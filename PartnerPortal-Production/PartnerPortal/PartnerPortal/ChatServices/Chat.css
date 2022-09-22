@@ -1,0 +1,25 @@
+﻿.assistly-widget a {
+   z-index: 3;
+   display: block;
+   background: url(https://www.starmicronics.com/images/chat/sprite_2019.jpg) no-repeat !important;
+   position: fixed !important;
+    height: 185px;
+   width: 250px !important;
+   overflow: hidden;
+   bottom:0px;
+   right:0px;
+   draggable:true;
+}  
+
+.chatMinimizer {
+   z-index: 3;
+   display: block;
+   position: fixed !important;
+   height: 15px;
+   width: 150px !important;
+	font-size: 8pt;
+   overflow: hidden;
+   bottom:185px;
+   right:0px;
+   draggable:true;
+} 

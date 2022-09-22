@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "DeletedMegaMenuItem";
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+}
+
+@section featured {
+
+}
+@section scripts
+{
+
+}
+@section MainContent {
+    <div ng-controller="MenuController">
+        <div ng-hide="DeletedMenuList.length > 0" style="width: 100%; text-align: center;">
+            <h2 style="color: #4682b4; font-weight: bold;">No deleted menu item found</h2>
+        </div>
+        <div ng-show="DeletedMenuList.length > 0" style="box-shadow: 10px 10px 5px #888888;">
+            <input type="button" id="submitButton" class="btn btn-primary" ng-click="UpdateMenuStructure()" value="Save" style="width: 100px; margin-top: 10px; box-shadow: 4px 4px 5px #888888;" />
+            <input type="button" ng-show="showCheckAll" id="checkAllButton" class="btn btn-primary" ng-click="CheckAll()" value="Check All" style="width: 100px; margin-top: 10px; box-shadow: 4px 4px 5px #888888;" />
+            <input type="button" ng-show="!showCheckAll" id="uncheckAllButton" class="btn btn-primary" ng-click="UncheckAll()" value="Uncheck All" style="width: 100px; margin-top: 10px; box-shadow: 4px 4px 5px #888888;" />
+            <div class="divFullBorderCMS"></div>
+            <div class="table_wrap paddingtop20 paddingleft10p" style="background-color: rgb(234, 234, 234);">
+                <div ivh-treeview="DeletedMenuList"
+                    ivh-treeview-validate="true"
+                    ivh-treeview-selected-attribute="'isSelected'"
+                    ivh-treeview-expand-to-depth="2"
+                    ivh-treeview-default-selected-state="false" ivh-treeview-filter="filterName">
+                </div>
+            </div>
+            <br />
+        </div>
+    </div>
+}
+
+@section AngularScripts
+{
+    <script>
+        app.controller("MenuController", function ($controller, $scope, $http, $rootScope, SweetAlert,
+            notificationFactory, $location,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory, $window, $modal) {
+            $scope.DeletedMenuList = [];
+            $scope.ToUpdateMenus = [];
+            $scope.showCheckAll = true;
+
+            dbUtilFactory.get(root + '/api/megamenu/DeletedMenuItems/', "", function (d) {
+                $scope.DeletedMenuList = d;
+            }, '', 'Error getting data ');
+
+            $scope.UpdateMenuStructure = function () {
+                $scope.ToUpdateMenus = [];
+                $scope.GatherRecoveredMenus($scope.DeletedMenuList);
+                dbUtilFactory.postp(root + '/api/megamenu/updateDeletedStatus/', $scope.ToUpdateMenus, function (d) {
+                    SweetAlert.swal("Data Saved", "", "success");
+                    dbUtilFactory.get('/api/megamenu/DeletedMenuItems/', "", function (d) {
+                        $scope.DeletedMenuList = d;
+                    }, '', 'Error getting data ');
+                }, '', 'Error getting data ');
+            }
+
+            $scope.GatherRecoveredMenus = function (menulist) {
+                for (var i = 0; i < menulist.length; i++) {
+                    var item = menulist[i];
+                    if (item.lastNode) {
+                        if (item.isSelected) {
+                            var m = {};
+                            m.Id = item.id;
+                            m.Title = item.label;
+                            $scope.ToUpdateMenus.push(m);
+                        }
+                    } else {
+                        $scope.GatherRecoveredMenus(item.children);
+                    }
+                }
+            }
+
+            $scope.CheckUncheckAllRecurr = function (menulist, status) {
+                for (var i = 0; i < menulist.length; i++) {
+                    var item = menulist[i];
+                    item.isSelected = status;
+                    if (item.children != undefined) {
+                        $scope.CheckUncheckAllRecurr(item.children, status);
+                    }
+                }
+            }
+
+            $scope.CheckAll = function () {
+                $scope.CheckUncheckAllRecurr($scope.DeletedMenuList, true);
+                $scope.showCheckAll = false;
+            }
+
+            $scope.UncheckAll = function () {
+                $scope.CheckUncheckAllRecurr($scope.DeletedMenuList, false);
+                $scope.showCheckAll = true;
+            }
+        });
+    </script>
+}

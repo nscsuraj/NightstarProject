@@ -1,0 +1,354 @@
+﻿@{
+    ViewBag.Title = "Manage Notifications";
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+}
+
+@section featured {
+}
+@section scripts
+{
+
+    <script src="~/Scripts/Angular/angular1.3.5.js"></script>
+    <script src="~/Scripts/Angular/lodash.min.js"></script>
+    <script src="~/Scripts/Angular/angularjs-dropdown-multiselect.js"></script>
+    <script src="~/Scripts/app/app.js"></script>
+    <style>
+        .ui-button-text {
+            font-size: 1.4rem;
+        }
+    </style>
+    <script>
+
+    </script>
+}
+@section MainContent {
+    <div ng-controller="PageCMSController">
+        <div id="display" ng-hide="showOperations">
+            <input type="button" id="submitButton" class="btn btn-primary" ng-click="addNotification()" value="Create New Page" style="width: auto; margin-top: 10px; box-shadow: 4px 4px 5px #888888;" />
+            <div class="divFullBorderCMS"></div>
+            <div class="leftFloat width99p paddingtop10 paddingleft1p" style="background-color: rgb(234, 234, 234);">
+                <div class="leftFloat width99p">
+                    <div class="leftFloat width100p">
+                        <div class="leftFloat width5p paddingtop5">
+                            <b>Filter</b>
+                        </div>
+                        <div class="leftFloat width93p paddingleft2p">
+                            <table style="width: 100%">
+                                <tr>
+                                    <td>Header:</td>
+                                    <td><input class="form-control width80p" style="padding: 5px;" ng-model="searchText.Title" /></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="leftFloat width100p">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr style="color: #428bca; cursor: pointer;">
+                                    <th ng-click="predicate = 'Header'; reverse=!reverse" style="cursor: pointer;">Header</th>
+                                    <th ng-click="predicate = 'Status'; reverse=!reverse" style="cursor: pointer;">Status</th>
+                                    <th ng-click="predicate = 'CreateDate'; reverse=!reverse" style="cursor: pointer;">Create Date</th>
+                                    <th style="text-align: center;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="item in Notifications | filter:searchText | orderBy:predicate:reverse|itemsPerPage:10">
+                                    <td data-placement="right"><a title="Update Page" href="#" ng-click="updateNotification(item)">{{item.Header}}</a></td>
+                                    <td data-placement="right">{{item.IsActive}}</td>
+                                    <td data-placement="right">{{formatDate(item.CreateDate,'MMM dd yyyy')}}</td>
+                                    <td class="TextAlignCenter paddingtop5 paddingbottom5">
+                                        <a class="btn-small btn-enable-disable-user" title="Change page status" href="#" ng-click="changeNotificationStatus(item)" ng-show="item.IsActive">
+                                            <img src="~/Images/Active.png" height="20px" width="20px"></img>
+                                        </a>
+                                        <a class="btn-small btn-enable-disable-user" title="Change page status" href="#" ng-click="changeNotificationStatus(item)" ng-show="!item.IsActive">
+                                            <img src="~/Images/Inactive.png" height="20px" width="20px"></img>
+                                        </a>
+                                        <a class="btn-small btn-enable-disable-user" title="Change page status" href="#" ng-click="DeleteNotification(item)">
+                                            <img src="~/Images/delete-24.png" height="20px" width="20px"></img>
+                                        </a>
+                                        <a class="btn-small btn-enable-disable-user paddingleft20" title="Update Page" href="#" ng-click="updateNotification(item)">
+                                            <img src="~/Images/edit.png" height="20px" width="20px"></img>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="operation" ng-show="showOperations">
+            <div style="width: 100%; height: 30px; font-size: 20pt; font-weight: bold; color: #2F6A79; text-shadow: 4px 4px 4px #BCBEBF; padding-top: 15px;">
+                &nbsp;&nbsp;Create the notification
+            </div>
+
+            <div class="divFullBorderCMS"></div>
+            <input type="button" id="saveContent" class="btn btn-primary" ng-click="saveContent()" value="Save Page" style="width: 100px; margin-top: 10px;">
+            <input type="button" id="cancelSaveContent" class="btn btn-primary" ng-click="cancelSaveContent()" value="Cancel" style="width: 100px; margin-top: 10px;">
+            <input type="hidden" ng-model="cmsData.Id" value="{{cmsData.Id}}" id="hdnPageId" />
+            <div class="leftFloat width100p paddingtop10">
+                <div class="leftFloat width10p paddingtop5" style="font-size: 18px;">
+                    <b>Header</b>
+                </div>
+                <div class="leftFloat width85p paddingleft2p">
+                    <input class="form-control " style="width: 80%; padding: 5px;" ng-model="cmsData.Header" ng-required="required" />
+                </div>
+            </div>
+            <div class="leftFloat width100p paddingtop10" style="height: 40px;">
+                <div class="leftFloat width10p" style="font-size: 18px;">
+                    <b> Notification For</b>
+                </div>
+                <div class="leftFloat width30p paddingleft2p">
+                    <select class="form-control " style="width: 81%; padding: 5px; height: 38px;" ng-model="cmsData.Type" ng-change="DecidePartnerOrUserChoser()">
+                        <option value="1">All Users</option>
+                        <option value="2">Partner Type</option>
+                        <option value="3">Particular User</option>
+                    </select>
+                </div>
+            </div>
+            <div class="leftFloat width100p paddingtop10 paddingbottom10" ng-show="showUserChoser">
+                <div class="leftFloat width10p paddingtop5" style="font-size: 18px;">
+                    <b>Chose Users</b>
+                </div>
+                <div class="leftFloat width85p paddingleft2p">
+                    <div ng-dropdown-multiselect="" extra-settings="dropdownSetting"
+                         options="Users" selected-model="UsersSelected" checkboxes="true"></div>
+                </div>
+            </div>
+
+            <div class="leftFloat width100p paddingtop10 paddingbottom10" ng-show="showPartnerChoser">
+                <div class="leftFloat width10p paddingtop5" style="font-size: 18px;">
+                    <b>Chose Partner Type</b>
+                </div>
+                <div class="leftFloat width85p paddingleft2p">
+                    <div ng-dropdown-multiselect="" extra-settings="dropdownSetting"
+                         options="PartnerTypes" selected-model="PartnerTypesSelected" checkboxes="true"></div>
+                </div>
+            </div>
+            <div class="leftFloat width100p divFullBorderCMS"></div>
+            <div class="leftFloat width100p" style="font-size:18px;font-weight:bold;">Notification Detail</div>
+            <div style="width: 100%; height: auto; font-size: 9pt; font-weight: normal; color: #000000; margin-top: 15px;display:inline-block;">
+                Notifications require all CSS to be inline. CMS elements depend on css files on the server and may break once the email is sent. For emails requiring more advanced formatting, build the email html in different tool (i.e. Act-On) and paste the html code in the source code option of the editor.
+            </div>
+            @Html.Action("Editor", "Dashboard")
+        </div>
+    </div>
+    <div id="dialog_metaTag" style="display: none;"></div>
+}
+
+@section AngularScripts
+{
+    <style>
+        .the-modal .modal-content {
+            width: 1200px;
+            height: 800px;
+        }
+    </style>
+
+    <script src="~/Scripts/MetaTagModalManagement.js"></script>
+    <script>
+        app.controller("PageCMSController", function ($controller, $scope, $http, $rootScope, SweetAlert,
+            notificationFactory, $location,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory, $window, $modal, $log) {
+
+
+            $scope.cmsData = {};
+            $scope.showOperations = false;
+            $scope.Notifications = [];
+            $scope.cmsData.Id = 0;
+            $scope.cmsData.Header = "";
+            $scope.cmsData.Type = "1";
+            $scope.cmsData.SendEmail = false;
+            $scope.showUserChoser = false;
+            $scope.showPartnerChoser = false;
+
+            $scope.UsersSelected = [];
+            $scope.Users = [];
+
+            $scope.PartnerTypesSelected = [];
+            $scope.PartnerTypes = [];
+            $scope.dropdownSetting = {
+                scrollable: true,
+                scrollableHeight: '400px'
+            }
+
+            $scope.formatDate = function (date, format) {
+                if (date == undefined) return '';
+                return $.format.date(new Date(date), format);
+            };
+
+            $scope.DecidePartnerOrUserChoser = function () {
+                if ($scope.cmsData.Type == "3") {
+                    $scope.showUserChoser = true;
+                    $scope.showPartnerChoser = false;
+                }
+                if ($scope.cmsData.Type == "2") {
+                    $scope.showUserChoser = false;
+                    $scope.showPartnerChoser = true;
+                }
+                if ($scope.cmsData.Type == "1") {
+                    $scope.showUserChoser = false;
+                    $scope.showPartnerChoser = false;
+                }
+            }
+
+            $scope.addNotification = function () {
+                $scope.showOperations = true;
+                $scope.cmsData = {};
+                $scope.cmsData.Id = 0;
+                $scope.cmsData.Header = "";
+                $scope.cmsData.Type = "1";
+                $scope.cmsData.Status = 1;
+                initEditor();
+            };
+            $scope.cancelSaveContent = function () {
+                $scope.showOperations = false;
+                $scope.cmsData = {};
+                $scope.cmsData.Id = 0;
+                $scope.cmsData.Header = "";
+                $scope.cmsData.Type = "1";
+            }
+            $scope.updateNotification = function (item) {
+
+                dbUtilFactory.get(root + 'api/ppcmsapi/GetNotification/', item.Id, function (d) {
+                    $scope.showOperations = true;
+                    $scope.cmsData = d.Notification;
+                    editorContent = d.Notification.Detail;
+                    if (d.Notification.Type == 2) {
+                        $scope.PartnerTypesSelected = d.SelectedRecipient;
+                        $scope.showUserChoser = false;
+                        $scope.showPartnerChoser = true;
+                    }
+                    if (d.Notification.Type == 3) {
+                        $scope.UsersSelected = d.SelectedRecipient;
+                        $scope.showUserChoser = true;
+                        $scope.showPartnerChoser = false;
+                    }
+                    if (editorContent.Children.length > 0) {
+                        parseFullObject();
+                    }
+                }, '', 'Error getting data ');
+            };
+            $scope.getNotifications = function () {
+                dbUtilFactory.get(root + 'api/ppcmsapi/GetNotifications/', "", function (d) {
+                    $scope.Notifications = d;
+                }, '', 'Error getting data ');
+            };
+            $scope.getNotifications();
+            $scope.getPortalUsers = function () {
+                dbUtilFactory.get(root + 'api/ppcmsapi/GetPortalUsersList/', "", function (d) {
+                    for (var i = 0; i < d.length; i++) {
+                        $scope.Users.push({ id: d[i].PartnerNumber, label: (d[i].AccountName + "(" + d[i].PartnerNumber + ")") });
+                    }
+                }, '', 'Error getting data ');
+            };
+            $scope.getPortalUsers();
+            $scope.getPortalPartnerTypes = function () {
+                dbUtilFactory.get(root + 'api/ppcmsapi/GetPortalPartnerTypes/', "", function (d) {
+                    for (var i = 0; i < d.length; i++) {
+                        $scope.PartnerTypes.push({ id: d[i], label: d[i] });
+                    }
+                }, '', 'Error getting data ');
+            };
+            $scope.getPortalPartnerTypes();
+
+            $scope.saveContent = function () {
+                SweetAlert.swal({
+                    title: "Are you sure?",
+                    text: "Do you want to send notification email.",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: true
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $scope.cmsData.SendEmail = true;
+                        $scope.processSaveContent();
+                    } else {
+                        $scope.cmsData.SendEmail = false;
+                        $scope.processSaveContent();
+                    }
+                });                
+            };
+            $scope.processSaveContent = function () {
+                //alert($scope.cmsData.SendEmail);
+                //return false;
+                if ($scope.cmsData.Header == undefined || $scope.cmsData.Header === '') {
+                    SweetAlert.swal({
+                        title: "Required Field Missing?",
+                        text: "Notification header is required. Please fill up notification header.",
+                        type: "warning"
+                    });
+                    return;
+                }
+
+                var recipients = [];
+                if ($scope.cmsData.Type == "2") {
+                    angular.forEach($scope.PartnerTypesSelected, function (value, index) {
+                        recipients.push(value.id);
+                    });
+                }
+                if ($scope.cmsData.Type == "3") {
+                    angular.forEach($scope.UsersSelected, function (value, index) {
+                        recipients.push(value.id);
+                    });
+                }
+
+                $scope.cmsData.Detail = editorContent;
+                //$scope.cmsData.SelectedUsers = $scope.UsersSelected;
+                $scope.cmsData.Recipients = recipients;
+                dbUtilFactory.postp(root + 'api/ppcmsapi/SaveNotification', $scope.cmsData, function (d) {
+                    $scope.getNotifications();
+                    SweetAlert.swal(d, "", "success");
+                    //window.location.href = window.location.href;
+                }, '', 'Error getting data ');
+            }
+            $scope.changeNotificationStatus = function (page) {
+                var text = page.IsActive ? "Inactive" : "Active";
+                SweetAlert.swal({
+                    title: "Are you sure?",
+                    text: "You are going to set the notification " + text + ". The action can not be reverted back.",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes",
+                    closeOnConfirm: true
+                },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            dbUtilFactory.postp(root + 'api/ppcmsapi/ChangeNotificationStatus/', page, function (d) {
+                                page.IsActive = !page.IsActive;
+                                SweetAlert.swal(d, "", "success");
+                                //window.location.href = window.location.href;
+                            }, '', 'Error getting data ');
+                        }
+                    });
+            };
+            $scope.DeleteNotification = function (page) {
+                var text = page.IsActive ? "Inactive" : "Active";
+                SweetAlert.swal({
+                    title: "Are you sure?",
+                    text: "You are going to delete the notification. The action can not be reverted back.",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes",
+                    closeOnConfirm: true
+                },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            dbUtilFactory.postp(root + 'api/ppcmsapi/DeleteNotification/', page, function (d) {
+                                SweetAlert.swal(d, "", "success");
+                                window.location.href = window.location.href;
+                            }, '', 'Error getting data ');
+                        }
+                    });
+            };
+        });
+    </script>
+}
+

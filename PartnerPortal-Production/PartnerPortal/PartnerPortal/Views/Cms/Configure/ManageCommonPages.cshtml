@@ -1,0 +1,379 @@
+﻿@{
+    ViewBag.Title = "Create Page Using CMS";
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+}
+
+@section featured {
+}
+@section scripts
+{
+  
+    <style>
+        .ui-button-text {
+            font-size: 1.4rem;
+        }
+    </style>
+    <script>
+
+    </script>
+}
+@section MainContent {
+    <div ng-controller="PageCMSController">
+        <div id="display" ng-hide="showOperations">
+            <input type="button" id="submitButton" class="btn btn-primary" ng-click="addPage()" value="Create New Page" style="width: auto; margin-top: 10px; box-shadow: 4px 4px 5px #888888;"/>
+            <div class="divFullBorderCMS"></div>
+            <div class="leftFloat width99p paddingtop10 paddingleft1p" style="background-color: rgb(234, 234, 234);">
+                <div class="leftFloat width99p">
+                    <div class="leftFloat width100p">
+                        <div class="leftFloat width5p paddingtop5"><b>Filter</b>
+                        </div>
+                        <div class="leftFloat width93p paddingleft2p">
+                            <table style="width: 100%">
+                                <tr>
+                                    <td style="width: 10%;">Any:</td>
+                                    <td><input class="form-control width80p" style="padding: 5px;" ng-model="searchText.SearchTextGlobal"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Title:</td>
+                                    <td><input class="form-control width80p" style="padding: 5px;" ng-model="searchText.Title"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Description:</td>
+                                    <td><input class="form-control width80p" style="padding: 5px;" ng-model="searchText.Description"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="leftFloat width100p paddingtop10 paddingbottom10" ng-init="filterStatus='False'">
+                        <div class="leftFloat paddingtop5"><b>Document Type</b>
+                        </div>
+                        <div class="leftFloat  paddingleft2p">
+                            @*                            <div class="leftFloat width20 paddingtop3">
+                                <input ng-model="filterStatus" type="radio" name="animal" value=""/>
+                            </div>
+                            <div class="leftFloat width30 paddingtop3">All</div>*@
+                            <div class="leftFloat width20 paddingtop3">
+                                <input ng-model="filterStatus" type="radio" name="animal" value="False"/>
+                            </div>
+                            <div class="leftFloat width50 paddingtop3">Pages</div>
+                            <div class="leftFloat width20 paddingtop3">
+                                <input ng-model="filterStatus" type="radio" name="animal" value="True"/>
+                            </div>
+                            <div class="leftFloat width200 paddingtop3">Custom Templates</div>
+                        </div>
+                    </div>
+                    <div class="leftFloat width100p">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr style="color: #428bca; cursor: pointer;">
+                                <th ng-click="predicate = 'PartPageName'; reverse=!reverse" style="cursor: pointer;">Page Name</th>
+                                <th ng-click="predicate = 'Description'; reverse=!reverse" style="cursor: pointer;">Description</th>
+                                <th ng-click="predicate = 'CreateDate'; reverse=!reverse" style="cursor: pointer;">Create Date</th>
+                                @*<th ng-click="predicate = 'Status'; reverse=!reverse" style="cursor: pointer;">Status</th>*@
+                                <th style="cursor: pointer;">Permlink</th>
+                                <th style="text-align: center;">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr dir-paginate="item in PageList | filter:searchText | filter:{IsCustomTemplate : filterStatus} | orderBy:predicate:reverse|itemsPerPage:10">
+                                <td data-placement="right"><a title="Update Page" href="#" ng-click="updatePage(item)">{{item.Title}}</a></td>
+                                <td data-placement="right">{{item.Description}}</td>
+                                <td data-placement="right">{{formatDate(item.CreateDate,'MMM dd yyyy')}}</td>
+                                @*                                <td class="TextAlignCenter">
+                                    <i class='glyphicon glyphicon-ok' ng-show="item.Status==true"></i>
+                                    <i class='glyphicon glyphicon-remove' ng-show="item.Status==false"></i>
+                                </td>*@
+                                <td data-placement="right">{{pageUrl(item)}}</td>
+                                <td class="TextAlignCenter paddingtop5 paddingbottom5">
+                                    <a class="btn-small btn-enable-disable-user" title="Change page status" href="#" ng-click="changeStatus(item)">
+                                        <img src="~/Images/delete-24.png" height="20px" width="20px"></img>
+                                    </a>
+                                    <a class="btn-small btn-enable-disable-user paddingleft20" title="Preview page" href="#" ng-click="previewPage(item)">
+                                        <img src="~/Images/preview_file.png" height="20px" width="20px"></img>
+                                    </a>
+                                    <a class="btn-small btn-enable-disable-user paddingleft20" title="Update Page" href="#" ng-click="updatePage(item)">
+                                        <img src="~/Images/edit.png" height="20px" width="20px"></img>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="operation" ng-show="showOperations">
+            <div style="width: 100%; height: 30px; font-size: 20pt; font-weight: bold; color: #2F6A79; text-shadow: 4px 4px 4px #BCBEBF; padding-top: 15px;">
+                &nbsp;&nbsp;Create the html for Page
+            </div>
+            <div class="divFullBorderCMS"></div>
+            <input type="button" id="saveContent" class="btn btn-primary" ng-click="saveContent()" value="Save Page" style="width: 100px; margin-top: 10px;">
+            <input type="button" id="saveCustomTemplate" class="btn btn-primary" ng-click="saveCustomTemplate()" value="Save Custom Template" style="width: 200px; margin-top: 10px;">
+            <input type="button" id="cancelSaveContent" class="btn btn-primary" ng-click="cancelSaveContent()" value="Cancel" style="width: 100px; margin-top: 10px;">
+            <input type="button" id="manageMetaTags" class="btn btn-primary" ng-click="OpenMetaTagManagementModal()" ng-disabled="disableMetaTagManagement()" value="Manage Meta Tags" style="width: 150px; margin-top: 10px;">
+            <input type="hidden" ng-model="cmsData.Id" value="{{cmsData.Id}}" id="hdnPageId"/>
+            <div class="leftFloat width100p paddingtop10">
+                <div class="leftFloat width10p paddingtop5" style="font-size: 18px;"><b>Name(Will be used in URL)</b>
+                </div>
+                <div class="leftFloat width85p paddingleft2p">
+                    <input class="form-control " style="width: 80%; padding: 5px;" ng-model="cmsData.Title" ng-required="required"/>
+                </div>
+            </div>
+            <div class="leftFloat width100p paddingtop10">
+                <div class="leftFloat width10p paddingtop5" style="font-size: 18px;"><b>Title Tag</b>
+                </div>
+                <div class="leftFloat width85p paddingleft2p">
+                    <input class="form-control " style="width: 80%; padding: 5px;" ng-model="cmsData.TitleTag" ng-required="required"/>
+                </div>
+            </div>
+            <div class="leftFloat width100p paddingtop10" style="height: 40px;">
+                <div class="leftFloat width10p" style="font-size: 18px;"><b>Layout Type</b>
+                </div>
+                <div class="leftFloat width30p paddingleft2p">
+                    <select class="form-control " style="width: 81%; padding: 5px; height: 38px;" ng-model="cmsData.LayoutType">
+                        <option value="1">Inherited</option>
+                        <option value="2">Blank</option>
+                    </select>
+                </div>
+                <div class="leftFloat width40p" style="font-size: 20px;">
+                    <b>Save As Template</b>&nbsp;&nbsp;<input type="checkbox" ng-model="cmsData.IsTemplate" style="width: 20px; height: 20px;"/>
+                </div>
+            </div>
+            <div class="leftFloat width100p paddingtop10 paddingbottom10">
+                <div class="leftFloat width10p paddingtop5" style="font-size: 18px;"><b>Description</b>
+                </div>
+                <div class="leftFloat width85p paddingleft2p">
+                    <input class="form-control " style="width: 80%; padding: 5px;" ng-model="cmsData.Description"/>
+                </div>
+            </div>
+            <div class="leftFloat width100p paddingtop10 paddingbottom10" style="display: none;">
+                <div class="leftFloat width10p paddingtop5" style="font-size: 18px;"><b>Languages</b>
+                </div>
+                <div class="leftFloat width85p paddingleft2p">
+                    <div class="leftFloat width15p" style="font-size: 20px;">
+                        <b>English</b>&nbsp;&nbsp;<input type="checkbox" ng-model="cmsData.SitesArray.English" style="width: 20px; height: 20px;"/>
+                    </div>
+                    <div class="leftFloat width15p" style="font-size: 20px;">
+                        <b>Espanol</b>&nbsp;&nbsp;<input type="checkbox" ng-model="cmsData.SitesArray.Espanol" style="width: 20px; height: 20px;"/>
+                    </div>
+                    <div class="leftFloat width15p" style="font-size: 20px;">
+                        <b>Portuguese</b>&nbsp;&nbsp;<input type="checkbox" ng-model="cmsData.SitesArray.Portugese" style="width: 20px; height: 20px;"/>
+                    </div>
+
+                </div>
+            </div>
+            <div class="leftFloat width100p divFullBorderCMS"></div>
+            @Html.Action("Editor", "Dashboard")
+        </div>
+    </div>
+     <div id="dialog_metaTag" style="display: none;"></div>
+}
+
+@section AngularScripts
+{
+    <style>
+        .the-modal .modal-content {
+            width: 1200px;
+            height: 800px;
+        }
+    </style>
+
+    <script src="~/Scripts/MetaTagModalManagement.js"></script>
+    <script>
+        //function OpenMetaTagDialog() {
+        //    $("#dialog_metaTag").empty();
+        //    var template = "/Templates/CMS/MetaTagModalTemplate.html";
+        //    $("#dialog_metaTag").load(template);
+        //    var dialog = $("#dialog_metaTag").dialog({
+        //        autoOpen: false,
+        //        width: "96%",
+        //        modal: true,
+        //        resizable: false,
+        //        position: [30, 30],
+        //        dialogClass: "no-titlebar",
+        //        create: function (event) { $(event.target).parent().css('position', 'fixed'); $(".ui-widget-header").hide(); },
+        //        open: function () { $(".ui-widget-header").hide(); },
+        //        close: function () {
+        //            $(".ui-widget-header").show();
+        //        }
+        //    });
+        //    dialog.dialog("open");
+        //}
+
+        app.controller("PageCMSController", function($controller, $scope, $http, $rootScope, SweetAlert,
+            notificationFactory, $location,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory, $window, $modal, $log) {
+
+
+            $scope.cmsData = {};
+            $scope.showOperations = false;
+            $scope.PageList = [];
+            $scope.PageType = 2;
+            $scope.cmsData.LayoutType = "1";
+            $scope.pageMode = 1;
+            $scope.cmsData.Id = 0;
+            $scope.cmsData.SitesArray = {
+                English: false,
+                Espanol: false,
+                Portugese : false
+            };
+            $scope.cmsData.Sites = "";
+            $scope.formatDate = function(date, format) {
+                if (date == undefined)return '';
+                return $.format.date(new Date(date), format);
+            };
+
+            $scope.addPage = function() {
+                $scope.showOperations = true;
+                $scope.cmsData = {};
+                $scope.cmsData.Id = 0;
+                $scope.cmsData.LayoutType = "1";
+                $scope.cmsData.PageType = $scope.PageType;
+                $scope.cmsData.Status = 1;
+                $scope.pageMode = 1;
+                $scope.cmsData.IsTemplate = false;
+                $scope.cmsData.SitesArray = {
+                    English: false,
+                    Espanol: false,
+                    Portugese: false
+                };
+                $scope.cmsData.Sites = "";
+                initEditor();
+            };
+            $scope.cancelSaveContent = function() {
+                $scope.showOperations = false;
+                $scope.cmsData = {};
+                $scope.pageMode = 1;
+            }
+            $scope.updatePage = function (page) {
+
+                dbUtilFactory.get(root + '/api/pppageinfo/GetPageForCMS/', page.Id, function (d) {
+                    $scope.showOperations = true;
+                    $scope.cmsData = d;
+                    $scope.cmsData.SitesArray = {
+                        English: d.Sites.indexOf('EN') > 0,
+                        Espanol: d.Sites.indexOf('ES') > 0,
+                        Portugese: d.Sites.indexOf('PT') > 0
+                    };
+                    $scope.cmsData.Sites = d.Sites;
+                    editorContent = d.PageJson;
+
+                    if (editorContent.Children.length > 0) {
+                        parseFullObject();
+                    }
+                    $scope.pageMode = 2;
+                }, '', 'Error getting data ');
+            };
+            $scope.disableMetaTagManagement = function() {
+                if ($scope.cmsData.Id <= 0) {
+                    return true;
+                }
+                if ($scope.cmsData.IsTemplate) {
+                    return true;
+                }
+                if ($scope.cmsData.IsCustomTemplate) {
+                    return true;
+                }
+                return false;
+            }
+            $scope.previewPage = function(page) {
+                //alert(pageUrl);
+                window.open(pageUrl + "/" + page.Title, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=" + screen.width + ",height=" + screen.height);
+            }
+            $scope.pageUrl = function(page) {
+                //alert(pageUrl);
+                return pageUrl + "/" + page.Id;
+            }
+            $scope.getPageList = function() {
+                dbUtilFactory.get(root + '/api/pppageinfo/GetPageList/', $scope.PageType, function (d) {
+                    $scope.PageList = d;
+                }, '', 'Error getting data ');
+            };
+            $scope.getPageList();
+            $scope.saveContent = function() {
+                if ($scope.cmsData.Title == undefined || $scope.cmsData.Title === '') {
+                    SweetAlert.swal({
+                        title: "Required Field Missing?",
+                        text: "Page title is required. Please fill up page title.",
+                        type: "warning"
+                    });
+                    return;
+                }
+                
+                var sites = ($scope.cmsData.SitesArray.English ? "EN" : "") + "," + ($scope.cmsData.SitesArray.Espanol ? "ES" : "") + "," + ($scope.cmsData.SitesArray.Portugese ? "PT" : "");
+                $scope.cmsData.Sites = sites;
+                $scope.cmsData.IsCustomTemplate = false;
+                $scope.cmsData.PageJson = editorContent;
+                dbUtilFactory.postp(root + 'api/pppageinfo/SavePage', $scope.cmsData, function (d) {
+                    $scope.getPageList();
+                    SweetAlert.swal(d, "", "success");
+                    if ($scope.pageMode == 1 && $scope.cmsData.IsTemplate == true) {
+                        window.location.href = window.location.href;
+                    }
+                }, '', 'Error getting data ');
+            };
+
+            $scope.saveCustomTemplate = function() {
+                if ($scope.cmsData.Title == undefined || $scope.cmsData.Title === '') {
+                    SweetAlert.swal({
+                        title: "Required Field Missing?",
+                        text: "Page title is required. Please fill up page title.",
+                        type: "warning"
+                    });
+                    return;
+                }
+                $scope.cmsData.IsCustomTemplate = true;
+                $scope.cmsData.PageJson = editorContent;
+                dbUtilFactory.postp(root + '/api/pppageinfo/SavePage', $scope.cmsData, function (d) {
+                    $scope.getPageList();
+                    $scope.cmsData.Id
+                    SweetAlert.swal(d, "", "success");
+                    window.location.href = window.location.href;
+                }, '', 'Error getting data ');
+            };
+
+            $scope.changeStatus = function(page) {
+                var text = page.Status ? "Inactive" : "Active";
+                SweetAlert.swal({
+                        title: "Are you sure?",
+                        text: "You are going to delete the page. The action can not be reverted back.",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Yes, delete the page.",
+                        closeOnConfirm: true
+                    },
+                    function(isConfirm) {
+                        if (isConfirm) {
+                            dbUtilFactory.postp(root + '/api/pppageinfo/Delete/', page, function (d) {
+                                page.Status = !page.Status;
+                                SweetAlert.swal(d, "", "success");
+                                window.location.href = window.location.href;
+                            }, '', 'Error getting data ');
+                        }
+                    });
+            };
+
+
+            $scope.OpenMetaTagManagementModal = function() {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: root + "/Templates/CMS/MetaTagModalTemplate.html",
+                    controller: 'CMSMetaTagModalManagementController',
+                    windowClass: 'the-modal',
+                    // resolve: { PageId: function () { return $scope.cmsData.Id; } }
+                });
+                //modalInstance.result.then(function (PageId) {
+                //    //$scope.SelectedUserId = SelectedUserId;
+                //  //  $scope.Init();
+                //}, function () {
+                //   // $log.info('Modal dismissed at: ' + new Date());
+                //  //  $scope.Init();
+                //});
+            }
+
+        });
+    </script>
+}
+

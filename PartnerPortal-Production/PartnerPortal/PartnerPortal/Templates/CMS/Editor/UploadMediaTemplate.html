@@ -1,0 +1,720 @@
+﻿<style>
+    .ui-dialog {
+        padding: 0;
+    }
+
+        .ui-dialog .ui-dialog-content {
+            padding: 0;
+        }
+
+    td.active {
+        background-color: #d4d4d4;
+        color: #0073aa !important;
+    }
+
+    .leftMenu:hover {
+        background-color: #d4d4d4;
+    }
+
+    .buttonCheck {
+        width: 16px;
+        height: 16px;
+        position: relative;
+        top: -138px;
+        left: 100px;
+        background-color: #0073aa;
+        border: 4px double #ffffff;
+        color: #ffffff;
+        box-shadow: 2px 2px 1px #888888;
+        text-align: center;
+        z-index: 100001;
+    }
+
+    .uploadedElementImg {
+        width: 120px;
+        height: 90px;
+        display: inline-block;
+        background-color: #d4d4d4;
+        text-align: center;
+    }
+
+    .uploadedElementImage {
+        width: 90%;
+        height: 80%;
+        position: relative;
+        top: 10px;
+    }
+
+    .uploadedElement {
+        width: 120px;
+        height: 130px;
+        display: inline-block;
+        border-style: double;
+        border-width: 4px;
+        border-color: #d4d4d4;
+        box-shadow: 2px 2px 5px #888888;
+        margin: 5px;
+        cursor: pointer;
+    }
+
+    .uploadedElementText {
+        width: 120px;
+        height: 40px;
+        font-size: 9px;
+        display: inline-block;
+        background-color: #ffffff;
+        position: relative;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+        word-break: break-all;
+        font-weight: bold;
+        overflow: hidden;
+    }
+
+    #insertElementIntoPageButton {
+        background-color: #007acc;
+        color: #ffffff;
+        float: right;
+        margin-right: 23%;
+        border: 1px solid #d3d3d3;
+    }
+
+    .show {
+        display: inline-block;
+    }
+
+    .hide {
+        display: none;
+    }
+</style>
+
+
+<div id="uploadMediaTemplate" class="leftFloat width100p">
+    
+    <div class="leftFloat width100p height95p">
+        <table class="leftFloat width100p height100p" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="width12p" style="background-color: #F2F2F2; vertical-align: top; border-right: 2px solid #E5E1E1;">
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <table class="width100p">
+                        <tr>
+                            <td class="width5p">&nbsp;
+                            </td>
+                            <td class="width95p height30" data-header="Quick Links">
+                                <b>Quick Links</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="height10" colspan="2">&nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="width5p">&nbsp;
+                            </td>
+                            <td class="width95p height30 leftMenu start" data-header="All Uploaded Files" data-state="1">
+                                <a style="cursor: pointer; text-decoration: none;" onclick=" filterElementsToDisplayFromLeftClick('all') ">&nbsp;&nbsp;<b>All Uploaded Files</b></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="width5p">&nbsp;
+                            </td>
+                            <td class="width95p height30 leftMenu" data-header="E Books" data-state="2">
+                                <a style="cursor: pointer; text-decoration: none;" onclick=" filterElementsToDisplayFromLeftClick('ebooks') ">&nbsp;&nbsp;E Books</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="width88p">
+                    <br/>
+                    <br/>
+                    <table class="width100p height100p">
+                        <tr style="height: 5%; width: 100%;">
+                            <td style="height: 5%; width: 100%;">
+                                <label id="header" style="font-size: 18pt; font-family: sans-serif; padding-left: 20px;">Uploaded Files</label>
+                                <a href="#" class="ui-dialog-titlebar-close ui-corner-all closeDialog" role="button" style="top: 20px !important; right: 20px;"><span class="ui-icon ui-icon-closethick">close</span></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="leftFloat width100p paddingtop5">
+                                <div id="tab-container-upload-media" class="tab-container">
+                                    <ul class='etabs'>
+                                        <li class='tab'><a href="#tabs1" id="uploadFilesTab">Upload Files</a></li>
+                                        <li class='tab'><a href="#tabs2" id="mediaLibraryTab">Media Library</a></li>
+                                    </ul>
+                                    <div class="panel-container width98p" style="padding: 0;">
+                                        <div id="tabs1" class="width100p" style="text-align: center;" ondrop="fileDropped(event)" ondragover="allowFileDrop(event)">
+                                            <table id="tblUploadFile" class="width100p">
+                                                <tr>
+                                                    <td class="width100p">
+                                                        <div class="uploader-inline-content no-upload-message">
+                                                            <div class="upload-ui">
+                                                                <h2 class="upload-instructions drop-instructions">Drop files anywhere to upload</h2>
+                                                                <p class="upload-instructions drop-instructions">or</p>
+                                                                <button type="button" id="upload-file-proxy-button" class="button insert-media add_media" style="height: 40px; width: 150px;"><span class="wp-media-buttons-icon"></span>Select Files</button>
+                                                                <input type="file" id="upload-file-button" style="display: none;" multiple onchange=" uploadMediaFiles($(this).get(0).files) "/>
+                                                            </div>
+                                                            <div class="post-upload-ui paddingtop5">
+                                                                <p class="max-upload-size">Maximum upload file size: 50 MB.</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div id="tabs2" class="width100p height100p">
+                                            <table class="width100p height100p">
+                                                <tr>
+                                                    <td class="leftFloat width78p paddingtop10">
+                                                        <table class="width100p height100p">
+                                                            <tr class="leftFloat width99p paddingleft1p">
+                                                                <td class="leftFloat width33p">
+                                                                    <select id="media-attachment-filters" style="width: 93%; border: 1px solid #dfdfdf; height: 30px; padding: 5px;">
+                                                                        <option value="all">All media items</option>
+                                                                        <!--<option value="uploaded">Uploaded to this page</option>-->
+                                                                        <option value="image">Images</option>
+                                                                        <option value="audio">Audio</option>
+                                                                        <option value="video">Video</option>
+                                                                        <option value="unattached">Unattached</option>
+                                                                        <option value="ebooks">E Books</option>
+                                                                        <option value="ebookImages">E Book Images</option>
+                                                                    </select>
+
+                                                                </td>
+                                                                <td class="leftFloat width33p">
+                                                                    <select id="media-attachment-date-filters" style="width: 93%; border: 1px solid #dfdfdf; height: 30px; padding: 5px;">
+                                                                        <option value="all">All dates</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td class="leftFloat width34p">
+                                                                    <input type="search" placeholder="Search" id="media-search-input" style="width: 93%; border: 1px solid #dfdfdf; height: 30px; padding: 5px;">
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="leftFloat width99p paddingleft1p paddingtop5">
+                                                                <td id="displayElementContainerTd" colspan="3" class="width100p height90p TextAlignCenter" style="vertical-align: middle;">
+                                                                    <div id="displayContainerOfUploadedElements" style="right: 0; bottom: 61px; overflow: auto;">
+                                                                    </div>
+                                                                    <div id="displayElementNoItem">
+                                                                        <h3>No. Items Found</h3>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <td class="leftFloat width22p height100p" style="right: 0; bottom: 61px; background-color: #e5e1e1;">
+                                                        <table id="displayContainerText" class="leftFloat width95p" cellpadding="0" cellspacing="0" style="margin: 10px; vertical-align: top;">
+                                                            <tr colspan="2">
+                                                                <td colspan="2" style="font-weight: bold; height: 40px;">FILE DETAILS</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="width95p TextAlignCenter" colspan="2">
+                                                                    <img style="width: 80px; height: 80px; border-style: double; border-width: 4px; border-color: #d4d4d4; box-shadow: 2px 2px 5px #888888;" id="detailDisplayFileImage"/>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="width100p TextAlignCenter height50" colspan="2" style="font-size: 9px; font-weight: bold; word-break: break-all;">
+                                                                    <input type="hidden" id="detailDisplayFileId"/>
+                                                                    <div id="detailDisplayFileName" style="margin: 5px;"></div>
+                                                                    <div id="detailDisplayFileDate" style="margin: 5px;"></div>
+                                                                    <div id="detailDisplayFileSize" style="margin: 5px;"></div>
+                                                                    <div id="detailDisplayFileDelete" style="margin: 5px;">
+                                                                        <a id="fileDelete" href="#" style="color: #ff0000">Delete Permanently</a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height: 30px;">
+                                                                <td class="width40p" style="vertical-align: top; padding-top: 8px; font-size: 9px; font-weight: bold;">URL
+                                                                </td>
+                                                                <td class="width60p">
+                                                                    <input type="text" id="detailDisplayFilePath" readonly="readonly" style="border: 1px solid #d3d3d3; font-size: 9px; height: 20px; width: 89%; background-color: #dfdfdf;"/>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height: 30px;">
+                                                                <td style="vertical-align: top; padding-top: 12px; font-size: 9px; font-weight: bold;">Title
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" id="detailDisplayFileTitle"  class="updateFileInfo" data-property="Title" style="height: 20px; width: 88%; font-size: 9px;"/>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height: 70px;">
+                                                                <td style="vertical-align: top; padding-top: 4px; font-size: 9px; font-weight: bold;">Caption
+                                                                </td>
+                                                                <td>
+                                                                    <textarea id="detailDisplayFileCaption"  class="updateFileInfo" data-property="Caption" style="height: 70px; width: 86%; font-size: 9px;"></textarea>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height: 70px;">
+                                                                <td style="vertical-align: top; padding-top: 4px; font-size: 9px; font-weight: bold;">Description&nbsp;
+                                                                </td>
+                                                                <td>
+                                                                    <textarea id="detailDisplayFileDescription"  class="updateFileInfo" data-property="Description" style="height: 70px; width: 86%; font-size: 9px;"></textarea>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height: 70px;">
+                                                                <td style="vertical-align: middle; padding-top: 12px; font-size: 9px; font-weight: bold;">Alt Text(Image)&nbsp;
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" id="detailDisplayFileImgAltText" class="updateFileInfo" data-property="AltText" style="height: 20px; width: 88%; font-size: 9px;"/>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height: 70px;">
+                                                                <td style="vertical-align: top; padding-top: 4px; font-size: 9px; font-weight: bold;">&nbsp;
+                                                                </td>
+                                                                <td>
+                                                                   <input type="button" id="btnSaveFileDescr"  style="height: 20px; width: 88%; font-size: 9px;" onclick="updateFileInfo()" value="Save"/>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="leftFloat width98p paddingtop20 paddingbottom10">
+                                <div style="width: 90px; height: 20px; display: inline-block; float: left; font-weight: bold; margin-left: 50px;" id="noOfFilesSelected"></div>
+                                <a id="clearSelectedFiles" style="margin: 10px; cursor: pointer; color: blue;" onclick=" clearSelection() ">Clear</a>
+                                <button type="button" id="insertElementIntoPageButton" class="editor-tab-button editor-tab-button-selected ui-corner-all"><span class="ui-button-text">Insert Into Page</span></button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<template id="uploaded_element_display_template">
+    <div class="uploadedElement leftFloat width100p" onclick="uploadedElementClicked(event,this)">
+        <div class="uploadedElementImg">
+            <img class="uploadedElementImage" src=""/>
+        </div>
+        <div class="uploadedElementText">
+        </div>
+        <div class="buttonCheck hide"><i class="fusiona-flag"></i></div>
+    </div>
+</template>
+<script>
+
+
+    var uploadedElements = {};
+
+    var allowMultiSelect = false;
+
+    var selectedUploadedObjectsToUse = [];
+
+    var currentlySelectedObject = {};
+
+    var audioImagePath = root + "/Images/FileTypes/audio.png";
+    var docxImagePath = root + "/Images/FileTypes/docx.png";
+    var excelImagePath = root + "/Images/FileTypes/excel.png";
+    var htmlImagePath = root + "/Images/FileTypes/html.png";
+    var txtImagePath = root + "/Images/FileTypes/txt.png";
+    var videoImagePath = root + "/Images/FileTypes/video.png";
+    var unknownImagePath = root + "/Images/FileTypes/txt.png";
+
+    function uploadMediaFiles(files) {
+        var data = new FormData();
+
+        var okToUpload = true;
+        // Add the uploaded image content to the form data collection
+        for (var i = 0; i < files.length; i++) {
+            if (files[i].size <= 52428800) {
+                data.append("UploadedImage" + i, files[i]);
+            } else {
+                alert("File " + files[i].name + " exceeds the size limit. Please select files having maximum size 50 MB.\n\nUpload cancelled.");
+                okToUpload = false;
+            }
+        }
+
+        if (okToUpload) {
+            data.append("UploadedType", currState);
+            $.ajax({
+                type: 'POST',
+                url: root + "api/ppeditor/UploadFiles",
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    $("#mediaLibraryTab").click();
+                    setUpMediaLibrary();
+                },
+                error: function(data) {
+                    alert(data.responseText);
+                }
+            });
+        }
+    }
+
+    function setUpMediaLibrary() {
+        $.ajax({
+            type: 'GET',
+            url: root + "api/ppeditor/GetUploadInformations",
+            success: function(data) {
+                uploadedElements = data;
+                var s = document.getElementById('media-attachment-date-filters');
+                s.options.length = 0;
+                s.options[0] = new Option("All Dates", 'all');
+                for (var i = 0; i < data.Dates.length; i++) {
+                    //Fill date filter dropdown
+                    s.options[s.options.length] = new Option($.format.date(new Date(data.Dates[i]), 'MMM dd yyyy'), new Date(data.Dates[i]));
+                }
+                renderElements(uploadedElements.Data);
+                if (selectedUploadedObjectsToUse.length > 0) {
+                    for (var i = 0; i < selectedUploadedObjectsToUse.length; i++) {
+                        $(".uploadedElement").each(function() {
+                            if ($(this).attr("data-objId") == selectedUploadedObjectsToUse[i].Id) {
+                                $(this).click();
+                            }
+                        });
+                    }
+                }
+                if (currentlySelectedObject.Id != undefined || currentlySelectedObject.ID != null) {
+                    $(".uploadedElement").each(function() {
+                        if ($(this).attr("data-objId") == currentlySelectedObject.Id) {
+                            $(this).click();
+                        }
+                    });
+                }
+
+
+                $("#detailDisplayFileId").val('');
+                $("#detailDisplayFileName").text('');
+                $("#detailDisplayFileDate").text('');
+                $("#detailDisplayFileSize").text('');
+                $("#detailDisplayFilePath").val('');
+                $("#detailDisplayFileTitle").val('');
+                $('#detailDisplayFileImgAltText').val('');
+
+                $("#detailDisplayFileCaption").val('');
+                $("#detailDisplayFileDescription").val('');
+                $("#noOfFilesSelected").html("");
+                $("#clearSelectedFiles").hide();
+                $("#detailDisplayFileDelete").hide();
+
+                $("#detailDisplayFileImage").attr("src", "");
+            },
+            error: function(data) {
+            }
+        });
+    }
+
+    function renderElements(obj) {
+
+        $("#displayContainerOfUploadedElements").empty();
+        //alert(obj.length);
+        if (obj.length === 0) {
+            $("#displayElementContainerTd").css("vertical-align", "middle");
+            $("#displayElementContainerTd").css("text-align", "center");
+            $("#displayElementNoItem").show();
+        } else {
+            $("#displayElementContainerTd").css("vertical-align", "top");
+            $("#displayElementContainerTd").css("text-align", "left");
+            $("#displayElementNoItem").hide();
+            for (var j = 0; j < obj.length; j++) {
+                //Fill date filter dropdown
+                var tmpl = document.getElementById('uploaded_element_display_template').content.cloneNode(true);
+                $(tmpl.querySelector('.uploadedElementText')).html(obj[j].OriginalFileName);
+                $(tmpl.querySelector('.uploadedElement')).attr("data-objId", obj[j].Id);
+
+                if (obj[j].FileType.indexOf("image") > -1) {
+                    $(tmpl.querySelector('.uploadedElementImage')).attr("src", obj[j].FilePath);
+                } else if (obj[j].FileType.indexOf("audio") > -1) {
+                    $(tmpl.querySelector('.uploadedElementImage')).attr("src", audioImagePath);
+                } else if (obj[j].FileType.indexOf("video") > -1) {
+                    $(tmpl.querySelector('.uploadedElementImage')).attr("src", videoImagePath);
+                } else if (obj[j].FileType.indexOf(".document") > -1) {
+                    $(tmpl.querySelector('.uploadedElementImage')).attr("src", docxImagePath);
+                } else if (obj[j].FileType.indexOf(".sheet") > -1) {
+                    $(tmpl.querySelector('.uploadedElementImage')).attr("src", excelImagePath);
+                } else if (obj[j].FileType.indexOf("text/plain") > -1) {
+                    $(tmpl.querySelector('.uploadedElementImage')).attr("src", txtImagePath);
+                } else if (obj[j].FileType.indexOf("pdf") > -1) {
+                    $(tmpl.querySelector('.uploadedElementImage')).attr("src", docxImagePath);
+                } else if (obj[j].FileType.indexOf("html") > -1) {
+                    $(tmpl.querySelector('.uploadedElementImage')).attr("src", htmlImagePath);
+                } else {
+                    $(tmpl.querySelector('.uploadedElementImage')).attr("src", unknownImagePath);
+                }
+                document.getElementById("displayContainerOfUploadedElements").appendChild(tmpl);
+            }
+        }
+    }
+
+    $(document).ready(function() {
+        $("#media-attachment-filters").change(function() {
+            filterElementsToDisplay();
+        });
+        $("#media-attachment-date-filters").change(function() {
+            filterElementsToDisplay();
+        });
+        $("#media-search-input").keyup(function() {
+            filterElementsToDisplay();
+        });
+
+        $("#insertElementIntoPageButton").click(function() {
+            $("#dialog_uploadMedia").dialog('close');
+        });
+
+        $("#fileDelete").click(function() {
+            deleteUploadedFile();
+        });
+
+        allowMultiSelect = $("#dialog_uploadMedia").attr("data-allowMultiSelect") === undefined ? false : $("#dialog_uploadMedia").attr("data-allowMultiSelect");
+        $("#clearSelectedFiles").hide();
+        $("#detailDisplayFileDelete").hide();
+    });
+
+    function uploadedElementClicked(e, ctrl) {
+        try {
+
+            var objs = uploadedElements.Data;
+            var obj = {};
+            if ((allowMultiSelect === true) && (e.ctrlKey === true)) {
+                obj = $.grep(objs, function(x) {
+                    return (x.Id == $(ctrl).attr("data-objId"));
+                });
+                var okToPush = true;
+                for (var i = 0; i < selectedUploadedObjectsToUse.length; i++) {
+                    if (selectedUploadedObjectsToUse[i].ID === obj[0].Id) {
+                        okToPush = false;
+                    }
+                }
+                if (okToPush === true) {
+                    selectedUploadedObjectsToUse.push(obj[0]);
+                }
+                $(ctrl).find(".buttonCheck").addClass("show");
+                $(ctrl).find(".buttonCheck").removeClass("hide");
+            } else {
+                selectedUploadedObjectsToUse = [];
+                obj = $.grep(objs, function(x) {
+                    return (x.Id == $(ctrl).attr("data-objId"));
+                });
+                selectedUploadedObjectsToUse.push(obj[0]);
+                $(".buttonCheck").each(function() {
+                    $(this).removeClass("show");
+                    $(this).addClass("hide");
+                });
+                $(ctrl).find(".buttonCheck").addClass("show");
+                $(ctrl).find(".buttonCheck").removeClass("hide");
+            }
+            currentlySelectedObject = obj[0];
+            $("#detailDisplayFileId").val(obj[0].Id);
+            $("#detailDisplayFileName").text(obj[0].OriginalFileName);
+            $("#detailDisplayFileDate").text($.format.date(new Date(obj[0].CreateDate), 'MMM dd yyyy'));
+            $("#detailDisplayFileSize").text(Math.round(obj[0].FileSize / 1024) + " KB");
+            $("#detailDisplayFilePath").val(obj[0].FilePath);
+            $("#detailDisplayFileTitle").val(obj[0].Title == null ? "" : obj[0].Title);
+
+            $("#detailDisplayFileCaption").val(obj[0].Caption == null ? "" : obj[0].Caption);
+            $("#detailDisplayFileDescription").val(obj[0].Description == null ? "" : obj[0].Description);
+            $("#detailDisplayFileImgAltText").val(obj[0].AltText == null ? "" : obj[0].AltText);
+
+            $("#noOfFilesSelected").html(selectedUploadedObjectsToUse.length + " Selected");
+
+            $("#clearSelectedFiles").hide();
+            $("#detailDisplayFileDelete").hide();
+            if (selectedUploadedObjectsToUse.length > 0) {
+                $("#clearSelectedFiles").show();
+                $("#detailDisplayFileDelete").show();
+            }
+            $("#detailDisplayFileImage").attr("src", $(ctrl).find(".uploadedElementImage").attr("src"));
+
+
+        } catch (e) {
+
+        }
+
+    }
+
+    function filterElementsToDisplayFromLeftClick(type) {
+        $("#media-attachment-filters").val(type);
+        filterElementsToDisplay();
+    }
+
+    function filterElementsToDisplay() {
+        var filterVal1 = $("#media-attachment-filters").val();
+        var filterVal2 = $("#media-attachment-date-filters").val();
+        var filterVal3 = $("#media-search-input").val();
+
+        var objs = uploadedElements.Data;
+        switch (filterVal1) {
+        case "all":
+            break;
+        //case "uploaded":
+        //    objs = $.grep(objs, function (x) {
+        //        return (x.UploadType === currState);
+        //    });
+        //    break;
+        case "image":
+            objs = $.grep(objs, function(x) {
+                return (x.FileType.indexOf("image") > -1);
+            });
+            break;
+        case "audio":
+            objs = $.grep(objs, function(x) {
+                return (x.FileType.indexOf("audio") > -1);
+            });
+            break;
+        case "video":
+            objs = $.grep(objs, function(x) {
+                return (x.FileType.indexOf("video") > -1);
+            });
+            break;
+        case "unattached":
+            objs = $.grep(objs, function(x) {
+                return (x.IsAttached === false);
+            });
+            break;
+        case "ebooks":
+            objs = $.grep(objs, function(x) {
+                return (x.UploadType === 2);
+            });
+            break;
+        case "ebookImages":
+            objs = $.grep(objs, function(x) {
+                return (x.UploadType === 3);
+            });
+            break;
+        }
+        //filter date
+        if (filterVal2 !== "all") {
+            objs = $.grep(objs, function(x) {
+                var dt = new Date(x.CreateDate);
+                var dt2 = new Date(filterVal2);
+                return (dt.getMonth() === dt2.getMonth() && dt.getDay() === dt2.getDay() && dt.getYear() === dt2.getYear());
+            });
+        }
+
+        if (filterVal3 !== "") {
+            objs = $.grep(objs, function(x) {
+                return (x.FileName.toLowerCase().indexOf(filterVal3.toLowerCase()) > -1);
+            });
+        }
+        renderElements(objs);
+    }
+
+    function updateFileInfo() {
+        if (currentlySelectedObject.Id != undefined || currentlySelectedObject.Id != null) {
+            $(".updateFileInfo").each(function() {
+                var ctrl = this;
+                currentlySelectedObject[$(ctrl).attr("data-property")] = $(ctrl).val();
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: root + "api/ppeditor/UpdateFileInfo",
+                data: currentlySelectedObject,
+                success: function(data) {
+                    setUpMediaLibrary();
+                },
+                error: function(data) {
+                    //alert(data.responseText);
+                }
+            });
+        }
+    }
+
+    function deleteUploadedFile() {
+        if (currentlySelectedObject.Id != undefined || currentlySelectedObject.Id != null) {
+            if (confirm("Do you really want to delete this file?")) {
+                $.ajax({
+                    type: 'POST',
+                    url: root + "api/ppeditor/DeleteFileInfo",
+                    data: currentlySelectedObject,
+                    success: function(data) {
+                        setUpMediaLibrary();
+
+
+                    },
+                    error: function(data) {
+                        //alert(data.responseText);
+                    }
+                });
+            }
+
+
+        }
+    }
+
+    function clearSelection() {
+        $(".buttonCheck").each(function() {
+            $(this).removeClass("show");
+            $(this).addClass("hide");
+        });
+        selectedUploadedObjectsToUse = [];
+        currentlySelectedObject = {};
+
+        $("#detailDisplayFileId").val("");
+        $("#detailDisplayFileName").text("");
+        $("#detailDisplayFileDate").text("");
+        $("#detailDisplayFileSize").text("");
+        $("#detailDisplayFilePath").val("");
+        $("#detailDisplayFileTitle").val("");
+
+        $("#detailDisplayFileCaption").val("");
+        $("#detailDisplayFileDescription").val("");
+
+        $("#noOfFilesSelected").html("");
+
+        $("#clearSelectedFiles").hide();
+        $("#detailDisplayFileDelete").hide();
+        $("#detailDisplayFileImage").attr("src", "");
+
+    }
+
+</script>
+
+
+<script>
+    var currState = 1;
+    var uploadCategory = 1;
+    $(document).ready(function () {
+        $("#uploadMediaTemplate").css("height", $(window).height() - 60);
+        $("#displayContainerOfUploadedElements").css("height", $(window).height() - 360);
+        $("#displayContainerText").css("height", $(window).height() - 360);
+        $("#tblUploadFile").css("height", $(window).height() - 360);
+
+        $(".closeDialog").click(function () {
+            $("#dialog_uploadMedia").dialog("close");
+        });
+
+        $('#tab-container-upload-media').easytabs();
+        $(".start").addClass("active");
+        $(".leftMenu").click(function () {
+            $(".leftMenu").each(function () {
+                $(this).removeClass("active");
+            });
+            $(this).addClass("active");
+            $("#header").text($(this).attr("data-header"));
+            //currState = $(this).attr("data-state");
+        });
+
+        $("#upload-file-proxy-button").click(function () {
+            $("#upload-file-button").click();
+        });
+        if ($("#mediaUploaderUploadType") != undefined && $("#mediaUploaderUploadType").val() > 1) {
+            currState = $("#mediaUploaderUploadType").val();
+        }
+
+        setUpMediaLibrary();
+    });
+
+    function allowFileDrop(ev) {
+        ev.preventDefault();
+    }
+
+    function fileDropped(ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        var files = event.dataTransfer.files;
+        uploadMediaFiles(files);
+    }
+</script>

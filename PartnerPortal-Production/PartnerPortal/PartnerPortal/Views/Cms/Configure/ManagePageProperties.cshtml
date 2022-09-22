@@ -1,0 +1,127 @@
+﻿@{
+    ViewBag.Title = "Manage Page Properties";
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+}
+
+@section featured {
+}
+@section scripts
+{
+    <style>
+        .ui-button-text {
+            font-size: 1.4rem;
+        }
+    </style>
+    <script>
+    </script>
+}
+@section MainContent {
+    <div ng-controller="MenuAndPageTaggingController">
+        <table style="width: 100%; height: 100%;">
+            <tr>
+                <td style="background-color: #026F8A; color: #ffffff; text-align: center; vertical-align: middle; font-size: 24px; font-weight: bold; padding: 10px;">Manage Page Properties</td>
+            </tr>
+            <tr>
+                <td style="text-align: left; vertical-align: middle; font-size: 24px; font-weight: bold; padding: 10px;">
+                    <input type="button" id="submitButton" class="btn btn-primary" ng-click="save()" value="Save" style="width: 100px; margin-top: 10px; box-shadow: 4px 4px 5px #888888;"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: left; vertical-align: middle; font-size: 24px; font-weight: bold; padding: 10px;">
+                    <div class="divFullBorderCMS"></div>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: left; vertical-align: middle; font-size: 24px; font-weight: bold; padding: 10px;">
+                    <div class="leftFloat width99p paddingtop10 paddingleft1p" style="background-color: rgb(234, 234, 234);">
+                        <div class="leftFloat width99p">
+                            <div class="leftFloat width100p">
+                                <div class="leftFloat width5p paddingtop5" style="font-size: 16px;"><b>Filter</b>
+                                </div>
+                                <div class="leftFloat width93p paddingleft2p">
+                                    <input id="filter" class="form-control width100p" ng-model="filterName" style="font-size: 14px; width: 99%; padding: 5px;"/>
+                                </div>
+                            </div>
+                            <div class="leftFloat width100p paddingtop10" style="font-size: 16px;">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr style="color: #428bca; cursor: pointer;">
+                                            <th ng-click="predicate = 'Title'; reverse=!reverse" style="cursor: pointer; font-size: 18px;">Page</th>
+                                            <th ng-click="predicate = 'PageTitle'; reverse=!reverse" style="cursor: pointer; font-size: 18px;">Title</th>
+                                            <th ng-click="predicate = 'Url'; reverse=!reverse" style="cursor: pointer; font-size: 18px;">Description</th>
+                                            <th ng-click="predicate = 'Url'; reverse=!reverse" style="cursor: pointer; font-size: 18px;">Header</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <tr dir-paginate="item in pageList | filter:filterName | filter:filterStatus | orderBy:predicate:reverse|itemsPerPage:10" style="height: 35px;" pagination-id="cust">
+                                        <td data-placement="right" style="width: 25%;">
+                                            {{item.Title}}
+                                        </td>
+                                        <td data-placement="right" style="width: 25%; cursor: pointer;" >
+                                            <input type="text" ng-model="item.TitleTag" style="width: 96%; padding: 5px;"/>
+                                        </td>
+                                        <td data-placement="right" style="width: 25%; cursor: pointer;" >
+                                            <input type="text" ng-model="item.Description" style="width: 96%; padding: 5px;"/>
+                                        </td>
+                                        <td data-placement="right" style="width: 25%; cursor: pointer;" >
+                                            <input type="text" ng-model="item.PageHeader" style="width: 96%; padding: 5px;"/>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="cust"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: left; vertical-align: middle; font-size: 24px; font-weight: bold; padding: 10px;">
+                    <div class="divFullBorderCMS"></div>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right; vertical-align: middle; font-size: 24px; font-weight: bold; padding: 10px;">
+                    <input type="button" id="submitButton1" class="btn btn-primary" ng-click="save()" value="Save" style="width: 100px; margin-top: 10px; box-shadow: 4px 4px 5px #888888;"/>
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+}
+
+@section AngularScripts
+{
+    <script>
+        app.controller("MenuAndPageTaggingController", function($controller, $scope, $http, $rootScope, SweetAlert,
+            notificationFactory, $location,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory, $window, $modal, $log) {
+            $scope.pageList = [];
+            $scope.init = function() {
+
+                dbUtilFactory.get(root + 'api/pppageinfo/GetPages', "", function(d) {
+                    $scope.pageList = d;
+                }, '', 'Error getting data ');
+            };
+
+
+            $scope.init();
+
+            $scope.save = function() {
+                for (var i = 0; i < $scope.pageList.length; i++) {
+                    dbUtilFactory.postp(root + 'api/pppageinfo/SavePageProperties', $scope.pageList[i], function (d) {
+                            SweetAlert.swal(d, "", "Data Saved");
+                        }, '', 'Error getting data ');
+                };
+               // $scope.init();
+            }
+        });
+
+
+    </script>
+}
+

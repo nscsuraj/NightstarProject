@@ -1,0 +1,35 @@
+﻿<div style="width: 95%; display: inline-block; position: absolute; left: 2%">
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Shortocode</strong><span>Choose woocommerce shortcode</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_woo_shortocode" name="fusion_woo_shortocode" class="select-field objectProperty" data-PropertyIndex="308">
+                <option value="1">Order tracking</option>
+                <option value="2">Product price/cart button</option>
+                <option value="3">Product by SKU/ID</option>
+                <option value="4">Products by SKU/ID</option>
+                <option value="5">Product categories</option>
+                <option value="6">Products by category slug</option>
+                <option value="7">Recent products</option>
+                <option value="8">Featured products</option>
+                <option value="9">Shop Message</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-textarea">
+        <div class="name-description"><strong>Shortcode content</strong><span>Shortcode will appear here</span></div>
+        <div class="element-type">
+            <textarea rows="5" cols="55" class="textarea-field objectProperty" data-PropertyIndex="309" id="fusion_woo_shortocde_content" name="fusion_woo_shortocde_content">
+                [woocommerce_order_tracking]
+            </textarea>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {        
+        $(".ui-dialog").css("height", $(window).height() - 70);
+    });
+</script>

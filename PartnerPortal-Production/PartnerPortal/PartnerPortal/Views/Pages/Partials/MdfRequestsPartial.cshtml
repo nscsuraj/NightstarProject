@@ -1,0 +1,700 @@
+﻿
+<style>
+    
+    .oppTableHeader {
+        padding: 2px; background-color: #ECF8FF; color: #133B7C; height: 30px; font-weight: bold; font-size: 12pt; table-layout: fixed;
+    }
+    .oppTableText {
+        padding: 4px;
+        
+        font-size: 12pt;
+        height: 30px;
+    }
+    .oppHeaderCol1 {
+        width: 30%;
+        margin-right: 3%;
+        float: left;
+        display: inline-block;
+        text-align: left;
+        font-size: 12pt; font-weight: bold; letter-spacing: 1px;
+    }
+    .oppHeaderCol2 {
+        width: 30%;
+        margin-right: 3%;
+        float: left;
+        display: inline-block;
+        text-align: left;
+        font-size: 12pt; font-weight: bold; letter-spacing: 1px;
+        margin-left: 10px;
+    }
+    .oppHeaderColOpenOpp {
+        width: 30%;
+        float: left;
+        display: inline-block;
+        text-align: left;
+        cursor: pointer;
+        font-size: 10pt; font-weight: bold; letter-spacing: 1px;
+    }
+    .oppHeaderCol3 {
+        float: right;
+        text-align: right;
+        display: inline-block;
+        font-size: 11pt; font-weight: bold; letter-spacing: 1px;
+    }
+    .totalRequestedContent {
+        width: 100%; 
+        height: 35px; 
+        color: #001E4F; 
+        font-weight: normal; 
+        display: inline-block; 
+        background-color: #D3ECFA; 
+        font-size: 18pt;
+        padding: 5px;
+        padding-top: 20px;
+    }
+    .totalAvailableContent {
+        width: 100%; 
+        height: 35px; 
+        color: #001E4F; 
+        font-weight: normal; 
+        display: inline-block; 
+        vertical-align: middle; 
+        background-color: #D3ECFA; 
+        font-size: 18pt;
+                padding: 5px;
+        padding-top: 20px;
+    }
+    .btnRequestFund {
+        width: 60%; 
+        height: 30px; 
+        color: #ffffff; 
+        font-weight: normal; 
+        display: inline-block; 
+        text-align: center; 
+        background-color: #133B7C; 
+        font-size: 10pt;
+        padding-top: 10px;
+    }
+    .btnRequestFundHeader {
+        width: 100%; color: #001E4F; font-weight: bold; height: 55px;
+    }
+
+    .itemDescription {
+        background-color: #d1d1d1;
+        color: #133B7C;
+    }
+
+    @@media only screen and (max-width:1395px){
+        .oppTableHeader {
+            font-weight: bold; font-size: 12pt;
+        }
+        .oppTableText {
+            font-size: 12pt;
+        }
+        .totalRequestedContent {
+            height: 30px; 
+            font-size: 16pt;
+            padding: 5px;
+            padding-top: 15px;
+        }
+        .totalAvailableContent {
+            height: 30px; 
+            font-size: 16pt;
+            padding: 5px;
+            padding-top: 15px;
+        }
+        .btnRequestFund {
+            width: 80%; 
+            height: 30px; 
+            font-size: 10pt;
+            padding-top: 10px;
+        }
+        .btnRequestFundHeader {
+            height: 45px;
+        }
+     }
+    @@media only screen and (max-width:1240px){
+         .oppHeaderCol1 {
+            width: 33%;
+            margin-right: 2%;
+            float: left;
+            display: inline-block;
+            text-align: left;
+            font-size: 12pt; font-weight: bold; letter-spacing: 1px;
+        }
+        .oppHeaderCol2 {
+            width: 33%;
+            margin-right: 2%;
+            float: left;
+            display: inline-block;
+            text-align: left;
+            font-size: 12pt; font-weight: bold; letter-spacing: 1px;
+            margin-left: 10px;
+        }
+        .oppHeaderColOpenOpp {
+            width: 25%;
+            float: left;
+            margin-left: 2%;
+            display: inline-block;
+            text-align: left;
+            cursor: pointer;
+            font-size: 10pt; font-weight: bold; letter-spacing: 1px;
+        }
+        .oppTableHeader {
+            font-weight: bold; font-size: 10pt;
+        }
+        .oppTableText {
+            font-size: 10pt;
+        }
+        .totalRequestedContent {
+            height: 30px; 
+            font-size: 14pt;
+            padding: 5px;
+            padding-top: 15px;
+        }
+        .totalAvailableContent {
+            height: 30px; 
+            font-size: 14pt;
+            padding: 5px;
+            padding-top: 15px;
+        }
+        .btnRequestFund {
+            width: 100%; 
+            height: 30px; 
+            font-size: 10pt;
+            padding-top: 10px;
+        }
+        .btnRequestFundHeader {
+            height: 45px;
+        }
+     }
+    @@media only screen and (max-width:1160px){
+        .oppHeaderCol1 {
+            width: 33%;
+            margin-right: 2%;
+            float: left;
+            display: inline-block;
+            text-align: left;
+            font-size: 10pt; font-weight: bold; letter-spacing: 1px;
+        }
+        .oppHeaderCol2 {
+            width: 33%;
+            margin-right: 2%;
+            float: left;
+            display: inline-block;
+            text-align: left;
+            font-size: 10pt; font-weight: bold; letter-spacing: 1px;
+            margin-left: 10px;
+        }
+        .oppHeaderColOpenOpp {
+            width: 26%;
+            float: left;
+            margin-left: 1%;
+            display: inline-block;
+            text-align: left;
+            cursor: pointer;
+            font-size: 10pt; font-weight: bold; letter-spacing: 1px;
+        }
+        .oppTableHeader {
+            font-weight: bold; font-size: 10pt;
+        }
+        .oppTableText {
+            font-size: 10pt;
+        }
+        .totalRequestedContent {
+            height: 30px; 
+            font-size: 11pt;
+            padding: 5px;
+            padding-top: 15px;
+        }
+        .totalAvailableContent {
+            height: 30px; 
+            font-size: 11pt;
+            padding: 5px;
+            padding-top: 15px;
+        }
+        .btnRequestFund {
+            width: 100%; 
+            height: 30px; 
+            font-size: 10pt;
+            padding-top: 10px;
+        }
+        .btnRequestFundHeader {
+            height: 45px;
+        }
+     }
+    @@media only screen and (max-width:960px){
+        .oppTableHeader {
+            font-weight: bold; font-size: 9pt;
+        }
+        .oppTableText {
+            font-size: 10pt;
+        }
+       .totalRequestedContent {
+            height: 20px; 
+            font-size: 11pt;
+            padding: 5px;
+            padding-top: 10px;
+            padding-bottom: 20px;
+        }
+        .totalAvailableContent {
+            height: 20px; 
+            font-size: 11pt;
+            padding: 5px;
+            padding-top: 10px;
+            padding-bottom: 20px;
+        }
+        .btnRequestFund {
+            width: 100%; 
+            height: 35px; 
+            font-size: 9pt;
+            padding-top: 5px;
+        }
+        .btnRequestFundHeader {
+            height: 45px;
+        }
+     }
+    @@media only screen and (max-width:900px) and (min-width:550px){
+        .oppHeaderCol1 {
+            width: 33%;
+            margin-right: 2%;
+            float: left;
+            display: inline-block;
+            text-align: left;
+            font-size: 12pt; font-weight: bold; letter-spacing: 1px;
+        }
+        .oppHeaderCol2 {
+            width: 33%;
+            margin-right: 2%;
+            float: left;
+            display: inline-block;
+            text-align: left;
+            font-size: 12pt; font-weight: bold; letter-spacing: 1px;
+            margin-left: 10px;
+        }
+        .oppHeaderColOpenOpp {
+            width: 25%;
+            float: left;
+            margin-left: 2%;
+            display: inline-block;
+            text-align: left;
+            cursor: pointer;
+            font-size: 10pt; font-weight: bold; letter-spacing: 1px;
+        }
+        .oppTableHeader {
+            font-weight: bold; font-size: 12pt;
+        }
+        .oppTableText {
+            font-size: 12pt;
+        }
+        .totalRequestedContent {
+            height: 20px; 
+            font-size: 14pt;
+            padding: 5px;
+            padding-top: 10px;
+            padding-bottom: 20px;
+        }
+        .totalAvailableContent {
+            height: 20px; 
+            font-size: 14pt;
+            padding: 5px;
+            padding-top: 10px;
+            padding-bottom: 20px;
+        }
+        .btnRequestFund {
+            width: 100%; 
+            height: 20px; 
+            font-size: 12pt;
+            padding-top: 10px;
+            padding-bottom: 20px;
+        }
+        .btnRequestFundHeader {
+            height: 35px;
+        }
+    }
+    @@media only screen and (max-width:549px) and (min-width:490px){
+        .oppHeaderCol1 {
+            width: 46%;
+            margin-right: 2%;
+            float: left;
+            display: inline-block;
+            text-align: left;
+            font-size: 12pt; font-weight: bold; letter-spacing: 1px;
+        }
+        .oppHeaderCol2 {
+            width: 46%;
+            margin-right: 2%;
+            float: left;
+            display: inline-block;
+            text-align: left;
+            font-size: 12pt; font-weight: bold; letter-spacing: 1px;
+            margin-left: 10px;
+        }
+        .oppHeaderColOpenOpp {
+            width: 99%;
+            float: left;
+            display: inline-block;
+            text-align: left;
+            cursor: pointer;
+            font-size: 10pt; font-weight: bold; letter-spacing: 1px;
+        }
+        .oppTableHeader {
+            font-weight: bold; font-size: 12pt;
+        }
+        .oppTableText {
+            font-size: 12pt;
+        }
+        .totalRequestedContent {
+            height: 20px; 
+            font-size: 12pt;
+            padding: 5px;
+            padding-top: 10px;
+            padding-bottom: 20px;
+        }
+        .totalAvailableContent {
+            height: 20px; 
+            font-size: 12pt;
+            padding: 5px;
+            padding-top: 10px;
+            padding-bottom: 20px;
+        }
+        .btnRequestFund {
+            width: 100%; 
+            height: 20px; 
+            font-size: 14pt;
+            padding-top: 10px;
+            padding-bottom: 20px;
+            font-weight: bold;
+        }
+        .btnRequestFundHeader {
+            height: 35px;
+        }
+    }
+    @@media only screen and (max-width:489px) and (min-width:421px){
+        .oppHeaderCol1 {
+            width: 46%;
+            margin-right: 2%;
+            float: left;
+            display: inline-block;
+            text-align: left;
+            font-size: 10pt; font-weight: bold; letter-spacing: 1px;
+        }
+        .oppHeaderCol2 {
+            width: 46%;
+            margin-right: 2%;
+            float: left;
+            display: inline-block;
+            text-align: left;
+            font-size: 10pt; font-weight: bold; letter-spacing: 1px;
+            margin-left: 10px;
+        }
+        .oppHeaderColOpenOpp {
+            width: 99%;
+            float: left;
+            display: inline-block;
+            text-align: left;
+            cursor: pointer;
+            font-size: 10pt; font-weight: bold; letter-spacing: 1px;
+        }
+        .oppTableHeader {
+            font-weight: bold; font-size: 12pt;
+        }
+        .oppTableText {
+            font-size: 12pt;
+        }
+        .totalRequestedContent {
+            height: 20px; 
+            font-size: 10pt;
+            padding: 5px;
+            padding-top: 10px;
+            padding-bottom: 20px;
+        }
+        .totalAvailableContent {
+            height: 20px; 
+            font-size: 10pt;
+            padding: 5px;
+            padding-top: 10px;
+            padding-bottom: 20px;
+        }
+        .btnRequestFund {
+            width: 100%; 
+            height: 20px; 
+            font-size: 14pt;
+            padding-top: 10px;
+            padding-bottom: 20px;
+            font-weight: bold;
+        }
+        .btnRequestFundHeader {
+            height: 35px;
+        }
+    }
+    @@media only screen and (max-width:420px) and (min-width:0px){
+        .oppHeaderCol1 {
+            width: 46%;
+            margin-right: 2%;
+            float: left;
+            display: inline-block;
+            text-align: left;
+            font-size: 11pt; font-weight: bold; letter-spacing: 1px;
+        }
+        .oppHeaderCol2 {
+            width: 46%;
+            margin-right: 2%;
+            float: left;
+            display: inline-block;
+            text-align: left;
+            font-size: 11pt; font-weight: bold; letter-spacing: 1px;
+            margin-left: 10px;
+        }
+        .oppHeaderColOpenOpp {
+            width: 99%;
+            float: left;
+            margin-left: 0%;
+            display: inline-block;
+            text-align: left;
+            cursor: pointer;
+            font-size: 10pt; font-weight: bold; letter-spacing: 1px;
+        }
+        .oppTableHeader {
+            font-weight: bold; font-size: 7pt !important;
+        }
+        .oppTableText {
+            font-size: 7pt;
+        }
+        .totalRequestedContent {
+            height: 20px; 
+            font-size: 11pt;
+            padding: 5px;
+            padding-top: 10px;
+            padding-bottom: 20px;
+        }
+        .totalAvailableContent {
+            height: 20px; 
+            font-size: 11pt;
+            padding: 5px;
+            padding-top: 10px;
+            padding-bottom: 20px;
+        }
+        .btnRequestFund {
+            width: 100%; 
+            height: 20px; 
+            font-size: 14pt;
+            padding-top: 10px;
+            padding-bottom: 20px;
+            font-weight: bold;
+        }
+        .btnRequestFundHeader {
+            height: 35px;
+        }
+    }
+
+     @@media only screen and (max-width:330px) and (min-width:0px){
+        .oppHeaderCol1 {
+            width: 99%;
+            margin-right: 0%;
+            float: left;
+            display: inline-block;
+            text-align: left;
+            font-size: 12pt; font-weight: bold; letter-spacing: 1px;
+        }
+        .oppHeaderCol2 {
+            width: 99%;
+            margin-right: 0%;
+            float: left;
+            display: inline-block;
+            text-align: left;
+            font-size: 12pt; font-weight: bold; letter-spacing: 1px;
+            margin-top: 10px;
+            margin-left: 0px;
+        }
+        .oppHeaderColOpenOpp {
+            width: 99%;
+            float: left;
+            margin-left: 0%;
+            display: inline-block;
+            text-align: left;
+            cursor: pointer;
+            font-size: 10pt; font-weight: bold; letter-spacing: 1px;
+        }
+        .oppTableHeader {
+            font-weight: bold; font-size: 12pt;
+        }
+        .oppTableText {
+            font-size: 10pt;
+        }
+        .totalRequestedContent {
+            height: 20px; 
+            font-size: 14pt;
+            padding: 5px;
+            padding-top: 10px;
+            padding-bottom: 20px;
+        }
+        .totalAvailableContent {
+            height: 20px; 
+            font-size: 14pt;
+            padding: 5px;
+            padding-top: 10px;
+            padding-bottom: 20px;
+        }
+        .btnRequestFund {
+            width: 100%; 
+            height: 20px; 
+            font-size: 14pt;
+            padding-top: 10px;
+            padding-bottom: 20px;
+            font-weight: bold;
+        }
+        .btnRequestFundHeader {
+            height: 35px;
+        }
+    }
+
+     
+    tr .spnTooltip {
+        z-index:10;display:none; padding:14px 20px;
+        margin-top:-30px; margin-left:28px;
+        width:600px; line-height:16px;
+    }
+    tr:hover .spnTooltip{
+        display:inline; position:absolute; color:#133B7C;
+        border:1px solid #DCA; background:#f7f7f7;box-shadow: 1px 1px 5px #888888;}
+    .callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;}
+</style>
+
+<div style="width: 100%;" ng-controller="StarMdfRequestsController">
+    <div style="font-size: 16pt; font-weight: bold; color: #737373; background-color: #ECF8FF; margin-left: 15px; margin-bottom: 20px; border: 1px solid #ececec; text-align: center;" id="StarMdfRequestsLoading">
+        <img src="~/Images/loadingP.gif"/>
+    </div>
+
+    <div class="fusion-fullwidth fullwidth-box" style="text-align: left; -webkit-background-size: cover; display: none; -moz-background-size: cover; -o-background-size: cover; background-size: cover;" id="StarMdfRequestsContent">
+
+        <div class="fusion-row">
+            <div style="width: 100%; display: inline-block; text-align: left; padding-top: 30px; color: #3D80EB;">
+                <div class="oppHeaderCol1">
+                    <div style="width: 100%; color: #001E4F; font-weight: bold; height: 35px;">Total Requested</div>
+                    <div class="totalRequestedContent">{{MdfRequest.TotalMdfRequestAmount}} USD</div>
+                </div>
+                <div class="oppHeaderCol2">
+                    <div style="width: 100%; color: #001E4F; font-weight: bold; height: 35px;">Total Available</div>
+                    <div class="totalAvailableContent">{{MdfRequest.Mdf.TotalMdfAvailable}} USD</div>
+                </div>
+                <div class="oppHeaderColOpenOpp" ng-hide="IsDistributor" ng-click="GoToOpenRequest()">
+                    <div class="btnRequestFundHeader"></div>
+                    <div class="btnRequestFund">Request Funds</div>
+                </div>
+
+            </div>
+            <div id="displayOpportunityList" style="padding: 2px; text-align: center;">
+                <table style="cursor: pointer; text-align: left; width: 100%; table-layout: fixed; word-wrap: break-word;">
+                    <thead>
+                    <tr style="text-align: left; border-bottom: 1px solid #000000;">
+                        <th class="oppTableHeader" style="width: 50%;">Description</th>
+                        <th ng-click="predicate = 'OpportunityName'; reverse=!reverse" class="oppTableHeader" style="width: 25%;">Amount</th>
+                        <th class="oppTableHeader" style="text-align: left; width: 25%;">Payment Status</th>
+                        @*<th ng-click="predicate = 'Amount'; reverse=!reverse" class="oppTableHeader" style="text-align: left; width: 25%;">Project Status</th>*@
+
+                    </tr>
+                    </thead>
+                    <tbody>
+@*                    <tr ng-show="showLoading">
+                        <td colspan="4">
+                            <div style="font-size: 16pt; font-weight: bold; color: #737373; background-color: #ECF8FF; margin-left: 15px; margin-bottom: 20px; border: 1px solid #ececec; text-align: center;">
+                                <img src="~/Images/loadingP.gif"/>
+                            </div>
+
+                        </td>
+                    </tr>*@
+                    <tr ng-repeat-start="item in MdfRequest.MdfRequests | orderBy : predicate:reverse" ng-hide="showLoading">
+                        <td style="height: 10px; padding: 0; font-size: 4pt; background-color: #ECF8FF;" colspan="3">&nbsp;</td>
+                    </tr>
+                    <tr style="background-color: #D3ECFA; color: #133B7C;">
+                        @*<td class="oppTableText" style="padding-left: 5px;" ng-click="showDescription(item)">*@
+                        <td class="oppTableText" style="padding-left: 5px;" ng-click="showDescription(item)">
+                            @*{{GetDescriptionToDisplay(item.ActivityDescription)}}*@
+                            {{item.ActivityDescription}}
+                            @* <span class="spnTooltip">
+                               {{item.ActivityDescription}}
+                            </span>*@
+                        </td>
+                        @*                        <td style="" class="oppTableText" ng-click="showDescription(item)">{{item.Amount}}</td>
+                        <td style="text-align: left;" class="oppTableText" ng-click="showDescription(item)">{{item.PaymentStatus}}</td>
+                        <td style="text-align: left;" class="oppTableText" ng-click="showDescription(item)">{{item.ProjectStatus}} ></td>*@
+                        <td style="" class="oppTableText">{{item.Amount}}</td>
+                        <td style="text-align: left;" class="oppTableText">{{item.PaymentStatus}}</td>
+                        @*<td style="text-align: left;" class="oppTableText">{{item.ProjectStatus}} ></td>*@
+                    </tr>
+                    <tr ng-show="item.ShowDescription">
+                        <td style="padding: 5px; font-size: 10pt; height: 20px;" class="itemDescription" colspan="3">{{item.ActivityDescription}}</td>
+                    </tr>
+                    <tr ng-repeat-end>
+                        <td style="height: 1px; padding: 0; font-size: 0pt; background-color: #ECF8FF;" colspan="3"></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<script>
+     $(document).ready(function() {
+         $(".rightPanelContainer").hide();
+     });
+
+        app.controller("StarMdfRequestsController", function ($controller, $scope, $http, $sce, 
+            notificationFactory, $location,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory) {
+
+            
+            $scope.MdfRequest = {};
+            //$scope.showLoading = true;
+
+            $scope.getMdfRequests = function() {
+                dbUtilFactory.get(root + 'api/ppcmsapi/GetMdfRequestFromSessionData/', "", function (d) {
+                    $scope.MdfRequest = d;
+                    $("#StarMdfRequestsLoading").hide();
+                    $("#StarMdfRequestsContent").show();
+                    //var dt = new Date(d.Mdf.CreatedDate);
+                    var n = d.Mdf.MdfYear;//dt.getFullYear();
+                    $("#mdfContact").html(d.Mdf.MdfContact);
+                    $("#mdfContactEmail").html("<a href='mailto:" + d.Mdf.MdfContactEmail + "' target='_blank'>" + d.Mdf.MdfContactEmail + "</a>");
+                    //$("#mdfContactEmail").html(d.Mdf.MdfContactEmail);
+
+                    $("#mdfHistQOne").html("Q1 " + n + ": " + d.Mdf.MDFQuarterOne + " USD");
+                    $("#mdfHistQTwo").html("Q2 " + n + ": " + d.Mdf.MDFQuarterTwo + " USD");
+                    $("#mdfHistQThree").html("Q3 " + n + ": " + d.Mdf.MDFQuarterThree + " USD");
+                    $("#mdfHistQFour").html("Q4 " + n + ": " + d.Mdf.MDFQuarterFour + " USD");
+
+                    $scope.showLoading = false;
+                }, '', 'Error getting data ');
+            };
+            $scope.getMdfRequests();
+
+            $scope.GoToOpenRequest = function() {
+                window.location.href = root + "Pages/AddMdfRequests";
+            };
+
+            $scope.showDescription = function (item) {
+                var existingStatus = item.ShowDescription;
+                for (var i = 0; i < $scope.MdfRequest.MdfRequests.length; i++) {
+                    $scope.MdfRequest.MdfRequests[i].ShowDescription = false;
+                }
+                item.ShowDescription = !existingStatus;
+            }
+
+            $scope.GetDescriptionToDisplay = function (descr) {
+                if (descr.length > 10) {
+                    return descr.substring(0, 10) + ".....";
+                }
+                return descr;
+
+            }
+
+        });
+    </script>

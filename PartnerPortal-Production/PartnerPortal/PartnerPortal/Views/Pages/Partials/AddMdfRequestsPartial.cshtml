@@ -1,0 +1,194 @@
+﻿
+<style>
+    .clsTextBoxOpportunity {
+        min-height: 50px !important;
+        font-size: 20px !important;
+    }
+    .btnLanding {
+        background-color: #21459A;
+        border: none;
+        color: #FFFFFF;
+        text-align: center;
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        margin: 10px 0 !important;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+        height: 40px;
+        width: 150px;
+    }
+    .invalidated {
+        border-bottom: 1px solid #FF0208 !important;
+        background-color: #FFBABC !important;
+    }
+</style>
+
+<div style="width: 100%; " ng-controller="StarMdfRequestController">
+    <div class="fusion-fullwidth fullwidth-box" style="text-align: left; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; " id="">
+        <div style="padding-left: 20px;">
+            <div style="width: 100%; height: 30px; color: #2551A4; margin-top: 40px; font-size: 22pt; font-weight: bold;">
+                Request MDF Funds
+            </div>
+            <div style="width: 100%; height: 30px;">
+                <a href="~/Pages/MdfRequests" style="color: #2551A4; font-size: 14pt; font-weight: bold;">View Existing Requests & Progress&#8680;</a>
+            </div>
+
+            @*<div style="width: 100%; margin-top: 20px;">
+                <div style="width: 200px; padding-left: 20px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 12pt;">Contact</div>
+                <div style="width: 500px; float: left; display: table-cell; vertical-align: middle;">
+                    <input class="clsTextBoxOpportunity" readonly="readonly" placeholder="Contact" id="" type="text" value="" ng-model="MDF.MdfContact">
+                </div>
+            </div>
+
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+
+            <div style="width: 100%; margin-top: 20px;">
+                <div style="width: 200px; padding-left: 20px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 12pt;">Contact Email</div>
+                <div style="width: 500px; float: left; display: table-cell; vertical-align: middle;">
+                    <input class="clsTextBoxOpportunity" readonly="readonly"  placeholder="Contact Email" id="" type="text" value="" ng-model="MDF.MdfContactEmail">
+                </div>
+            </div>
+
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>*@
+
+            <div style="width: 100%; margin-top: 20px;">
+                <div style="width: 200px; padding-left: 20px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 12pt;">Description</div>
+                <div style="width: 500px; float: left; display: table-cell; vertical-align: middle;">
+                    <textarea class="clsTextBoxOpportunity" style="width: 100%; height: 150px; color: #aaa9a9; border: 1px solid #d2d2d2; padding: 8px 15px;border-color: #d2d2d2; margin-right: 1%; box-sizing: border-box; font: 100% Arial, Helvetica, sans-serif;" placeholder="Description" id="" value="" ng-model="MdfRequest.Market_Activity_Description__c">
+                        
+                    </textarea>
+                </div>
+            </div>
+
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 200px; padding-left: 20px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 12pt;">Amount</div>
+                <div style="width: 500px;  float: left; display: table-cell; vertical-align: middle;">
+                    <input class="clsTextBoxOpportunity" style="width: 100%;"  placeholder="Amount" type="text" value="" ng-model="MdfRequest.Total_Amount__c">
+                </div>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both; text-align: left;">
+                <input type="button" name="addOpportunity" class="btnLanding" value="Submit" ng-click="AddMdfRequest()">
+            </div>
+            <br/><br/><br/><br/><br/><br/>
+        </div>
+
+    </div>
+    <div style="width: 100%; height: 500px; opacity: .5; display: inline-block; position: absolute; top: 0; left: 0; z-index: 99;" ng-show="showProcessing">
+        <div style="font-size: 22pt; height: 80px; padding-top: 200px;">
+            <img src="~/Images/processing10.gif"/>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    textarea::-webkit-input-placeholder {
+  color: #aaa9a9;
+}
+
+textarea:-moz-placeholder { /* Firefox 18- */
+  color: #aaa9a9;  
+}
+
+textarea::-moz-placeholder {  /* Firefox 19+ */
+  color: #aaa9a9;  
+}
+
+textarea:-ms-input-placeholder {
+  color: #aaa9a9;  
+}
+
+textarea::placeholder {
+  color: #aaa9a9;  
+}
+</style>
+<script>
+     
+    $(document).ready(function () {
+        $(".rightPanelContainer").hide();
+    });
+        app.controller("StarMdfRequestController", function ($controller, $scope, $http, $sce, 
+            notificationFactory, $location,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory) {
+
+            $scope.showProcessing = false;
+
+            $scope.MDF = {};
+            $scope.getAccount = function () {
+                dbUtilFactory.get(root + 'api/ppcmsapi/GetMdfFromSessionData/', "", function (d) {
+                    $scope.MDF = d;
+                    $("#mdfContact").html(d.MdfContact);
+                    $("#mdfContactEmail").html("<a href='mailto:" + d.MdfContactEmail + "' target='_blank'>" + d.MdfContactEmail + "</a>");
+                }, '', 'Error getting data ');
+            };
+            $scope.getAccount();
+            $scope.formatDate = function (date, format) {
+                if (date == undefined) return '';
+                return $.format.date(new Date(date), format);
+            };
+
+            $scope.MdfRequest = {};
+            
+            $scope.inIt = function () {
+                $scope.MdfRequest.MDF_Award__c = "";
+                $scope.MdfRequest.Total_Amount__c = "";
+                $scope.MdfRequest.Quarter__c = "";
+                $scope.MdfRequest.Market_Activity_Description__c = "";
+                $scope.MdfRequest.ContactEmail = "";
+                $scope.MdfRequest.Contact = "";
+            };
+            $scope.inIt();
+            $scope.AddMdfRequest = function () {
+
+                if ($scope.MDF == null || $scope.MDF == undefined || ($scope.MDF.MdfId == null && $scope.MDF.MdfId == undefined && $scope.MDF.MdfId == "")) {
+                    //swal("You do not have any MDF fund.");
+                    swal({
+                        title: "Error",
+                        text: "You do not have any MDF fund. Please reach out to your Dedicated Channel Account Manager for any queries.",
+                        type: "error"
+                    });
+                    return false;
+                }
+
+                $scope.MdfRequest.MDF_Award__c = $scope.MDF.MdfId;
+                $scope.MdfRequest.Quarter__c = $scope.MDF.MdfLatestQuarter;
+                $scope.MdfRequest.ContactEmail = $scope.MDF.MdfContactEmail;
+                $scope.MdfRequest.Contact = $scope.MDF.MdfContact;
+
+                if ($scope.MdfRequest.Amount__c == "") {
+                    //swal("Please provide amount.");
+                    swal({
+                        title: "Error",
+                        text: "Please provide amount.",
+                        type: "error"
+                    });
+                    return false;
+                }
+                
+
+                $scope.showProcessing = true;
+                dbUtilFactory.postp(root + 'api/ppcmsapi/AddMdfRequest/', $scope.MdfRequest, function () {
+                    var redUrl = '@Url.Content("~/Pages/MdfRequests")';
+                    swal({
+                        title: "Done",
+                        text: "Mdf Request Created Successfully.",
+                        type: "success"
+                    }).then(function () {
+                        $scope.showProcessing = false;
+                        window.location.href = redUrl;
+                    });
+
+
+                }, '', 'Error getting data ');
+
+
+
+
+                return true;
+            };
+
+        });
+    </script>

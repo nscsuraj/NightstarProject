@@ -1,0 +1,11 @@
+﻿@model PartnerPortal.Models.GatewayVM
+
+<style>
+    #footerDiv a{
+        color:@Model.Footer.TextColor !important;
+    }
+</style>
+
+<div id="footerDiv" style=" width: 100%;background-color: @Model.Footer.BackColor;min-height:@Model.Footer.MinimumHeight;color:@Model.Footer.TextColor">
+    @Html.Raw(Model.FooterHtml)
+</div>

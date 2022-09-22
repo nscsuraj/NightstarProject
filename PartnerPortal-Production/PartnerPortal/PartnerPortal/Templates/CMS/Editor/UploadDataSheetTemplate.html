@@ -1,0 +1,299 @@
+﻿<style>
+    .ui-dialog {
+        padding: 0;
+    }
+
+        .ui-dialog .ui-dialog-content {
+            padding: 0;
+        }
+
+    td.active {
+        background-color: #d4d4d4;
+        color: #0073aa !important;
+    }
+
+    .leftMenu:hover {
+        background-color: #d4d4d4;
+    }
+
+    .buttonCheck {
+        width: 16px;
+        height: 16px;
+        position: relative;
+        top: -138px;
+        left: 100px;
+        background-color: #0073aa;
+        border: 4px double #ffffff;
+        color: #ffffff;
+        box-shadow: 2px 2px 1px #888888;
+        text-align: center;
+        z-index: 100001;
+    }
+
+    .uploadedDataSheetImg {
+        width: 120px;
+        height: 90px;
+        display: inline-block;
+        background-color: #d4d4d4;
+        text-align: center;
+    }
+
+    .uploadedDataSheetImage {
+        width: 90%;
+        height: 80%;
+        position: relative;
+        top: 10px;
+    }
+
+    .uploadedElement {
+        width: 120px;
+        height: 130px;
+        display: inline-block;
+        border-style: double;
+        border-width: 4px;
+        border-color: #d4d4d4;
+        box-shadow: 2px 2px 5px #888888;
+        margin: 5px;
+        cursor: pointer;
+    }
+
+    .uploadedDataSheetText {
+        width: 120px;
+        height: 40px;
+        font-size: 9px;
+        display: inline-block;
+        background-color: #ffffff;
+        position: relative;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+        word-break: break-all;
+        font-weight: bold;
+        overflow: hidden;
+    }
+
+    #insertDataSheetIntoPageButton {
+        background-color: #007acc;
+        color: #ffffff;
+        float: right;
+        margin-right: 23%;
+        border: 1px solid #d3d3d3;
+    }
+
+    .show {
+        display: inline-block;
+    }
+
+    .hide {
+        display: none;
+    }
+</style>
+<script>
+    var currState = 1;
+    $(document).ready(function () {
+        $("#uploadDataSheetTemplate").css("height", $(window).height() - 70);
+        $("#displayContainerOfUploadedDataSheetElements").css("height", $(window).height() - 375);
+        $("#tblUploadDataSheet").css("height", $(window).height() - 300);
+
+        $(".closeDialog").click(function () {
+            $("#dialog_uploadMedia").dialog("close");
+        });
+
+        $('#tab-container-upload-media').easytabs();
+        $(".start").addClass("active");
+        $(".leftMenu").click(function() {
+            $(".leftMenu").each(function() {
+                $(this).removeClass("active");
+            });
+            $(this).addClass("active");
+            $("#header").text($(this).attr("data-header"));
+            if ($(this).attr("data-state") == "1") {
+                $("#dropAnywhereUpload").text("Drop data sheet anywhere to upload");
+                $("#upload-datasheet-proxy-button").text("Select Data Sheet");
+                $("#maxUploadSize").text("Maximum upload data sheet size: 100 MB.");
+                $("#uploadDataSheetTab").text("Upload Data Sheet");
+                $("#dataSheetLibraryTab").text("Data Sheet Library");
+                $("#tdMediaDetails").text("DATA SHEET DETAILS");
+            }
+            if ($(this).attr("data-state") == "2") {
+                $("#dropAnywhereUpload").text("Drop software anywhere to upload");
+                $("#upload-datasheet-proxy-button").text("Select Software");
+                $("#maxUploadSize").text("Maximum upload software size: 100 MB.");
+                $("#uploadDataSheetTab").text("Upload Software");
+                $("#dataSheetLibraryTab").text("Software Library");
+                $("#tdMediaDetails").text("SOFTWARE DETAILS");
+            }
+            currState = $(this).attr("data-state");
+            setUpDataSheetLibrary();
+        });
+
+        $("#upload-datasheet-proxy-button").click(function () {
+            $("#upload-datasheet-button").click();
+        });
+        setUpDataSheetLibrary();
+    });
+
+    function allowDataSheetDrop(ev) {
+        ev.preventDefault();
+    }
+
+    function dataSheetDropped(ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        var files = event.dataTransfer.files;
+        uploadDataSheet(files);
+    }
+</script>
+<div id="uploadDataSheetTemplate" class="leftFloat width100p">
+    <div class="leftFloat width100p height95p">
+        <table class="leftFloat width100p height100p" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="width12p" style="background-color: #F2F2F2; vertical-align: top; border-right: 2px solid #E5E1E1;">
+                    <br /><br /><br /><br /><br /><br />
+                    <table class="width100p">
+                        <tr>
+                            <td class="width5p">&nbsp;
+                            </td>
+                            <td class="width95p height30 leftMenu start" data-header="Insert Data Sheet File" data-state="1">
+                                <a style="cursor: pointer; text-decoration: none;">&nbsp;&nbsp;<b>Insert Data Sheet File</b></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="height10" colspan="2">&nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="width5p">&nbsp;
+                            </td>
+                            <td class="width95p height30 leftMenu" data-header="Insert Software File" data-state="2">
+                                <a style="cursor: pointer; text-decoration: none;">&nbsp;&nbsp;<b>Insert Software File</b></a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="width88p">
+                    <br /><br />
+                    <table class="width100p height100p">
+                        <tr style="height: 5%; width: 100%;">
+                            <td style="height: 5%; width: 100%;">
+                                <label id="header" style="font-size: 18pt; font-family: sans-serif; padding-left: 20px;">Insert Data Sheet File</label>
+                                <a href="#" class="ui-dialog-titlebar-close ui-corner-all closeDialog" role="button" style="top: 20px !important; right: 20px;"><span class="ui-icon ui-icon-closethick">Close</span></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="leftFloat width100p paddingtop5">
+                                <div id="tab-container-upload-media" class="tab-container">
+                                    <ul class='etabs'>
+                                        <li class='tab'><a href="#tabs1" id="uploadDataSheetTab">Upload Data Sheet</a></li>
+                                        <li class='tab'><a href="#tabs2" id="dataSheetLibraryTab">Data Sheet Library</a></li>
+                                    </ul>
+                                    <div class="panel-container width98p" style="padding: 0;">
+                                        <div id="tabs1" class="width100p" style="text-align: center;" ondrop="dataSheetDropped(event)" ondragover="allowDataSheetDrop(event)">
+                                            <table id="tblUploadDataSheet" class="width100p">
+                                                <tr>
+                                                    <td class="width100p">
+                                                        <div class="uploader-inline-content no-upload-message">
+                                                            <div class="upload-ui">
+                                                                <h2 id="dropAnywhereUpload" class="upload-instructions drop-instructions">Drop data sheet anywhere to upload</h2>
+                                                                <p class="upload-instructions drop-instructions">or</p>
+                                                                <button id="upload-datasheet-proxy-button" type="button" class="button insert-media add_media" style="height: 40px; width: 180px;"><span class="wp-media-buttons-icon"></span>Select Data Sheet</button>
+                                                                <input id="upload-datasheet-button" type="file" style="display: none;" multiple onchange="uploadDataSheet($(this).get(0).files)"/>
+                                                            </div>
+                                                            <div class="post-upload-ui paddingtop5">
+                                                                <p id="maxUploadSize" class="max-upload-size">Maximum upload data sheet size: 100 MB.</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div id="tabs2" class="width100p height100p">
+                                            <table class="width100p height100p">
+                                                <tr>
+                                                    <td class="leftFloat width78p paddingtop10">
+                                                        <table class="width100p height100p">
+                                                            <tr class="leftFloat width99p paddingleft1p">
+                                                                <td class="leftFloat width33p">
+                                                                    <select id="media-attachment-date-filters" style="width: 93%; border: 1px solid #dfdfdf; height: 30px; padding: 5px;">
+                                                                        <option value="all">All dates</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td class="leftFloat width34p">
+                                                                    <input type="search" placeholder="Search" id="media-search-input" style="width: 93%; border: 1px solid #dfdfdf; height: 30px; padding: 5px;">
+                                                                </td>
+                                                                <td class="leftFloat width33p">
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="leftFloat width99p paddingleft1p paddingtop5">
+                                                                <td id="displayElementContainerTd" colspan="3" class="width100p height90p TextAlignCenter" style="vertical-align: middle;">
+                                                                    <div id="displayContainerOfUploadedDataSheetElements" style="right: 0; bottom: 61px; overflow: auto;">
+                                                                    </div>
+                                                                    <div id="displayElementNoItem">
+                                                                        <h3>No. Items Found</h3>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <td class="leftFloat width22p height100p" style="right: 0; bottom: 61px; background-color: #e5e1e1;">
+                                                        <table id="displayContainerText" class="leftFloat width95p" cellpadding="0" cellspacing="0" style="margin: 10px; vertical-align: top; height: 150px !important;">
+                                                            <tr>
+                                                                <td id="tdMediaDetails" colspan="2" style="font-weight: bold; height: 40px;">DATA SHEET DETAILS</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="width95p TextAlignCenter" colspan="2">
+                                                                    <img id="detailDisplayDataSheet" style="width: 80px; height: 80px; border-style: double; border-width: 4px; border-color: #d4d4d4; box-shadow: 2px 2px 5px #888888;"/>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="width100p TextAlignCenter height50" colspan="2" style="font-size: 9px; font-weight: bold; word-break: break-all;">
+                                                                    <input id="detailDisplayDataSheetId" type="hidden"/>
+                                                                    <div id="detailDisplayDataSheetName" style="margin: 5px;"></div>
+                                                                    <div id="detailDisplayDataSheetDate" style="margin: 5px;"></div>
+                                                                    <div id="detailDisplayDataSheetSize" style="margin: 5px;"></div>
+                                                                    <div id="detailDisplayDataSheetDelete" style="margin: 5px;">
+                                                                        <a id="dataSheetDelete" href="#" style="color: #ff0000">Delete Permanently</a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height: 30px;">
+                                                                <td class="width100p" colspan="2" style="vertical-align: top; padding-top: 8px; font-size: 9px; font-weight: bold;">URL
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="width100p" colspan="2">
+                                                                    <textarea id="detailDisplayDataSheetPath" readonly="readonly" style="border: 1px solid #d3d3d3; height: 100px; width: 98%; background-color: #dfdfdf;"></textarea >
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="leftFloat width98p paddingtop10 paddingbottom10">
+                                <div id="noOfDataSheetSelected" style="width: 90px; height: 20px; display: inline-block; float: left; font-weight: bold; margin-left: 50px;"></div>
+                                <a id="clearSelectedDataSheet" style="margin: 10px; cursor: pointer; color: blue;" onclick=" clearSelection() ">Clear</a>
+                                <button type="button" id="insertDataSheetIntoPageButton" class="editor-tab-button editor-tab-button-selected ui-corner-all"><span class="ui-button-text">Insert Into Page</span></button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<template id="uploaded_element_display_template">
+    <div class="uploadedElement leftFloat width100p" onclick="uploadedDataSheetClicked(event,this)">
+        <div class="uploadedDataSheetImg">
+            <img class="uploadedDataSheetImage" src=""/>
+        </div>
+        <div class="uploadedDataSheetText">
+        </div>
+        <div class="buttonCheck hide"><i class="fusiona-flag"></i></div>
+    </div>
+</template>

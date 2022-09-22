@@ -1,0 +1,640 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutCMS.cshtml";
+}
+
+
+@section MainContent
+{
+    <link href="~/Styles/Editor/Editor.css" rel="stylesheet"/>
+    <link href="~/Styles/Editor/Symbols.css" rel="stylesheet"/>
+    <link href="~/Styles/Editor/application.css" rel="stylesheet"/>
+    <link href="~/Styles/Editor/colorpicker.css" rel="stylesheet"/>
+
+    <style>
+        .ui-button-text {
+            font-size: 1.4rem;
+        }
+        .fusionb-remove-button {
+            display: inline-block;
+            height: 34px;
+            line-height: 34px;
+            margin: 0;
+            font-size: 13px;
+            color: #333333;
+            background: #fff;
+            border: 1px solid #c7c5c5;
+            width: 95px;
+            text-align: center;
+            text-decoration: none;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+
+    </style>
+    <style>
+        .daycolodd {
+            background-color: #CDD0D1;
+            color: #000000;
+        }
+        .daycoleven {
+            background-color: #f1f1f1;
+            color: #000000;
+        }
+        #displayTopicList tr:hover {
+            background-color: #51808F;
+            color: #ffffff;
+        }
+        #displayTopicList table {
+            border-collapse: separate;
+            border: solid black 1px;
+            border-radius: 6px;
+            -moz-border-radius: 6px;
+        }
+
+        #displayTopicList td, th {
+            border-top: solid black 1px;
+        }
+
+        #displayTopicList th {
+            background-color: blue;
+            border-top: none;
+            border-left: none;
+        }
+
+        #displayTopicList td:first-child {
+            border-left: none;
+            border-right: none;
+        }
+    </style>
+
+
+    <div style="background-color: #005D7C; color: #ffffff; font-size: 16pt; font-weight: bold; padding-left: 20px; padding-top: 10px; height: 30px; width: 99%; box-shadow: 4px 4px 20px #888888;">
+        File Management
+    </div>
+    <br/><br/>
+    <div id="angController" ng-controller="FileManagementController">
+    <div id="displayTopicList">
+        <div class="leftFloat width100p">
+            <div class="leftFloat paddingtop5 paddingleft10" style="color: #000000; text-align: right;"><b>Filter</b>
+            </div>
+            <div class="leftFloat width85p paddingleft2p">
+                <input id="filter" class="width90p" style="height: 30px; color: #000000; border: 1px solid black; border-radius: 5px;" ng-model="filterName"/>
+            </div>
+        </div>
+        <br/><br/>
+        <div class="leftFloat width100p paddingtop5 paddingleft10 paddingbottom10" style="color: #000000;">
+            <input type="button" id="submitButton" class="btn btn-primary" ng-click="AddFile()" value="Add New File" style="width: auto; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;"/>
+        </div>
+        <div style="padding: 10px; text-align: center;">
+            <table style="cursor: pointer; text-align: left; width: 100%; table-layout: fixed; word-wrap: break-word;">
+                <thead>
+                <tr style="text-align: left;">
+                    <td style="padding: 5px; text-align: right !important; border: none; width: 20px;background-color: #007BA3; ">&nbsp;</td>
+                    <td style="text-align: right !important; border: none; background-color: #007BA3;">
+                        <table style="cursor: pointer; text-align: left; border: none; width: 100%; table-layout: fixed; word-wrap: break-word;">
+                            <tr style="text-align: left;">
+                                <th ng-click="predicate = 'Name'; reverse=!reverse" style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; font-size: 14pt; table-layout: fixed"> Library For</th>
+                                <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; width: 10px;">&nbsp;</th>
+                                <th ng-click="predicate = 'Name'; reverse=!reverse" style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; font-size: 14pt; table-layout: fixed"> Category</th>
+                                <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; width: 10px;">&nbsp;</th>
+                                <th ng-click="predicate = 'Name'; reverse=!reverse" style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; font-size: 14pt; table-layout: fixed"> Title</th>
+                                <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; width: 10px;">&nbsp;</th>
+                                <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; font-size: 14pt;"> Description</th>
+                                <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; font-size: 14pt; text-align: center;"> View / Edit</th>
+                                <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; font-size: 14pt; text-align: center;"> Delete</th>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat-start="item in Files  | filter : filterName | orderBy : predicate:reverse" ng-class-odd="'daycolodd'" ng-class-even="'daycoleven'" ng-hide="item.LibraryType==Files[$index-1].LibraryType">
+                    <td style="padding: 5px;">
+                        <button type="button" ng-click="SetRowClicked(item)">
+                            <span ng-bind="item.Expanded ? '-' : '+'"></span>
+                        </button>
+                    </td>
+                    <td style="padding: 5px;">
+                        <div >{{item.LibraryType}} - Page</div>
+                    </td>
+                </tr>
+
+                <tr ng-repeat-end="" ng-show="item.Expanded">
+                    <td style="padding: 5px; text-align: right !important; border: none;">&nbsp;</td>
+                    <td style="text-align: right !important; border: none;">
+                        <table style="cursor: pointer; text-align: left; width: 100%; table-layout: fixed; word-wrap: break-word;">
+                            <tr style="text-align: left;">
+                                <td style="padding: 5px;">&nbsp;</td>
+                                <td style="width: 10px;">&nbsp;</td>
+                                <td style="padding: 5px;" ng-click="EditItem(item)">{{item.CategoryName}}</td>
+                                <td style="width: 10px;">&nbsp;</td>
+                                <td style="padding: 5px;" ng-click="EditItem(item)">{{item.Title}}</td>
+                                <td style="width: 10px;">&nbsp;</td>
+                                <td style="padding: 5px;" ng-click="EditItem(item)">{{item.Description}}</td>
+                                <td style="padding: 5px; font-size: 14pt; color: #ffffff; text-align: center;" ng-click="EditItem(item)">
+                                    <a href="#" style="color: #835000;"><i class="fa fa-eye"></i></a>
+                                </td>
+                                <td style="padding: 5px; font-size: 14pt; color: #ffffff; text-align: center;" ng-click="DeleteItem(item)">
+                                    <a href="#" style="color: #FB1800;"><i class="fa fa-scissors"></i></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="leftFloat width100p paddingtop5 paddingright10 paddingbottom10" style="color: #000000; text-align: right;">
+            <input type="button" id="submitButton" class="btn btn-primary" ng-click="AddFile()" value="Add New File" style="width: auto; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;"/>
+        </div>
+    </div>
+    <br/>
+    <div id="UpdateTopic" style="padding: 10px; float: left; width: 90%; display: none;">
+        <div style="padding: 10px; width: 100%; border: 1px solid black; border-radius: 5px;">
+            <table style="text-align: left; width: 100%; padding: 10px; color: #000000;">
+                <tr>
+                    <td style="border: none; font-weight: bold;">Library File For (Page)</td>
+                    <td style="border: none;">
+                        <select class="form-control " style="width: 81%; padding: 5px; height: 38px;" ng-model="File.LibraryType" ng-change="TypeChoosen()">
+                            <option value="marketing">Marketing</option>
+                            <option value="support">Support</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height: 20px;" colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border: none; font-weight: bold;">Library Category</td>
+                    <td style="border: none;">
+                        <select class="form-control " style="width: 81%; padding: 5px; height: 38px;" ng-model="File.LibraryCategoryId" ng-change="CategoryChoosen()">
+                            <option ng-repeat="x in FilteredLibraryCategories" value="{{x.Id}}">{{x.Title}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height: 20px;" colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border: none; font-weight: bold;">File Type</td>
+                    <td style="border: none;">
+                        <select class="form-control " style="width: 81%; padding: 5px; height: 38px;" ng-model="File.FileTypeId">
+                            <option ng-repeat="x in FilteredFileTypes" ng-selected="x.IsSelected" value="{{x.Id}}">{{x.Title}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height: 20px;" colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border: none; font-weight: bold;">Title</td>
+                    <td style="border: none;"><input type="text" ng-model="File.Title" class="form-control " style="width: 81%; padding: 5px; height: 38px;"/></td>
+                </tr>
+                <tr>
+                    <td style="height: 20px;" colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border: none; font-weight: bold;">Title (Spanish)</td>
+                    <td style="border: none;"><input type="text" ng-model="File.TitleSpanish" class="form-control " style="width: 81%; padding: 5px; height: 38px;"/></td>
+                </tr>
+                <tr>
+                    <td style="height: 20px;" colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border: none; font-weight: bold;">Description</td>
+                    <td style="border: none;">
+                        <textarea ng-model="File.Description" class="form-control " style="width: 81%; padding: 5px; height: 38px;" rows="5"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height: 20px;" colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border: none; font-weight: bold;">Description (Spanish)</td>
+                    <td style="border: none;">
+                        <textarea ng-model="File.DescriptionSpanish" class="form-control " style="width: 81%; padding: 5px; height: 38px;" rows="5"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height: 20px;" colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border: none; font-weight: bold;">File Url</td>
+                    <td style="border: none;">
+                        <div class="fusion-upload-container" style="width: 100%;">
+                            <input type="text" id="filePath" ng-model="File.FilePath" class="form-control " style="width: 81%; padding: 5px; height: 38px;"/>
+                            <a href="#" id="displayFile" class="fusionb-upload-button fusionb-upload-button2" style="float: left;">Upload</a>
+                            <a href="#" class="fusionb-remove-button fusionb-remove-button2" style="float: left;" ng-click="removeFile()">Remove</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height: 20px;" colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border: none; font-weight: bold;">Thumbnail Image <br/>(Width:130PX, Height:150PX)</td>
+                    <td style="border: none;">
+                        <div class="fusion-upload-container" style="width: 400px;">
+                            <img id="imgF" style="border: 1px solid black; height: 200px; width: 200px;" src="">
+                            <a href="#" id="displayImage" class="fusionb-upload-button fusionb-upload-button1">Upload</a>
+                            <a href="#" class="fusionb-remove-button fusionb-remove-button1" ng-click="removeLogo()">Remove</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height: 20px;" colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border: none; font-weight: bold;">Display Order</td>
+                    <td style="border: none;">
+                        <select class="form-control " style="width: 81%; padding: 5px; height: 38px;" id="SectionOrder">
+                            <option ng-repeat="x in SectionsOrders" ng-selected="x.IsSelected" value="{{x.Id}}">{{x.Title}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height: 20px;" colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border: none; font-weight: bold;">Allowed Partner Types</td>
+                    <td style="border: none;">
+                        <div ng-repeat="perm in PartnerTypes" style="min-width: 150px; float: left; border: 1px solid #000000; height: 40px; background-color: #ffffff; margin: 10px; padding: 10px;">
+                            <table style="width: 100%">
+                                <tr>
+                                    <td>
+                                        <b>{{perm.PartnerType}}</b>&nbsp;&nbsp;
+                                    </td>
+                                    <td style="width: 30px;">
+                                        <input type="checkbox" ng-model="perm.IsAssigned" style="width: 20px; height: 20px;"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height: 20px;" colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border: none; font-weight: bold;">&nbsp;</td>
+                    <td style="border: none;">
+                        <input type="button" class="btn btn-primary" ng-click="SaveFile()" value="Save" style="width: 200px; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;"/>
+                        <input type="button" class="btn btn-primary" ng-click="CancelUpdate()" value="Close" style="width: 200px; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;"/>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+    </div>
+    <div id="dialog_uploadMedia" style="display: none;"></div>
+
+    <input type="hidden" id="mediaUploaderUploadType" value="1"/>
+    <script type="text/javascript">
+        var uploaderOpenedBy = {};
+        var logoPath = "";
+        $(document).ready(function() {
+            $(".ui-dialog").css("height", $(window).height() - 60);
+
+            $("#displayImage").click(function() {
+                $("#dialog_uploadMedia").empty();
+                $("#mediaUploaderUploadType").val(3);
+                var template = '@Url.Content("~/Templates/CMS/Editor/UploadMediaTemplate.html")';
+                $("#dialog_uploadMedia").load(template);
+                uploaderOpenedBy = $(this);
+                var dialog = $("#dialog_uploadMedia").dialog({
+                    autoOpen: false,
+                    width: "96%",
+                    modal: true,
+                    resizable: false,
+                    position: [30, 30],
+                    dialogClass: "no-titlebar",
+                    create: function(event) {
+                        $(event.target).parent().css('position', 'fixed');
+                        $(".ui-widget-header").hide();
+                    },
+                    open: function() { $(".ui-widget-header").hide(); },
+                    close: function() {
+                        $(".ui-widget-header").show();
+                        if (selectedUploadedObjectsToUse.length > 0) {
+                            uploaderCallback(1, selectedUploadedObjectsToUse[0].FilePath);
+                        }
+                    }
+                });
+                dialog.dialog("open");
+            });
+
+            $("#displayFile").click(function() {
+                $("#dialog_uploadMedia").empty();
+                $("#mediaUploaderUploadType").val(3);
+                var template = '@Url.Content("~/Templates/CMS/Editor/UploadMediaTemplate.html")';
+                $("#dialog_uploadMedia").load(template);
+                uploaderOpenedBy = $(this);
+                var dialog = $("#dialog_uploadMedia").dialog({
+                    autoOpen: false,
+                    width: "96%",
+                    modal: true,
+                    resizable: false,
+                    position: [30, 30],
+                    dialogClass: "no-titlebar",
+                    create: function(event) {
+                        $(event.target).parent().css('position', 'fixed');
+                        $(".ui-widget-header").hide();
+                    },
+                    open: function() { $(".ui-widget-header").hide(); },
+                    close: function() {
+                        $(".ui-widget-header").show();
+                        if (selectedUploadedObjectsToUse.length > 0) {
+                            uploaderCallback(2, selectedUploadedObjectsToUse[0].FilePath);
+                        }
+                    }
+                });
+                dialog.dialog("open");
+            });
+
+        });
+
+        function uploaderCallback(type, filePath) {
+            if ($(uploaderOpenedBy) != undefined) {
+                if (type === 1) {
+                    document.getElementById("imgF").src = filePath;
+                    logoPath = filePath;
+                    if (logoPath != undefined && logoPath != "") {
+                        $(".fusionb-remove-button1" + type).show();
+                        $(".fusionb-upload-button1" + type).hide();
+                    } else {
+                        $(".fusionb-remove-button1" + type).hide();
+                        $(".fusionb-upload-button1" + type).show();
+                    }
+                }
+                if (type === 2) {
+                    document.getElementById("filePath").value = filePath;
+                    if (filePath != undefined && filePath != "") {
+                        $(".fusionb-remove-button2" + type).show();
+                        $(".fusionb-upload-button2" + type).hide();
+                    } else {
+                        $(".fusionb-remove-button2" + type).hide();
+                        $(".fusionb-upload-button2" + type).show();
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script>
+        app.controller("FileManagementController", function($controller, $scope, $http, $rootScope,
+            notificationFactory, validationFactory, dbUtilFactory, $window, $modal, $log) {
+            $scope.FileTypes = [];
+            $scope.FilteredFileTypes = [];
+            $scope.LibraryCategories = [];
+            $scope.FilteredLibraryCategories = [];
+            $scope.Files = [];
+            $scope.File = {};
+
+            $scope.PartnerTypes = [];
+
+            $scope.inIt = function() {
+                var url = rootUrl + 'api/ppcmsapi/GetFileTypes';
+                dbUtilFactory.get(url, "", function(d) {
+                    $scope.FileTypes = d;
+                }, '', 'Error getting data ');
+
+                url = rootUrl + 'api/ppcmsapi/GetLibraryCategories';
+                dbUtilFactory.get(url, "", function(d) {
+                    $scope.LibraryCategories = d;
+                }, '', 'Error getting data ');
+
+                url = rootUrl + 'api/ppcmsapi/GetLibraryFiles';
+                dbUtilFactory.get(url, "", function(d) {
+                    $scope.Files = d;
+                }, '', 'Error getting data ');
+
+                url = rootUrl + 'api/ppcmsapi/GetPartnerTypesForPermission';
+                dbUtilFactory.get(url, "", function(d) {
+                    $scope.PartnerTypes = d;
+
+                }, '', 'Error getting data ');
+            };
+
+            $scope.inIt();
+
+            $scope.SetRowClicked = function (item) {
+                var result = $.grep($scope.Files, function (e) { return e.LibraryType == item.LibraryType });
+                $(result).each(function (key, value) {
+                    value.Expanded = !value.Expanded;
+                });
+            }
+
+            $scope.removeLogo = function() {
+                logoPath = "";
+                $(".fusionb-remove-button1").hide();
+                $(".fusionb-upload-button1").show();
+                document.getElementById("imgF").src = logoPath;
+            };
+
+            $scope.removeFile = function() {
+                $(".fusionb-remove-button2").hide();
+                $(".fusionb-upload-button2").show();
+                $scope.File.FilePath = "";
+            };
+
+            $scope.SetFilteredFileTypeList = function() {
+                $scope.FilteredFileTypes = [];
+                var obj = {};
+                for (var t = 0; t < $scope.FileTypes.length; t++) {
+                    obj = {};
+                    obj.Id = $scope.FileTypes[t].Id;
+                    obj.Title = $scope.FileTypes[t].FileType;
+                    obj.IsSelected = ($scope.File.FileTypeId === obj.Id);
+                    $scope.FilteredFileTypes.push(obj);
+                }
+
+                obj = {};
+                obj.Id = 0;
+                obj.Title = 'Other';
+                obj.IsSelected = ($scope.File.FileTypeId === 0);
+                $scope.FilteredFileTypes.push(obj);
+            }
+
+            $scope.TypeChoosen = function() {
+                var count = 0;
+                $scope.FilteredLibraryCategories = [];
+
+                for (var i = 0; i < $scope.LibraryCategories.length; i++) {
+                    //alert($scope.LibraryCategories[i].LibraryType);
+                    //alert($scope.File.LibraryType);
+                    if ($scope.LibraryCategories[i].LibraryType === $scope.File.LibraryType) {
+                        var obj = {};
+                        obj.Id = $scope.LibraryCategories[i].Id;
+                        obj.Title = $scope.LibraryCategories[i].CategoryName;
+                        obj.IsSelected = ($scope.File.LibraryCategoryId === obj.Id);
+                        $scope.FilteredLibraryCategories.push(obj);
+                    }
+                }
+            }
+
+            $scope.CategoryChoosen = function() {
+                var count = 0;
+                $scope.SectionsOrders = [];
+                for (var k = 0; k < $scope.Files.length; k++) {
+                    if ($scope.Files[k].LibraryCategoryId == $scope.File.LibraryCategoryId) {
+                        count = count + 1;
+                    }
+                }
+                var selectedSet = false;
+                for (var i = 0; i <= count; i++) {
+                    var obj = {};
+                    obj.Id = i + 1;
+                    obj.Title = i + 1;
+                    obj.IsSelected = false;
+                    if (obj.Id == $scope.File.SortOrder) {
+                        obj.IsSelected = true;
+                        selectedSet = true;
+                    }
+                    $scope.SectionsOrders.push(obj);
+                };
+
+                if (!selectedSet) {
+                    $scope.SectionsOrders[count].IsSelected = true;
+                }
+
+            }
+
+            $scope.AddFile = function() {
+                $scope.File = {};
+                $scope.File.Id = 0;
+                $scope.File.LibraryType = "";
+                $scope.File.LibraryCategoryId = "";
+                $scope.File.FileTypeId = null;
+                $scope.File.Title = "";
+                $scope.File.Description = "";
+                $scope.File.FilePath = "";
+                $scope.File.FileThumbnailPath = "";
+                $scope.File.SortOrder = "";
+                $scope.File.AllowedPartnerTypes = "";
+
+                $scope.SetFilteredFileTypeList();
+
+                var logoPath = "";
+                document.getElementById("imgF").src = "";
+                $(".fusionb-remove-button1").hide();
+                $(".fusionb-upload-button1").show();
+                $(".fusionb-remove-button2").hide();
+                $(".fusionb-upload-button2").show();
+                $("#displayTopicList").slideUp("slow", function() {
+                    $("#UpdateTopic").slideDown("slow", function() {
+                        // Animation complete.
+                    });
+                });
+            };
+
+            $scope.CancelUpdate = function() {
+                $("#UpdateTopic").slideUp("slow", function() {
+                    $("#displayTopicList").slideDown("slow", function() {
+                        // Animation complete.
+                    });
+                });
+            };
+
+            $scope.EditItem = function(item) {
+                $scope.File = item;
+
+                
+                $scope.PartnerTypes = item.PartnerTypes;
+                $scope.TypeChoosen();
+                $scope.CategoryChoosen();
+                $scope.SetFilteredFileTypeList();
+                logoPath = $scope.File.FileThumbnailPath;
+                document.getElementById("imgF").src = logoPath;
+
+                if (logoPath != undefined && logoPath != "") {
+                    $(".fusionb-remove-button1").show();
+                    $(".fusionb-upload-button1").hide();
+                } else {
+                    $(".fusionb-remove-button1").hide();
+                    $(".fusionb-upload-button1").show();
+                }
+                if ($scope.File.FilePath != undefined && $scope.File.FilePath != "") {
+                    $(".fusionb-remove-button2").show();
+                    $(".fusionb-upload-button2").hide();
+                } else {
+                    $(".fusionb-remove-button2").hide();
+                    $(".fusionb-upload-button2").show();
+                }
+                $("#displayTopicList").slideUp("slow", function() {
+                    $("#UpdateTopic").slideDown("slow", function() {
+                        // Animation complete.
+                    });
+                });
+            };
+
+            $scope.DeleteItem = function(item) {
+                var text = "You won't be able to revert this!";
+                swal({
+                        title: "Are you sure?",
+                        text: text,
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Yes, delete the file type.",
+                        closeOnConfirm: true
+                    },
+                    function(isConfirm) {
+                        if (isConfirm) {
+                            dbUtilFactory.postp(rootUrl + 'api/ppcmsapi/DeleteLibraryiles/', item, function () {
+                                swal(
+                                    'Deleted!',
+                                    'The file type has been deleted.',
+                                    'success'
+                                );
+                                $scope.inIt();
+                            }, '', 'Error getting data ');
+                        }
+                    });
+            };
+
+            $scope.SaveFile = function() {
+                if ($scope.File.LibraryType == "") {
+                    swal("Library Type is required");
+                    return;
+                }
+                if ($scope.File.LibraryCategoryId == "") {
+                    swal("Library Category is required");
+                    return;
+                }
+                $scope.File.FilePath = document.getElementById("filePath").value;
+                if ($scope.File.FilePath == "") {
+                    swal("File is required");
+                    return;
+                }
+                var perms = "";
+                for (var i = 0; i < $scope.PartnerTypes.length; i++) {
+                    if ($scope.PartnerTypes[i].IsAssigned) {
+                        if (perms == "") {
+                            perms = $scope.PartnerTypes[i].PartnerType;
+                        } else {
+                            perms = perms + "," + $scope.PartnerTypes[i].PartnerType;
+                        }
+                    }
+                }
+
+                if ($scope.File.FileTypeId =="") {
+                    $scope.File.FileTypeId = null;
+                }
+
+                $scope.File.AllowedPartnerTypes = perms;
+                $scope.File.FileThumbnailPath = logoPath;
+                $scope.File.SortOrder = document.getElementById("SectionOrder").value;
+                dbUtilFactory.postp(rootUrl + 'api/ppcmsapi/SaveLibraryFiles/', $scope.File, function (d) {
+                    $scope.inIt();
+                    $scope.FileType = {};
+                    $scope.CancelUpdate();
+                }, '', 'Error getting data ');
+
+            };
+        });
+    </script>
+}
+

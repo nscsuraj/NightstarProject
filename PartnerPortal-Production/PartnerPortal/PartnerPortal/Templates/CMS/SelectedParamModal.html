@@ -1,0 +1,26 @@
+﻿<div class="modal-header">
+    <a class="close" ng-click="$dismiss()" aria-hidden="true">&times;</a>
+    <h4 class="modal-title"><strong>Selected {{Header}}</strong></h4>
+</div>
+<div class="modal-body">
+    <!--<div style="height:75px;">
+        <label for="filter" >Filter</label>
+        <input id="filter" class="form-control" ng-model="filterName" />
+    </div>-->
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr ng-repeat="item in List | filter:filterName | orderBy:predicate:reverse">
+                <td>{{item}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <!--<div class="col-md-4">            
+        </div>-->
+        <div class="col-md-4 pull-right">
+            <input class="btn btn-primary pull-right" type="button" ng-click="close()" value="Close" />
+        </div>
+    </div>
+</div>

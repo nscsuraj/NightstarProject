@@ -1,0 +1,114 @@
+﻿<div class="modal-header">
+    <a class="close" ng-click="$dismiss()" aria-hidden="true">&times;</a>
+    <h4 class="modal-title"><strong>Add Advertisement</strong></h4>
+</div>
+<div style="height: 76%; width: 100%; position: absolute; text-align: center; background-color: #ffffff; opacity: 0.8; z-index: 10000;" ng-show="loader">
+    <br />
+    <br />
+    <br />
+    <img src="/Images/3Dloading.gif" />
+</div>
+<div class="modal-body">
+    <div class="row">
+        <label class="col-md-4 control-label">Advertisement Location<span ng-show="Validate('AdvLocation')" style="color: red; font-weight: bold">&nbsp;*</span></label>
+        <div class="col-md-7">
+            <div class="input-group">
+                <label class="form-control" ng-click="AdvLocationSelect()" style="overflow: hidden; width: 100%; height: 26px; text-overflow: ellipsis;">{{Advertisement.LocationNames}}</label>
+                <span class="input-group-addon glyphicon glyphicon-list" ng-class="{ext: Advertisement.Locations.length <= 0}" ng-click="ShowSelectedParameters(Advertisement.Locations, 'Advertisement Locations')" style="top: 0px;"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row paddingtop5">
+        <label class="col-md-4 control-label">Advertisement Title<span ng-show="Validate('AdvTitle')" style="color: red; font-weight: bold">&nbsp;*</span></label>
+        <div class="col-md-7">
+            <input type="text" class="form-control" style="width: 92%;" ng-model="Advertisement.AdTitle" />
+        </div>
+    </div>
+    <div class="row paddingtop5">
+        <label class="col-md-4 control-label">Description</label>
+        <div class="col-md-7">
+            <input type="text" class="form-control" style="width: 92%;" ng-model="Advertisement.Description"/>
+        </div>
+    </div>
+    <div class="row paddingtop5">
+        <label class="col-md-4 control-label">Advertisement Link</label>
+        <div class="col-md-7">
+            <input type="text" class="form-control" style="width: 92%;" ng-model="Advertisement.Link"/>
+        </div>
+    </div>
+    <div class="row paddingtop5">
+        <label class="col-md-4 control-label">Link Target</label>
+        <div class="col-md-7">
+            <select id="fusion_target" name="fusion_target" class="select-field">
+                <option value="_self" selected="">_self</option>
+                <option value="_blank">_blank</option>
+            </select>
+        </div>
+    </div>
+    <div class="row paddingtop5">
+        <label class="col-md-4 control-label">Width</label>
+        <div class="col-md-7">
+            <input type="number" class="form-control" style="width: 92%;" ng-model="Advertisement.Width" />
+        </div>
+    </div>
+    <div class="row paddingtop5">
+        <label class="col-md-4 control-label">Height</label>
+        <div class="col-md-7">
+            <input type="text" class="form-control" style="width: 92%;" ng-model="Advertisement.Height" />
+        </div>
+    </div>
+    <div class="row paddingtop5">
+        <label class="col-md-4 control-label">File Type</label>
+        <div class="col-md-7">
+            <select class="form-control" ng-model="Advertisement.FileType" style="width: 92.5%; height: 28px;">
+                <option value="Image">Image</option>
+                <option value="Video">Video</option>
+            </select>
+        </div>
+    </div>
+    <div class="row paddingtop5">
+        <label class="col-md-4 control-label">Attachment<span ng-show="Validate('AdvFile')" style="color: red; font-size: 10px; font-weight: bold">&nbsp;*Size should be max 10mb.</span></label>
+        <div class="col-md-7">
+            <input type="file" name="attachmentI" id="imgU" onchange="PreviewImage();" class="form-control" style="width: 92%;" data-ak-file-model="Advertisement.attachment" accept=".jpg, .png, .jpeg, .gif" ng-show="Advertisement.FileType == 'Image'" />
+            <input type="file" name="attachment" id="vdU" class="form-control" onchange="PreviewVideo();" style="width: 92%;" data-ak-file-model="Advertisement.attachment" accept="video/mp4" ng-show="Advertisement.FileType == 'Video'" />
+        </div>
+    </div>
+    <div class="row paddingtop5">
+        <label class="col-md-4 control-label">Preview</label>
+        <div class="col-md-7">
+            <img id="imgP" style="border: 1px solid black; height: 200px; width: 200px;" ng-show="Advertisement.FileType == 'Image'">
+            <video id="vdP" width="320" height="240" controls ng-show="Advertisement.FileType == 'Video'">
+                <source src="" type="video/mp4">
+            </video>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-4">
+            <input class="btn btn-primary pull-left modal-submit-btn" type="button" ng-click="Submit()" ng-disabled="DisableAddAdvertisement()" value="Submit" />
+        </div>
+        <div class="col-md-4 pull-right">
+            <input class="btn btn-primary pull-right" type="button" ng-click="clear()" value="Clear" />
+            <input class="btn btn-primary pull-right" type="button" ng-click="cancel()" value="Cancel" />
+        </div>
+    </div>
+</div>
+<script>
+    function PreviewImage() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("imgU").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("imgP").src = oFREvent.target.result;
+        };
+    };
+    function PreviewVideo() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("vdU").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("vdP").src = oFREvent.target.result;
+        };
+    };
+</script>

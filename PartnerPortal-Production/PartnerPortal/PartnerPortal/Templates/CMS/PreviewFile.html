@@ -1,0 +1,19 @@
+﻿<div class="modal-header">
+    <a class="close" ng-click="$dismiss()" aria-hidden="true">&times;</a>
+    <h4 class="modal-title"><strong>Preview {{FileType}}</strong></h4>
+</div>
+<div class="modal-body" style="text-align: center;">
+    <img id="imgP" style="border: 1px solid black; height: 400px; width: 400px;" ng-show="FileType == 'Image'" ng-src="{{FilePath}}">
+    <video id="vdP" width="400" height="240" controls ng-show="FileType == 'Video'" preload="auto">
+        <source ng-src="{{FilePath}}" type="video/mp4">
+    </video>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <!--<div class="col-md-4">            
+        </div>-->
+        <div class="col-md-4 pull-right">
+            <input class="btn btn-primary pull-right" type="button" ng-click="close()" value="Close" />
+        </div>
+    </div>
+</div>

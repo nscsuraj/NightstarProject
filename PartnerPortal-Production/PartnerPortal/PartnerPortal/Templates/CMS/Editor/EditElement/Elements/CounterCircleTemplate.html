@@ -1,0 +1,380 @@
+﻿<style>
+    .colorSelector {
+        position: relative;
+        width: 36px;
+        height: 36px;
+    }
+
+        .colorSelector div {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 30px;
+            height: 30px;
+        }
+
+    .colorpicker {
+        z-index: 1120;
+    }
+</style>
+<script>
+    var CounterCircle = 0;
+    $(document).ready(function () {
+        $(".ui-dialog").css("height", $(window).height() - 70);
+
+        //get the object and set values
+        var carrierObj = JSON.parse($("#dialog_form").attr("data-obj"));
+        try {
+            $(".objectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(carrierObj[$(this).attr("data-PropertyIndex")]);
+                } else {
+                    if (carrierObj[$(this).attr("data-PropertyIndex")] != null && carrierObj[$(this).attr("data-PropertyIndex")] != undefined && carrierObj[$(this).attr("data-PropertyIndex")].length > 0)
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                }
+            });
+        } catch (e) {
+
+        }
+
+        $("#counterCircleContainer tr:first").hide();
+        var tempCounterCircles = carrierObj[612];
+        if (tempCounterCircles != undefined && tempCounterCircles.length > 0) {
+            for (var i = 0; i < tempCounterCircles.length; i++) {
+                addNewCounterCircle($("#fusion-child-add"), tempCounterCircles[i]);
+            }
+        } else {//First Time
+            addNewCounterCircle($("#fusion-child-add"));
+        }
+    });
+
+    function toggleCounterCircleDetail(ctrl) {
+        var state = $(ctrl).attr("data-state");
+        var index = $(ctrl).attr("data-boxIndex");
+
+        if (state == 0) {
+            $(ctrl).parent().find(".boxDetail").show();
+            $(ctrl).attr("data-state", "1");
+            $(ctrl).html("Counter Circle Item " + index + "<i class='fusiona-minus'>");
+        }
+        else if (state == 1) {
+            $(ctrl).parent().find(".boxDetail").hide();
+            $(ctrl).attr("data-state", "0");
+            $(ctrl).html("Counter Circle Item " + index + "<i class='fusiona-plus2'>");
+        }
+    }
+
+    function addNewCounterCircle(ctrl, obj) {
+        var tr = $(ctrl).parents("tr:first");
+        var prevTr = $(tr).prev()[0];
+        var cloneTr = $(prevTr).clone(true);
+        $(cloneTr).css("display", "");
+        $(cloneTr).addClass("child-clone-row");
+        var td = $(cloneTr).find("td:first");
+        var linkHeader = $(td).find(".linkHeader");
+        CounterCircle += 1;
+        $(linkHeader).attr("data-boxIndex", CounterCircle);
+        $(linkHeader).html("Counter Circle Item " + CounterCircle + "<i class='fusiona-plus2'>");
+        //$(linkHeader).attr("data-state", CounterCircle);
+        var filledColorSelector = 'filledColorSelector' + CounterCircle;
+        var unfilledColorSelector = 'unfilledColorSelector' + CounterCircle;
+
+        cloneTr.find('.filledColorSelector').prop('id', filledColorSelector);
+        cloneTr.find('.unfilledColorSelector').prop('id', unfilledColorSelector);
+
+        cloneTr.find('.filledColor').prop('id', 'filledColor' + CounterCircle);
+        cloneTr.find('.unfilledColor').prop('id', 'unfilledColor' + CounterCircle);
+
+        cloneTr.find('.colorSelector div').css('backgroundColor', '#ffffff');
+        cloneTr.find('#' + filledColorSelector).ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#' + filledColorSelector + ' div').css('backgroundColor', '#' + hex);
+                $('#' + 'filledColor' + $(linkHeader).attr("data-boxIndex")).val('#' + hex);
+            }
+        });
+
+        cloneTr.find('#' + unfilledColorSelector).ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#' + unfilledColorSelector + ' div').css('backgroundColor', '#' + hex);
+                $('#' + 'unfilledColor' + $(linkHeader).attr("data-boxIndex")).val('#' + hex);
+            }
+        });
+
+        if (obj != undefined) {
+            $(cloneTr).find(".subObjectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(obj[$(this).attr("data-subPropertyIndex")]);
+                } else {
+                    $(this).val(obj[$(this).attr("data-subPropertyIndex")]);
+                }
+            });
+        }
+
+        $(prevTr).before($(cloneTr));
+
+        //set color
+        if (obj != undefined) {
+            $('#' + filledColorSelector + ' div').css('backgroundColor', $('#' + 'filledColor' + CounterCircle).val());
+            $('#' + unfilledColorSelector + ' div').css('backgroundColor', $('#' + 'unfilledColor' + CounterCircle).val());
+        }
+    }
+
+    function removeCounterCircle(ctrl) {
+        var tr = $(ctrl).parents("tr:first");
+        if (CounterCircle == 1) {
+            alert("You need a minimum of one row");
+            return false;
+        }
+        $(tr).remove();
+        CounterCircle -= 1;
+        var c = 1;
+        $("#counterCircleContainer tr.child-clone-row").each(function () {
+            var linkHeader = $(this).find(".linkHeader");
+            $(linkHeader).attr("data-boxIndex", c);
+            $(linkHeader).html("Counter Circle Item " + c + "<i class='fusiona-plus2'>");
+            c = c + 1;
+        });
+    }
+</script>
+
+<div style="width: 95%; display: inline-block; position: absolute; left: 2%">
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS Class</strong><span>Add a class to the wrapping HTML element.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="422" value="" id="fusion_class" name="fusion_class" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS ID</strong><span>Add an ID to the wrapping HTML element.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="423" value="" id="fusion_id" name="fusion_id" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <table class="clearfix has-children" id="counterCircleContainer">
+        <tr data-boxindex="0">
+            <!--class="child-clone-row"-->
+            <td><a href="#" class="fusion-expand-child linkHeader" data-boxindex="" onclick="toggleCounterCircleDetail(this)" data-state="0">Counter Circle Item 1<i class="fusiona-plus2"></i></a>
+                <div class="child-options boxDetail" style="display: none;" data-boxindex="">
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-select">
+                        <div class="name-description"><strong>Filled Area Percentage</strong><span>From 1% to 100%</span></div>
+                        <div class="element-type">
+                            <div class="select_arrow"></div>
+                            <select name="fusion_value[0]" class="select-field subObjectProperty" data-subpropertyindex="20">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                                <option value="32">32</option>
+                                <option value="33">33</option>
+                                <option value="34">34</option>
+                                <option value="35">35</option>
+                                <option value="36">36</option>
+                                <option value="37">37</option>
+                                <option value="38">38</option>
+                                <option value="39">39</option>
+                                <option value="40">40</option>
+                                <option value="41">41</option>
+                                <option value="42">42</option>
+                                <option value="43">43</option>
+                                <option value="44">44</option>
+                                <option value="45">45</option>
+                                <option value="46">46</option>
+                                <option value="47">47</option>
+                                <option value="48">48</option>
+                                <option value="49">49</option>
+                                <option value="50">50</option>
+                                <option value="51">51</option>
+                                <option value="52">52</option>
+                                <option value="53">53</option>
+                                <option value="54">54</option>
+                                <option value="55">55</option>
+                                <option value="56">56</option>
+                                <option value="57">57</option>
+                                <option value="58">58</option>
+                                <option value="59">59</option>
+                                <option value="60">60</option>
+                                <option value="61">61</option>
+                                <option value="62">62</option>
+                                <option value="63">63</option>
+                                <option value="64">64</option>
+                                <option value="65">65</option>
+                                <option value="66">66</option>
+                                <option value="67">67</option>
+                                <option value="68">68</option>
+                                <option value="69">69</option>
+                                <option value="70">70</option>
+                                <option value="71">71</option>
+                                <option value="72">72</option>
+                                <option value="73">73</option>
+                                <option value="74">74</option>
+                                <option value="75">75</option>
+                                <option value="76">76</option>
+                                <option value="77">77</option>
+                                <option value="78">78</option>
+                                <option value="79">79</option>
+                                <option value="80">80</option>
+                                <option value="81">81</option>
+                                <option value="82">82</option>
+                                <option value="83">83</option>
+                                <option value="84">84</option>
+                                <option value="85">85</option>
+                                <option value="86">86</option>
+                                <option value="87">87</option>
+                                <option value="88">88</option>
+                                <option value="89">89</option>
+                                <option value="90">90</option>
+                                <option value="91">91</option>
+                                <option value="92">92</option>
+                                <option value="93">93</option>
+                                <option value="94">94</option>
+                                <option value="95">95</option>
+                                <option value="96">96</option>
+                                <option value="97">97</option>
+                                <option value="98">98</option>
+                                <option value="99">99</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-color">
+                        <div class="name-description">
+                            <strong>Filled Color</strong>
+                            <span>Controls the color of the filled in area. Leave blank for theme option selection.</span>
+                        </div>
+                        <div class="element-type">
+                            <div class="wp-picker-container">
+                                <table style="width: 100%" colspacing="10" class="subColorTable">
+                                    <tr>
+                                        <td style="width: 75%; text-align: right;">
+                                            <div class="colorSelector filledColorSelector" style="width: 90%;">
+                                                <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                                </div>
+                                                <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td style="width: 25%; vertical-align: middle;">
+                                            <input type="text" class="subObjectProperty filledColor" data-propertyindex="21" value="" id="filledColor" name="filledColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-color">
+                        <div class="name-description">
+                            <strong>Unfilled Color</strong>
+                            <span>Controls the color of the unfilled in area. Leave blank for theme option selection.</span>
+                        </div>
+                        <div class="element-type">
+                            <div class="wp-picker-container">
+                                <table style="width: 100%" colspacing="10" class="subColorTable">
+                                    <tr>
+                                        <td style="width: 75%; text-align: right;">
+                                            <div class="colorSelector unfilledColorSelector" style="width: 90%;">
+                                                <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                                </div>
+                                                <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td style="width: 25%; vertical-align: middle;">
+                                            <input type="text" class="subObjectProperty unfilledColor" data-propertyindex="22" value="" id="unfilledColor" name="unfilledColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-input">
+                        <div class="name-description"><strong>Size of the Counter</strong><span>Insert size of the counter in px. ex: 220</span></div>
+                        <div class="element-type">
+                            <input type="text" class="text-field subObjectProperty" data-subpropertyindex="23" value="220" name="fusion_size[0]" size="50" style="padding: 6px 0px !important;">
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-select">
+                        <div class="name-description"><strong>Show Scales</strong><span>Choose to show a scale around circles.</span></div>
+                        <div class="element-type">
+                            <div class="select_arrow"></div>
+                            <select name="fusion_scales[0]" class="select-field subObjectProperty" data-subpropertyindex="24">
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-select">
+                        <div class="name-description"><strong>Countdown</strong><span>Choose to let the circle filling move counter clockwise.</span></div>
+                        <div class="element-type">
+                            <div class="select_arrow"></div>
+                            <select name="fusion_countdown[0]" class="select-field subObjectProperty" data-subpropertyindex="25">
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-input">
+                        <div class="name-description"><strong>Animation Speed</strong><span>Insert animation speed in milliseconds</span></div>
+                        <div class="element-type">
+                            <input type="text" class="text-field subObjectProperty" data-subpropertyindex="26" value="1500" name="fusion_speed[0]" size="50" style="padding: 6px 0px !important;">
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-input">
+                        <div class="name-description"><strong>Counter Circle Text</strong><span>Insert text for counter circle box, keep it short</span></div>
+                        <div class="element-type">
+                            <input type="text" class="text-field subObjectProperty" data-subpropertyindex="27" value="Text" name="fusion_content[0]" size="50" style="padding: 6px 0px !important;">
+                        </div>
+                    </div>
+                    <a class="child-clone-row-remove fusion-shortcodes-button" href="JavaScript:void(0)" onclick="removeCounterCircle(this)">Remove</a>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><a id="fusion-child-add" data-itemcount="1" href="JavaScript:void(0)" onclick="addNewCounterCircle(this)">Add New Counter Circle</a></td>
+        </tr>
+    </table>
+</div>

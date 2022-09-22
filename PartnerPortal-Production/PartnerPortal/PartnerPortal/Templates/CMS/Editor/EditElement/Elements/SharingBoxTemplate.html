@@ -1,0 +1,292 @@
+﻿<style>
+    .colorSelector {
+        position: relative;
+        width: 36px;
+        height: 36px;
+    }
+
+        .colorSelector div {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 30px;
+            height: 30px;
+        }
+
+    .colorpicker {
+        z-index: 1120;
+    }
+</style>
+<script type="text/javascript">
+    var uploaderOpenedBy = {};
+    $(document).ready(function () {
+        $('#colorSelector div').css('backgroundColor', '#ffffff');
+
+        //get the object and set values
+        var carrierObj = JSON.parse($("#dialog_form").attr("data-obj"));
+        try {
+            $(".objectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(carrierObj[$(this).attr("data-PropertyIndex")]);
+                } else if ($(this).is('textarea')) {
+                    if (!(carrierObj[$(this).attr("data-PropertyIndex")] == undefined)) {
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                    }
+                } else {
+                    if (carrierObj[$(this).attr("data-PropertyIndex")] != null && carrierObj[$(this).attr("data-PropertyIndex")] != undefined && carrierObj[$(this).attr("data-PropertyIndex")].length > 0)
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                }
+            });
+        } catch (e) {
+
+        }
+        //set color
+        $('#taglineColorSelector div').css('backgroundColor', $('#taglineColor').val());
+        $('#backgroundColorSelector div').css('backgroundColor', $('#backgroundColor').val());
+        $("#backgroundImageDisplay").attr("src", $("#fusion_pinterest_image").val());
+        if ($("#fusion_pinterest_image").val().length > 0) {
+            $('.fusionb-upload-button').text('Remove').addClass('remove-image');
+        }
+
+        $('#taglineColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#taglineColorSelector div').css('backgroundColor', '#' + hex);
+                $('#taglineColor').val('#' + hex);
+            }
+        });
+        $('#colorSelector div').css('backgroundColor', '#ffffff');
+        $('#backgroundColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#backgroundColorSelector div').css('backgroundColor', '#' + hex);
+                $('#backgroundColor').val('#' + hex);
+            }
+        });
+        $(".ui-dialog").css("height", $(window).height() - 70);
+
+        $(".fusionb-upload-button").click(function () {
+            $("#dialog_uploadMedia").empty();
+            var template = root + "/Templates/CMS/Editor/UploadMediaTemplate.html";
+            $("#dialog_uploadMedia").load(template);
+            uploaderOpenedBy = $(this);
+            //$("#dialog_uploadMedia").attr("data-allowMultiSelect",false); //Add this line only if you want to add multiselect option
+
+            if ($(this).hasClass('remove-image')) {
+                $(this).parent().find('img').attr('src', '');
+                $(this).parent().find('input').attr('value', '');
+                $(this).hide();
+                $(this).text('Upload').removeClass('remove-image').attr('style', '');
+                return;
+            }
+
+            var dialog = $("#dialog_uploadMedia").dialog({
+                autoOpen: false,
+                width: "96%",
+                modal: true,
+                resizable: false,
+                position: [30, 30],
+                dialogClass: "no-titlebar",
+                create: function (event) { $(event.target).parent().css('position', 'fixed'); $(".ui-widget-header").hide(); },
+                open: function () { $(".ui-widget-header").hide(); },
+                close: function () {
+                    //for (var i = 0; i < selectedUploadedObjectsToUse.length; i++) {
+                    //    alert(selectedUploadedObjectsToUse[i].FilePath);
+                    //}
+                    $(".ui-widget-header").show();
+                    if (selectedUploadedObjectsToUse.length > 0) {
+                        uploaderCallback(selectedUploadedObjectsToUse[0].FilePath);
+                        $('.fusionb-upload-button').text('Remove').addClass('remove-image');
+                    }
+
+                }
+            });
+            dialog.dialog("open");
+        });
+    });
+
+    function uploaderCallback(filePath) {
+        if ($(uploaderOpenedBy) != undefined) {
+            $(uploaderOpenedBy).parent().find("input[type='hidden']").val(filePath);
+            $(uploaderOpenedBy).parent().find("img").attr("src", filePath);
+        }
+    }
+
+</script>
+<div style="width: 95%; display: inline-block; position: absolute; left: 2%">
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description">
+            <strong>Tagline</strong><span>The title tagline that will display</span>
+        </div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="490" value="" id="fusion_tagline" name="fusion_tagline" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+
+    <div class="clearfix form-element-container form-element-container-color">
+        <div class="name-description"><strong>Tagline Color</strong><span>Controls the text color. Leave blank for theme option selection</span></div>
+        <div class="element-type">
+            <div class="wp-picker-container">
+                <table style="width: 100%" colspacing="10">
+                    <tr>
+                        <td style="width: 75%; text-align: right;">
+                            <div id="taglineColorSelector" class="colorSelector" style="width: 90%;">
+                                <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                </div>
+                                <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                </span>
+                            </div>
+                        </td>
+                        <td style="width: 25%; vertical-align: middle;">
+                            <input type="text" class="objectProperty" data-propertyindex="491" value="" id="taglineColor" name="taglineColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-color">
+        <div class="name-description"><strong>Background Color</strong><span>Controls the background color. Leave blank for theme option selection.</span></div>
+        <div class="element-type">
+            <div class="wp-picker-container">
+                <table style="width: 100%" colspacing="10">
+                    <tr>
+                        <td style="width: 75%; text-align: right;">
+                            <div id="backgroundColorSelector" class="colorSelector" style="width: 90%;">
+                                <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                </div>
+                                <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                </span>
+                            </div>
+                        </td>
+                        <td style="width: 25%; vertical-align: middle;">
+                            <input type="text" class="objectProperty" data-propertyindex="492" value="" id="backgroundColor" name="backgroundColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description">
+            <strong>Title</strong><span>The post title that will be shared</span>
+        </div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="493" value="" id="fusion_title" name="fusion_title" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description">
+            <strong>Link to Share</strong>
+        </div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="494" value="" id="fusion_link" name="fusion_link" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-textarea">
+        <div class="name-description">
+            <strong>Description</strong><span>The description that will be shared</span>
+        </div>
+        <div class="element-type">
+            <textarea rows="5" cols="55" class="textarea-field objectProperty" data-propertyindex="495" id="fusion_description" name="fusion_description" style="padding: 6px 0px !important;"></textarea>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description">
+            <strong>Boxed Social Icons</strong><span>Choose to get a boxed icons. Choose default for theme option selection.</span>
+        </div>
+        <div class="element-type">
+            <div class="select_arrow">
+            </div>
+            <select id="fusion_iconboxed" name="fusion_iconboxed" class="select-field objectProperty" data-propertyindex="496">
+                <option value="" selected="">Default</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description">
+            <strong>Social Icon Box Radius</strong><span>Choose the radius of the boxed icons. In pixels (px), ex: 1px, or "round". Leave blank for theme option selection.</span>
+        </div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="497" value="4px" id="fusion_iconboxedradius" name="fusion_iconboxedradius" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-textarea">
+        <div class="name-description">
+            <strong>Social Icon Custom Colors</strong><span>Specify the color of social icons. Use one for all or separate by | symbol. ex: #AA0000|#00AA00|#0000AA. Leave blank for theme option selection.</span>
+        </div>
+        <div class="element-type">
+            <textarea rows="5" cols="55" class="textarea-field objectProperty" data-propertyindex="498" id="fusion_iconcolor" name="fusion_iconcolor" style="padding: 6px 0px !important;"></textarea>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-textarea">
+        <div class="name-description">
+            <strong>Social Icon Custom Box Colors</strong><span>Specify the box color of social icons. Use one for all or separate by | symbol. ex: </span>
+        </div>
+        <div class="element-type">
+            <textarea rows="5" cols="55" class="textarea-field objectProperty" data-propertyindex="499" id="fusion_boxcolor" name="fusion_boxcolor" style="padding: 6px 0px !important;"></textarea>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Social Icon Tooltip Position</strong><span>Choose the display position for tooltips. Choose default for theme option selection.</span></div>
+        <div class="element-type">
+            <div class="select_arrow">
+            </div>
+            <select id="fusion_icontooltip" name="fusion_icontooltip" class="select-field objectProperty" data-propertyindex="500">
+                <option value="" selected="">Default</option>
+                <option value="top">Top</option>
+                <option value="bottom">Bottom</option>
+                <option value="left">Left</option>
+                <option value="Right">Right</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-upload">
+        <div class="name-description"><strong>Choose Image to Share on Pinterest</strong></div>
+        <div class="element-type">
+            <div class="fusion-upload-container">
+                <img id="backgroundImageDisplay" src="" alt="Image" class="uploaded-image" style="padding-bottom: 3px;">
+                <div style="clear: both;"></div>
+                <input type="hidden" class="fusion-form-text fusion-form-upload fusion-input objectProperty"
+                    data-propertyindex="501" name="fusion_pinterest_image" id="fusion_pinterest_image" value="">
+                <a href="#" class="fusionb-upload-button " data-upid="1">Upload</a>
+                <a href="#" style="display: none" class="fusionb-edit-button" data-upid="1">Edit</a>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description">
+            <strong>CSS Class</strong><span>Add a class to the wrapping HTML element.</span>
+        </div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="502" value="" id="fusion_class" name="fusion_class" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description">
+            <strong>CSS ID</strong><span>Add an ID to the wrapping HTML element.</span>
+        </div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="503" value="" id="fusion_id" name="fusion_id" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+</div>
+

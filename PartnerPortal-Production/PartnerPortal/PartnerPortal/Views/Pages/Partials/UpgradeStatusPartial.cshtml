@@ -1,0 +1,186 @@
+﻿<div style="background-color: #ECF8FF; min-height: 550px;" ng-controller="UpgradeStatusController">
+    <div>
+        <div style="width: 80%; display: inline-block; text-align: center;padding-top: 80px; color: #3D80EB; font-size: 26pt; font-weight: bold; letter-spacing: 1px;">
+            Star Partner Loyalty Journey
+        </div>
+        <div style="width: 80%; display: inline-block; text-align: center;">
+
+            <div style="padding-top: 80px; color: #3D80EB; font-size: 26pt; font-weight: bold; letter-spacing: 1px; display: inline-block;">
+                <div style="display: inline-block; float: left; margin-bottom: 20px;" >
+                    <div class="circleBox" ng-show="ShowBronze">
+                        <div class="circle">
+                            <div class="tick">&#10003;</div>
+                        </div>
+                        <div class="circleText">Bronze</div>
+                    </div>
+                    <div class="lineBox" ng-show="ShowSilver">
+                        <div class="lineBoxLine"></div>
+                    </div>
+                </div>
+
+                <div style="display: inline-block; float: left;margin-bottom: 20px;">
+
+
+                    <div class="circleBox" ng-show="ShowSilver">
+                        <div class="circle">
+                            <div class="tick">&#10003;</div>
+                        </div>
+                        <div class="circleText">Silver</div>
+                    </div>
+                    <div class="lineBox" ng-show="ShowGold">
+                        <div class="lineBoxLine"></div>
+                    </div>
+                </div>
+
+                <div style="display: inline-block; float: left;margin-bottom: 20px;">
+
+
+                    <div class="circleBox" ng-show="ShowGold">
+                        <div class="circle">
+                            <div class="tick">&#10003;</div>
+                        </div>
+                        <div class="circleText">Gold</div>
+                    </div>
+                      <div class="lineBox" ng-show="ShowPlatinum">
+                        <div class="lineBoxLine"></div>
+                    </div>
+                </div>
+
+                <div style="display: inline-block; float: left;margin-bottom: 20px;">
+                  
+
+                    <div class="circleBox" ng-show="ShowPlatinum">
+                        <div class="circle">
+                            <div class="tick">&#10003;</div>
+                        </div>
+                        <div class="circleText">Platinum</div>
+                    </div>
+                </div>
+
+            </div>
+                
+
+        </div>
+
+        <div style="width: 80%; display: inline-block; text-align: left; padding-top: 80px; color: #3D80EB; font-size: 26pt; font-weight: bold; letter-spacing: 1px;">
+            <div style="font-size: 18pt; font-weight: bold; color: #505255">
+                Congratulations!
+            </div>
+            <div style="font-size: 12pt; font-weight: normal; color: #939494; margin-top: 20px;" ng-show="ShowBronzeText">
+                Your company is currently a Bronze Partner.<a href="~/Pages/BronzePartnerBenefit" style="color: #7d7d7d;">Learn More ></a>
+            </div>
+            <div style="font-size: 12pt; font-weight: normal; color: #939494; margin-top: 20px;" ng-show="ShowSilverText">
+                Your company is currently a Silver Partner.<a href="~/Pages/SilverPartnerBenefit" style="color: #7d7d7d;">Learn More ></a>
+            </div>
+            <div style="font-size: 12pt; font-weight: normal; color: #939494; margin-top: 20px;" ng-show="ShowGoldText">
+                Your company is currently a Gold Partner.<a href="~/Pages/GoldPartnerBenefit" style="color: #7d7d7d;">Learn More ></a>
+            </div>
+            <div style="font-size: 12pt; font-weight: normal; color: #939494; margin-top: 20px;" ng-show="ShowPlatinumText">
+                Your company is currently a Platinum Partner and you have access to all Star's best benefits. <a href="~/Pages/PlatinumPartnerBenefit" style="color: #7d7d7d;">Learn More ></a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+    .circleBox {
+          width: 40px;
+          height: 40px;
+         display: inline-block;
+        float: left;
+         
+    }
+    .circleText {
+        padding-top: 10px;
+        font-size: 10pt;
+        color: #000000;         
+    }
+     .circle {
+         width: 40px;
+         height: 40px;
+         background: #3D80EB;
+         border-radius: 50%;
+         display: block;
+         
+     }
+    .tick {
+        color: #ffffff;
+        font-size: 20pt;
+        margin-top: 10px;
+        display: inline-block;
+        font-stretch: expanded;
+    }
+    .lineBox {
+        width: 150px;
+        height: 40px;
+        display: inline-block;
+        float: left;
+        padding-top: 17px;
+    }
+    .lineBoxLine {
+        width: 150px;
+ 
+        height: 5px;
+        display: inline-block;
+        background-color: #3D80EB;
+        float: left;
+    }
+</style>
+
+<script>
+     
+
+    app.controller("UpgradeStatusController", function ($controller, $scope, $http, $sce,
+            notificationFactory, $location,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory) {
+
+            $scope.ShowBronze = false;
+            $scope.ShowSilver = false;
+            $scope.ShowGold = false;
+            $scope.ShowPlatinum = false;
+
+            $scope.ShowBronzeText = false;
+            $scope.ShowSilverText = false;
+            $scope.ShowGoldText = false;
+            $scope.ShowPlatinumText = false;
+
+              $scope.Account = {};
+              $scope.getAccount = function() {
+                dbUtilFactory.get(root + 'api/ppcmsapi/GetAccountFromSessionData/', "", function (d) {
+                    $scope.Account = d;
+                    if (d.PartnerType.toLowerCase().indexOf("technology") >= 0 || d.PartnerType.toLowerCase().indexOf("services") >= 0) {
+                        $scope.ShowUpgradeStatus = true;
+                        if (d.LoyaltyLevel === "Bronze Partner") {
+                            $scope.ShowBronze = true;
+                            $scope.ShowBronzeText = true;
+                        }
+                        if (d.LoyaltyLevel === "Silver Partner") {
+                            $scope.ShowBronze = true;
+                            $scope.ShowSilver = true;
+                            $scope.ShowSilverText = true;
+                        }
+                        if (d.LoyaltyLevel === "Gold Partner") {
+                            $scope.ShowBronze = true;
+                            $scope.ShowSilver = true;
+                            $scope.ShowGold = true;
+                            $scope.ShowGoldText = true;
+                        }
+                        if (d.LoyaltyLevel === "Platinum Partner") {
+                            $scope.ShowBronze = true;
+                            $scope.ShowSilver = true;
+                            $scope.ShowGold = true;
+                            $scope.ShowPlatinum = true;
+                            $scope.ShowPlatinumText = true;
+                        }
+                    } 
+                    
+                }, '', 'Error getting data ');
+            };
+              $scope.getAccount();
+
+
+
+        });
+    </script>

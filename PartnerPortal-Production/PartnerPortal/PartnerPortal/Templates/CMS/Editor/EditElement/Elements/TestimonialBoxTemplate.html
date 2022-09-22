@@ -1,0 +1,371 @@
+﻿<style>
+    .colorSelector {
+        position: relative;
+        width: 36px;
+        height: 36px;
+    }
+
+        .colorSelector div {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 30px;
+            height: 30px;
+        }
+
+    .colorpicker {
+        z-index: 1120;
+    }
+</style>
+<script>
+    var uploaderOpenedBy = {};
+    var TestimonialBox = 0;
+    $(document).ready(function () {
+        $('#colorSelector div').css('backgroundColor', '#ffffff');
+
+        //get the object and set values
+        var carrierObj = JSON.parse($("#dialog_form").attr("data-obj"));
+        try {
+            $(".objectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(carrierObj[$(this).attr("data-PropertyIndex")]);
+                } else if ($(this).is('textarea')) {
+                    if (!(carrierObj[$(this).attr("data-PropertyIndex")] == undefined)) {
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                    }
+                } else {
+                    if (carrierObj[$(this).attr("data-PropertyIndex")] != null && carrierObj[$(this).attr("data-PropertyIndex")] != undefined && carrierObj[$(this).attr("data-PropertyIndex")].length > 0)
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                }
+            });
+        } catch (e) {
+
+        }
+        //set color
+        $('#backgroundColorSelector div').css('backgroundColor', $('#backgroundColor').val());
+        $('#textColorSelector div').css('backgroundColor', $('#textColor').val());
+
+        $('#backgroundColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#backgroundColorSelector div').css('backgroundColor', '#' + hex);
+                $('#backgroundColor').val('#' + hex);
+            }
+        });
+
+        $('#textColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#textColorSelector div').css('backgroundColor', '#' + hex);
+                $('#textColor').val('#' + hex);
+            }
+        });
+
+        $(".ui-dialog").css("height", $(window).height() - 60);
+
+        $("#TestimonialBoxContainer tr:first").hide();
+        var tempTestimonialBoxes = carrierObj[619];
+        if (tempTestimonialBoxes != undefined && tempTestimonialBoxes.length > 0) {
+            for (var i = 0; i < tempTestimonialBoxes.length; i++) {
+                addNewTestimonialBox($("#fusion-child-add"), tempTestimonialBoxes[i]);
+            }
+        } else {//First Time
+            addNewTestimonialBox($("#fusion-child-add"));
+        }
+    });
+
+    function toggleTestimonialBoxDetail(ctrl) {
+        var state = $(ctrl).attr("data-state");
+        var index = $(ctrl).attr("data-boxIndex");
+
+        if (state == 0) {
+            $(ctrl).parent().find(".boxDetail").show();
+            $(ctrl).attr("data-state", "1");
+            $(ctrl).html("Testimonial Boxes Item " + index + "<i class='fusiona-minus'>");
+        }
+        else if (state == 1) {
+            $(ctrl).parent().find(".boxDetail").hide();
+            $(ctrl).attr("data-state", "0");
+            $(ctrl).html("Testimonial Boxes Item " + index + "<i class='fusiona-plus2'>");
+        }
+    }
+
+    function addNewTestimonialBox(ctrl, obj) {
+        var tr = $(ctrl).parents("tr:first");
+        var prevTr = $(tr).prev()[0];
+        var cloneTr = $(prevTr).clone(true);
+        $(cloneTr).css("display", "");
+        $(cloneTr).addClass("child-clone-row");
+        var td = $(cloneTr).find("td:first");
+        var linkHeader = $(td).find(".linkHeader");
+        TestimonialBox += 1;
+        $(linkHeader).attr("data-boxIndex", TestimonialBox);
+        $(linkHeader).html("Testimonial Boxes Item " + TestimonialBox + "<i class='fusiona-plus2'>");
+        cloneTr.find(".fusionb-upload-button").prop('id', 'testimonialBoxUpload' + TestimonialBox);
+        //$(linkHeader).attr("data-state", TestimonialBoxTestimonial);
+
+        if (obj != undefined) {
+            $(cloneTr).find(".subObjectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(obj[$(this).attr("data-subPropertyIndex")]);
+                } else {
+                    $(this).val(obj[$(this).attr("data-subPropertyIndex")]);
+                }
+            });
+            $(cloneTr).find(".uploaded-image").each(function () {
+                $(this).attr("src", obj[77]);
+                if (obj[77] != '') {
+                    $(this).parent().find('.fusionb-upload-button').text('Remove').addClass('remove-image');
+                }
+            });
+        }
+
+        $(cloneTr).find('#testimonialBoxUpload' + TestimonialBox).click(function () {
+            $("#dialog_uploadMedia").empty();
+            var template = root + "/Templates/CMS/Editor/UploadMediaTemplate.html";
+            $("#dialog_uploadMedia").load(template);
+            uploaderOpenedBy = $(this);
+            //$("#dialog_uploadMedia").attr("data-allowMultiSelect",false); //Add this line only if you want to add multiselect option
+
+            if (uploaderOpenedBy.hasClass('remove-image')) {
+                uploaderOpenedBy.parent().find('img').attr('src', '');
+                uploaderOpenedBy.parent().find('input').attr('value', '');
+                uploaderOpenedBy.hide();
+                uploaderOpenedBy.text('Upload').removeClass('remove-image').attr('style', '');
+
+                return;
+            }
+            var dialog = $("#dialog_uploadMedia").dialog({
+                autoOpen: false,
+                width: "96%",
+                modal: true,
+                resizable: false,
+                position: [30, 30],
+                dialogClass: "no-titlebar",
+                create: function (event) { $(event.target).parent().css('position', 'fixed'); $(".ui-widget-header").hide(); },
+                open: function () { $(".ui-widget-header").hide(); },
+                close: function () {
+                    //for (var i = 0; i < selectedUploadedObjectsToUse.length; i++) {
+                    //    alert(selectedUploadedObjectsToUse[i].FilePath);
+                    //}
+                    $(".ui-widget-header").show();
+                    if (selectedUploadedObjectsToUse.length > 0) {
+                        uploaderCallback(selectedUploadedObjectsToUse[0].FilePath);
+                        uploaderOpenedBy.text('Remove').addClass('remove-image');
+                    }
+                }
+            });
+            dialog.dialog("open");
+        });
+        $(prevTr).before($(cloneTr));
+
+    }
+
+    function removeTestimonialBox(ctrl) {
+        var tr = $(ctrl).parents("tr:first");
+        if (TestimonialBox == 1) {
+            alert("You need a minimum of one row");
+            return false;
+        }
+        $(tr).remove();
+        TestimonialBox -= 1;
+        var c = 1;
+        $("#TestimonialBoxContainer tr.child-clone-row").each(function () {
+            var linkHeader = $(this).find(".linkHeader");
+            $(linkHeader).attr("data-boxIndex", c);
+            $(linkHeader).html("Testimonial Boxes Item " + c + "<i class='fusiona-plus2'>");
+            c = c + 1;
+        });
+    }
+
+    function uploaderCallback(filePath) {
+        if ($(uploaderOpenedBy) != undefined) {
+            $(uploaderOpenedBy).parent().find("input[type='hidden']").val(filePath);
+            $(uploaderOpenedBy).parent().find("img").attr("src", filePath);
+        }
+    }
+</script>
+<div style="width: 95%; display: inline-block; position: absolute; left: 2%">
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Design</strong><span>Choose a design for the shortcode.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_design" name="fusion_design" class="select-field objectProperty" data-propertyindex="590">
+                <option value="classic">Classic</option>
+                <option value="clean">Clean</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-color">
+        <div class="name-description"><strong>Background Color</strong><span>Controls the background color. Leave blank for theme option selection.</span></div>
+        <div class="element-type">
+            <div class="wp-picker-container">
+                <table style="width: 100%" colspacing="10">
+                    <tr>
+                        <td style="width: 75%; text-align: right;">
+                            <div id="backgroundColorSelector" class="colorSelector" style="width: 90%;">
+                                <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                </div>
+                                <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                </span>
+                            </div>
+                        </td>
+                        <td style="width: 25%; vertical-align: middle;">
+                            <input type="text" class="objectProperty" data-propertyindex="591" value="" id="backgroundColor" name="backgroundColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-color">
+        <div class="name-description"><strong>Text Color</strong><span>Controls the text color. Leave blank for theme option selection.</span></div>
+        <div class="element-type">
+            <div class="wp-picker-container">
+                <table style="width: 100%" colspacing="10">
+                    <tr>
+                        <td style="width: 75%; text-align: right;">
+                            <div id="textColorSelector" class="colorSelector" style="width: 90%;">
+                                <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                </div>
+                                <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                </span>
+                            </div>
+                        </td>
+                        <td style="width: 25%; vertical-align: middle;">
+                            <input type="text" class="objectProperty" data-propertyindex="592" value="" id="textColor" name="textColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Random Order</strong><span>Choose to display testimonials in random order.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_random" name="fusion_random" class="select-field objectProperty" data-propertyindex="593">
+                <option value="" selected="">Default</option>
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS Class</strong><span>Add a class to the wrapping HTML element.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="594" value="" id="fusion_class" name="fusion_class" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS ID</strong><span>Add an ID to the wrapping HTML element.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="595" value="" id="fusion_id" name="fusion_id" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <table class="clearfix has-children" id="TestimonialBoxContainer">
+        <tbody>
+            <tr data-boxindex="0">
+                <td>
+                    <a href="#" class="fusion-expand-child linkHeader" data-boxindex="" onclick="toggleTestimonialBoxDetail(this)" data-state="0">Testimonial Item 1<i class="fusiona-plus2"></i></a>
+                    <div class="child-options boxDetail" style="display: none;" data-boxindex="">
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-input">
+                            <div class="name-description"><strong>Name</strong><span>Insert the name of the person</span></div>
+                            <div class="element-type">
+                                <input type="text" class="text-field subObjectProperty" data-subpropertyindex="75" value="" id="fusion_name[0]" name="fusion_name[0]" size="50" style="padding: 6px 0px !important;">
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-select">
+                            <div class="name-description"><strong>Avatar</strong><span>Choose which kind of Avatar to be displayed.</span></div>
+                            <div class="element-type">
+                                <div class="select_arrow"></div>
+                                <select id="fusion_gender[0]" name="fusion_gender[0]" class="select-field subObjectProperty" data-subpropertyindex="76">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="image">Image</option>
+                                    <option value="none">None</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-upload">
+                            <div class="name-description"><strong>Custom Avatar</strong><span>Upload a custom avatar image.</span></div>
+                            <div class="element-type">
+                                <div class="fusion-upload-container">
+                                    <img src="" alt="Image" class="uploaded-image" style="height: 192px; width: 311px; padding-bottom: 3px;">
+                                    <div style="clear: both;"></div>
+                                    <input type="hidden" class="fusion-form-text fusion-form-upload fusion-input subObjectProperty" name="fusion_image" value=""
+                                           data-subpropertyindex="77">
+                                    <a href="#" class="fusionb-upload-button " data-upid="1">Upload</a>
+                                    <a href="#" style="display: none" class="fusionb-edit-button" data-upid="1">Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-input">
+                            <div class="name-description"><strong>Avatar Alt Text</strong><span>The alt attribute provides alternative information if an image cannot be viewed.</span></div>
+                            <div class="element-type">
+                                <input type="text" class="text-field subObjectProperty" data-subpropertyindex="175" value="" id="txtAltText" name="fusion_name[0]" size="50" style="padding: 6px 0px !important;">
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-input">
+                            <div class="name-description"><strong>Border Radius</strong><span>Choose the radius of the testimonial image. In pixels (px), ex: 1px, or "round".  Leave blank for theme option selection.</span></div>
+                            <div class="element-type">
+                                <input type="text" class="text-field subObjectProperty" data-subpropertyindex="78" value="" id="fusion_borderradius[0]" name="fusion_borderradius[0]" size="50" style="padding: 6px 0px !important;">
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-input">
+                            <div class="name-description"><strong>Company</strong><span>Insert the name of the company.</span></div>
+                            <div class="element-type">
+                                <input type="text" class="text-field subObjectProperty" data-subpropertyindex="79" value="" id="fusion_company[0]" name="fusion_company[0]" size="50" style="padding: 6px 0px !important;">
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-input">
+                            <div class="name-description"><strong>Link</strong><span>Add the url the company name will link to.</span></div>
+                            <div class="element-type">
+                                <input type="text" class="text-field subObjectProperty" data-subpropertyindex="80" value="" id="fusion_link[0]" name="fusion_link[0]" size="50" style="padding: 6px 0px !important;">
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-select">
+                            <div class="name-description">
+                                <strong>Target</strong><span>_self = open in same window<br>
+                                    _blank = open in new window.</span>
+                            </div>
+                            <div class="element-type">
+                                <div class="select_arrow"></div>
+                                <select id="fusion_target[0]" name="fusion_target[0]" class="select-field subObjectProperty" data-subpropertyindex="81">
+                                    <option value="_self" selected="">_self</option>
+                                    <option value="_blank">_blank</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-textarea">
+                            <div class="name-description"><strong>Testimonial Content</strong><span>Add the testimonial content</span></div>
+                            <div class="element-type">
+                                <textarea rows="5" cols="55" class="textarea-field subObjectProperty" data-subpropertyindex="82" id="fusion_content_wp[0]" name="fusion_content_wp[0]"></textarea>
+                            </div>
+                        </div>
+                        <a class="child-clone-row-remove fusion-shortcodes-button" href="JavaScript:void(0)" onclick="removeTestimonialBox(this)">Remove</a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><a id="fusion-child-add" data-itemcount="1" href="JavaScript:void(0)" onclick="addNewTestimonialBox(this)">Add New Testimonial</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,536 @@
+﻿@model PartnerPortal.Models.EditorVM
+@{
+    Layout = "~/Views/Shared/_LayoutScripts.cshtml";
+}
+
+@section StyleSheets
+{
+    <link href="~/Styles/Editor/Editor.css" rel="stylesheet" />
+    <link href="~/Styles/Editor/Symbols.css" rel="stylesheet" />
+    <link href="~/Styles/Editor/application.css" rel="stylesheet" />
+    <link href="~/Styles/Editor/colorpicker.css" rel="stylesheet" />
+    <script src="~/Scripts/Editor/Editor.js"></script>
+    <script src="~/Scripts/Editor/EditorMenuColumnItemHandler.js"></script>
+    <script src="~/Scripts/Editor/EditorElementDropHandler.js"></script>
+    <script src="~/Scripts/Editor/ObjectModifier.js"></script>
+    <script src="~/Scripts/Editor/EditElementHandler.js"></script>
+    <script src="~/Scripts/Editor/Enumerations.js"></script>
+    <script src="~/Scripts/Editor/colorpicker.js"></script>
+    <script src="~/Scripts/tinymce/tinymce.js"></script>
+    <script src="~/Scripts/navAccordion.js"></script>
+@*    <script src="~/Scripts/Editor/MediaUploader.js"></script>*@
+@*    <script src="~/Scripts/Editor/DataSheetUploader.js"></script>*@
+}
+
+@section scripts
+{
+    <style>
+        #div1 {
+            width: 350px;
+            min-height: 300px;
+            height: auto;
+            padding: 10px;
+            border: 1px solid #aaaaaa;
+        }
+    </style>
+
+}
+
+@*        <div>
+            <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <br>
+            <img id="drag1" src="~/Images/StarLogo.png" draggable="true" ondragstart="drag(event)" width="336" height="69">
+            <input id="t1" type="text" value="Test" draggable="true" ondragstart="drag(event)"/>
+        </div>*@
+<div class="leftFloat width96p paddingtop20 paddingleft2p" style="">
+    <button type="button" id="test"  style="" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" onclick=" OpenModalForViewJson(); "><span class="ui-button-text">Display JSON</span></button>
+    <button type="button" id="insert-media-button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick=" UploadMedia(); "><span class="ui-button-text">Add Media</span></button>
+</div>
+<div class="leftFloat width100p paddingtop20">
+    <div id="editorMainContainer" class="width96p" style="height: auto; display: inline-block; border: 2px solid #aaaaaa; position: relative; left: 2%; background-color: #FFFFFF;">
+        <div id="editorHeader" style="height: 70px; width: 100%; background-color: #f1f1f1;">
+            <table style="height: 100%; width: 100%">
+                <tr>
+                    <td style="width: 90%; text-align: center; padding-left: 20px;">
+                        <div id="tabButton-1" data-index="1" class="editor-tab-button editor-tab-button-selected">
+                            <a href="#" class="font-White font-Bold">
+                                <i class="fusion-tab fusiona-columns"></i>&nbsp;Column Options
+                            </a>
+                        </div>
+                        <div id="tabButton-2" data-index="2" class="editor-tab-button" style="position: relative; left: 10px;">
+                            <a href="#" class="font-Black">
+                                <i class="fusion-tab fusiona-TFicon"></i>&nbsp;Builder Elements
+                            </a>
+                        </div>
+                        <div id="tabButton-3" data-index="3" class="editor-tab-button" style="position: relative; left: 20px;">
+                            <a href="#" class="font-Black">
+                                <i class="fusion-tab fusiona-file-alt"></i>&nbsp;Custom Templates
+                            </a>
+                        </div>
+                        <div id="tabButton-4" data-index="4" class="editor-tab-button" style="position: relative; left: 30px;">
+                            <a href="#" class="font-Black">
+                                <i class="fusion-tab fusiona-copy"></i>&nbsp;Pre Built Templates
+                            </a>
+                        </div>
+
+                    </td>
+                    <td style="width: 10%; vertical-align: middle; text-align: center;">
+
+                        <a id="del_icon" href="javascript:void(0)" style="position: relative; left: 20px;"><i class="fusiona-trash-o"></i></a>
+                        @*   <a class="b_left fusion_undo" href="javascript:void(0)" style="position: relative; left: 40px;"><i class="fusiona-reply" style="color: rgb(0, 142, 197);"></i></a>
+                    <a class="b_right fusion_redo" href="javascript:void(0)"><i class="fusiona-forward" style="color: rgb(0, 142, 197);"></i></a>*@
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="editorElements-1" style="width: 100%; background-color: #ffffff; display: inline-block; border: 1px solid #aaaaaa;">
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" draggable="true" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container grid-option" id="full_width_container">
+                    <i class="fusion-icon builder-options-icon fusiona-move-horizontal"></i>
+                    <span>Full Width Container</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" draggable="true" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container grid-option" id="grid_one_container">
+                    <i class="fusion-icon fusion-icon-grid-1"></i>
+                    <span>1/1</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" draggable="true" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container grid-option" id="grid_two_container">
+                    <i class="fusion-icon fusion-icon-grid-2"></i>
+                    <span>1/2</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" draggable="true" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container grid-option" id="grid_three_container">
+                    <i class="fusion-icon fusion-icon-grid-3"></i>
+                    <span>1/3</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" draggable="true" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container grid-option" id="grid_two_third_container">
+                    <i class="fusion-icon fusion-icon-grid-2-3"></i>
+                    <span>2/3</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" draggable="true" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container grid-option" id="grid_four_container">
+                    <i class="fusion-icon fusion-icon-grid-4"></i>
+                    <span>1/4</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" draggable="true" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container grid-option" id="grid_three_fourth_container">
+                    <i class="fusion-icon fusion-icon-grid-3-4"></i>
+                    <span>3/4</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" draggable="true" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container grid-option" id="grid_five_container">
+                    <i class="fusion-icon fusion-icon-grid-5"></i>
+                    <span>1/5</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" draggable="true" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container grid-option" id="grid_two_fifth_container">
+                    <i class="fusion-icon fusion-icon-grid-2-5"></i>
+                    <span>2/5</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" draggable="true" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container grid-option" id="grid_three_fifth_container">
+                    <i class="fusion-icon fusion-icon-grid-3-5"></i>
+                    <span>3/5</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" draggable="true" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container grid-option" id="grid_four_fifth_container">
+                    <i class="fusion-icon fusion-icon-grid-4-5"></i>
+                    <span>4/5</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" draggable="true" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container grid-option" id="grid_six_container">
+                    <i class="fusion-icon fusion-icon-grid-6"></i>
+                    <span>1/6</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" draggable="true" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container grid-option" id="grid_five_sixth_container">
+                    <i class="fusion-icon fusion-icon-grid-5-6"></i>
+                    <span>5/6</span>
+                </a>
+            </div>
+        </div>
+        <div id="editorElements-2" style="height: auto; width: 100%; background-color: #ffffff; border: 1px solid #aaaaaa; display: none;">
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="alert_box">
+                    <i class="fusion-icon builder-options-icon fusiona-exclamation-sign"></i>
+                    <span>Alert</span>
+                </a>
+            </div>
+        <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" hidden="" ondragstart="drag(event)">
+            <a href="javascript:void(0);" class="element_block item-container element-option" id="wp_blog">
+                <i class="fusion-icon builder-options-icon fusiona-blog"></i>
+                <span>Blog</span>
+            </a>
+        </div>
+        <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+            <a href="javascript:void(0);" class="element_block item-container element-option" id="back_to_top_block">
+                <i class="fusion-icon builder-options-icon fusiona-hand-up"></i>
+                <span>Back To Top</span>
+            </a>
+        </div>
+
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="button_block">
+                    <i class="fusion-icon builder-options-icon fusiona-check-empty"></i>
+                    <span>Button</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="button_with_icon">
+                    <i class="fusion-icon builder-options-icon fusiona-check-empty"></i>
+                    <span>Button With Icon</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="check_list">
+                    <i class="fusion-icon builder-options-icon fusiona-list-ul"></i>
+                    <span>Checklist</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="fusion_code">
+                    <i class="fusion-icon builder-options-icon fusiona-code"></i>
+                    <span>Code Block</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="content_boxes">
+                    <i class="fusion-icon builder-options-icon fusiona-newspaper"></i>
+                    <span>Content Boxes</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="countdown_box">
+                    <i class="fusion-icon builder-options-icon fusiona-clock"></i>
+                    <span>Countdown Box</span>
+                </a>
+            </div>
+            @* <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="counter_box">
+                    <i class="fusion-icon builder-options-icon fusiona-browser"></i>
+                    <span>Counter Box</span>
+                </a>
+            </div>*@
+            @*  <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="counter_circle">
+                    <i class="fusion-icon builder-options-icon fusiona-clock"></i>
+                    <span>Counter Circle</span>
+                </a>
+            </div>*@
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="flip_boxes">
+                    <i class="fusion-icon builder-options-icon fusiona-loop-alt2"></i>
+                    <span>Flip Boxes</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" hidden="" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="font_awesome">
+                    <i class="fusion-icon builder-options-icon fusiona-flag"></i>
+                    <span>Font Awesome</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" hidden="" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="fusionslider">
+                    <i class="fusion-icon builder-options-icon fusiona-TFicon"></i>
+                    <span>Fusion Slider</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="google_map">
+                    <i class="fusion-icon builder-options-icon fusiona-map fusion_has_colorpicker"></i>
+                    <span>Google Map</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="image_carousel">
+                    <i class="fusion-icon builder-options-icon fusiona-images"></i>
+                    <span>Image Carousel</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="image_frame">
+                    <i class="fusion-icon builder-options-icon fusiona-image"></i>
+                    <span>Image Frame</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="layer_sldier">
+                    <i class="fusion-icon builder-options-icon fusiona-stack"></i>
+                    <span>Layer Slider</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="menu_anchor">
+                    <i class="fusion-icon builder-options-icon fusiona-anchor"></i>
+                    <span>Menu Anchor</span>
+                </a>
+            </div>
+        <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+            <a href="javascript:void(0);" class="element_block item-container element-option" id="modal">
+                <i class="fusion-icon builder-options-icon fusiona-external-link"></i>
+                <span>Modal</span>
+            </a>
+        </div>
+        <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+            <a href="javascript:void(0);" class="element_block item-container element-option" id="page_scroller">
+                <i class="fusion-icon builder-options-icon fusiona-layers-alt"></i>
+                <span>Page Scroller</span>
+            </a>
+        </div>
+
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" hidden="" data-drop_level="4">
+                <a href="javascript:void(0);" class="element_block item-container" id="person_box">
+                    <i class="fusion-icon builder-options-icon fusiona-user"></i>
+                    <span>Person</span>
+                </a>
+            </div>
+
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="pricing_table">
+                    <i class="fusion-icon builder-options-icon fusiona-dollar"></i>
+                    <span>Pricing Table</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" hidden="" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="progress_bar">
+                    <i class="fusion-icon builder-options-icon fusiona-tasks"></i>
+                    <span>Progress Bar</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" hidden="" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="recent_posts">
+                    <i class="fusion-icon builder-options-icon fusiona-feather"></i>
+                    <span>Recent Posts</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" hidden="" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="recent_works">
+                    <i class="fusion-icon builder-options-icon fusiona-insertpicture"></i>
+                    <span>Recent Works</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="section_separator">
+                    <i class="fusion-icon builder-options-icon fusiona-ellipsis"></i>
+                    <span>Section Separator</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="separator_element">
+                    <i class="fusion-icon builder-options-icon fusiona-minus"></i>
+                    <span>Separator</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="sharing_box">
+                    <i class="fusion-icon builder-options-icon fusiona-share2"></i>
+                    <span>Sharing Box</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" hidden="" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="revolution_slider">
+                    <i class="fusion-icon builder-options-icon fusiona-air"></i>
+                    <span>Revolution Slider</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" hidden="" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="post_slider">
+                    <i class="fusion-icon builder-options-icon fusiona-layers-alt"></i>
+                    <span>Post Slider</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="slider_element">
+                    <i class="fusion-icon builder-options-icon fusiona-uniF61C"></i>
+                    <span>Slider</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="slider_with_thumb">
+                    <i class="fusion-icon builder-options-icon fusiona-uniF61C"></i>
+                    <span>Slider With Thumb</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="social_links">
+                    <i class="fusion-icon builder-options-icon fusiona-link"></i>
+                    <span>Social Links</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="sound_cloud">
+                    <i class="fusion-icon builder-options-icon fusiona-soundcloud"></i>
+                    <span>Soundcloud</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle " ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="table_box">
+                    <i class="fusion-icon builder-options-icon fusiona-table"></i>
+                    <span>Table</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="tabs_box">
+                    <i class="fusion-icon builder-options-icon fusiona-folder"></i>
+                    <span>Tabs</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="tagline_box">
+                    <i class="fusion-icon builder-options-icon fusiona-list-alt"></i>
+                    <span>Tagline Box</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="testimonial_box">
+                    <i class="fusion-icon builder-options-icon fusiona-bubbles"></i>
+                    <span>Testimonial</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="text_box">
+                    <i class="fusion-icon builder-options-icon fusiona-font"></i>
+                    <span>Text Block</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="title_box">
+                    <i class="fusion-icon builder-options-icon fusiona-H"></i>
+                    <span>Title</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="toggles_box">
+                    <i class="fusion-icon builder-options-icon fusiona-expand-alt"></i>
+                    <span>Toggles</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="video_vimeo">
+                    <i class="fusion-icon builder-options-icon fusiona-vimeo2"></i>
+                    <span>Vimeo</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" hidden="" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="woo_carousel">
+                    <i class="fusion-icon builder-options-icon fusiona-tag"></i>
+                    <span>Woo Carousel</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" hidden="" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="woo_featured">
+                    <i class="fusion-icon builder-options-icon fusiona-star-empty"></i>
+                    <span>Woo Featured</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" hidden="" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="woo_shortcodes">
+                    <i class="fusion-icon builder-options-icon fusiona-shopping-cart"></i>
+                    <span>Woo Shortcodes</span>
+                </a>
+            </div>
+            <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                <a href="javascript:void(0);" class="element_block item-container element-option" id="video_youtube">
+                    <i class="fusion-icon builder-options-icon fusiona-youtube"></i>
+                    <span>Youtube</span>
+                </a>
+            </div>
+        <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+            <a href="javascript:void(0);" class="element_block item-container element-option" id="video">
+                <i class="fusion-icon builder-options-icon fusiona-star-empty"></i>
+                <span>Video</span>
+            </a>
+        </div>
+        <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+            <a href="javascript:void(0);" class="element_block item-container element-option" id="apn">
+                <i class="fusion-icon builder-options-icon fusiona-pen"></i>
+                <span>Product Number</span>
+            </a>
+        </div>
+        <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+            <a href="javascript:void(0);" class="element_block item-container element-option" id="imagelibrary">
+                <i class="fusion-icon builder-options-icon fusiona-image"></i>
+                <span>Image Library</span>
+            </a>
+        </div>
+        </div>
+    <div id="editorElements-3" style="height: auto; width: 100%; background-color: #ffffff; border: 1px solid #aaaaaa; display: none;">
+        @{
+            var i = 0;
+                foreach (var item in Model.CustomTemplates)
+                {
+                //@Html.Raw(string.Format("<div class='pre_built_templates_section'><a class='fusion_pre_built_template templates_selection' data-id='{0}' onclick='loadTemplate(this)' href='JavaScript:void(0)'>{1}</a></div>", item.Id, item.Title))
+                    <text>
+                        <div class="item-wrapper pre_element_block ui-draggable ui-draggable-handle" ondragstart="drag(event)">
+                            <a href="javascript:void(0);" class="element_block item-container element-option" id="Custom_Template_@i" data-pageId ="@item.Id">
+                                <i class="fusion-icon builder-options-icon fusiona-uniF61C"></i>
+                                <span>@item.Title</span>
+                            </a>
+                        </div>
+                    </text>
+                    i = i + 1;
+                }
+         }
+
+
+    </div>
+        <div id="editorElements-4" style="height: auto; width: 100%; background-color: #ffffff; border: 1px solid #aaaaaa; display: none;">
+            <div id="pre_built_templates_wrapper">
+                <div id="custom_templates_right" class="custom_pre_built">
+                    @{
+                        foreach (var item in Model.Templates)
+                        {
+                        @Html.Raw(string.Format("<div class='pre_built_templates_section'><a class='fusion_pre_built_template templates_selection' data-id='{0}' onclick='loadTemplate(this)' href='JavaScript:void(0)'>{1}</a></div>", item.Id, item.Title))
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div id="editor" data-objid="container_editor" style="height: 600px; overflow: auto; min-height: 600px; width: 100%; background-color: #E2E2E2; display: inline-block; border: none;" ondrop="drop(event)" ondragover="allowDrop(event)">
+        </div>
+    </div>
+</div>
+
+@Html.Raw(File.ReadAllText(Server.MapPath("~/Templates/CMS/Editor/ColumnTemplates.html")))
+@Html.Raw(File.ReadAllText(Server.MapPath("~/Templates/CMS/Editor/ElementTemplate.html")))
+<div class="leftFloat width100p paddingtop30">
+    <div id="dialog_form" style="display: none;"></div>
+    <div id="dialog_uploadMedia" style="display: none;"></div>
+    <div id="dialog_viewJson" style="display: none;">
+        <div class="width98p" style="display: inline-block; position: absolute; left: 1%">
+            <div class="leftFloat width98p paddingtop10 paddingleft1p">
+                <button id="btn-json-viewer" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" title="View Json"><span class="ui-button-text">View Json Object of editor</span></button>
+            </div>
+            <div class="leftFloat width98p paddingtop10 paddingleft1p">
+                <pre id="json-renderer"></pre>
+            </div>
+            <script>
+                $(function () {
+                    $('#btn-json-viewer').click(function () {
+                        var options = {
+                            collapsed: $('#collapsed').is(':checked'),
+                            withQuotes: $('#with-quotes').is(':checked')
+                        };
+                        $('#json-renderer').jsonViewer(editorContent, options);
+                    });
+                    // Display JSON sample on load
+                    // $('#btn-json-viewer').click();
+                });
+            </script>
+        </div>
+    </div>
+</div>

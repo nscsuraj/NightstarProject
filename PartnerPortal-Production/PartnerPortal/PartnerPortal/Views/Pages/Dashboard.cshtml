@@ -1,0 +1,64 @@
+﻿@model PartnerPortal.Models.PageInfoVM
+@{
+    ViewBag.Title = Model.TitleTag;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section MetaTags
+{
+        <link rel="canonical" href="https://www.starmicronics.com/partnerportal/pages/dashboard/" />
+     @foreach (var m in Model.Gateway.MetaTags)
+     {
+         if (m.TagType == 0)
+         {
+             <meta property="og:@m.TagKey" content="@m.TagValue"/>
+         }
+         else
+         {
+            <meta name="@m.TagKey" content="@m.TagValue"/>
+         }
+     
+     }
+}
+
+@section scripts
+{
+
+}
+@section MainContent {
+    @if (Model.Gateway.Identity.PartnerType.ToLower() == "distributor")
+    {
+        @Html.Partial("Partials/StarDashboardDistPartial")
+    }
+    else
+    {
+        @Html.Partial("Partials/StarDashboardIsvPartial")
+    }
+     
+
+    @foreach (var page in Model.PageSections)
+    {
+        @Html.Partial("Partials/PagePartial", page.Id)
+    }
+
+    @Html.Partial("Partials/StarBlogPosts")
+    @Html.HiddenFor(m=> m.MenuName)
+    @Html.HiddenFor(m=> m.PageHeader)
+    <style>
+    
+    @@media only screen and (max-width: 990px)
+    {
+        .fusion-one-third {
+            width: 100% !important;
+            margin-top: 20px;
+        }
+    }
+    </style>
+}
+@*@section FooterContent {
+    @Html.Partial("Partials/FooterContentPartial",Model.Gateway)
+}*@
+
+@section RightPanelPartial{
+    @Html.Partial("Partials/RightPanelPartial")
+}

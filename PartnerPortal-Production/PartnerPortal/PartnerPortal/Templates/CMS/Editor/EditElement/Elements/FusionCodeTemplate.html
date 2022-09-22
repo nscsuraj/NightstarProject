@@ -1,0 +1,37 @@
+﻿<div style="width: 95%; display: inline-block; position: absolute; left: 2%">
+    <div class="clearfix form-element-container form-element-container-textarea">
+        <div class="name-description"><strong>Code</strong><span>Enter some content for this codeblock</span></div>
+        <div class="element-type">
+            <textarea rows="5" cols="55" class="textarea-field objectProperty" data-PropertyIndex="411" id="fusion_content_code" name="fusion_content_code">
+                Click edit button to change this code.
+            </textarea>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $(".ui-dialog").css("height", $(window).height() - 70);
+
+        //get the object and set values
+        var carrierObj = JSON.parse($("#dialog_form").attr("data-obj"));
+        try {
+            $(".objectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(carrierObj[$(this).attr("data-PropertyIndex")]);
+                } else if ($(this).is('textarea')) {
+                    if (!(carrierObj[$(this).attr("data-PropertyIndex")] == undefined)) {
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                    }
+                } else {
+                    if (carrierObj[$(this).attr("data-PropertyIndex")] != null && carrierObj[$(this).attr("data-PropertyIndex")] != undefined && carrierObj[$(this).attr("data-PropertyIndex")].length > 0)
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                }
+            });
+        } catch (e) {
+
+        }
+    });
+</script>

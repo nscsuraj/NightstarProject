@@ -1,0 +1,38 @@
+﻿
+<div style="margin-top: 20px; text-align: center; width: 100%;" ng-controller="PPAdminLeftPanelBrChartController">
+    <canvas id="bar" class="chart chart-bar" chart-colors="chartColors" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" style="display: block; width: 100%; height: 261px;"></canvas>
+</div>
+
+<script>
+     
+
+        app.controller("PPAdminLeftPanelBrChartController", function ($controller, $scope, $http, $sce, 
+            notificationFactory, $location,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory,$window) {
+            //var ddlYears = document.getElementById("cmbYearForChart");
+            //$scope.Visits = [];
+            //$scope.PageViews = [28, 48, 40, 19, 86, 27, 90, 40, 19, 86, 27, 90];
+            $scope.data = [];
+            $scope.Year = $window.document.getElementById("cmbYearForChart").value;
+            $scope.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+            $scope.series = ['Visits', 'Page Views'];
+            alert($scope.Year);
+            $scope.GetVisits = function () {
+                dbUtilFactory.get(root + 'api/ppcmsapi/GetVisitsAndPageViewsSummary/' + document.getElementById("cmbYearForChart").value, "", function (d) {
+                    //$scope.Visits = d.Visits;
+                    $scope.data.push(d.Visits);
+                    $scope.data.push(d.PageViews);
+                }, '', 'Error getting data ');
+            };
+            $scope.GetVisits();
+            
+            $scope.options = { legend: { display: true } };
+
+            $scope.chartColors = ['#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'];
+
+            $scope.$watch('Year', function () {
+                alert('Watch:' + $scope.Year);
+            });
+        });
+    </script>

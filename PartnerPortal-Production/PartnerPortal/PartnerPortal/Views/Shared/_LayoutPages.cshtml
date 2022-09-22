@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="en-US" class="no-js">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>@ViewBag.Title</title>
+    <link href="~/Images/star_icon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    @RenderSection("MetaTags", required: false)
+    @Styles.Render("~/Content/css")
+     @Styles.Render("~/Content/Maincss")
+    @Styles.Render("~/Content/editorcmscss")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/angularjs")
+    @Scripts.Render("~/bundles/customjsmain")
+     @RenderSection("scripts", required: false)
+</head>
+
+<body class="f11 f11v1">
+    <script type="text/javascript">
+    var rootUrl = '@Url.Content("~")';
+    var root = 'http://localhost/';
+    //    var root = 'http://mdev.starmicronics.com/';
+    </script>
+    @RenderSection("MainContent", required: false)
+    <script type="text/javascript" id="mpelid" src="//starmicronicscom.mpeasylink.com/mpel/mpel.js" async></script>
+    <script type="text/javascript" src="~/Scripts/ResponsiveVideo.js"></script>
+
+
+    <!-- Start of LiveChat (www.livechatinc.com) code -->
+    <script type="text/javascript">
+        window.__lc = window.__lc || {};
+        window.__lc.license = 11189897;
+        (function () {
+            var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+            lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
+        })();
+    </script>
+    <noscript>
+        <a href="https://www.livechatinc.com/chat-with/11189897/" rel="nofollow">Chat with us</a>,
+        powered by <a href="https://www.livechatinc.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a>
+    </noscript>
+    <!-- End of LiveChat code -->
+
+</body>
+</html>

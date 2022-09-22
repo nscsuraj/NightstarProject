@@ -1,0 +1,61 @@
+﻿<div style="width: 95%; display: inline-block; position: absolute; left: 2%">
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Video ID</strong><span>For example the Video ID for<br>https://vimeo.com/75230326 is 75230326</span></div>
+        <div class="element-type"><input type="text" class="text-field objectProperty" data-PropertyIndex="325" value="" id="Text1" name="fusion_id" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Width</strong><span>In pixels but only enter a number, ex: 600</span></div>
+        <div class="element-type"><input type="text" class="text-field objectProperty" data-PropertyIndex="326" value="600" id="fusion_width" name="fusion_width" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Height</strong><span>In pixels but only enter a number, ex: 350</span></div>
+        <div class="element-type"><input type="text" class="text-field objectProperty" data-PropertyIndex="327" value="350" id="fusion_height" name="fusion_height" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Autoplay Video</strong><span>Set to yes to make video autoplaying</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_autoplay" name="fusion_autoplay" class="select-field objectProperty" data-PropertyIndex="328">
+                <option value="no" selected="">No</option>
+                <option value="yes">Yes</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>AdditionalAPI Parameter</strong><span>Use additional API parameter, for example &amp;title=0 to disable title on video. VimeoPlus account may be required.</span></div>
+        <div class="element-type"><input type="text" class="text-field objectProperty" data-PropertyIndex="329" value="" id="fusion_apiparams" name="fusion_apiparams" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS Class</strong><span>Add a class to the wrapping HTML element.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-PropertyIndex="330" value="" id="fusion_class" name="fusion_class" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $(".ui-dialog").css("height", $(window).height() - 70);
+
+        //get the object and set values
+        var carrierObj = JSON.parse($("#dialog_form").attr("data-obj"));
+        try {
+            $(".objectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(carrierObj[$(this).attr("data-PropertyIndex")]);
+                } else {
+                    if (carrierObj[$(this).attr("data-PropertyIndex")] != null && carrierObj[$(this).attr("data-PropertyIndex")] != undefined && carrierObj[$(this).attr("data-PropertyIndex")].length > 0)
+                    $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                }
+            });
+        } catch (e) {
+
+        }
+    });
+</script>

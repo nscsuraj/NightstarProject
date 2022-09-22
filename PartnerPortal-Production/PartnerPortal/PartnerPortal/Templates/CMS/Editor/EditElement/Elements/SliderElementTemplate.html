@@ -1,0 +1,287 @@
+﻿<div style="width: 95%; display: inline-block; position: absolute; left: 2%">
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Image Size Width</strong><span>Width in percentage (%) or pixels (px)</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="504" value="100%" id="fusion_size_width" name="fusion_size_width" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description">
+            <strong>Image Size Height</strong><span>Height in percentage (%) or pixels (px)</span>
+        </div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="505" value="100%" id="fusion_size_height" name="fusion_size_height" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description">
+            <strong>CSS Class</strong><span>Add a class to the wrapping HTML element.</span>
+        </div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="506" value="" id="fusion_class" name="fusion_class" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description">
+            <strong>CSS ID</strong><span>Add an ID to the wrapping HTML element.</span>
+        </div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="507" value="" id="fusion_id" name="fusion_id" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+
+    <table class="clearfix has-children" id="SliderContainer">
+        <tbody>
+            <tr data-boxindex="0">
+                <td><a href="#" class="fusion-expand-child linkHeader" data-boxindex="" onclick="toggleSliderDetail(this)" data-state="0">Slider Item 1<i class="fusiona-plus2"></i></a>
+                    <div class="child-options boxDetail" style="display: none;" data-boxindex="">
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-select">
+                            <div class="name-description"><strong>Slide Type</strong><span>Choose a video or image slide</span></div>
+                            <div class="element-type">
+                                <div class="select_arrow"></div>
+                                <select id="fusion_slider_type[0]" name="fusion_slider_type[0]" class="select-field subObjectProperty" data-subpropertyindex="35" onchange="toggleVideoImageElements(this)">
+                                    <option value="image" selected="">Image</option>
+                                    <option value="video">Video</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-upload videoHide">
+                            <div class="name-description"><strong>Slide Image</strong><span>Upload an image to display in the slide</span></div>
+                            <div class="element-type">
+                                <div class="fusion-upload-container">
+                                    <img src="" alt="Image" class="uploaded-image" style="height: 192px; width: 311px; padding-bottom: 3px;">
+                                    <div style="clear: both;"></div>
+                                    <input type="hidden" class="fusion-form-text fusion-form-upload fusion-input subObjectProperty" name="fusion_image"
+                                        value="" data-subpropertyindex="36">
+                                    <a href="#" class="fusionb-upload-button " data-upid="1">Upload</a>
+                                    <a href="#" style="display: none" class="fusionb-edit-button" data-upid="1">Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="clearfix form-element-container funsion-element-child form-element-container-input">
+                            <div class="name-description"><strong>Image Alt Text</strong><span>The alt attribute provides alternative information if an image cannot be viewed.</span></div>
+                            <div class="element-type">
+                                <input type="text" class="text-field subObjectProperty" data-subpropertyindex="175" value="" id="txtAltText" name="fusion_name[0]" size="50" style="padding: 6px 0px !important;">
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-input videoHide">
+                            <div class="name-description">
+                                <strong>Full Image Link or External Link</strong>
+                                <span>Add the url of where the image will link to. If lightbox option is enabled, you have to add the full image link to show it in the lightbox</span>
+                            </div>
+                            <div class="element-type">
+                                <input type="text" class="text-field subObjectProperty" data-subpropertyindex="37" value="" id="fusion_image_url[0]" name="fusion_image_url[0]" size="50" style="padding: 6px 0px !important;">
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-select videoHide">
+                            <div class="name-description"><strong>Link Target</strong><span>_self = open in same window<br>
+                                _blank = open in new window</span></div>
+                            <div class="element-type">
+                                <div class="select_arrow"></div>
+                                <select id="fusion_image_target[0]" name="fusion_image_target[0]" class="select-field subObjectProperty" data-subpropertyindex="38">
+                                    <option value="_self" selected="">_self</option>
+                                    <option value="_blank">_blank</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-select videoHide">
+                            <div class="name-description"><strong>Lighbox</strong><span>Show image in Lightbox</span></div>
+                            <div class="element-type">
+                                <div class="select_arrow"></div>
+                                <select id="fusion_image_lightbox[0]" name="fusion_image_lightbox[0]" class="select-field subObjectProperty" data-subpropertyindex="39">
+                                    <option value="yes" selected="">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-textarea imageHide" style="display: none;">
+                            <div class="name-description">
+                                <strong>Video Shortcode or Video Embed Code</strong>
+                                <span>Click the Youtube or Vimeo Shortcode button below then enter your unique video ID, or copy and paste your video embed code.
+                                    <a href="JavaScript:void(0);" onclick="addVideoCode(this)" data-videocode="[youtube id='Enter video ID (eg. Wq4Y7ztznKc)' width='600' height='350']" class="fusionb-add-shortcode">Insert Youtube Shortcode</a>
+                                    <a href="JavaScript:void(0);" onclick="addVideoCode(this)" data-videocode="[vimeo id='Enter video ID (eg. 10145153)' width='600' height='350']" class="fusionb-add-shortcode">Insert Vimeo Shortcode</a>
+                                </span>
+                            </div>
+                            <div class="element-type">
+                                <textarea rows="5" cols="55" class="textarea-field subObjectProperty" data-subpropertyindex="88"></textarea>
+                            </div>
+                        </div>
+                        <a class="child-clone-row-remove fusion-shortcodes-button" href="JavaScript:void(0)" onclick="removeSlider(this)">Remove</a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><a id="fusion-child-add" data-itemcount="1" href="JavaScript:void(0)" onclick="addNewSlider(this)">Add New Slide</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+    var uploaderOpenedBy = {};
+    var Slider = 0;
+    $(document).ready(function () {
+        $(".ui-dialog").css("height", $(window).height() - 60);
+
+        //get the object and set values
+        var carrierObj = JSON.parse($("#dialog_form").attr("data-obj"));
+        try {
+            $(".objectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(carrierObj[$(this).attr("data-PropertyIndex")]);
+                } else if ($(this).is('textarea')) {
+                    if (!(carrierObj[$(this).attr("data-PropertyIndex")] == undefined)) {
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                    }
+                } else {
+                    if (carrierObj[$(this).attr("data-PropertyIndex")] != null && carrierObj[$(this).attr("data-PropertyIndex")] != undefined && carrierObj[$(this).attr("data-PropertyIndex")].length > 0)
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                }
+            });
+        } catch (e) {
+
+        }
+        $("#SliderContainer tr:first").hide();
+        var tempSliders = carrierObj[614];
+        if (tempSliders != undefined && tempSliders.length > 0) {
+            for (var i = 0; i < tempSliders.length; i++) {
+                addNewSlider($("#fusion-child-add"), tempSliders[i]);
+            }
+        } else {//First Time
+            addNewSlider($("#fusion-child-add"));
+        }
+    });
+
+    function toggleSliderDetail(ctrl) {
+        var state = $(ctrl).attr("data-state");
+        var index = $(ctrl).attr("data-boxIndex");
+
+        if (state == 0) {
+            $(ctrl).parent().find(".boxDetail").show();
+            $(ctrl).attr("data-state", "1");
+            $(ctrl).html("Slider Item " + index + "<i class='fusiona-minus'>");
+        }
+        else if (state == 1) {
+            $(ctrl).parent().find(".boxDetail").hide();
+            $(ctrl).attr("data-state", "0");
+            $(ctrl).html("Slider Item " + index + "<i class='fusiona-plus2'>");
+        }
+    }
+
+    function addNewSlider(ctrl, obj) {    
+
+        var tr = $(ctrl).parents("tr:first");
+        var prevTr = $(tr).prev()[0];
+        var cloneTr = $(prevTr).clone(true);
+        $(cloneTr).css("display", "");
+        $(cloneTr).addClass("child-clone-row");
+        var td = $(cloneTr).find("td:first");
+        var linkHeader = $(td).find(".linkHeader");
+        Slider += 1;
+        $(linkHeader).attr("data-boxIndex", Slider);
+        $(linkHeader).html("Slider Item " + Slider + "<i class='fusiona-plus2'>");
+        cloneTr.find(".fusionb-upload-button").prop('id', 'sliderUpload' + Slider);
+        //$(linkHeader).attr("data-state", SliderSlider);
+
+
+        cloneTr.find('#sliderUpload' + Slider).click(function () {
+            $("#dialog_uploadMedia").empty();
+            var template = root + "/Templates/CMS/Editor/UploadMediaTemplate.html";
+            $("#dialog_uploadMedia").load(template);
+            uploaderOpenedBy = $(this);
+
+            if (uploaderOpenedBy.hasClass('remove-image')) {
+                uploaderOpenedBy.parent().find('img').attr('src', '');
+                uploaderOpenedBy.parent().find('input').attr('value', '');
+                uploaderOpenedBy.hide();
+                uploaderOpenedBy.text('Upload').removeClass('remove-image').attr('style', '');
+
+                return;
+            }
+            //$("#dialog_uploadMedia").attr("data-allowMultiSelect",false); //Add this line only if you want to add multiselect option
+            var dialog = $("#dialog_uploadMedia").dialog({
+                autoOpen: false,
+                width: "96%",
+                modal: true,
+                resizable: false,
+                position: [30, 30],
+                dialogClass: "no-titlebar",
+                create: function (event) { $(event.target).parent().css('position', 'fixed'); $(".ui-widget-header").hide(); },
+                open: function () { $(".ui-widget-header").hide(); },
+                close: function () {
+                    //for (var i = 0; i < selectedUploadedObjectsToUse.length; i++) {
+                    //    alert(selectedUploadedObjectsToUse[i].FilePath);
+                    //}
+                    $(".ui-widget-header").show();
+                    if (selectedUploadedObjectsToUse.length > 0) {
+                        uploaderCallback(selectedUploadedObjectsToUse[0].FilePath);
+                        uploaderOpenedBy.text('Remove').addClass('remove-image');
+                    }                   
+                }
+            });
+            dialog.dialog("open");
+        });
+
+        if (obj != undefined) {
+            $(cloneTr).find(".subObjectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(obj[$(this).attr("data-subPropertyIndex")]);
+                } else {
+                    $(this).val(obj[$(this).attr("data-subPropertyIndex")]);
+                }
+            });
+            $(cloneTr).find(".uploaded-image").each(function () {
+                $(this).attr("src", obj[36]);
+                if (obj[36].length > 0) {
+                    $(this).parent().find('.fusionb-upload-button').text('Remove').addClass('remove-image');
+                }
+            });
+        }
+        $(prevTr).before($(cloneTr));
+    }
+
+    function removeSlider(ctrl) {
+        var tr = $(ctrl).parents("tr:first");
+        if (Slider == 1) {
+            alert("You need a minimum of one row");
+            return false;
+        }
+        $(tr).remove();
+        Slider -= 1;
+        var c = 1;
+        $("#SliderContainer tr.child-clone-row").each(function () {
+            var linkHeader = $(this).find(".linkHeader");
+            $(linkHeader).attr("data-boxIndex", c);
+            $(linkHeader).html("Slider Item " + c + "<i class='fusiona-plus2'>");
+            c = c + 1;
+        });
+    }
+
+    function addVideoCode(ctrl) {
+        var code = $(ctrl).attr('data-videoCode');
+        $(ctrl).parent().parent().parent().find(".subObjectProperty").html(code);
+    }
+
+    function toggleVideoImageElements(ctrl) {
+        var parent = $(ctrl).parent().parent().parent();
+        if ($(ctrl).val() === "image") {
+            $(parent).find(".imageHide").hide();
+            $(parent).find(".videoHide").show();
+        } else {
+            $(parent).find(".videoHide").hide();
+            $(parent).find(".imageHide").show();
+        }
+    }
+
+    function uploaderCallback(filePath) {
+        if ($(uploaderOpenedBy) != undefined) {
+            $(uploaderOpenedBy).parent().find("input[type='hidden']").val(filePath);
+            $(uploaderOpenedBy).parent().find("img").attr("src", filePath);
+        }
+    }
+</script>

@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Partner Portal Admin Dashboard";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section MetaTags
+{
+        <link rel="canonical" href="http://empower.starmicronics.com/admin/dashboard" />
+}
+
+@section scripts
+{
+
+}
+@section MainContent {
+
+    @Html.Partial("Partials/AccountsPartial")
+
+    <style>
+    
+    @@media only screen and (max-width: 990px)
+    {
+        .fusion-one-third {
+            width: 100% !important;
+            margin-top: 20px;
+        }
+    }
+    </style>
+}

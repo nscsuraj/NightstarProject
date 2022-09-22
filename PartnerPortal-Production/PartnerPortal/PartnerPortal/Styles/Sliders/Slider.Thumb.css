@@ -1,0 +1,175 @@
+﻿.jssorb20 {
+    position: absolute;
+}
+
+    .jssorb20 div, .jssorb20 div:hover, .jssorb20 .av {
+        position: absolute;
+        width: 19px;
+        height: 19px;
+        text-align: center;
+        line-height: 19px;
+        color: #000000;
+        font-size: 12px;
+        background: url('/Images/icons/slider_Thumb_b05.png') no-repeat;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .jssorb20 div {
+        background-position: -5px -5px;
+    }
+
+        .jssorb20 div:hover, .jssorb20 .av:hover {
+            background-position: -35px -5px;
+        }
+
+    .jssorb20 .av {
+        background-position: -65px -5px;
+    }
+
+    .jssorb20 .dn, .jssorb20 .dn:hover {
+        background-position: -95px -5px;
+    }
+
+.jssora02l, .jssora02r {
+    display: block;
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    cursor: pointer;
+    background: url('/Images/icons/slider_Thumb_a01.png') no-repeat;
+    overflow: hidden;
+}
+
+.jssora02l {
+    background-position: -3px -33px;
+}
+
+.jssora02r {
+    background-position: -63px -33px;
+}
+
+.jssora02l:hover {
+    background-position: -123px -33px;
+}
+
+.jssora02r:hover {
+    background-position: -183px -33px;
+}
+
+.jssora02l.jssora02ldn {
+    background-position: -3px -33px;
+}
+
+.jssora02r.jssora02rdn {
+    background-position: -63px -33px;
+}
+
+.jssort12-200-69 .w {
+    cursor: pointer;
+    position: absolute;
+    width: 153px;
+    height: 102px;
+    border: 1px solid #c3c6cc;
+    top: 0;
+    left: 0px;
+}
+
+.jssort12-200-69 .p {
+    position: absolute;
+    width: 175px;
+    height: 110px;
+    top: 0;
+    left: 0;
+    padding: 0;
+}
+
+.jssort12-200-69 .pav .w, .jssort12-200-69 .pdn .w {
+    top: 0;
+    left: 0;
+    padding: 0;
+    width: 155px;
+    height: 102px;
+    border: 2px solid #17469e;
+}
+
+.jssort12-200-69 .c {
+    top: 0;
+    left: 0;
+    padding: 0;
+    width: 155px;
+    height: 102px;
+}
+
+
+.jssort12-200-69 .pav .c, .jssort12-200-69 .p:hover .c {
+    /*border: 1px solid #456ea0;*/
+}
+
+#thumbnavigatorNsc {
+	top:630px !important;
+}
+
+.mainHeight {
+	height: 400px !important;
+}
+
+#thumbnavigatorSildes {
+	left: 0px !important;
+}
+
+@media only screen and (max-width: 6000px) and (min-width: 1500px) {  
+    .mainHeight {
+        height: 480px !important;
+    }
+}
+@media only screen and (max-width: 1500px) and (min-width: 1400px) {  
+    .mainHeight {
+        height: 440px !important;
+    }
+}
+@media only screen and (max-width: 1400px) and (min-width: 1300px) {  
+    .mainHeight {
+        height: 420px !important;
+    }
+}
+@media only screen and (max-width: 1300px) and (min-width: 1200px) {  
+    .mainHeight {
+        height: 380px !important;
+    }
+}
+@media only screen and (max-width: 1200px) and (min-width: 1100px) {  
+    .mainHeight {
+        height: 340px !important;
+    }
+}
+@media only screen and (max-width: 1100px) and (min-width: 700px) {  
+    .mainHeight {
+        height: 480px !important;
+    }
+}
+@media only screen and (max-width: 700px) and (min-width: 600px) {  
+    .mainHeight {
+        height: 380px !important;
+    }
+}
+@media only screen and (max-width: 600px) and (min-width: 500px) {  
+    .mainHeight {
+        height: 330px !important;
+    }
+}
+@media only screen and (max-width: 500px) and (min-width: 400px) {  
+    .mainHeight {
+        height: 250px !important;
+    }
+}
+@media only screen and (max-width: 400px) and (min-width: 300px) {  
+    .mainHeight {
+        height: 180px !important;
+    }
+}
+@media only screen and (max-width: 300px) and (min-width: 0px) {  
+    .mainHeight {
+        height: 160px !important;
+    }
+}

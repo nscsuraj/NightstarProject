@@ -1,0 +1,1525 @@
+﻿
+<style>
+     .distContainerLeft {
+         max-width: 95%;
+         min-height: 200px;
+         background-color: #ffffff
+
+    }
+     .topMargin60px{
+         margin-top:60px;
+     }
+    .topMargin20px {
+        margin-top: 20px;
+    }
+    .distContentLeft {
+        display: inline-block;
+        text-align: left; 
+        float: left; 
+        width: 100%; 
+        min-height: 200px; 
+        background-color: #ffffff;
+        -webkit-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: -1px 0px 3px 1px rgba(0, 0, 0, 0.15);
+    }
+
+     .distContainerRight {
+         max-width: 95%;
+         min-height: 200px;
+         background-color: #ffffff;
+        margin-left:5%;
+    }
+    .distContentRight {
+        display: inline-block;
+        text-align: left; 
+        float: right; 
+        min-width: 100%; 
+        min-height: 200px; 
+        background-color: #ffffff;
+        -webkit-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: -1px 0px 3px 1px rgba(0, 0, 0, 0.15);
+    }
+    .distTopText {
+        font-size: 80pt; color: #3B86FF; height: 140px; width: 100%;padding: 10px;padding-right: 20px; vertical-align: middle; text-align: right;
+    }
+    .distMiddleText {
+        font-size: 18pt; color: #3B86FF; height: 40px; width: 100%;padding: 10px; padding-right: 20px;vertical-align: top; text-align: right;
+    }
+    .distBottomText {
+        font-size: 14pt; color: #3B86FF; height: 40px; width: 100%;padding: 10px; vertical-align: middle;padding-right: 20px; text-align: right;
+    }
+    .productClassContainer {
+        width: 94.3%; 
+        background-color: #ffffff; 
+        min-height: 400px; 
+        margin-top: 40px;
+        padding: 20px;
+    }
+    .mdfContainer {
+        width: 97%; 
+        background-color: #ffffff; 
+        min-height: 200px; 
+        margin-top: 40px;
+        padding: 10px;
+        padding-bottom: 0px;
+    }
+    .growthRateContainer {
+        width: 90%; 
+        background-color: #ffffff; 
+        min-height: 100px; 
+        margin-right: 20px;
+        display: inline-block;
+        font-size: 12pt;
+        font-weight: bold;
+    }
+    .growthRateContainerMidCol {
+        margin-left: 2%;
+    }
+    .growthRateContainerLastCol {
+        margin-left: 7%;
+    }
+    .growthImageContainer {
+        width: 40px; 
+        display: inline-block; 
+        padding-left: 10px; 
+        float: left; 
+        padding-top: 30px;
+    }
+    .growthImage {
+        width: 40px; 
+        height: 40px; 
+        float: right;
+        padding-top: 5px;
+    }
+    .growthTextContainer {
+        padding-top: 30px; 
+        display: inline-block; 
+        float: left; 
+        padding-left: 20px;
+    }
+    .growthArrow {
+        font-size: 18pt; 
+        font-weight: bold;
+    }
+    .productClassFirstCol {
+        text-align: left; color: #A5A3F7; font-size: 14pt; padding-left: 20px; border-bottom: 1px solid #A5A3F7;
+    }
+    .productClassFirstColContent {
+        text-align: left; color: #A5A3F7; font-size: 12pt; padding-left: 20px;
+    }
+    .productClassOtherCol {
+        text-align: left; color: #A5A3F7; font-size: 14pt; border-bottom: 1px solid #A5A3F7;
+    }
+    .productClassOtherColContent {
+        text-align: left; color: #A5A3F7; font-size: 12pt;
+    }
+@@media only screen and (max-width:1650px){
+    .distTopText {
+        font-size: 80pt; color: #3B86FF; height: 140px; width: 100%;padding: 10px;padding-right: 20px;  vertical-align: middle; text-align: right;
+    }
+    .distMiddleText {
+        font-size: 18pt; color: #3B86FF; height: 40px; width: 100%;padding: 10px;padding-right: 20px;  vertical-align: top; text-align: right;
+    }
+    .distBottomText {
+        font-size: 14pt; color: #3B86FF; height: 40px; width: 100%;padding: 10px;padding-right: 20px;  vertical-align: middle; text-align: right;
+    }
+    .growthImageContainer {
+        width: 30px; 
+        padding-left: 10px; 
+        float: left; 
+    }
+    .growthImage {
+        width: 30px; 
+        height: 30px; 
+        float: right;
+        padding-top: 10px;
+    }
+    .growthTextContainer {
+        padding-top: 30px; 
+        display: inline-block; 
+        float: left; 
+        padding-left: 10px;
+    }
+}
+
+@@media only screen and (max-width:1450px){
+   .distContainerLeft {
+         margin-top: 60px;
+         max-width: 95%;
+         min-height: 150px;
+         background-color: #ffffff
+
+    }
+    .distContentLeft {
+        display: inline-block;
+        text-align: left; 
+        float: left; 
+        min-width: 100%; 
+        min-height: 150px; 
+        background-color: #ffffff;
+        -webkit-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: -1px 0px 3px 1px rgba(0, 0, 0, 0.15);
+    }
+
+     .distContainerRight {
+         margin-top: 60px;
+         max-width: 95%;
+         min-height: 150px;
+         background-color: #ffffff;
+         margin-left: 5%;
+    }
+    .distContentRight {
+        display: inline-block;
+        text-align: left; 
+        float: right; 
+        min-width: 100%; 
+        min-height: 150px; 
+        background-color: #ffffff;
+        -webkit-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: -1px 0px 3px 1px rgba(0, 0, 0, 0.15);
+    }
+    .distTopText {
+        font-size: 70pt; color: #3B86FF; height: 80px; width: 100%;padding: 5px;padding-right: 20px;  vertical-align: middle; text-align: right;
+    }
+    .distMiddleText {
+        font-size: 16pt; color: #3B86FF; height: 40px; width: 100%;padding: 5px;padding-right: 20px;  vertical-align: top; text-align: right;
+    }
+    .distBottomText {
+        font-size: 14pt; color: #3B86FF; height: 40px; width: 100%;padding: 5px;padding-right: 20px;  vertical-align: middle; text-align: right;
+    }
+    .growthRateContainer {
+        width: 90%; 
+        font-size: 11pt;
+    }
+    .growthRateContainerMidCol {
+        margin-left: 2%;
+    }
+    .growthRateContainerLastCol {
+        margin-left: 7%;
+    }
+    .growthImageContainer {
+        width: 30px; 
+        padding-left: 10px; 
+        float: left; 
+    }
+    .growthImage {
+        width: 30px; 
+        height: 30px; 
+        float: right;
+    }
+    .growthTextContainer {
+        padding-top: 30px; 
+        display: inline-block; 
+        float: left; 
+        padding-left: 10px;
+    }
+}
+@@media only screen and (max-width:1750px) and (min-width:1300px){
+    .growthRateContainer {
+        width: 90%; 
+        font-size: 11pt;
+    }
+    .growthRateContainerMidCol {
+        margin-left: 2%;
+    }
+    .growthRateContainerLastCol {
+        margin-left: 7%;
+    }
+    .growthImageContainer {
+        width: 30px; 
+        padding-left: 10px; 
+        float: left; 
+    }
+    .growthImage {
+        width: 30px; 
+        height: 30px; 
+        float: right;
+    }
+    .growthTextContainer {
+        padding-top: 30px; 
+        display: inline-block; 
+        float: left; 
+        padding-left: 10px;
+    }
+}
+@@media only screen and (max-width:1300px){
+   .distContainerLeft {
+         margin-top: 60px;
+         max-width: 95%;
+         min-height: 150px;
+         background-color: #ffffff
+
+    }
+    .distContentLeft {
+        display: inline-block;
+        text-align: left; 
+        float: left; 
+        min-width: 100%; 
+        min-height: 150px; 
+        background-color: #ffffff;
+        -webkit-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: -1px 0px 3px 1px rgba(0, 0, 0, 0.15);
+    }
+
+     .distContainerRight {
+         margin-top: 60px;
+         max-width: 95%;
+         min-height: 150px;
+         background-color: #ffffff;
+         margin-left: 5%;
+
+    }
+    .distContentRight {
+        display: inline-block;
+        text-align: left; 
+        float: right; 
+        min-width: 100%; 
+        min-height: 150px; 
+        background-color: #ffffff;
+        -webkit-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: -1px 0px 3px 1px rgba(0, 0, 0, 0.15);
+    }
+    .distTopText {
+        font-size: 70pt; color: #3B86FF; height: 70px; width: 100%;padding: 5px;padding-right: 20px;  vertical-align: middle; text-align: right;
+    }
+    .distMiddleText {
+        font-size: 14pt; color: #3B86FF; height: 40px; width: 100%;padding: 5px;padding-right: 20px;  vertical-align: top; text-align: right;
+    }
+    .distBottomText {
+        font-size: 14pt; color: #3B86FF; height: 40px; width: 100%;padding: 5px;padding-right: 20px;  vertical-align: middle; text-align: right;
+    }
+    .growthRateContainer {
+        width: 90%; 
+        font-size: 10pt;
+    }
+    .growthRateContainerMidCol {
+        margin-left: 2%;
+    }
+    .growthRateContainerLastCol {
+        margin-left: 9%;
+    }
+    .growthImageContainer {
+        width: 30px; 
+        padding-left: 5px; 
+        float: left; 
+    }
+    .growthImage {
+        width: 30px; 
+        height: 30px; 
+        float: right;
+    }
+    .growthTextContainer {
+        padding-top: 30px; 
+        display: inline-block; 
+        float: left; 
+        padding-left: 5px;
+    }
+    .growthArrow {
+        font-size: 16pt; 
+        font-weight: bold;
+    }
+    .mdfContainer {
+        width: 97.5%; 
+    }
+}
+
+@@media only screen and (max-width:1150px){
+      .distContainerLeft {
+         margin-top: 60px;
+         max-width: 95%;
+         min-height: 100px;
+          background-color: #ffffff;
+
+    }
+    .distContentLeft {
+        display: inline-block;
+        text-align: left; 
+        float: left; 
+        min-width: 100%; 
+        min-height: 100px; 
+        background-color: #ffffff;
+        -webkit-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: -1px 0px 3px 1px rgba(0, 0, 0, 0.15);
+    }
+
+     .distContainerRight {
+         margin-top: 60px;
+         max-width: 95%;
+         min-height: 100px;
+         background-color: #ffffff;
+         margin-left: 5%;
+    }
+    .distContentRight {
+        display: inline-block;
+        text-align: left; 
+        float: right; 
+        min-width: 100%; 
+        min-height: 100px; 
+        background-color: #ffffff;
+        -webkit-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: -1px 0px 3px 1px rgba(0, 0, 0, 0.15);
+    }
+  .distTopText {
+        font-size: 60pt; color: #3B86FF; height: 50px; width: 100%;padding: 5px;padding-right: 10px; vertical-align: middle; text-align: right;
+    }
+    .distMiddleText {
+        font-size: 11pt; color: #3B86FF; height: 3px; width: 100%;padding: 10px;padding-right: 10px; vertical-align: top; text-align: right;
+    }
+    .distBottomText {
+        font-size: 11pt; color: #3B86FF; height: 35px; width: 100%;padding: 10px;padding-right: 10px; vertical-align: middle; text-align: right;
+    }
+     .growthRateContainer {
+        width: 95%; 
+        font-size: 10pt;
+    }
+    .growthRateContainerMidCol {
+        margin-left: 4%;
+    }
+    .growthRateContainerLastCol {
+        margin-left: 7%;
+    }
+    .growthImageContainer {
+        width: 20px; 
+        padding-left: 5px; 
+        float: left; 
+    }
+    .growthImage {
+        width: 20px; 
+        height: 20px; 
+        float: right;
+    }
+    .growthTextContainer {
+        padding-top: 30px; 
+        display: inline-block; 
+        float: left; 
+        padding-left: 5px;
+    }
+    .growthArrow {
+        font-size: 14pt; 
+        font-weight: bold;
+    }
+}
+@@media only screen and (max-width:1030px) and (min-width:990px){
+    .growthRateContainer {
+        width: 97%; 
+        font-size: 10pt;
+    }
+    .growthImageContainer {
+        width: 20px; 
+        padding-left: 2px; 
+        float: left; 
+    }
+    .growthImage {
+        width: 20px; 
+        height: 20px; 
+        float: right;
+    }
+    .growthTextContainer {
+        padding-top: 30px; 
+        display: inline-block; 
+        float: left; 
+        padding-left: 5px;
+    }
+    .growthArrow {
+        font-size: 14pt; 
+        font-weight: bold;
+    }
+}
+@@media only screen and (max-width:990px)and (min-width:900px){
+    .productClassContainer {
+        width: 92.5% !important; 
+        background-color: #ffffff; 
+        min-height: 400px; 
+        margin-top: 40px;
+        padding-right: 20px;
+    }
+    .growthRateContainer {
+        width: 100%; 
+        background-color: #ffffff; 
+        min-height: 100px; 
+        margin-right: 0px;
+        font-size: 14pt;
+    }
+    .growthRateContainerMidCol {
+        margin-left: 0%;
+    }
+    .growthRateContainerLastCol {
+        margin-left: 0%;
+    }
+     .growthImageContainer {
+        width: 40px; 
+        padding-left: 20px; 
+        float: left; 
+    }
+    .growthImage {
+        width: 40px; 
+        height: 40px; 
+        float: right;
+    }
+    .growthTextContainer {
+        padding-top: 30px; 
+        display: inline-block; 
+        float: left; 
+        padding-left: 20px;
+    }
+    .growthArrow {
+        font-size: 18pt; 
+        font-weight: bold;
+    }
+     .mdfContainer {
+        width: 97.5%; 
+    }
+}
+@@media only screen and (max-width:940px){
+   .distContainerLeft {
+         margin-top: 60px;
+         max-width: 95%;
+         min-height: 40px;
+         background-color: #ffffff
+
+    }
+    .distContentLeft {
+        display: inline-block;
+        text-align: left; 
+        float: left; 
+        min-width: 100%; 
+        min-height: 40px; 
+        background-color: #ffffff;
+        -webkit-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: -1px 0px 3px 1px rgba(0, 0, 0, 0.15);
+    }
+
+     .distContainerRight {
+         margin-top: 60px;
+         max-width: 95%;
+         min-height: 40px;
+         background-color: #ffffff;
+         margin-left: 5%;
+    }
+    .distContentRight {
+        display: inline-block;
+        text-align: left; 
+        float: right; 
+        min-width: 100%; 
+        min-height: 40px; 
+        background-color: #ffffff;
+        -webkit-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: -1px 0px 3px 1px rgba(0, 0, 0, 0.15);
+    }
+    
+    .distTopText {
+        font-size: 40pt; color: #3B86FF; height: 40px; width: 100%;padding: 10px; vertical-align: middle; text-align: right;
+    }
+    .distMiddleText {
+        font-size: 10pt; color: #3B86FF; height: 20px; width: 100%;padding: 10px; vertical-align: top; text-align: right;
+    }
+    .distBottomText {
+        font-size: 10pt; color: #3B86FF; height: 20px; width: 100%;padding: 10px; vertical-align: middle; text-align: right;
+    }
+    .growthRateContainer {
+        width: 100%; 
+        background-color: #ffffff; 
+        min-height: 100px; 
+        margin-right: 0px;
+    }
+
+}
+@@media only screen and (max-width:900px) and (min-width:400px){
+    .distContainerLeft {
+         margin-top: 20px;
+         max-width: 100%;
+         width: 100%;
+         min-height: 200px;
+        background-color: #ffffff;
+        display: inline-block;
+    }
+    .distContentLeft {
+        display: inline-block;
+        text-align: left; 
+        
+        min-width: 100%; 
+        min-height: 200px; 
+        background-color: #ffffff;
+        -webkit-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: -1px 0px 3px 1px rgba(0, 0, 0, 0.15);
+    }
+
+     .distContainerRight {
+         max-width: 100%;
+         margin-top: 40px;
+         width: 100%;
+         min-height: 200px;
+        background-color: #ffffff;
+        display: inline-block;
+         margin-left: 0;
+    }
+    .distContentRight {
+        display: inline-block;
+        text-align: left; 
+        
+        min-width: 100%; 
+        min-height: 200px; 
+        background-color: #ffffff;
+        -webkit-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: -1px 0px 3px 1px rgba(0, 0, 0, 0.15);
+    }
+    .fusion-one-half {
+        width: 100% !important;
+    }
+    .distTopText {
+        font-size: 80pt !important; color: #3B86FF; height: 100px; width: 100%;padding: 10px;padding-right: 20px;  vertical-align: middle; text-align: right;
+    }
+    .distMiddleText {
+        font-size: 18pt !important; color: #3B86FF; height: 50px; width: 100%;padding: 10px;padding-right: 20px;  vertical-align: top; text-align: right;
+    }
+    .distBottomText {
+        font-size: 16pt !important; color: #3B86FF; height: 50px; width: 100%;padding: 10px;padding-right: 20px;  vertical-align: middle; text-align: right;
+    }
+    .productClassContainer {
+        width: 99% !important; 
+        background-color: #ffffff; 
+        min-height: 400px; 
+        margin-top: 40px;
+
+    }
+    .growthRateContainer {
+        width: 100%; 
+        background-color: #ffffff; 
+        min-height: 100px; 
+        margin-right: 0px;
+        font-size: 14pt; 
+    }
+    .growthRateContainerMidCol {
+        margin-left: 0%;
+    }
+    .growthRateContainerLastCol {
+        margin-left: 0%;
+    }
+     .growthImageContainer {
+        width: 40px; 
+        padding-left: 10%; 
+        float: left; 
+    }
+    .growthImage {
+        width: 40px; 
+        height: 40px; 
+        float: right;
+    }
+    .growthTextContainer {
+        padding-top: 30px; 
+        display: inline-block; 
+        float: left; 
+        padding-left: 20px;
+    }
+    .growthArrow {
+        font-size: 18pt; 
+        font-weight: bold;
+    }
+    .productClassContainer {
+        padding: 0px;
+        padding-left: 10px;
+    }
+    .mdfContainer {
+        width: 98%; 
+    }
+}
+@@media only screen and (max-width:414px) and (min-width:0px){
+    .distContainerLeft {
+         margin-top: 20px;
+        max-width: 100%;
+         width: 100%;
+         min-height: 220px;
+        background-color: #ffffff;
+        display: inline-block;
+    }
+    .distContentLeft {
+        display: inline-block;
+        text-align: left; 
+        
+        min-width: 100%; 
+        min-height: 220px; 
+        background-color: #ffffff;
+        -webkit-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: -1px 0px 3px 1px rgba(0, 0, 0, 0.15);
+    }
+
+     .distContainerRight {
+         margin-top: 40px;
+         max-width: 100%;
+         width: 100%;
+         min-height: 220px;
+        background-color: #ffffff;
+        display: inline-block;
+         margin-left: 0%;
+    }
+    .distContentRight {
+        display: inline-block;
+        text-align: left; 
+        
+        min-width: 100%; 
+        min-height: 220px; 
+        background-color: #ffffff;
+        -webkit-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: -1px 0px 3px 1px rgba(0, 0, 0, 0.15);
+    }
+    .fusion-one-half {
+        width: 100% !important;
+    }
+    .distTopText {
+        font-size: 60pt !important; color: #3B86FF; height: 120px; width: 100%;padding: 10px;padding-right: 20px;  vertical-align: middle; text-align: right;
+    }
+    .distMiddleText {
+        font-size: 14pt !important; color: #3B86FF; height: 50px; width: 100%;padding: 10px;padding-right: 20px;  vertical-align: top; text-align: right;
+    }
+    .distBottomText {
+        font-size: 14pt !important; color: #3B86FF; height: 50px; width: 100%;padding: 10px;padding-right: 20px;  vertical-align: middle; text-align: right;
+    }
+    .growthRateContainer {
+        width: 100%; 
+        background-color: #ffffff; 
+        min-height: 100px; 
+        margin-right: 0px;
+        font-size: 14pt;    
+        
+    }
+    .growthRateContainerMidCol {
+        margin-left: 0%;
+    }
+    .growthRateContainerLastCol {
+        margin-left: 0%;
+    }
+     .growthImageContainer {
+        width: 40px; 
+        padding-left: 10px; 
+        float: left; 
+    }
+    .growthImage {
+        width: 40px; 
+        height: 40px; 
+        float: right;
+    }
+    .growthTextContainer {
+        padding-top: 30px; 
+        display: inline-block; 
+        float: left; 
+        padding-left: 20px;
+    }
+    .growthArrow {
+        font-size: 18pt; 
+        font-weight: bold;
+    }
+    .productClassContainer {
+        width: 100%; 
+        background-color: #ffffff; 
+        min-height: 400px; 
+        margin-top: 40px;
+        padding: 5px;
+        padding-right: 1px;
+    }
+    .productClassFirstCol {
+        font-size: 6pt !important; padding-left: 2px;width: 25%;
+    }
+    .productClassFirstColContent {
+        font-size: 6pt !important;margin: 10px; padding-left: 2px;width: 25%;
+    }
+    .productClassOtherCol {
+        font-size: 6pt !important;width: 20%;
+    }
+    .productClassOtherColContent {
+        text-align: left;padding: 2px; color: #A5A3F7; font-size: 6pt !important;width: 20%;
+    }
+    .demoUnits{font-size:18pt !important;}
+    .mdfContainer {
+        width: 96%; 
+    }
+}
+
+
+.circleUsed {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #8A87FA;
+    float: left;
+    margin: 5px;
+    margin-top: 3px;
+}
+.circlePending {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #D3D1F7;
+    float: left;
+    margin: 5px;
+    margin-top: 3px;
+}
+</style>
+
+<div id="StarDistContentControllerContainer" style="width: 100%; display: none;" ng-controller="StarDistContentController">
+    <div class="fusion-fullwidth fullwidth-box" style="text-align: left; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;" id="">
+        <div class="fusion-row" id="loyaltyRegistrationNotice" style="background-color: #133496;display:none;">
+            <a href="~/pages/loyaltyLeadRegistration" target="_self" style="cursor:pointer;"><img src="~/Images/UnlockBenefits.jpg" /></a>
+        </div>
+        <div class="fusion-row" ng-show="showOpportunitySection" id="opportunitySection">
+            <div>
+                <div class="fusion-one-half one_half fusion-layout-column fusion-spacing-no " style="text-align: center;">
+                    <div class="fusion-column-wrapper">
+                        <div class="distContainerLeft">
+                            <div class="distContentLeft">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td class="distTopText">
+                                            {{Account.DiscountRate}}%
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="distMiddleText">
+                                            Empower Discount
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center;">
+                                            <hr style="width: 95%; margin: 0; margin-left: 2%;" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="distBottomText" style="height: 40px;">
+                                            <a href="~/Pages/ProductLookup" style="color: #3B86FF;">Product Lookup ></a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="fusion-one-half one_half fusion-layout-column fusion-spacing-no " style="text-align: center;">
+                    <div class="fusion-column-wrapper">
+
+                        <div class="distContainerRight">
+                            <div class="distContentRight">
+
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td class="distTopText">
+                                            {{OpportunitiesCount}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="distMiddleText">
+                                            Open Opportunities
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center;">
+                                            <hr style="width: 95%; margin: 0; margin-left: 2%;" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="distBottomText" style="height: 40px;">
+                                            <a href="~/Pages/AddOpportunity" style="color: #3B86FF;" ng-hide="Account.PartnerType=='Distributor'">Submit Opportunities ></a><br />
+                                            <a href="~/Pages/Opportunities" style="color: #3B86FF;">View Open Opportunities ></a>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+        <div class="fusion-row">
+            <table style="width: 100%;">
+                <tr>
+                    <td style="height: 40px;">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        <div style="display: inline-block; text-align: center; width: 100%; background-color: #133496; font-size: 24pt; font-weight: bold; color: #ffffff; height: 50px; padding-top: 40px;" class="fullWidthOnMobile">
+
+                            <a href="~/Pages/ProductLookup" style="color: #ffffff; font-size: 24pt; font-weight: bold;" class="demoUnits">Check Pricing</a>
+                            @*<a href="~/Pages/Opportunities" style="color: #2551A4; font-size: 14pt; font-weight: bold;">View Existing Opportunities&#8680;</a>*@
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height: 30px;">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        <div style="display: inline-block; text-align: center; width: 100%; background-color: #ffffff; font-size: 24pt; font-weight: bold; color: #133496; height: 50px; padding-top: 40px; border: 1px solid #133496;" class="fullWidthOnMobile">
+
+                            <a href="~/Pages/request-demo" style="color: #133496; font-size: 24pt; font-weight: bold;" class="demoUnits">Request Demo Units</a>
+                            @*<a href="~/Pages/Opportunities" style="color: #2551A4; font-size: 14pt; font-weight: bold;">View Existing Opportunities&#8680;</a>*@
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+        <div class="fusion-row" style="margin-top: 50px;" ng-show="showGrowthSection">
+            <div class="fusion-one-third one_third fusion-layout-column fusion-spacing-no">
+                <div class="fusion-column-wrapper">
+                    <div class="growthRateContainer boxShadowWithoutBorder">
+                        <div class="growthImageContainer">
+                            <div class="growthImage">
+                                <img src="~/Images/Human.png" />
+                            </div>
+                        </div>
+                        <div class="growthTextContainer">
+                            <div style="color: #57d9fe">
+                                {{Account.Revenue6Month}}
+                            </div>
+                            <div style="color: #57d9fe">
+                                6 Month<span style="color: #ffffff; display: inline-block;">aaaaaaaa</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="fusion-one-third one_third fusion-layout-column fusion-spacing-no" style="text-align: left;">
+                <div class="fusion-column-wrapper">
+                    <div class="growthRateContainer boxShadowWithoutBorder growthRateContainerMidCol">
+                        <div class="growthImageContainer">
+                            <div class="growthImage">
+                                <img src="~/Images/Human.png" />
+                            </div>
+                        </div>
+                        <div class="growthTextContainer">
+                            <div style="color: #57d9fe">
+                                {{Account.Revenue12Month}}
+                            </div>
+                            <div style="color: #57d9fe; text-align: left;">
+                                12 Month<span style="color: #ffffff; display: inline-block;">aaaaaaaa</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="fusion-one-third one_third fusion-layout-column fusion-spacing-no" style="text-align: left;">
+                <div class="fusion-column-wrapper">
+                    <div class="growthRateContainer boxShadowWithoutBorder growthRateContainerLastCol">
+                        <div class="growthImageContainer">
+                            <div class="growthImage">
+                                <img src="~/Images/industryd.png" />
+                            </div>
+                        </div>
+                        <div class="growthTextContainer">
+                            <div style="color: #57d9fe">
+
+                                <span style="color: #48D28C" ng-show="Account.Growth>0"><span class="growthArrow">&#8593;</span> {{Account.Growth}}%</span>
+                                <span style="color: #F51616" ng-show="Account.Growth<0"><span class="growthArrow">&#8595;</span> {{Account.Growth}}%</span>
+                                <span style="color: #A5A3F7" ng-show="Account.Growth==0">{{Account.Growth}}%</span>
+                            </div>
+                            <div style="color: #57d9fe; text-align: left;">
+                                6/12 Month Growth
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="fusion-row" style="display: none;" id="mdfContainer">
+            <div class="mdfContainer boxShadowWithoutBorder">
+                <table style="width: 100%; min-height: 160px;">
+                    <tr>
+                        <td style="height: 40px; width: 200px; text-align: left; color: #3B86FF; font-size: 12pt !important; vertical-align: top;">
+                            <div style="width: 100%; color: #3B86FF; font-weight: bold; font-size: 14pt; margin-bottom: 10px;">
+                                MDF Funds
+                            </div>
+                            <div style="width: 100%; color: #000000; font-weight: normal; font-size: 10pt;">
+                                Total Available&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #48D28C; font-weight: bold;">{{Mdf.TotalMdfAvailable}}</span>
+                            </div>
+                        </td>
+                        <td style="vertical-align: top; border-bottom: 1px solid #CCCCCC; vertical-align: middle; text-align: center;" rowspan="2">
+                            @Html.Partial("Partials/PercentageCircle")
+                            <div style="display: inline-block;"><div class="progress-bar position" data-percent="0" data-duration="1000" data-color="#48D28C,#8A87FA"></div></div>
+                        </td>
+                        <td style="width: 110px; text-align: right; color: #57d9fe; font-size: 10pt !important; vertical-align: top;">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    @*                <tr>
+                        <td colspan="3">
+                            <div class="faded_line">&nbsp;</div>
+                        </td>
+                    </tr>*@
+                    <tr style="border-bottom: 1px solid #CCCCCC ">
+                        <td style="text-align: left; vertical-align: bottom; height: 90px;">
+                            <div style="width: 100%; color: #000000; font-weight: normal; font-size: 10pt;margin-bottom: 10px;">
+                                <div class="circleUsed"></div>Total Used
+                            </div>
+                            <div style="width: 100%; color: #000000; font-weight: normal; font-size: 10pt;">
+                                <span style="color: #000000; font-weight: normal; padding-left: 20px;">{{Mdf.TotalMdfUsed}}</span>
+                            </div>
+                        </td>
+
+                        <td style="text-align: left; color: #000000; font-size: 10pt; vertical-align: bottom;">
+                            <div style="width: 100%; color: #000000; font-weight: normal; font-size: 10pt; margin-bottom: 10px; display: none;">
+                                <div class="circlePending"></div>Total Pending
+                            </div>
+
+                            <div style="width: 100%; color: #000000; font-weight: normal; font-size: 10pt; display: none;">
+                                <span style="color: #000000; font-weight: normal;padding-left: 20px;">{{Mdf.TotalMdfPending}}</span>
+                            </div>
+
+                        </td>
+
+
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="height: 30px;">
+                            <span><a href="/partnerportal/pages/MdfRequests/" style="color: #3B86FF;">View Requests &gt;</a></span>
+                            <span style="padding-left: 20px;"><a href="/partnerportal/pages/AddMdfRequests/" style="color: #3B86FF; font-weight: bold;">Submit Request &gt;</a></span>
+                        </td>
+                    </tr>
+
+
+                </table>
+            </div>
+        </div>
+
+        <div class="fusion-row">
+            <div class="productClassContainer boxShadowWithoutBorder">
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="height: 20px;" colspan="3">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height: 60px; width: 4%; text-align: right; color: #57d9fe; font-size: 18pt !important; vertical-align: top;">
+                            <div style="height: 10px;">&#8226;&#8226;&#8226;</div>
+                            <div style="height: 10px;">&#8226;&#8226;&#8226;</div>
+                            <div style="height: 10px;">&#8226;&#8226;&#8226;</div>
+                        </td>
+                        <td style="width: 92%; padding-left: 20px; vertical-align: top; padding-top: 20px;">
+                            <div style="width: 100%; color: #57D9FE; font-weight: bold; font-size: 16pt;">
+                                Product Classes
+                            </div>
+                        </td>
+                        <td style="height: 60px; width: 4%; text-align: right; color: #57d9fe; font-size: 18pt !important; vertical-align: top;">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 100%;" colspan="3">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="text-align: left; width: 4%;" class="hideOnMobile">
+                                        &nbsp;
+                                    </td>
+
+                                    <td class="productClassFirstCol">
+                                        Product Class
+                                    </td>
+
+                                    <td class="productClassOtherCol">
+                                        6 Months
+                                    </td>
+
+                                    <td class="productClassOtherCol">
+                                        12 Months
+                                    </td>
+
+                                    <td class="productClassOtherCol">
+                                        Growth <span style="cursor: pointer; font-size: 12pt;" title="Growth is calculated by comparing the 6 month average to the 12 month average for each product class.">&#x24D8;</span>
+                                    </td>
+
+                                    <td style="text-align: left; width: 4%;" class="hideOnMobile">
+                                        &nbsp;
+                                    </td>
+
+                                </tr>
+                                <tr ng-repeat="product in PurchaseByProduct">
+                                    <td style="text-align: left;" class="hideOnMobile">
+                                        &nbsp;
+                                    </td>
+                                    <td class="productClassFirstColContent">
+                                        {{product.ProductClass}}
+                                    </td>
+                                    <td class="productClassOtherColContent">
+                                        {{product.SixMonthsSale}}
+                                    </td>
+                                    <td class="productClassOtherColContent">
+                                        {{product.TwelveMonthsSale}}
+                                    </td>
+                                    <td class="productClassOtherColContent">
+                                        <span style="color: #48D28C" ng-show="product.Growth>0">&#8593;{{product.Growth}}%</span>
+                                        <span style="color: #F51616" ng-show="product.Growth<0">&#8595;{{product.Growth}}%</span>
+                                        <span style="color: #A5A3F7" ng-show="product.Growth==0">{{product.Growth}}%</span>
+                                    </td>
+                                    <td style="text-align: left;" class="hideOnMobile">
+                                        &nbsp;
+                                    </td>
+
+                                </tr>
+
+                            </table>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+
+                </table>
+            </div>
+        </div>
+
+        <div class="fusion-row" id="delegateContainerTemp" style="display:none;">
+            <div class="productClassContainer boxShadowWithoutBorder" style="min-height:0px;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="height: 20px;" colspan="3">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height: 60px; width: 4%; text-align: right; color: #57d9fe; font-size: 18pt !important; vertical-align: top;">
+                            <div style="width: 100%; color: #57D9FE; font-weight: bold; font-size: 16pt;">
+                                &lt;/&gt;
+                            </div>
+
+                        </td>
+                        <td style="width: 92%; padding-left: 20px; vertical-align: top; padding-top: 10px;">
+                            <div style="width: 100%; color: #57D9FE; font-weight: bold; font-size: 16pt;">
+                                Delegate Partners
+                            </div>
+                        </td>
+                        <td style="height: 60px; width: 4%; text-align: right; color: #57d9fe; font-size: 18pt !important; vertical-align: top;">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height: 20px;" colspan="3">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height: 20px;" colspan="3">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="text-align: left; width: 4%;" class="hideOnMobile">
+                                        &nbsp;
+                                    </td>
+                                    <td style="height: 60px; text-align: left; color: #57d9fe; font-size: 18pt !important; vertical-align: top;">
+                                        <div style="width: 100%; color: #57D9FE; font-weight: bold; font-size: 10pt;line-height:1.5;">
+                                            Delegate Partners take the pain out of ordering and fulfillment of Star Products. Authorized Delegates can purchase Star Products on your behalf using your Empower Partner discount. <a style="color:#57D9FE !important;" hrea="https://www.starmicronics.com/PartnerPortal/pages/delegate-registration ">Get Started></a>
+                                        </div>
+
+                                    </td>
+                                    <td style="text-align: left;" class="hideOnMobile">
+                                        &nbsp;
+                                    </td>
+
+                                </tr>
+
+                            </table>
+                        </td>
+                    </tr>
+
+
+                </table>
+            </div>
+        </div>
+
+        <div class="fusion-row" id="delegateContainerTechnologyPartner" style="display:none;">
+            <div class="productClassContainer boxShadowWithoutBorder" style="min-height:0px;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="height: 20px;" colspan="3">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height: 60px; width: 4%; text-align: right; color: #57d9fe; font-size: 18pt !important; vertical-align: top;">
+                            <div style="width: 100%; color: #57D9FE; font-weight: bold; font-size: 16pt;">
+                                &lt;/&gt;
+                            </div>
+
+                        </td>
+                        <td style="width: 92%; padding-left: 20px; vertical-align: top; padding-top: 10px;">
+                            <div style="width: 100%; color: #57D9FE; font-weight: bold; font-size: 16pt;">
+                                Delegate Partners
+                            </div>
+                        </td>
+                        <td style="height: 60px; width: 4%; text-align: right; color: #57d9fe; font-size: 18pt !important; vertical-align: top;">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 100%;" colspan="3">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="text-align: left; width: 4%;" class="hideOnMobile">
+                                        &nbsp;
+                                    </td>
+
+                                    <td class="productClassFirstCol">
+                                        Partner Name
+                                    </td>
+
+                                    <td class="productClassOtherCol">
+                                        Delegate Number
+                                    </td>
+
+                                    <td style="text-align: left; width: 4%;" class="hideOnMobile">
+                                        &nbsp;
+                                    </td>
+
+                                </tr>
+                                <tr ng-repeat="product in Delegates">
+                                    <td style="text-align: left;" class="hideOnMobile">
+                                        &nbsp;
+                                    </td>
+                                    <td class="productClassFirstColContent">
+                                        {{product.DelegatePartnerAccountName}}
+                                    </td>
+                                    <td class="productClassOtherColContent">
+                                        {{product.DelegatePartnerEPN}}
+                                    </td>
+
+                                    <td style="text-align: left;" class="hideOnMobile">
+                                        &nbsp;
+                                    </td>
+
+                                </tr>
+
+                            </table>
+
+
+                        </td>
+
+
+                    </tr>
+                    <tr>
+                        <td style="height: 10px;" colspan="3">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td style="height: 20px;" colspan="3">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="text-align: left; width: 4%;" class="hideOnMobile">
+                                        &nbsp;
+                                    </td>
+                                    <td style="height: 60px; text-align: left; color: #57d9fe; font-size: 18pt !important; vertical-align: top;">
+                                        <div style="width: 100%; color: #57D9FE; font-weight: bold; font-size: 10pt;line-height:1.5;">
+                                            Delegate Partners will handle the ordering and fulfilment of Star Products on your behalf. Authorized Delegates are educated in Star hardware and will help provide a better experience for your customers. They can purchase Star products on your behalf using an increased Empower Program discount. @*<a style="color:#57D9FE !important;" hrea="https://www.starmicronics.com/PartnerPortal/pages/delegate-registration ">Get Started></a>*@
+                                        </div>
+
+                                    </td>
+                                    <td style="text-align: left;" class="hideOnMobile">
+                                        &nbsp;
+                                    </td>
+
+                                </tr>
+
+                            </table>
+                        </td>
+
+                        <!--<td style="height: 60px; width: 4%; text-align: left; color: #57d9fe; font-size: 18pt !important; vertical-align: top;" colspan="3">
+                        <div style="width: 100%; color: #57D9FE; font-weight: bold; font-size: 12pt;">
+                            Delegate Partners will handle the ordering and fulfilment of Star Products on your behalf. Authorized Delegates are educated in Star hardware and will help provide a better experience for your customers. They can purchase Star products on your behalf using an increased Empower Program discount.-->
+                        @*<a style="color:#57D9FE !important;" hrea="https://www.starmicronics.com/PartnerPortal/pages/delegate-registration ">Get Started></a>*@
+                        <!--</div>
+
+                    </td>-->
+                    </tr>
+
+
+                </table>
+            </div>
+        </div>
+
+        <div class="fusion-row" id="delegateContainer" style="display:none;">
+            <div class="productClassContainer boxShadowWithoutBorder" style="min-height:0px;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="height: 20px;" colspan="3">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height: 60px; width: 4%; text-align: right; color: #57d9fe; font-size: 18pt !important; vertical-align: top;">
+                            <div style="width: 100%; color: #57D9FE; font-weight: bold; font-size: 16pt;margin-top:10px;">
+                                &lt;/&gt;
+                            </div>
+
+                        </td>
+                        <td style="width: 92%; padding-left: 20px; vertical-align: top; padding-top: 10px;">
+                            <table style="width:100%;">
+                                <tr>
+                                    <td style=" color: #57D9FE; font-weight: bold; font-size: 16pt;display:inline-block;vertical-align:middle;">
+                                        <div style="color: #57D9FE; font-weight: bold; font-size: 16pt;">
+                                            Technology Partners
+                                        </div>
+                                    </td>
+                                    <td style="text-align:right;margin-right:10px;">
+                                        <div style="width: 170px; height: 25px; color: #ffffff; font-weight: normal; display: inline-block; padding-top: 10px;text-align:center;margin-bottom:10px; background-color: #133B7C; border:1px solid #ffffff;font-size: 10pt;cursor:pointer;" ng-click="GoToRequestRebate()">Request Rebate</div>
+                                        <div style="width: 170px; height: 25px; color: #133B7C; font-weight: normal; display: inline-block; padding-top: 10px;text-align:center;margin-bottom:10px; background-color: #ffffff;border:1px solid #133B7C; font-size: 10pt;cursor:pointer;" ng-click="GoToRecentRequest()">Recent Request</div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+                        <td style="height: 60px; width: 4%; text-align: right; color: #57d9fe; font-size: 18pt !important; vertical-align: top;">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 100%;" colspan="3">
+                            <table style="width: 100%;margin-top:20px;">
+                                <tr>
+                                    <td style="text-align: left; width: 4%;" class="hideOnMobile">
+                                        &nbsp;
+                                    </td>
+
+                                    <td class="productClassFirstCol">
+                                        Partner Name
+                                    </td>
+
+                                    <td class="productClassOtherCol">
+                                        Delegate Number
+                                    </td>
+
+                                    <td style="text-align: left; width: 4%;" class="hideOnMobile">
+                                        &nbsp;
+                                    </td>
+
+                                </tr>
+                                <tr ng-repeat="product in Delegates">
+                                    <td style="text-align: left;" class="hideOnMobile">
+                                        &nbsp;
+                                    </td>
+                                    <td class="productClassFirstColContent">
+                                        {{product.TechnologyPartnerAccountName}}
+                                    </td>
+                                    <td class="productClassOtherColContent">
+                                        {{product.TechnologyPartnerEPN}}
+                                    </td>
+
+                                    <td style="text-align: left;" class="hideOnMobile">
+                                        &nbsp;
+                                    </td>
+
+                                </tr>
+
+                            </table>
+
+
+                        </td>
+
+
+                    </tr>
+                    <tr>
+                        <td style="height: 10px;" colspan="3">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td style="height: 20px;" colspan="3">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="text-align: left; width: 4%;" class="hideOnMobile">
+                                        &nbsp;
+                                    </td>
+                                    <td style="height: 60px; text-align: left; color: #57d9fe; font-size: 18pt !important; vertical-align: top;">
+                                        <div style="width: 100%; color: #57D9FE; font-weight: bold; font-size: 10pt;line-height:1.5;">
+                                            The Star Empower Program allows Technology Partners that choose not to order and resell Star Products to select a Delegate Partner to do so on their behalf. Delegate Partners that are fulfilling Star products for Technology Partners will receive an increase Empower Program discount. @*<a style="color:#57D9FE !important;" hrea="https://www.starmicronics.com/PartnerPortal/pages/delegate-registration ">Get Started></a>*@
+                                        </div>
+
+                                    </td>
+                                    <td style="text-align: left;" class="hideOnMobile">
+                                        &nbsp;
+                                    </td>
+
+                                </tr>
+
+                            </table>
+                        </td>
+
+                        <!--<td style="height: 60px; width: 4%; text-align: left; color: #57d9fe; font-size: 18pt !important; vertical-align: top;" colspan="3">
+                        <div style="width: 100%; color: #57D9FE; font-weight: bold; font-size: 12pt;">
+                            The Star Empower Program allows Technology Partners that choose not to order and resell Star Products to select a Delegate Partner to do so on their behalf. Delegate Partners that are fulfilling Star products for Technology Partners will receive an increase Empower Program discount.-->
+                        @*<a style="color:#57D9FE !important;" hrea="https://www.starmicronics.com/PartnerPortal/pages/delegate-registration ">Get Started></a>*@
+                        <!--</div>
+
+                    </td>-->
+                    </tr>
+
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<Style>
+    
+
+    @@media only screen and (max-width: 759px) {
+
+
+    }
+
+    @@font-face {
+        font-family: 'Sintony';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Sintony'), url(https://fonts.gstatic.com/s/sintony/v7/XoHm2YDqR7-98cVUET0tuv0rnjrQ8Q.woff2) format('woff2');
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    /* latin */
+    @@font-face {
+        font-family: 'Sintony';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Sintony'), url(https://fonts.gstatic.com/s/sintony/v7/XoHm2YDqR7-98cVUETMtuv0rnjo.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+
+  
+</Style>
+
+<script>
+    
+
+        app.controller("StarDistContentController", function ($controller, $scope, $http, $sce, 
+            notificationFactory, $location,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory) {
+
+
+            $scope.OpportunitiesCount = 0;
+            $scope.PurchaseByProduct = [];
+            $scope.showUpGrowth = false;
+            $scope.showDownGrowth = false;
+            $scope.showMdfFund = false;
+            $scope.Mdf = {};
+            $scope.Delegates = [];
+            $scope.ShowLoyaltyRegnNotification = false;
+
+            $scope.showOpportunitySection = false;
+            $scope.showGrowthSection = false;
+
+            $scope.Account = {};
+            $scope.getAccount = function () {
+                dbUtilFactory.get(root + 'api/ppcmsapi/GetAccountFromSessionData/', "", function (d) {
+                    $scope.Account = d;
+                    $scope.showGrowthSection = true;
+                    if ((d.LoyaltyLevel.indexOf("Gold") >= 0) || (d.LoyaltyLevel.indexOf("Platinum") >= 0)) {
+                        $scope.getMdf();
+                    }
+                    if ((d.PartnerType.indexOf("Technology") >= 0) || (d.PartnerType.indexOf("Solution") >= 0) || (d.PartnerType.indexOf("Services") >= 0) || (d.PartnerType.indexOf("Fulfillment") >= 0)) {                        
+                        $scope.getDelegateData();
+                    }
+                }, '', 'Error getting data ');
+                $scope.ShowLoyaltyRegnNotification();
+            };
+
+            $scope.ShowLoyaltyRegnNotification = function () {
+                dbUtilFactory.get(root + 'api/ppcmsapi/ShowLoyaltyRegnNotification/', "", function (d) {
+                    if (d == true) {
+                        $("#loyaltyRegistrationNotice").show();
+                        $("#opportunitySection").addClass("topMargin20px");
+                        $("#requestTraining").css("margin-top", "20px");
+                    } else {
+                        $("#opportunitySection").addClass("topMargin60px");
+                        $("#requestTraining").css("margin-top", "60px");
+                    }
+                }, '', 'Error getting data ');
+            };
+
+            $scope.getOpportunities = function() {
+                dbUtilFactory.get(root + 'api/ppcmsapi/GetOpportunitiesCountSessionData/', "", function (d) {
+                    $scope.OpportunitiesCount = d;
+                    $("#StarDistContentControllerContainer").show();
+                    $scope.showOpportunitySection = true;
+                }, '', 'Error getting data ');
+            };
+            $scope.getOpportunities();
+            $scope.getAccount();
+            $scope.getPurchaseByProduct = function () {
+                dbUtilFactory.get(root + 'api/ppcmsapi/GetPurchaseByProductClassesFromSessionData/', "", function (d) {
+                    $scope.PurchaseByProduct = d;
+
+                }, '', 'Error getting data ');
+            };
+            $scope.getPurchaseByProduct();
+
+            $scope.getMdf = function () {
+                    dbUtilFactory.get(root + 'api/ppcmsapi/GetMdfFromSessionData/', "", function (d) {
+                        $scope.Mdf = d;
+                        if (d.MdfNo != null && d.MdfNo != undefined && d.MdfNo != "")
+                        {
+                            $(".progress-bar").attr("data-percent", d.PercentageUsed);
+                            $(".progress-bar").loading();
+                            $("#mdfContainer").show();
+                        }
+                    }, '', 'Error getting data ');
+            };
+            $scope.getDelegateData = function () {
+                dbUtilFactory.get(root + 'api/ppcmsapi/GetDelegateData/', "", function (d) {
+                    $scope.Delegates = d;
+                    
+                   // if (d.length > 0) {
+                        if (($scope.Account.PartnerType.indexOf("Technology") >= 0)) {
+                            $("#delegateContainerTechnologyPartner").show();
+                        } else {
+                            $("#delegateContainer").show();
+                        }
+                    //} else {                        
+                    //    //if (($scope.Account.PartnerType.indexOf("Technology") >= 0) || (d.PartnerType.indexOf("Solution") >= 0) || (d.PartnerType.indexOf("Services") >= 0) || (d.PartnerType.indexOf("Fulfillment") >= 0)) {
+                    //    if (($scope.Account.PartnerType.indexOf("Technology") >= 0)) {
+                    //        $("#delegateContainerTemp").show();
+                    //    }
+                    //}
+                }, '', 'Error getting data ');
+            };
+
+            $scope.GoToRequestRebate = function () {
+                window.location.href = root + "Pages/RequestRebate";
+            };
+            $scope.GoToRecentRequest = function () {
+                window.location.href = root + "Pages/RecentRequest";
+            };
+        });
+    </script>

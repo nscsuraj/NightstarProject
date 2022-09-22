@@ -1,0 +1,228 @@
+﻿
+<style>
+    .clsTextBoxOpportunity {
+        min-height: 50px !important;
+        font-size: 20px !important;
+    }
+    .btnLanding {
+        background-color: #21459A;
+        border: none;
+        color: #FFFFFF;
+        text-align: center;
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        margin: 10px 0 !important;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+        height: 40px;
+        width: 150px;
+    }
+    .invalidated {
+        border-bottom: 1px solid #FF0208 !important;
+        background-color: #FFBABC !important;
+    }
+</style>
+
+<div style="width: 100%;">
+    <div class="fusion-fullwidth fullwidth-box" style="margin-top:50px;margin-bottom:90px; text-align: left; background-color:#111c4e;background-repeat:no-repeat;background-position:left top;border:0px solid ;padding-top:20px;padding-bottom:20px;padding-left:20px;padding-right:20px;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;" id="">
+        <div class="fusion-row">
+            <div>
+                <div>
+                    <div style="text-size-adjust: auto; font-family: Calibri, Arial, Helvetica, sans-serif; font-size: 12pt;"><span style="color: #ffffff; font-family: Arial, Helvetica, sans-serif; text-align: justify;"><strong>Need training on Star products or target markets?</strong></span></div>
+                    <div style="text-size-adjust: auto; font-family: Calibri, Arial, Helvetica, sans-serif; font-size: 12pt;"><span style="color: #ffffff; font-family: Arial, Helvetica, sans-serif; text-align: justify;"> Submit a request and our team will follow up with you!</span></div>
+                </div>
+            </div>
+        </div>
+    
+</div>
+
+</div>
+<div id="requestForm" style="width: 100%; " ng-controller="StarTrainingRequestController">
+    <div class="fusion-fullwidth fullwidth-box" style="text-align: left; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; " id="form1">
+        <div style="padding-left: 20px;">
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 250px; padding-left: 20px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 12pt;">Name *</div>
+                <div style="width: 500px;  float: left; display: table-cell; vertical-align: middle;">
+                    <input class="clsTextBoxOpportunity" style="width: 100%;" placeholder="Training Requestor's Name *" type="text" value="" ng-model="Training.Training_Requestor_s_Name__c">
+                </div>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 250px; padding-left: 20px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 12pt;">Email *</div>
+                <div style="width: 500px;  float: left; display: table-cell; vertical-align: middle;">
+                    <input class="clsTextBoxOpportunity" style="width: 100%;" placeholder="Training Requestor's Email" type="text" value="" ng-model="Training.Training_Requestor_s_Email__c">
+                </div>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 250px; padding-left: 20px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 12pt;">Description</div>
+                <div style="width: 500px;  float: left; display: table-cell; vertical-align: middle;">
+                    <input class="clsTextBoxOpportunity" style="width: 100%;" placeholder="Description" type="text" value="" ng-model="Training.Products_or_Markets_you_want_training_on__c">
+                </div>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 250px; padding-left: 20px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 12pt;">Type of Training *</div>
+                <div style="width: 500px;  float: left; display: table-cell; vertical-align: middle;">
+                    <select ng-model="Training.Type_of_training__c" style="width: 100%; padding: 5px;padding-left: 15px; font-size: 11pt; height: 50px; border: 1px solid #d2d2d2; cursor: pointer;">
+                        <option value="">--None--</option>
+                        <option value="Virtual Training">Virtual Training</option>
+                        <option value="In-Person Training">In-Person Training</option>
+                    </select>                    
+                </div>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 30px;"></div>
+            <div style="width: 100%; height: 30px;">
+                <span style="color: #2551A4; font-size: 10pt; font-weight: bold;">By clicking "I Agree", you agree to Star Micronics Privacy Policy and Terms of Use. This may include product related emails..</span>
+                <div style="width: 770px;  float: left; display: table-cell; vertical-align: middle;">
+                    <span style="display:inline-block;width:500px;float:left;color: #2551A4;"><input type="checkbox" style="width:30px;height:30px;color: #2551A4;cursor:pointer;" ng-model="AgreedToPrivacyTerms" /> I Agree</span>
+                </div>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both; text-align: left;">
+                <input type="button" name="Submit" class="btnLanding" value="Submit" ng-click="SaveData()">
+            </div>
+        </div>
+
+    </div>    
+    <div style="width: 100%; height: 500px; opacity: .5; display: inline-block; position: absolute; top: 0; left: 0; z-index: 99;" ng-show="showProcessing">
+        <div style="font-size: 22pt; height: 80px; padding-top: 200px;">
+            <img src="~/Images/processing10.gif" />
+
+        </div>
+    </div>
+</div>
+
+    <style>
+        textarea::-webkit-input-placeholder {
+            color: #aaa9a9;
+        }
+
+        textarea:-moz-placeholder { /* Firefox 18- */
+            color: #aaa9a9;
+        }
+
+        textarea::-moz-placeholder { /* Firefox 19+ */
+            color: #aaa9a9;
+        }
+
+        textarea:-ms-input-placeholder {
+            color: #aaa9a9;
+        }
+
+        textarea::placeholder {
+            color: #aaa9a9;
+        }
+    </style>
+    <script>
+
+    $(document).ready(function () {
+        $(".rightPanelContainer").hide();
+        $("#requestTrainingLink").hide();
+        $("#supportNumber").css("margin-top", "80px");
+    });
+    function validateEmail(email) {
+        var re = /^(([^<>()[\]\\.,;:\s@@\"]+(\.[^<>()[\]\\.,;:\s@@\"]+)*)|(\".+\"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+        app.controller("StarTrainingRequestController", function ($controller, $scope, $http, $sce,
+            notificationFactory, $location,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory) {
+
+            $scope.showProcessing = false;
+            $scope.Account = {};
+            $scope.Training = {};
+            $scope.AgreedToPrivacyTerms = false;
+
+            $scope.inIt = function () {
+                $scope.Training = {};
+                $scope.Training.Products_or_Markets_you_want_training_on__c = "";//Description
+                $scope.Training.Account_Name__c = "";
+                $scope.Training.Type_of_training__c = "";
+                $scope.Training.Training_Requestor_s_Name__c = "";
+                $scope.Training.Training_Requestor_s_Email__c = "";
+                $scope.Training.Status__c = "Requested";
+
+            };
+            $scope.inIt();
+
+            $scope.getAccount = function () {
+                dbUtilFactory.get(root + 'api/ppcmsapi/GetAccountFromSessionData/', "", function (d) {
+                    $scope.Account = d;
+                    $scope.Training.Account_Name__c = d.AccountId;
+                }, '', 'Error getting data ');              
+
+            };
+            $scope.getAccount();           
+
+            $scope.SaveData = function () {
+                if (!$scope.AgreedToPrivacyTerms) {
+                    swal({
+                        title: "Error",
+                        text: "Please accept terms.",
+                        type: "error"
+                    });
+                    return false;
+                }
+                if ($scope.Training.Products_or_Markets_you_want_training_on__c == "") {
+                    swal({
+                        title: "Error",
+                        text: "Please fill the description.",
+                        type: "error"
+                    });
+                    return false;
+                }
+                if ($scope.Training.Type_of_training__c == "") {
+                    swal({
+                        title: "Error",
+                        text: "Please chose type of training.",
+                        type: "error"
+                    });
+                    return false;
+                }
+                if ($scope.Training.Training_Requestor_s_Email__c == "") {
+                    swal({
+                        title: "Error",
+                        text: "Please provide email.",
+                        type: "error"
+                    });
+                    return false;
+                } else if (!validateEmail($scope.Training.Training_Requestor_s_Email__c)) {
+                    swal({
+                        title: "Error",
+                        text: "Please provide valid email.",
+                        type: "error"
+                    });
+                    return false;
+                }
+                if ($scope.Training.Training_Requestor_s_Name__c == "") {
+                    swal({
+                        title: "Error",
+                        text: "Please provide name.",
+                        type: "error"
+                    });
+                    return false;
+                }
+                $scope.showProcessing = true;
+                dbUtilFactory.postp(root + 'api/ppcmsapi/SaveTrainingRequested/', $scope.Training, function () {
+                    var redUrl = '@Url.Content("~/Pages/Dashboard")';
+                    swal({
+                        title: "Done",
+                        text: "Thank you for requesting training. A Star expert will respond within one business day.",
+                        type: "success"
+                    }).then(function () {
+                        $scope.showProcessing = false;
+                        window.location.href = redUrl;
+                    });
+                }, '', 'Error getting data ');
+
+
+
+
+                return true;
+            };
+
+
+        });
+    </script>

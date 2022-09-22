@@ -1,0 +1,40 @@
+﻿@model PartnerPortal.Models.Admin.UserVM
+@{
+    ViewBag.Title = "Log In";
+    Layout = "~/Views/Shared/_LayoutScripts.cshtml";
+}
+<link rel="stylesheet" href="@Url.Content("~/Styles/loginStyle.css")">
+<script src="~/Scripts/ChatStatusIndicator.js"></script>
+<div class="leftFloat outer">
+    <div class="leftFloat inner">
+        <div class="leftFloat width100p height40" style="background-color: darkblue; color: #ffffff; font-family: Arial; font-weight: bold; font-size: 18pt; text-align: left;">
+            <div style="margin: 5px; margin-left: 20px;">Partner Portal</div>
+        </div>
+        <br/>
+        @using (Html.BeginForm("DoLogin", "Login", FormMethod.Post))
+        {
+            if (Request.QueryString["Terminated"] == "True")
+            {
+                <div class="leftFloat width100p paddingtop10" style="color: #ca0808">Your session has terminated.</div>
+            }
+            else
+            {
+                <div class="leftFloat width100p paddingtop10">&nbsp;</div>
+            }
+            <div class="leftFloat width100p paddingtop10">
+                @Html.TextBoxFor(m => m.LoginId, new {placeholder = "Enter User Name", @class = "clsTextBox"})@Html.ValidationMessageFor(m => m.LoginId, "*Required")
+            </div>
+            <div class="leftFloat width100p paddingtop10">
+                @Html.PasswordFor(m => m.LoginPassword, new {placeholder = "Enter Password", @class = "clsTextBox"})@Html.ValidationMessageFor(m => m.LoginPassword, "*Required")
+            </div>
+            <div class="leftFloat width100p paddingtop5">
+                &nbsp;@Html.ValidationMessageFor(m => m.LoginFailed)
+            </div>
+             <div class="leftFloat width100p paddingtop5">
+                 <input type="submit" name="commit" class="button" value="Log In">
+                 </div>
+        }
+    </div>
+</div>
+    
+

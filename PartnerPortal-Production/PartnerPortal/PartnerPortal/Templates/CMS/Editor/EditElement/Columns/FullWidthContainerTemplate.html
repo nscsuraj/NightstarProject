@@ -1,0 +1,496 @@
+﻿<style>
+    .colorSelector {
+        position: relative;
+        width: 36px;
+        height: 36px;
+    }
+
+        .colorSelector div {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 30px;
+            height: 30px;
+        }
+
+    .colorpicker {
+        z-index: 1120;
+    }
+</style>
+<script>
+    var uploaderOpenedBy = {};
+    $(document).ready(function () {
+        $('#tab-container-full-width-container').easytabs();
+        $('#colorSelector div').css('backgroundColor', '#ffffff');
+        //get the object and set values
+        var carrierObj = JSON.parse($("#dialog_form").attr("data-obj"));
+        try {
+            $(".objectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(carrierObj[$(this).attr("data-PropertyIndex")]);
+                } else {
+                    if (carrierObj[$(this).attr("data-PropertyIndex")].length > 0)
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                }
+            });
+        } catch (e) {
+
+        }
+        //set color
+        $('#backgroundColorSelector div').css('backgroundColor', $('#backgroundColor').val());
+        $('#videoOverlayColorSelector div').css('backgroundColor', $('#videoOverlayColor').val());
+        $('#borderColorSelector div').css('backgroundColor', $('#borderColor').val());
+        $("#backgroundImageDisplay").attr("src", $("#hidden_background_image").val());
+        $("#video_preview_image_display").attr("src", $("#video_preview_image").val());
+        if ($("#hidden_background_image").val().length > 0) {
+            $('.fusionb-upload-button').text('Remove').addClass('remove-image');
+        }
+
+
+        $('#backgroundColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#backgroundColorSelector div').css('backgroundColor', '#' + hex);
+                $('#backgroundColor').val('#' + hex);
+            },
+            onBeforeShow: function () {
+                $(this).ColorPickerSetColor($("#backgroundColor").val());
+            }
+        });
+
+        $('#videoOverlayColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#videoOverlayColorSelector div').css('backgroundColor', '#' + hex);
+                $('#videoOverlayColor').val('#' + hex);
+            },
+            onBeforeShow: function () {
+                $(this).ColorPickerSetColor($("#videoOverlayColor").val());
+            }
+        });
+
+        $('#borderColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#borderColorSelector div').css('backgroundColor', '#' + hex);
+                $('#borderColor').val('#' + hex);
+            },
+            onBeforeShow: function () {
+                $(this).ColorPickerSetColor($("#borderColor").val());
+            }
+        });
+        $(".ui-dialog").css("height", $(window).height() - 60);
+
+        $(".fusionb-upload-button").click(function () {
+            $("#dialog_uploadMedia").empty();
+            var template = root + "/Templates/CMS/Editor/UploadMediaTemplate.html";
+            $("#dialog_uploadMedia").load(template);
+            uploaderOpenedBy = $(this);
+            //$("#dialog_uploadMedia").attr("data-allowMultiSelect",false); //Add this line only if you want to add multiselect option
+
+            if ($(this).hasClass('remove-image')) {
+                $(this).parent().find('img').attr('src', '');
+                $(this).parent().find('input').attr('value', '');
+                $(this).hide();
+                $(this).text('Upload').removeClass('remove-image').attr('style', '');
+                return;
+            }
+
+            var dialog = $("#dialog_uploadMedia").dialog({
+                autoOpen: false,
+                width: "96%",
+                modal: true,
+                resizable: false,
+                position: [30, 30],
+                dialogClass: "no-titlebar",
+                create: function (event) {
+                    $(event.target).parent().css('position', 'fixed');
+                    $(".ui-widget-header").hide();
+                },
+                open: function () { $(".ui-widget-header").hide(); },
+                close: function () {
+                    //for (var i = 0; i < selectedUploadedObjectsToUse.length; i++) {
+                    //    alert(selectedUploadedObjectsToUse[i].FilePath);
+                    //}
+                    $(".ui-widget-header").show();
+                    if (selectedUploadedObjectsToUse.length > 0) {
+                        uploaderCallback(selectedUploadedObjectsToUse[0].FilePath);
+                    }
+                    $('.fusionb-upload-button').text('Remove').addClass('remove-image');
+                }
+            });
+            dialog.dialog("open");
+        });
+
+    });
+
+    function uploaderCallback(filePath) {
+        if ($(uploaderOpenedBy) != undefined) {
+            $(uploaderOpenedBy).parent().find("input[type='hidden']").val(filePath);
+            $(uploaderOpenedBy).parent().find("img").attr("src", filePath);
+        }
+    }
+
+</script>
+<div id="tab-container-full-width-container" class="tab-container">
+    <ul class='etabs'>
+        <li class='tab'><a href="#tabs1">Default</a></li>
+        <li class='tab'><a href="#tabs2">Background</a></li>
+        <li class='tab'><a href="#tabs3">Design</a></li>
+    </ul>
+    <div class='panel-container' style="width: 98%;">
+        <div id="tabs1" style="display: block;">
+            <div class="clearfix form-element-container form-element-container-select">
+                <div class="name-description"><strong>100% Interior Content Width</strong><span>Select if the interior content is contained to site width or 100% width. Selecting "Yes" will remove left/right padding. </span></div>
+                <div class="element-type">
+                    <div class="select_arrow"></div>
+                    <select id="hundred_percent" name="hundred_percent" class="select-field objectProperty" data-propertyindex="1">
+                        <option value="no" selected="">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-select">
+                <div class="name-description"><strong>Center Content</strong><span>Only works with columns inside a full width container that is set to equal heights.  Set to "Yes" to center the content horizontally and vertically.</span></div>
+                <div class="element-type">
+                    <div class="select_arrow"></div>
+                    <select id="center_content" name="center_content" class="select-field objectProperty" data-propertyindex="26">
+                        <option value="yes">Yes</option>
+                        <option value="no" selected="">No</option>
+                    </select>
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-select">
+                <div class="name-description"><strong>Set Columns to Equal Height</strong><span>Select to set all column shortcodes that are used inside the container to have equal height.</span></div>
+                <div class="element-type">
+                    <div class="select_arrow"></div>
+                    <select id="equal_height_columns" name="equal_height_columns" class="select-field objectProperty" data-propertyindex="2">
+                        <option value="no" selected="">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-select">
+                <div class="name-description"><strong>Hide on Mobile</strong><span>Select yes to hide full width container on mobile.</span></div>
+                <div class="element-type">
+                    <div class="select_arrow"></div>
+                    <select id="hide_on_mobile" name="hide_on_mobile" class="select-field objectProperty" data-propertyindex="3">
+                        <option value="no" selected="">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-input">
+                <div class="name-description"><strong>Name Of Menu Anchor</strong><span>This name will be the id you will have to use in your one page menu.</span></div>
+                <div class="element-type" style="display: inline-block !important;">
+                    <input type="text" class="text-field objectProperty" data-propertyindex="4" value="" id="menu_anchor" name="menu_anchor" size="50" style="padding: 6px 0px !important;">
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-input">
+                <div class="name-description"><strong>CSS Class</strong><span>Add a class to the wrapping HTML element.</span></div>
+                <div class="element-type">
+                    <input type="text" class="text-field objectProperty" data-propertyindex="5" value="" id="class" name="class" size="50" style="padding: 6px 0px !important;">
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-input">
+                <div class="name-description"><strong>CSS ID</strong><span>Add an ID to the wrapping HTML element.</span></div>
+                <div class="element-type">
+                    <input type="text" class="text-field objectProperty" data-propertyindex="6" value="" id="id" name="id" size="50" style="padding: 6px 0px !important;">
+                </div>
+            </div>
+        </div>
+        <div id="tabs2" style="display: inline-block;">
+            <div class="clearfix form-element-container form-element-container-color">
+                <div class="name-description"><strong>Background Color</strong><span>Controls the background color. Leave blank for theme option selection.</span></div>
+                <div class="element-type">
+                    <div class="wp-picker-container">
+                        <table style="width: 100%" colspacing="10">
+                            <tr>
+                                <td style="width: 75%; text-align: right;">
+                                    <div id="backgroundColorSelector" class="colorSelector" style="width: 90%;">
+                                        <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                        </div>
+                                        <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                        </span>
+                                    </div>
+                                </td>
+                                <td style="width: 25%; vertical-align: middle;">
+                                    <input type="text" class="objectProperty" data-propertyindex="7" value="" id="backgroundColor" name="backgroundColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-upload">
+                <div class="name-description"><strong>Background Image</strong><span>Upload an image to display in the background</span></div>
+                <div class="element-type">
+                    <div class="fusion-upload-container" id="background-image-upload-container">
+                        <img id="backgroundImageDisplay" src="" alt="Image" class="uploaded-image" style="padding-bottom: 3px;" />
+                        <div style="clear: both;"></div>
+                        <input type="hidden" class="fusion-form-text fusion-form-upload fusion-input objectProperty" data-propertyindex="8" name="background_image" id="hidden_background_image" value="">
+                        <a href="#" class="fusionb-upload-button" data-upid="1">Upload</a><!--<a href="#" style="display: none" class="fusionb-edit-button" data-upid="1">Edit</a>-->
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-select" style="display: none;">
+                <div class="name-description"><strong>Background Parallax</strong><span>Choose how the background image scrolls and responds.</span></div>
+                <div class="element-type">
+                    <div class="select_arrow"></div>
+                    <select id="background_parallax" name="background_parallax" class="select-field" data-propertyindex="9">
+                        <option value="none" selected="">No Parallax</option>
+                        <option value="fixed">Fixed</option>
+                        <option value="up">Up</option>
+                        <option value="down">Down</option>
+                        <option value="left">Left</option>
+                        <option value="right">Right</option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-input" style="display: none;">
+                <div class="name-description"><strong>Parallax Speed</strong><span>The movement speed, value should be between 0.1 and 1.0. A lower number means slower scrolling speed.</span></div>
+                <div class="element-type" style="display: inline-block !important;">
+                    <input type="text" class="text-field" data-propertyindex="10" value="0.3" id="parallax_speed" name="parallax_speed" size="50" style="padding: 6px 0px !important;">
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-select" style="display: none;">
+                <div class="name-description"><strong>Enable Parallax on Mobile</strong><span>Works for up/down/left/right only. Parallax effects would most probably cause slowdowns when your site is viewed in mobile devices. If the device width is less than 980 pixels, then it is assumed that the site is being viewed in a mobile device.</span></div>
+                <div class="element-type">
+                    <div class="select_arrow"></div>
+                    <select id="enable_mobile" name="enable_mobile" class="select-field" data-propertyindex="11">
+                        <option value="no" selected="">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-select">
+                <div class="name-description"><strong>Background Repeat</strong><span>Choose how the background image repeats.</span></div>
+                <div class="element-type">
+                    <div class="select_arrow"></div>
+                    <select id="background_repeat" name="background_repeat" class="select-field objectProperty" data-propertyindex="12">
+                        <option value="no-repeat" selected="">No Repeat</option>
+                        <option value="repeat">Repeat Vertically and Horizontally</option>
+                        <option value="repeat-x">Repeat Horizontally</option>
+                        <option value="repeat-y">Repeat Vertically</option>
+                    </select>
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-select">
+                <div class="name-description"><strong>Background Position</strong><span>Choose the postion of the background image</span></div>
+                <div class="element-type">
+                    <div class="select_arrow"></div>
+                    <select id="background_position" name="background_position" class="select-field objectProperty" data-propertyindex="13">
+                        <option value="left top" selected="">Left Top</option>
+                        <option value="left center">Left Center</option>
+                        <option value="left bottom">Left Bottom</option>
+                        <option value="right top">Right Top</option>
+                        <option value="right center">Right Center</option>
+                        <option value="right bottom">Right Bottom</option>
+                        <option value="center top">Center Top</option>
+                        <option value="center center">Center Center</option>
+                        <option value="center bottom">Center Bottom</option>
+                    </select>
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-input">
+                <div class="name-description"><strong>YouTube Video ID</strong><span>Enter the URL to the video or the video ID of your YouTube or Vimeo video you want to use as your background. If your URL isn't showing a video, try inputting the video ID instead. <small>Ads will show up in the video if it has them.</small></span></div>
+                <div class="element-type" style="display: inline-block !important;">
+                    <input type="text" class="text-field objectProperty" data-propertyindex="14" value="" id="video_url" name="video_url" size="50" style="padding: 6px 0px !important;">
+                    <div class="note">
+                        Tip: newly uploaded videos may not display right away and might show an error message.<br>
+                        Videos will not show up in mobile devices because they handle videos differently. In those cases, please provide a preview background image and that will be shown instead.
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-input" style="display: none;">
+                <div class="name-description"><strong>Video Aspect Ratio</strong><span>The video will be resized to maintain this aspect ratio, this is to prevent the video from showing any black bars. Enter an aspect ratio here such as: "16:9", "4:3" or "16:10". The default is "16:9"</span></div>
+                <div class="element-type" style="display: inline-block !important;">
+                    <input type="text" class="text-field" data-propertyindex="15" value="16:9" id="video_aspect_ratio" name="video_aspect_ratio" size="50" style="padding: 6px 0px !important;">
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-input" style="display: none;">
+                <div class="name-description"><strong>Video WebM Upload</strong><span>Video must be in a 16:9 aspect ratio. Add your WebM video file. WebM and MP4 format must be included to render your video with cross browser compatibility. OGV is optional.</span></div>
+                <div class="element-type">
+                    <input type="text" class="text-field " data-propertyindex="16" value="" id="video_webm" name="video_webm" size="50" style="padding: 6px 0px !important;">
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-input" style="display: none;">
+                <div class="name-description"><strong>Video MP4 Upload</strong><span>Video must be in a 16:9 aspect ratio. Add your WebM video file. WebM and MP4 format must be included to render your video with cross browser compatibility. OGV is optional.</span></div>
+                <div class="element-type">
+                    <input type="text" class="text-field " data-propertyindex="17" value="" id="video_mp4" name="video_mp4" size="50" style="padding: 6px 0px !important;">
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-input" style="display: none;">
+                <div class="name-description"><strong>Video OGV Upload</strong><span>Add your OGV video file. This is optional.</span></div>
+                <div class="element-type">
+                    <input type="text" class="text-field " data-propertyindex="18" value="" id="video_ogv" name="video_ogv" size="50" style="padding: 6px 0px !important;">
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-upload" style="display: none;">
+                <div class="name-description"><strong>Video Preview Image</strong><span>IMPORTANT: This field must be used for self hosted videos. Self hosted videos do not work correctly on mobile devices. The preview image will be seen in place of your video on older browsers or mobile devices.</span></div>
+                <div class="element-type">
+                    <div class="fusion-upload-container">
+                        <img src="" alt="Image" class="uploaded-image" style="height: 192px; width: 311px;" id="video_preview_image_display">
+                        <div style="clear: both;"></div>
+                        <input type="hidden" class="fusion-form-text fusion-form-upload fusion-input " data-propertyindex="19" name="video_preview_image" id="video_preview_image" value="">
+                        <a href="video_preview_image" class="fusionb-upload-button" data-upid="2">Upload</a><!--<a href="video_preview_image" style="display: none" class="fusionb-edit-button" data-upid="2">Edit</a>-->
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-color" style="display: none;">
+                <div class="name-description"><strong>Video Overlay Color</strong><span>Select a color to show over the video as an overlay. Hex color code, <strong>ex: #fff</strong></span></div>
+                <div class="element-type">
+                    <div class="wp-picker-container">
+                        <table style="width: 100%" colspacing="10">
+                            <tr>
+                                <td style="width: 75%; text-align: right;">
+                                    <div id="videoOverlayColorSelector" class="colorSelector" style="width: 90%;">
+                                        <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                        </div>
+                                        <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                        </span>
+                                    </div>
+                                </td>
+                                <td style="width: 25%; vertical-align: middle;">
+                                    <input type="text" class="objectProperty" data-propertyindex="20" value="" id="videoOverlayColor" name="videoOverlayColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-input" style="display: none;">
+                <div class="name-description"><strong>Video Overlay Opacity</strong><span>Opacity ranges between 0 (transparent) and 1 (opaque). ex: .4</span></div>
+                <div class="element-type">
+                    <input type="text" class="text-field " data-propertyindex="21" value="0.5" id="overlay_opacity" name="overlay_opacity" size="50" style="padding: 6px 0px !important;">
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-select">
+                <div class="name-description">
+                    <strong>Mute Video</strong>
+                </div>
+                <div class="element-type">
+                    <div class="select_arrow"></div>
+                    <select id="video_mute" name="video_mute" class="select-field objectProperty" data-propertyindex="22">
+                        <option value="yes" selected="">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-select">
+                <div class="name-description">
+                    <strong>Loop Video</strong>
+                </div>
+                <div class="element-type">
+                    <div class="select_arrow"></div>
+                    <select id="video_loop" name="video_loop" class="select-field objectProperty" data-propertyindex="23">
+                        <option value="yes" selected="">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-select" style="display: none;">
+                <div class="name-description"><strong>Fading Animation</strong><span>Choose to have the background image fade and blur on scroll. WARNING: Only works for images. </span></div>
+                <div class="element-type">
+                    <div class="select_arrow"></div>
+                    <select id="fade" name="fade" class="select-field " data-propertyindex="24">
+                        <option value="no" selected="">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div id="tabs3" style="display: block;">
+            <div class="clearfix form-element-container form-element-container-input">
+                <div class="name-description"><strong>Border Size</strong><span>In pixels (px), ex: 1px. Leave blank for theme option selection.</span></div>
+                <div class="element-type">
+                    <input type="text" class="text-field objectProperty" data-propertyindex="25" value="0px" id="border_size" name="border_size" size="50" style="padding: 6px 0px !important;">
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-color">
+                <div class="name-description"><strong>Border Color</strong><span>Controls the border color. Leave blank for no border color.</span></div>
+                <div class="element-type">
+                    <div class="wp-picker-container">
+                        <table style="width: 100%" colspacing="10">
+                            <tr>
+                                <td style="width: 75%; text-align: right;">
+                                    <div id="borderColorSelector" class="colorSelector" style="width: 90%;">
+                                        <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                        </div>
+                                        <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                        </span>
+                                    </div>
+                                </td>
+                                <td style="width: 25%; vertical-align: middle;">
+                                    <input type="text" class="objectProperty" data-propertyindex="27" value="" id="borderColor" name="borderColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-select">
+                <div class="name-description"><strong>Border Style</strong><span>Controls the border style.</span></div>
+                <div class="element-type">
+                    <div class="select_arrow"></div>
+                    <select id="border_style" name="border_style" class="select-field objectProperty" data-propertyindex="28">
+                        <option value="solid">Solid</option>
+                        <option value="dashed">Dashed</option>
+                        <option value="dotted">Dotted</option>
+                    </select>
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-input">
+                <div class="name-description"><strong>Padding Top</strong><span>In pixels or percentage, ex: 10px or 10%.</span></div>
+                <div class="element-type">
+                    <input type="text" class="text-field objectProperty" data-propertyindex="29" value="10px" id="padding_top" name="padding_top" size="50" style="padding: 6px 0px !important;">
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-input">
+                <div class="name-description"><strong>Padding Bottom</strong><span>In pixels or percentage, ex: 10px or 10%.</span></div>
+                <div class="element-type">
+                    <input type="text" class="text-field objectProperty" data-propertyindex="30" value="10px" id="padding_bottom" name="padding_bottom" size="50" style="padding: 6px 0px !important;">
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-input">
+                <div class="name-description"><strong>Padding Left</strong><span>In pixels or percentage, ex: 10px or 10%.</span></div>
+                <div class="element-type">
+                    <input type="text" class="text-field objectProperty" data-propertyindex="31" value="0" id="padding_left" name="padding_left" size="50" style="padding: 6px 0px !important;">
+                </div>
+            </div>
+            <div class="clearfix form-element-container form-element-container-input">
+                <div class="name-description"><strong>Padding Right</strong><span>In pixels or percentage, ex: 10px or 10%.</span></div>
+                <div class="element-type">
+                    <input type="text" class="text-field objectProperty" data-propertyindex="33" value="0" id="padding_right" name="padding_right" size="50" style="padding: 6px 0px !important;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

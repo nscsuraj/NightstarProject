@@ -1,0 +1,828 @@
+﻿<!DOCTYPE html>
+<html lang="en-US" class="no-js">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="google-site-verification" content="qG1hz2stDuxUAXRF0SRp5dsnMOIW1IKdjCnxqFp7xJA" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Images/star_icon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    @RenderSection("MetaTags", required: false)
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/Maincss")
+    @Styles.Render("~/Content/editorcmscss")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/angularjs")
+    @Scripts.Render("~/bundles/customjsmain")
+    @RenderSection("scripts", required: false)
+
+    @* Google Analytics code is:*@
+    <script src="~/scripts/gataglinks.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var GetDisplayChatUrl = '@Url.Action("DisplayChat", "Gateway")';
+        var _gaq = _gaq || [];
+        var pluginUrl = '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+        _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+        _gaq.push(['_setAccount', 'UA-19068382-1']);
+        _gaq.push(['_trackPageview']);
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    <script type="text/javascript">
+        var DisplayChatSMN = "";
+        $.ajax({
+            type: 'Get',
+            async: false,
+            url: GetDisplayChatUrl + "?configKey=DisplayChatSMN",
+            success: function (data) {
+                if (data != '') {
+                    DisplayChatSMN = data;
+                }
+            },
+            error: function (data) {
+            }
+        });
+        var rootUrl = '@Url.Content("~")';
+        var root = 'http://localhost/';
+        //var root = 'http://mdev.starmicronics.com/';
+        var pageUrl = '@Url.Content("~/Pages")';
+        $(document).ready(function () {
+            $("#btnStarInternationalWebsites")
+                .hover(function () {
+                    $("#divInternationalWebsites").slideDown();
+                },
+                    function () {
+                        $("#divInternationalWebsites")
+                            .mouseout(function () {
+                                $(this).css('display', 'none');
+                            })
+                            .mouseover(function () {
+                                $(this).css('display', 'block');
+                            });
+                        $("#btnStarInternationalWebsites")
+                            .mouseout(function () {
+                                $("#divInternationalWebsites").css('display', 'none');
+                            })
+                            .mouseover(function () {
+                                $("#divInternationalWebsites").css('display', 'block');
+                            });
+                    });
+
+            var isMobile = window.matchMedia("only screen and (max-width: 974px)");
+            if (isMobile.matches) {
+                $(".mobileClick").each(function () {
+                    $(this).attr("href", $(this).attr("data-mobilelink"));
+                });
+            }
+            var baseUrl = '@Request.Url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped)@Request.ApplicationPath';
+            if (baseUrl.charAt(baseUrl.length - 1) == '/') {
+                baseUrl = baseUrl.substr(0, baseUrl.length - 1);
+            }
+            //if (window.location.href.indexOf("/pages") > -1 || window.location.href.indexOf("/Supports") > -1 || window.location.href.indexOf("/SiteMap") > -1) {
+            if (window.location.href.length > baseUrl.length) {
+                $("#lnkHome").show();
+                $("#lnkSupport").addClass('width50p');
+                $("#lnkSupport").parents('li').removeClass('paddingleft10pMobile');
+            }
+            else {
+                $("#lnkHome").hide();
+                $("#lnkSupport").addClass('width100p');
+                $("#lnkSupport").parents('li').removeClass('paddingleft2p');
+            }
+
+            $("#lnkHome").click(function () {
+                window.location.href = baseUrl;
+            });
+
+            $(".u01nav")
+                .click(function () {
+                    var isMobile = window.matchMedia("only screen and (max-width: 974px)");
+                    if (isMobile.matches) {
+                        try {
+                            var myString = $(this).attr('href');
+                            while (myString.charAt(0) === '#')
+                                myString = myString.slice(1);
+                            $("#" + myString).toggle();
+
+                        } catch (err) {
+                        }
+                    }
+                });
+
+            $('#lnkSupport').hover(
+                function () {
+                    $('#supportDropdown').show();
+                },
+                function () {
+                    $('#supportDropdown').hide();
+                }
+            );
+
+            $("#lnkContactUs, #ContactUs, .ContactUs").click(function () {
+                window.location.href = baseUrl + '/pages/ContactUs';
+            });
+            $("#lnkContactSales, #ContactSales, .ContactSales, .ContactSalesSupport, #ContactSalesSupport").click(function () {
+                window.location.href = baseUrl + '@Url.Action("SupportContactSales", "Supports")';
+            });
+            $("#lnkFAQ, #FAQ, .FAQ").click(function () {
+                window.location.href = baseUrl + '/faq';
+            });
+            $("#lnkSoftwarePartners, #SoftwarePartners, .SoftwarePartners").click(function () {
+                window.location.href = baseUrl + '@Url.Action("SupportSoftwarePartners", "Supports")';
+            });
+            $("#lnkStarSupport, #StarSupport, .StarSupport").click(function () {
+                window.location.href = baseUrl + '/pages/StarSupport';
+            });
+            $("#lnkTechnicalSupport, #TechnicalSupport, .TechnicalSupport").click(function () {
+                window.location.href = baseUrl + '@Url.Action("SupportTechnical", "Supports")';
+            });
+            $("#lnkVIPSupport, #VIPSupport, .VIPSupport").click(function () {
+                //window.location.href = baseUrl + '@Url.Action("SupportVip", "Supports")';
+                window.location.href = 'http://marketing.starmicronics.com/acton/media/34776/vip-support-form';
+            });
+            $("#lnkEBook").click(function () {
+                window.location.href = baseUrl + '@Url.Action("EBooks", "Pages")';
+            });
+            $("#lnkSiteMap").click(function () {
+                window.location.href = baseUrl + '@Url.Action("Index", "SiteMap")';
+            });
+            @* $("#ctl01").on('keyup', function (e) {
+                if (e.keyCode == 13) {
+                    window.location.href = '@Url.Action("StarSearch", "Supports")' + "?usterms=" + $('#ctl01').val();
+                }
+            });*@
+        });
+    </script>
+    <!--– Chat Window Service -->
+    <link href="https://cdn.desk.com/assets/widget_embed_191.css" media="screen" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.desk.com/assets/widget_embed_libraries_191.js" type="text/javascript"></script>
+    <link href="/ChatServices/Chat.css" media="screen" rel="stylesheet" type="text/css" />
+    <script src="/ChatServices/Chat.js" type="text/javascript"></script>
+    <!--– End Chat Window Service -->
+    <!--– mp_snippet_begins -->
+    <script src="/scripts/mp_linkcode.js" type="text/javascript"></script>
+    <script>
+        MP.UrlLang = 'mp_js_current_lang';
+        MP.SrcUrl = decodeURIComponent('mp_js_orgin_url');
+        MP.oSite = decodeURIComponent('mp_js_origin_baseUrl');
+        MP.tSite = decodeURIComponent('mp_js_translated_baseUrl');
+        MP.init();
+        var mp_langLink = function () {
+            var langlinks = document.querySelectorAll('.langLink');
+            for (var i = 0; i < langlinks.length; i++) {
+                langlinks.item(i).onclick = function () {
+                    MP.init();
+                    var lang = this.getAttribute('data-lang');
+                    var url = this.getAttribute('data-href');
+                    var tSite = MP.tSite.replace(/(https?:\/\/|\/?$)/g, '');
+                    url = url.replace(/(https?:\/\/|\/?$)/g, '');
+                    MP.switchLanguage(tSite.search(url) != -1 ? MP.oSite : url, lang, true);
+                    return false;
+                }
+            }
+        };
+        if (window.addEventListener) {
+            window.addEventListener('load', mp_langLink, false);
+        } else if (window.attachEvent) {
+            window.attachEvent('onload', mp_langLink);
+        }
+        var buttonContainerId = '';
+        var pageScrollerId = '';
+        var pageScrollerDummyId = '';
+    </script>
+    <!--– mp_snippet_ends -->
+</head>
+<body class="f11 f11v1">
+    <div class="f11w1" id="headerMenu">
+        <header>
+            <div id="u01" class="u01">
+                <div class="u01tools">
+                    <div class="leftFloat width100p paddingtop10MobileNone">
+                        <div class="leftFloat divWidth18pMobile">
+                            <a href="/">
+                                <div class="u01logo">
+                                </div>
+                            </a>
+                        </div>
+                        <div class="leftFloat divWidth58pMobile">
+                            <ul class="u01navtools leftFloat width100p" style="list-style: none; padding-left: 0px;">
+                                <li id="Li2" class="leftFloat width100p">
+                                    <div class="leftFloat paddingbottom10 paddingtop5 divChooseYourLanguage">
+                                        <!--mp_global_switch_begins-->
+                                        <a mporgnav class="user-locale" href="#" style="font-size: 14pt!important;" onclick=" return chooser(); function chooser() { var script = document.createElement('SCRIPT'); script.src = 'https://starmicronicscom.mpeasylink.com/mpel/mpel_chooser.js'; document.body.appendChild(script); return false;} "
+                                            title="Global Switch">Choose Language</a>
+                                        <!--mp_global_switch_ends-->
+                                    </div>
+                                    <div class="leftFloat paddingbottom10 divDownloadDrivers">
+                                        <a href="https://starmicronics.com/Support/" title="Download Drivers">
+                                            <button class="downloadDrivers" style="border-style: none; background-color: transparent;"></button>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="leftFloat divWidth17pMobile">
+                            <div class="u01search">
+                                <input id="txtSiteSearch" name="txtSiteSearch" value="Search..." class="searchText autoclear" />
+                                <div class="leftFloat width96p divWidthSocialLink paddingtop5 paddingbottom5 TextAlignCenter" style="padding-left: 8px; display: none;">
+                                    <div class="leftFloat width16p">
+                                        <a href="https://www.linkedin.com/company/star-micronics" title="linkedin">
+                                            <div class="leftFloat LinkedIn"></div>
+                                        </a>
+                                    </div>
+                                    <div class="leftFloat width16p">
+                                        <a href="https://www.facebook.com/pages/Star-Micronics/87284275657" title="facebook">
+                                            <div class="leftFloat facebook"></div>
+                                        </a>
+                                    </div>
+                                    <div class="leftFloat width16p">
+                                        <a href="https://twitter.com/#!/starmicronics" title="twitter">
+                                            <div class="leftFloat twitter"></div>
+                                        </a>
+                                    </div>
+                                    <div class="leftFloat width16p">
+                                        <a href="https://www.youtube.com/user/StarMarCom" title="youtube">
+                                            <div class="leftFloat youtube"></div>
+                                        </a>
+                                    </div>
+                                    <div class="leftFloat width16p">
+                                        <a href="https://www.instagram.com/starmicronics/" title="instagram">
+                                            <div class="leftFloat instagram"></div>
+                                        </a>
+                                    </div>
+                                    <div class="leftFloat width16p">
+                                        <a href="https://www.starmicronics.com/blog/" title="blog">
+                                            <div class="leftFloat blog"></div>
+                                        </a>
+                                    </div>
+                                </div>
+                                @* @(Html.UltimateSearchInputMVC().SearchTextBox(stb => stb.Text("")).Render())
+                                <script>
+                                    $('#ctl01').addClass('searchText');
+                                    $('#ctl01').addClass('autoclear');
+                                    $("#ctl01").prop('type', '');
+                                    $("#ctl01").attr("placeholder", "Search...");
+                                    $("#ctl03_ctl00").hide();
+                                </script>*@
+                            </div>
+                        </div>
+                    </div>
+                    @Html.Partial("Partials/StarInternationalWebsitesPartial")
+                </div>
+                @Html.Action("GetMegaMenu", "Menu")
+            </div>
+            <div class="hp07z2"></div>
+        </header>
+        @* <div class="width100p" style="background-color: #186cb6">
+            <div class="BreadcrumpBar">Always Leading - Always Innovating</div>
+        </div>*@
+        @RenderSection("MainContent", required: false)
+        @*    <footer style="border-top: #dcdcdc 1px solid;">
+        <div id="u06">
+            @Html.Partial("Partials/FooterPartial")
+        </div>
+    </footer>*@
+    </div>
+    @RenderSection("FooterContent", required: false)
+    <div style="width: 100%; display: none; background-color: #ffffff; box-shadow: 10px 10px 5px #888888; border: 1px solid gray; height: 50px;" id="topNavMegaMenu">
+        <table style="width: 100%;">
+            <tr>
+                <td style="text-align: center;" id="tdMegaMenu">@Html.Action("GetMegaMenu", "Menu")</td>
+            </tr>
+        </table>
+        @*<div style="background-image: url(/Images/StarLogo.png) !important; background-size: 100% 100%; width: 90px; height: 40px; clear: both;"></div>*@
+    </div>
+    <div style="width: 100%; display: none; background-color: #ffffff; box-shadow: 10px 10px 5px #888888; border: 1px solid gray; text-align: center; height: 60px;" id="topNavButtonScroller">
+    </div>
+    <div style="width: 100%; display: none; background-color: #ededed; border: 1px solid gray; text-align: center;" id="topNavButtonScrollerExpanded" data-mode="1">
+    </div>
+    <div style="width: 100%; display: none; background-color: #ffffff; box-shadow: 10px 10px 5px #888888; border: 1px solid gray; text-align: center; height: 60px;" id="topNavPageScrollerButtonMobile">
+    </div>
+    <div style="width: 100%; display: none; background-color: #ededed; text-align: center; box-shadow: 10px 10px 5px #888888; border: 1px solid gray; height: 40px;" id="topNavPageScroller" data-mode="1">
+    </div>
+
+    <!--mp_easylink_begins-->
+    <script type="text/javascript" id="mpelid" src="https://starmicronicscom.mpeasylink.com/mpel/mpel.js" async></script>
+    <!--mp_easylink_ends-->
+    <script type="text/javascript" src="~/Scripts/ResponsiveVideo.js"></script>
+
+    <script type='text/javascript'>
+        //<![CDATA[ 
+
+        function scrollToIDNew(id, speed) {
+            var offSet = 50;
+            var targetOffset = $(id).offset().top - offSet;
+            $('html,body').animate({ scrollTop: targetOffset }, speed);
+        }
+
+        $(document).ready(function () {
+            /**
+                ************************************************************
+                *************** THIS IS THE NAVIGATION CODE ****************
+                ************************************************************
+                **/
+
+            if (isMobile()) {
+                $("#topNavButtonScrollerExpanded").html($("#" + buttonContainerId).html());
+                $("#topNavButtonScroller").css({
+                    "background-color": "#09619F",
+                    "color": "#ffffff",
+                    "font-size": "18pt",
+                    "font-weight": "bold",
+                    "height": "30px",
+                    "padding-top": "7px"
+                });
+                $("#topNavButtonScroller").click(function () {
+                    var mode = $("#topNavButtonScrollerExpanded").attr("data-mode");
+                    if (mode == "1") {
+                        $("#topNavButtonScrollerExpanded").css({
+                            "top": "75px",
+                            "position": "fixed",
+                            "z-index": "100015"
+                        });
+                        $("#topNavButtonScrollerExpanded").attr("data-mode", "2");
+                        $("#topNavButtonScrollerExpanded").show();
+                    } else {
+                        $("#topNavButtonScrollerExpanded").css({
+                            "z-index": "1",
+                            "position": "static"
+                        });
+                        $("#topNavButtonScrollerExpanded").attr("data-mode", "1");
+                        $("#topNavButtonScrollerExpanded").hide();
+                    }
+
+
+                });
+                $("#topNavButtonScroller").html("Call To Action");
+
+
+                $("#topNavPageScrollerButtonMobile").css({
+                    "background-color": "#09619F",
+                    "color": "#ffffff",
+                    "font-size": "18pt",
+                    "font-weight": "bold",
+                    "height": "30px",
+                    "padding-top": "7px"
+                });
+                $("#topNavPageScrollerButtonMobile").click(function () {
+                    var mode = $("#topNavPageScroller").attr("data-mode");
+                    if (mode == "1") {
+                        $("#topNavPageScroller").css({
+                            "top": "105px",
+                            "height": "auto",
+                            "position": "fixed",
+                            "z-index": "100015"
+                        });
+                        $("#topNavPageScroller").attr("data-mode", "2");
+                        $("#topNavPageScroller").show();
+                    } else {
+                        $("#topNavPageScroller").css({
+                            "z-index": "1",
+                            "height": "40px",
+                            "position": "static"
+                        });
+                        $("#topNavPageScroller").attr("data-mode", "1");
+                        $("#topNavPageScroller").hide();
+                    }
+
+
+                });
+                $("#topNavPageScrollerButtonMobile").html("Scroll Features");
+
+
+                $("#topNavPageScroller").html($("#" + pageScrollerDummyId).html());
+
+                $("#topNavPageScroller").find(".scroll-link").each(function () {
+                    $(this).removeClass("scroll-link").addClass("scroll-link1");
+                });
+
+                $('.scroll-link1').on('click', function (event) {
+                    event.preventDefault();
+                    var sectionId = $(this).attr('data-id');
+                    scrollToIDNew('#' + sectionId, 750);
+                });
+
+            } else {
+                $("#tdMegaMenu").find($('.u01nav > li')).eq(4).remove();
+                $("#tdMegaMenu").find($('.u01nav > li')).eq(4).remove();
+                $("#tdMegaMenu").find($('.u01nav > li')).eq(4).remove();
+                $("#tdMegaMenu").find($('.u01nav > li')).eq(4).remove();
+                $("#tdMegaMenu").find($('.u01nav > li')).eq(4).remove();
+                $("#tdMegaMenu").find($('.u01nav > li')).eq(0).before('<li style="list-style: none;" class=""><img src="/Images/StarLogo.png" style="height: 43px; width: 125px; "/></li>');
+                //$("#tdMegaMenu").find($('.u01nav > li')).eq(4).after('<li style="list-style: none;"><div class="divWidth100pMobile"><a mporgnav class="user-locale" style="font-size: 17px; color: #1f4f82; cursor: pointer; padding: 8px 9px 0px;" href="#" onclick=" return chooser(); function chooser() { var script = document.createElement("SCRIPT"); script.src = "https://starmicronicscom.mpeasylink.com/mpel/mpel_chooser.js"; document.body.appendChild(script); return false;} "title="Global Switch">Choose Your Language</a></div></li>');
+                $("#tdMegaMenu").find($('.u01nav > li')).eq(4).after('<li style="list-style: none;"><input value="Search..." name="q" class="searchText autoclear" style="height: 28px;"/></li>');
+                $("#tdMegaMenu").find($('.u01nav > li')).eq(5).after('<li style="list-style: none;"><div id="lnkContactUs" class="leftFloat width100p" style="font-size: 17px; color: #1f4f82; cursor: pointer; padding: 8px 4px;">Contact Us</div></li>');
+
+
+                $("#topNavButtonScroller").html($("#" + buttonContainerId).html());
+
+                $("#topNavPageScroller").html($("#" + pageScrollerDummyId).html());
+
+                $("#topNavPageScroller").find(".scroll-link").each(function () {
+                    $(this).removeClass("scroll-link").addClass("scroll-link1");
+                });
+
+                $('.scroll-link1').on('click', function (event) {
+                    event.preventDefault();
+                    var sectionId = $(this).attr('data-id');
+                    scrollToIDNew('#' + sectionId, 750);
+                });
+            }
+
+            $("#scrollerContainer" + pageScrollerDummyId).hide();
+
+            if (!isMobile()) {
+                $(function () {
+                    // Stick the #nav to the top of the window
+                    var nav = $('#topNavMegaMenu');
+                    var navHomeY = 40;
+                    var navB = $('#topNavButtonScroller');
+                    var navHomeYB = $("#" + buttonContainerId).offset().top;
+                    var navP = $('#topNavPageScroller');
+                    var navHomeYP = $('#' + pageScrollerId).offset().top;
+                    var isFixed = false;
+                    var isFixedB = false;
+                    var isFixedP = false;
+                    var $w = $(window);
+                    $w.scroll(function () {
+                        var scrollTop = $w.scrollTop();
+                        var shouldBeFixed = scrollTop > navHomeY;
+                        var shouldBeFixedB = scrollTop > navHomeYB;
+                        var shouldBeFixedP = scrollTop > navHomeYP;
+                        if (shouldBeFixed && !isFixed) {
+                            nav.css({
+                                display: 'block',
+                                position: 'fixed',
+                                top: 0,
+                                left: nav.offset().left,
+                                width: nav.width()
+                            });
+                            //  nav.addClass("topFixed");
+                            isFixed = true;
+                        } else if (!shouldBeFixed && isFixed) {
+                            nav.css({
+                                position: 'static',
+                                display: 'none',
+                            });
+                            isFixed = false;
+                        }
+
+                        if (shouldBeFixedB && !isFixedB) {
+                            navB.css({
+                                display: 'block',
+                                position: 'fixed',
+                                top: 50,
+                                left: navB.offset().left,
+                                width: navB.width()
+                            });
+                            //  nav.addClass("topFixed");
+                            isFixedB = true;
+                        } else if (!shouldBeFixedB && isFixedB) {
+                            navB.css({
+                                position: 'static',
+                                display: 'none',
+                            });
+                            isFixedB = false;
+                        }
+
+                        if (shouldBeFixedP && !isFixedP) {
+                            navP.css({
+                                display: 'block',
+                                position: 'fixed',
+                                top: 110,
+                                left: navP.offset().left,
+                                width: navP.width()
+                            });
+                            //  nav.addClass("topFixed");
+                            isFixedP = true;
+                        } else if (!shouldBeFixedP && isFixedP) {
+                            navP.css({
+                                position: 'static',
+                                display: 'none',
+                            });
+                            isFixedP = false;
+                        }
+                    });
+                });
+            } else {
+                $(function () {
+                    // Stick the #nav to the top of the window
+                    var nav = $('#topNavMegaMenu');
+                    var navFilled = false;
+                    var navHomeY = 30;
+                    var navB = $('#topNavButtonScroller');
+                    var navHomeYB = $("#" + buttonContainerId).offset().top;
+                    var navP = $('#topNavPageScrollerButtonMobile');
+                    var navHomeYP = $('#' + pageScrollerId).offset().top;
+
+                    var isFixed = false;
+                    var isFixedB = false;
+                    var isFixedP = false;
+
+                    var $w = $(window);
+                    $w.scroll(function () {
+                        var scrollTop = $w.scrollTop();
+                        var shouldBeFixed = scrollTop > navHomeY;
+                        var shouldBeFixedB = scrollTop > navHomeYB;
+                        var shouldBeFixedP = scrollTop > navHomeYP;
+
+                        if (shouldBeFixed && !isFixed) {
+                            if (!navFilled) {
+                                $("#topNavMegaMenu").html($("#u01").parent().html());
+                                $("#topNavMegaMenu").find(".u01mmenu a").on("click", function (m) {
+                                    m.preventDefault();
+                                    var i = $("#topNavMegaMenu").find("#u01 .u01active");
+                                    var l = $("#topNavMegaMenu").find(".u01navtools");
+                                    var n = $(this).parent("div").siblings("ul.u01nav");
+                                    var j = $(this).parent("div");
+                                    var k = $("#topNavMegaMenu").find(".u01logo + .u01pfile");
+                                    $(l).toggleClass("u01active");
+                                    $(n).toggleClass("u01active");
+                                    $(j).toggleClass("u01active");
+                                    $(k).toggleClass("u01active");
+                                    $(i).not(l).not(n).not(j).not(k).removeClass("u01active");
+                                });
+                                $("#topNavMegaMenu").find(".u01nav")
+                                    .click(function () {
+                                        var isMobile = window.matchMedia("only screen and (max-width: 974px)");
+                                        if (isMobile.matches) {
+                                            try {
+                                                var myString = $(this).attr('href');
+                                                while (myString.charAt(0) === '#')
+                                                    myString = myString.slice(1);
+
+                                                $("#topNavMegaMenu").find("#" + myString).toggle();
+
+                                            } catch (err) {
+                                            }
+                                        }
+                                    });
+
+                                navFilled = true;
+                            }
+                            nav.css({
+                                display: 'block',
+                                position: 'fixed',
+                                top: 0,
+                                left: nav.offset().left,
+                                width: nav.width()
+                            });
+                            nav.css("border-bottom", '2px solid gray');
+                            //  nav.addClass("topFixed");
+                            isFixed = true;
+                        } else if (!shouldBeFixed && isFixed) {
+                            $("#topNavMegaMenu").empty();
+                            navFilled = false;
+                            nav.css({
+                                position: 'static',
+                                display: 'block',
+                                top: 0,
+                                left: nav.offset().left,
+                                width: nav.width()
+                            });
+                            nav.css("border-bottom", 'none');
+                            isFixed = false;
+                        }
+
+                        if (shouldBeFixedB && !isFixedB) {
+                            navB.css({
+                                display: 'block',
+                                position: 'fixed',
+                                top: 45,
+                                left: navB.offset().left,
+                                width: navB.width()
+                            });
+                            //  nav.addClass("topFixed");
+                            isFixedB = true;
+                        } else if (!shouldBeFixedB && isFixedB) {
+                            navB.css({
+                                position: 'static',
+                                display: 'none',
+                            });
+                            $("#topNavButtonScrollerExpanded").hide();
+                            isFixedB = false;
+                        }
+
+                        if (shouldBeFixedP && !isFixedP) {
+                            navP.css({
+                                display: 'block',
+                                position: 'fixed',
+                                top: 75,
+                                left: navP.offset().left,
+                                width: navP.width()
+                            });
+                            //  nav.addClass("topFixed");
+                            isFixedP = true;
+                        } else if (!shouldBeFixedP && isFixedP) {
+                            navP.css({
+                                position: 'static',
+                                display: 'none'
+                            });
+                            $("#topNavPageScroller").hide();
+                            isFixedP = false;
+                        }
+                    });
+                });
+            }
+
+
+            /**
+                ************************************************************
+                *** THIS IS THE ADD-IN SMOOTH SCROLLING CODE ***************
+                *** (see: http://www.dwuser.com/education/content/quick-guide-adding-smooth-scrolling-to-your-webpages/ )
+                ************************************************************
+                **/
+
+
+            /**
+                 * SmoothScroll
+                 * This helper script created by DWUser.com.  Copyright 2012 DWUser.com.  
+                 * Dual-licensed under the GPL and MIT licenses.  
+                 * All individual scripts remain property of their copyrighters.
+                 * Date: 10-Sep-2012
+                 * Version: 1.0.1
+                 */
+            if (!window['jQuery']) alert('The jQuery library must be included before the smoothscroll.js file.  The plugin will not work propery.');
+
+            /**
+                 * jQuery.ScrollTo - Easy element scrolling using jQuery.
+                 * Copyright (c) 2007-2012 Ariel Flesler - aflesler(at)gmail(dot)com | http://flesler.blogspot.com
+                 * Dual licensed under MIT and GPL.
+                 * author Ariel Flesler
+                 * version 1.4.3.1
+                 */
+            ;
+            (function ($) {
+                var h = $.scrollTo = function (a, b, c) { $(window).scrollTo(a, b, c) };
+                h.defaults = { axis: 'xy', duration: parseFloat($.fn.jquery) >= 1.3 ? 0 : 1, limit: true };
+                h.window = function (a) { return $(window)._scrollable() };
+                $.fn._scrollable = function () {
+                    return this.map(function () {
+                        var a = this, isWin = !a.nodeName || $.inArray(a.nodeName.toLowerCase(), ['iframe', '#document', 'html', 'body']) != -1;
+                        if (!isWin) return a;
+                        var b = (a.contentWindow || a).document || a.ownerDocument || a;
+                        return /webkit/i.test(navigator.userAgent) || b.compatMode == 'BackCompat' ? b.body : b.documentElement
+                    })
+                };
+                $.fn.scrollTo = function (e, f, g) {
+                    if (typeof f == 'object') {
+                        g = f;
+                        f = 0
+                    }
+                    if (typeof g == 'function') g = { onAfter: g };
+                    if (e == 'max') e = 9e9;
+                    g = $.extend({}, h.defaults, g);
+                    f = f || g.duration;
+                    g.queue = g.queue && g.axis.length > 1;
+                    if (g.queue) f /= 2;
+                    g.offset = both(g.offset);
+                    g.over = both(g.over);
+                    return this._scrollable().each(function () {
+                        if (e == null) return;
+                        var d = this, $elem = $(d), targ = e, toff, attr = {}, win = $elem.is('html,body');
+                        switch (typeof targ) {
+                            case 'number':
+                            case 'string':
+                                if (/^([+-]=)?\d+(\.\d+)?(px|%)?$/.test(targ)) {
+                                    targ = both(targ);
+                                    break
+                                }
+                                targ = $(targ, this);
+                                if (!targ.length) return;
+                            case 'object':
+                                if (targ.is || targ.style) toff = (targ = $(targ)).offset();
+                        }
+                        $.each(g.axis.split(''), function (i, a) {
+                            var b = a == 'x' ? 'Left' : 'Top', pos = b.toLowerCase(), key = 'scroll' + b, old = d[key], max = h.max(d, a);
+                            if (toff) {
+                                attr[key] = toff[pos] + (win ? 0 : old - $elem.offset()[pos]);
+                                if (g.margin) {
+                                    attr[key] -= parseInt(targ.css('margin' + b)) || 0;
+                                    attr[key] -= parseInt(targ.css('border' + b + 'Width')) || 0
+                                }
+                                attr[key] += g.offset[pos] || 0;
+                                if (g.over[pos]) attr[key] += targ[a == 'x' ? 'width' : 'height']() * g.over[pos];
+                            } else {
+                                var c = targ[pos];
+                                attr[key] = c.slice && c.slice(-1) == '%' ? parseFloat(c) / 100 * max : c;
+                            }
+                            if (g.limit && /^\d+$/.test(attr[key])) attr[key] = attr[key] <= 0 ? 0 : Math.min(attr[key], max);
+                            if (!i && g.queue) {
+                                if (old != attr[key]) animate(g.onAfterFirst);
+                                delete attr[key];
+                            }
+                        });
+                        animate(g.onAfter);
+
+                        function animate(a) { $elem.animate(attr, f, g.easing, a && function () { a.call(this, e, g) }) }
+                    }).end()
+                };
+                h.max = function (a, b) {
+                    var c = b == 'x' ? 'Width' : 'Height', scroll = 'scroll' + c;
+                    if (!$(a).is('html,body')) return a[scroll] - $(a)[c.toLowerCase()]();
+                    var d = 'client' + c, html = a.ownerDocument.documentElement, body = a.ownerDocument.body;
+                    return Math.max(html[scroll], body[scroll]) - Math.min(html[d], body[d]);
+                };
+
+                function both(a) { return typeof a == 'object' ? a : { top: a, left: a } }
+            })(jQuery);
+
+            /**
+                 * jQuery.LocalScroll
+                 * Copyright (c) 2007-2010 Ariel Flesler - aflesler(at)gmail(dot)com | http://flesler.blogspot.com
+                 * Dual licensed under MIT and GPL.
+                 * Date: 05/31/2010
+                 * author Ariel Flesler
+                 * version 1.2.8b
+                 **/
+            ;
+            (function (b) {
+                function g(a, e, d) {
+                    var h = e.hash.slice(1), f = document.getElementById(h) || document.getElementsByName(h)[0];
+                    if (f) {
+                        a && a.preventDefault();
+                        var c = b(d.target);
+                        if (!(d.lock && c.is(":animated") || d.onBefore && !1 === d.onBefore(a, f, c))) {
+                            d.stop && c._scrollable().stop(!0);
+                            if (d.hash) {
+                                var a = f.id == h ? "id" : "name", g = b("<a> </a>").attr(a, h).css({ position: "absolute", top: b(window).scrollTop(), left: b(window).scrollLeft() });
+                                f[a] = "";
+                                b("body").prepend(g);
+                                location = e.hash;
+                                g.remove();
+                                f[a] = h
+                            }
+                            c.scrollTo(f, d).trigger("notify.serialScroll",
+                            [f])
+                        }
+                    }
+                }
+
+                var i = location.href.replace(/#.*/, ""), c = b.localScroll = function (a) { b("body").localScroll(a) };
+                c.defaults = { duration: 1E3, axis: "y", event: "click", stop: !0, target: window, reset: !0 };
+                c.hash = function (a) {
+                    if (location.hash) {
+                        a = b.extend({}, c.defaults, a);
+                        a.hash = !1;
+                        if (a.reset) {
+                            var e = a.duration;
+                            delete a.duration;
+                            b(a.target).scrollTo(0, a);
+                            a.duration = e;
+                        }
+                        g(0, location, a);
+                    }
+                };
+                b.fn.localScroll = function (a) {
+                    function e() { return !!this.href && !!this.hash && this.href.replace(this.hash, "") == i && (!a.filter || b(this).is(a.filter)) }
+
+                    a = b.extend({}, c.defaults, a);
+                    return a.lazy ? this.bind(a.event, function (d) {
+                        var c = b([d.target, d.target.parentNode]).filter(e)[0];
+                        c && g(d, c, a)
+                    }) : this.find("a,area").filter(e).bind(a.event, function (b) { g(b, this, a) }).end().end();
+                }
+            })(jQuery);
+            // Initialize all .smoothScroll links
+            jQuery(function ($) { $.localScroll({ filter: '.smoothScroll' }); });
+
+        }); //]]>  
+    </script>
+    @* Opentracker code is:*@
+    <!-- mp_trans_remove_start -->
+    <script type="text/javascript" defer="defer" src="https://script.opentracker.net/?site=www.starmicronics.com"></script>
+    <!-- mp_trans_remove_end -->
+    <!-- mp_trans_add='es' <script type="text/javascript" defer="defer" src="https://script.opentracker.net/?site=www.starmicronics.com/es"></script> -->
+<script> /*<![CDATA[*/
+    (function(w, a, b, d, s) {
+        w[a] = w[a] || {};
+        w[a][b] = w[a][b] || { q: [], track: function(r, e, t) { this.q.push({ r: r, e: e, t: t || +new Date }); } };
+        var e = d.createElement(s);
+        var f = d.getElementsByTagName(s)[0];
+        e.async = 1;
+        e.src = '//marketing.starmicronics.com/cdnr/32/acton/bn/tracker/34776';
+        f.parentNode.insertBefore(e, f);
+    })(window, 'ActOn', 'Beacon', document, 'script');
+    ActOn.Beacon.track(); /*]]>*/
+</script>
+
+
+<!-- Start of LiveChat (www.livechatinc.com) code -->
+<script type="text/javascript">
+    window.__lc = window.__lc || {};
+    window.__lc.license = 11189897;
+    (function () {
+        var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+        lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
+    })();
+</script>
+<noscript>
+<a href="https://www.livechatinc.com/chat-with/11189897/" rel="nofollow">Chat with us</a>,
+powered by <a href="https://www.livechatinc.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a>
+</noscript>
+<!-- End of LiveChat code -->
+</body>
+</html>

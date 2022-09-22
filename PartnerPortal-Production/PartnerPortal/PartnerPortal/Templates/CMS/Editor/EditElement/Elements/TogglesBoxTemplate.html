@@ -1,0 +1,179 @@
+﻿<script>
+    var counter = 0;
+    tinymce.remove();
+    $(document).ready(function () {
+        $(".ui-dialog").css("height", $(window).height() - 70);
+        //get the object and set values
+        var carrierObj = JSON.parse($("#dialog_form").attr("data-obj"));
+        try {
+            $(".objectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(carrierObj[$(this).attr("data-PropertyIndex")]);
+                } else {
+                    if (carrierObj[$(this).attr("data-PropertyIndex")] != null && carrierObj[$(this).attr("data-PropertyIndex")] != undefined && carrierObj[$(this).attr("data-PropertyIndex")].length > 0)
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                }
+            });
+            //tinymce.get('textTextBoxTemplateArea').setContent(carrierObj[]);
+        } catch (e) {
+
+        }
+
+        $("#toggleBoxesContainer tr:first").hide();
+        var tempContentBoxes = carrierObj[620];
+        if (tempContentBoxes != undefined && tempContentBoxes.length > 0) {
+            for (var i = 0; i < tempContentBoxes.length; i++) {
+                addNewToggleBox($("#fusion-child-add"), tempContentBoxes[i]);
+            }
+        } else {//First Time
+            addNewToggleBox($("#fusion-child-add"));
+        }
+    });
+
+    function toggleToggleBoxDetail(ctrl) {
+        var state = $(ctrl).attr("data-state");
+        var index = $(ctrl).attr("data-boxIndex");
+
+        if (state == 0) {
+            $(ctrl).parent().find(".boxDetail").show();
+            $(ctrl).attr("data-state", "1");
+            $(ctrl).html("Toggle Boxes Item " + index + "<i class='fusiona-minus'>");
+        }
+        else if (state == 1) {
+            $(ctrl).parent().find(".boxDetail").hide();
+            $(ctrl).attr("data-state", "0");
+            $(ctrl).html("Toggle Boxes Item " + index + "<i class='fusiona-plus2'>");
+        }
+    }
+
+    function addNewToggleBox(ctrl, obj) {
+        //var table = $(ctrl).parents("table:first").attr("id");
+        ////alert($(table).html());
+        //var tr = $("#" + table + " tr:first");
+        //var cloneTr = $(tr).clone(true);
+        //$(tr).after($(cloneTr));
+
+        var tr = $(ctrl).parents("tr:first");
+        var prevTr = $(tr).prev()[0];
+        var cloneTr = $(prevTr).clone(true);
+        $(cloneTr).css("display", "");
+        $(cloneTr).addClass("child-clone-row");
+        var td = $(cloneTr).find("td:first");
+        var linkHeader = $(td).find(".linkHeader");
+        counter += 1;
+        $(linkHeader).attr("data-boxIndex", counter);
+        $(linkHeader).html("Toggle Boxes Item " + counter + "<i class='fusiona-plus2'>");
+        //$(linkHeader).attr("data-state", contentBoxCounter);
+        $(cloneTr).find(".textToggleBoxTemplateArea").prop('id', 'textToggleBoxTemplateArea' + counter);
+
+        if (obj != undefined) {
+            $(cloneTr).find(".subObjectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(obj[$(this).attr("data-subPropertyIndex")]);
+                } else {
+                    $(this).val(obj[$(this).attr("data-subPropertyIndex")]);
+                }
+            });
+        }
+
+        $(prevTr).before($(cloneTr));
+        //Start tinymce
+        tinymce.init({
+            selector: '#textToggleBoxTemplateArea' + counter,
+            plugins: ['hr link fullscreen table textcolor charmap template code wordcount'],
+            menubar: 'false',
+            toolbar: 'bold italic strikethrough underline fontsizeselect | bullist numlist blockquote hr alignleft aligncenter alignright alignjustify outdent indent | link unlink fullscreen table styleselect forecolor | removeformat charmap undo redo template code',
+            fontsize_formats: '8pt 9pt 10pt 11pt 12pt 14pt 16pt 18pt 20pt 22pt 24px 32px 36px',
+            templates: [
+                {
+                    title: 'Test template 1',
+                    content: 'Test 1'
+                }, {
+                    title: 'Test template 2',
+                    content: 'Test 2'
+                }
+            ],
+            table_default_styles: {
+                width: '100%'
+            }
+        });
+        //End tinymce
+    }
+
+    function removeToggleBox(ctrl) {
+        var tr = $(ctrl).parents("tr:first");
+        if (counter == 1) {
+            alert("You need a minimum of one row");
+            return false;
+        }
+        $(tr).remove();
+        counter -= 1;
+        var c = 1;
+        $("#toggleBoxesContainer tr.child-clone-row").each(function () {
+            var linkHeader = $(this).find(".linkHeader");
+            $(linkHeader).attr("data-boxIndex", c);
+            $(linkHeader).html("Toggle Boxes Item " + c + "<i class='fusiona-plus2'>");
+            c = c + 1;
+        });
+    }
+    function createObjects(ctrl) {
+
+    }
+</script>
+<div style="width: 95%; display: inline-block; position: absolute; left: 2%">
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description">
+            <strong>CSS Class</strong><span>Add a class to the wrapping HTML element.</span>
+        </div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="603" value="" id="fusion_class" name="fusion_class" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description">
+            <strong>CSS ID</strong><span>Add an ID to the wrapping HTML element.</span>
+        </div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="604" value="" id="fusion_id" name="fusion_id" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <table class="clearfix has-children" id="toggleBoxesContainer">
+        <tbody>
+            <tr data-boxindex="0">
+                <td>
+                    <a href="#" class="fusion-expand-child linkHeader" data-boxindex="1" onclick="toggleToggleBoxDetail(this)" data-state="0">Toggles Item 1<i class="fusiona-plus2"></i></a>
+                    <div class="child-options boxDetail" style="display: none;" data-boxindex="1">
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-input">
+                            <div class="name-description "><strong>Title</strong><span>Insert the toggle title</span></div>
+                            <div class="element-type">
+                                <input type="text" class="text-field  subObjectProperty" data-subpropertyindex="83" value="" name="fusion_title[0]" size="50" style="padding: 6px 0px !important;">
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-select">
+                            <div class="name-description"><strong>Open by Default</strong><span>Choose to have the toggle open when page loads</span></div>
+                            <div class="element-type">
+                                <div class="select_arrow"></div>
+                                <select name="fusion_open[0]" class="select-field subObjectProperty" data-subpropertyindex="84">
+                                    <option value="no" selected="">No</option>
+                                    <option value="yes">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container-html_editor paddingbottom20">
+                            <div class="name-description paddingtop10"><strong>Toggle Content</strong><span>Insert the toggle content</span></div>
+                            <div class="width100p leftFloat">
+                                <textarea class="subObjectProperty textToggleBoxTemplateArea" data-subpropertyindex="85" style="width: 100%; height: 250px; padding-top: 20px;"></textarea>
+                            </div>
+                        </div>
+                        <a class="child-clone-row-remove fusion-shortcodes-button" href="JavaScript:void(0)" onclick="removeToggleBox(this)">Remove</a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a id="fusion-child-add" href="#" data-itemcount="1" onclick="addNewToggleBox(this)">Add New Toggle</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

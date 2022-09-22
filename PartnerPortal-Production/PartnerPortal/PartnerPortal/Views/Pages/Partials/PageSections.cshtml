@@ -1,0 +1,5 @@
+﻿@model System.Int32
+
+<div class="DragAndDropCMSContent">
+    @{ Html.RenderAction("GetPageHtml", "Utility", new {id = Model}); }
+</div>

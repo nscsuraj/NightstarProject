@@ -1,0 +1,276 @@
+﻿<style>
+    
+    .leftPanelContainer {
+        margin-top: 20px; 
+        float: right; 
+        max-width: 200px; 
+        min-height: 350px;
+        margin-right: 40px;
+    }
+    .leftPanelContent {
+        margin-top: 30px;
+    }
+    .leftPanelImage {
+	    text-align: center;
+    }
+    .leftPanelImageC {
+	    text-align: left;
+    }
+    .leftPanelImageI {
+        width: 80%;
+    }
+@@media only screen and (max-width:1399px){
+	.leftPanelContainer {
+        margin-top: 20px; 
+        float: left; 
+        max-width: 200px; 
+        min-height: 350px;
+        margin-right: 20px;
+	    margin-left: 50px;
+    }
+}
+@@media only screen and (max-width:999px){
+	.leftPanelContainer {
+        margin-top: 20px; 
+        float: left; 
+        max-width: 200px; 
+        min-height: 350px;
+        margin-right: 20px;
+	    margin-left: 20px;
+    }
+}
+@@media only screen and (max-width:940px){
+	.leftPanelContainer {
+        margin-top: 20px; 
+        float: left; 
+        max-width: 200px; 
+        min-height: 350px;
+        margin-right: 20px;
+	    margin-left: 5px;
+    }
+}
+@@media only screen and (max-width:900px){
+    .leftPanelContainer {
+        margin-top: 20px; 
+        float: none; 
+        max-width: 100%;
+        min-height: 110px;
+        margin-right: 0px;
+	    margin-left: 0px;
+        margin-bottom: 0px;
+    }
+	.leftPanelImage {
+	    width: 36%;
+	    float: left;
+	    text-align: right;
+        margin-right: 10px;
+	    padding-top: 0%;
+    }
+    .leftPanelContent {
+	    width: 58%;
+        float: left;
+        margin-top: 0px;
+    }
+    .leftPanelImageC {
+	    text-align: right;
+    }
+    .layoutLeftPanel {
+        margin-bottom: 0px !important; 
+    }
+    .leftPanelPartnerNumber {
+        height: 17px;
+    }
+    .leftPanelPartnerType {
+        height: 17px;
+    }
+    .leftPanelPartnerLogout {
+        height: 17px;
+    }
+    .leftPanelAccountName {
+        font-size: 9pt !important;
+        height: 17px;
+    }
+    .leftPanelLoyaltyLevel {
+         font-size: 9pt !important;
+         height: 17px;
+    }
+}
+
+@@media only screen and (max-width:500px){
+    .leftPanelImageC {
+        padding-top: 45px;
+	    text-align: right;
+    }
+    .leftPanelImageI {
+        width: 100%;
+    }
+}
+@@media only screen and (max-width:360px){
+.leftPanelPartnerLogout {
+    margin-top: 30px;
+}
+}
+</style>
+
+
+<div class="leftPanelContainer" style="background-color: #ECF8FF; display: none;" ng-controller="StarLeftPanelAccountDetailController">
+    <div class="leftPanelImage" ng-show="showLogoContainer">
+        <div ng-show="ShowBlueLogo">
+            <img src="~/Images/Logos/Star-Blue.png" style="width: 80%;" />
+        </div>
+        <div ng-show="ShowBronzeLogo">
+            <img src="~/Images/Logos/Star-Bronze.png" />
+        </div>
+        <div ng-show="ShowSilverLogo">
+            <img src="~/Images/Logos/Star-Silver.png" />
+        </div>
+        <div ng-show="ShowGoldLogo">
+            <img src="~/Images/Logos/Star-Gold.png" />
+        </div>
+        <div ng-show="ShowPlatinumLogo">
+            <img src="~/Images/Logos/Star-Platinum.png" />
+        </div>
+        <div ng-show="ShowDiamondLogo">
+            <img src="~/Images/Logos/Star-Diamond.png" />
+        </div>
+    </div>
+    <div class="leftPanelContent" ng-show="showAcDetailContainer">
+        <div style="font-weight: bold; font-size: 12pt; border-left: 2px solid #8B8B8B; text-align: left; padding-left: 5px; color: #1f4f82" class="leftPanelAccountName">
+            {{Account.AccountName}}
+        </div>
+        <div style="font-weight: bold; font-size: 12pt; border-left: 2px solid #8B8B8B; text-align: left; padding-left: 5px; color: #1f4f82" class="leftPanelLoyaltyLevel">
+            {{Account.LoyaltyLevel}}
+
+            @*<div style="font-weight: bold; font-size: 9pt;text-align: left; color:#7D7D7D" ng-show="ShowUpgradeStatus">
+                <a href="~/Pages/UpgradeStatus" style="color: #7d7d7d;">Upgrade Status ></a>
+            </div>*@
+
+
+        </div>
+        <div style="font-weight: bold; font-size: 9pt; text-align: left;border-left: 2px solid #8B8B8B;padding-left: 5px; margin-bottom: 20px;  color: #7D7D7D" ng-show="ShowLoyaltyRegistration" class="leftPanelPartnerNumber">
+            <a href="~/Pages/loyaltyLeadRegistration" style="color: #7d7d7d;">Loyalty Program Registration ></a>
+        </div>
+
+        <div style="font-weight: bold; font-size: 9pt; text-align: left;border-left: 2px solid #8B8B8B;padding-left: 5px; margin-bottom: 20px;   color: #7D7D7D" ng-show="ShowBronzeLogo" class="leftPanelPartnerNumber">
+            <a href="~/Pages/BronzePartnerBenefit" style="color: #7d7d7d;">Your Benefits ></a>
+        </div>
+
+        <div style="font-weight: bold; font-size: 9pt; text-align: left;border-left: 2px solid #8B8B8B;padding-left: 5px;  margin-bottom: 20px;  color: #7D7D7D" ng-show="ShowSilverLogo" class="leftPanelPartnerNumber">
+            <a href="~/Pages/SilverPartnerBenefit" style="color: #7d7d7d;">Your Benefits ></a>
+        </div>
+
+        <div style="font-weight: bold; font-size: 9pt; text-align: left;border-left: 2px solid #8B8B8B;padding-left: 5px;  margin-bottom: 20px;  color: #7D7D7D" ng-show="ShowGoldLogo" class="leftPanelPartnerNumber">
+            <a href="~/Pages/GoldPartnerBenefit" style="color: #7d7d7d;">Your Benefits ></a>
+        </div>
+
+        <div style="font-weight: bold; font-size: 9pt; text-align: left;border-left: 2px solid #8B8B8B;padding-left: 5px;  margin-bottom: 20px; color: #7D7D7D" ng-show="ShowPlatinumLogo" class="leftPanelPartnerNumber">
+            <a href="~/Pages/PlatinumPartnerBenefit" style="color: #7d7d7d;">Your Benefits ></a>
+        </div>
+        <div style="font-weight: bold; font-size: 9pt; text-align: left;border-left: 2px solid #8B8B8B;padding-left: 5px;  margin-bottom: 20px; color: #7D7D7D" ng-show="ShowDiamondLogo" class="leftPanelPartnerNumber">
+            <a href="~/Pages/DiamondPartnerBenefit" style="color: #7d7d7d;">Your Benefits ></a>
+        </div>
+
+        <div style="font-weight: bold; font-size: 9pt; border-left: 2px solid #8B8B8B; text-align: left; padding-left: 5px;" class="leftPanelPartnerNumber">
+            Partner Number : {{Account.PartnerNumber}}
+        </div>
+        <div style="font-weight: bold; font-size: 9pt; border-left: 2px solid #8B8B8B; text-align: left; padding-left: 5px;" class="leftPanelPartnerType">
+            Partner Type : {{AccountType}}@*{{Account.PartnerType}}*@
+            <span ng-show="Account.IsStockingPartner">Active Stocking Partner</span>
+        </div>
+        @*<div style="font-weight: bold; font-size: 9pt; border-left: 2px solid #8B8B8B; text-align: left; padding-left: 5px;display:none;" class="leftPanelPartnerLoyaltyRegistration">
+            <a href="~/Pages/loyaltyLeadRegistration" style="color: #7d7d7d;">Loyalty Registration ></a>
+        </div>*@
+        <div style="font-weight: bold; font-size: 9pt; border-left: 2px solid #8B8B8B; text-align: left; padding-left: 5px;" class="leftPanelPartnerLogout">
+            @Html.ActionLink("Log Out", "Logout", "PPLogin")
+        </div>
+    </div>
+</div>
+
+<script>
+     
+
+        app.controller("StarLeftPanelAccountDetailController", function ($controller, $scope, $http, $sce, 
+            notificationFactory, $location,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory) {
+
+            $scope.ShowBlueLogo = false;
+            $scope.ShowBronzeLogo = false;
+            $scope.ShowSilverLogo = false;
+            $scope.ShowGoldLogo = false;
+            $scope.ShowPlatinumLogo = false;
+            $scope.ShowDiamondLogo = false;
+            $scope.ShowUpgradeStatus = false;
+            //$scope.ShowBenefits = false;
+            $scope.ShowLoyaltyRegistration = false;
+            $scope.AccountType = "";
+            $scope.showLogoContainer = false;
+            $scope.showAcDetailContainer = false;
+
+              $scope.Account = {};
+              $scope.getAccount = function() {
+                dbUtilFactory.get(root + 'api/ppcmsapi/GetAccountFromSessionData/', "", function (d) {
+                    $scope.Account = d;
+                    $scope.showLogoContainer = true;
+                    $scope.showAcDetailContainer = true;
+                    $(".leftPanelContainer").show();
+                    $scope.SetAccountType(d.PartnerType);
+                    if (d.PartnerType.toLowerCase().indexOf("technology") >= 0 ||
+                        d.PartnerType.toLowerCase().indexOf("services") >= 0 ||
+                        d.PartnerType.toLowerCase().indexOf("solution") >= 0) {
+                        $scope.ShowUpgradeStatus = true;
+                        $(".leftPanelPartnerLoyaltyRegistration").show();
+                       // $scope.ShowBenefits = true;
+                        
+                        if (d.LoyaltyLevel === "Bronze Partner") {
+                            $scope.ShowBronzeLogo = true;
+                        }
+                        if (d.LoyaltyLevel === "Silver Partner") {
+                            $scope.ShowSilverLogo = true;
+                        }
+                        if (d.LoyaltyLevel === "Gold Partner") {
+                            $scope.ShowGoldLogo = true;
+                        }
+                        if (d.LoyaltyLevel === "Platinum Partner") {
+                            $scope.ShowPlatinumLogo = true;
+                        }
+                        if (d.LoyaltyLevel === "Diamond Partner") {                            
+                            $scope.ShowDiamondLogo = true;
+                        }
+                        if (d.LoyaltyLevel === undefined || d.LoyaltyLevel === null || d.LoyaltyLevel === "") {
+                            $scope.ShowLoyaltyRegistration = true;
+                            $scope.ShowBlueLogo = true;
+                        }
+                        
+                    } else {
+                        $scope.ShowBlueLogo = true;
+                    }
+                    
+                }, '', 'Error getting data ');
+            };
+              $scope.getAccount();
+
+              $scope.SetAccountType = function (partnerType) {
+                  $scope.AccountType = partnerType;
+                if (partnerType.indexOf("ISV") >= 0) {
+                    $scope.AccountType = "Technology Partner";
+                    $(".leftPanelPartnerLoyaltyRegistration").show();                    
+                    return;
+                }
+                if (partnerType.indexOf("DMAR") >= 0) {
+                    $scope.AccountType = "Solution Partner";
+                    return;
+                }
+                if (partnerType.indexOf("VAR") >=0) {
+                    $scope.AccountType = "Services Partner";
+                    $(".leftPanelPartnerLoyaltyRegistration").show();
+                    return;
+                }
+                if (partnerType.indexOf("Online") >= 0) {
+                    $scope.AccountType = "Fulfillment Partner";
+                    return;
+                }
+            }
+
+
+        });
+    </script>

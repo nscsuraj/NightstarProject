@@ -1,0 +1,31 @@
+﻿<div style="width: 95%; display: inline-block; position: absolute; left: 2%">
+
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Target Container</strong><span>This name will be the id of the container you want to scroll to.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-PropertyIndex="694" value="" id="backToTop" name="backToTop" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $(".ui-dialog").css("height", 400);
+
+        //get the object and set values
+        var carrierObj = JSON.parse($("#dialog_form").attr("data-obj"));
+        try {
+            $(".objectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(carrierObj[$(this).attr("data-PropertyIndex")]);
+                } else {
+                    if (carrierObj[$(this).attr("data-PropertyIndex")] != null && carrierObj[$(this).attr("data-PropertyIndex")] != undefined && carrierObj[$(this).attr("data-PropertyIndex")].length > 0)
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                }
+            });
+        } catch (e) {
+
+        }
+    });
+</script>

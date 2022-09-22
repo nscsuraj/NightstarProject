@@ -1,0 +1,167 @@
+﻿<style>
+    .colorSelector {
+        position: relative;
+        width: 36px;
+        height: 36px;
+    }
+
+        .colorSelector div {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 30px;
+            height: 30px;
+        }
+
+    .colorpicker {
+        z-index: 1120;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('#colorSelector div').css('backgroundColor', '#ffffff');
+
+        //get the object and set values
+        var carrierObj = JSON.parse($("#dialog_form").attr("data-obj"));
+        try {
+            $(".objectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(carrierObj[$(this).attr("data-PropertyIndex")]);
+                } else if ($(this).is('textarea')) {
+                    if (!(carrierObj[$(this).attr("data-PropertyIndex")] == undefined)) {
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                    }
+                } else {
+                    if (carrierObj[$(this).attr("data-PropertyIndex")] != null && carrierObj[$(this).attr("data-PropertyIndex")] != undefined && carrierObj[$(this).attr("data-PropertyIndex")].length > 0)
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                }
+            });
+        } catch (e) {
+
+        }
+        //set color
+        $('#backgroundColorSelector div').css('backgroundColor', $('#backgroundColor').val());
+
+        $('#backgroundColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#backgroundColorSelector div').css('backgroundColor', '#' + hex);
+                $('#backgroundColor').val('#' + hex);
+            }
+        });
+
+        $(".ui-dialog").css("height", $(window).height() - 70);
+    });
+</script>
+<div style="width: 95%; display: inline-block; position: absolute; left: 2%">
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>SoundCloud Url</strong><span>The SoundCloud url, ex: http://api.soundcloud.com/tracks/110813479</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="543" value="" id="fusion_url" name="fusion_url" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Layout</strong><span>Choose the layout of the soundcloud embed.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_layout" name="fusion_layout" class="select-field objectProperty" data-propertyindex="544">
+                <option value="classic">Classic</option>
+                <option value="visual">Visual</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Show Comments</strong><span>Choose to display comments.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_comments" name="fusion_comments" class="select-field objectProperty" data-propertyindex="545">
+                <option value="yes" selected="">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Show Related</strong><span>Choose to display related items.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_related" name="fusion_related" class="select-field objectProperty" data-propertyindex="546">
+                <option value="yes" selected="">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Show User</strong><span>Choose to display the user who posted the item.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_user" name="fusion_user" class="select-field objectProperty" data-propertyindex="547">
+                <option value="yes" selected="">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Autoplay</strong><span>Choose to autoplay the track</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_auto_play" name="fusion_auto_play" class="select-field objectProperty" data-propertyindex="548">
+                <option value="no" selected="">No</option>
+                <option value="yes">Yes</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-color">
+        <div class="name-description"><strong>Color</strong><span>Select the color of the shortcode</span></div>
+        <div class="element-type">
+            <div class="wp-picker-container">
+                <table style="width: 100%" colspacing="10">
+                    <tr>
+                        <td style="width: 75%; text-align: right;">
+                            <div id="backgroundColorSelector" class="colorSelector" style="width: 90%;">
+                                <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none; background-color: rgb(255, 119, 0);">
+                                </div>
+                                <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                </span>
+                            </div>
+                        </td>
+                        <td style="width: 25%; vertical-align: middle;">
+                            <input type="text" class="objectProperty" data-propertyindex="549" value="#ff7700" id="backgroundColor" name="backgroundColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Width</strong><span>In pixels (px) or percentage (%)</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="550" value="100%" id="fusion_width" name="fusion_width" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Height</strong><span>In pixels (px)</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="551" value="150px" id="fusion_height" name="fusion_height" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS Class</strong><span>Add a class to the wrapping HTML element.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="552" value="" id="fusion_class" name="fusion_class" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS ID</strong><span>Add an ID to the wrapping HTML element.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="553" value="" id="fusion_id" name="fusion_id" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Import Product Number";
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+}
+
+@section featured {
+}
+@section scripts
+{
+    <style>
+        .ui-button-text {
+            font-size: 1.4rem;
+        }
+        
+    </style>
+    <script>
+    </script>
+}
+@section MainContent {
+    @using (@Html.BeginForm("ImportProductNumber", "Import", FormMethod.Post, new { id = "ImportProductNumber", name = "ImportProductNumber", enctype = "multipart/form-data" }))
+    {
+    <div>
+        <table style="width: 100%; height: 100%;">
+            <tr>
+                <td style="background-color: #026F8A; color: #ffffff; text-align: center; vertical-align: middle; font-size: 24px; font-weight: bold; padding: 10px;">Import Product Number</td>
+            </tr>
+            <tr style="height: 20px;">
+                <td></td>
+            </tr>
+            <tr style="">
+                <td style="width: 100%; vertical-align: middle; text-align: center;">
+                    <div class="row paddingtop5" style="border: 1px solid black; height: 80px; border-radius: 4px; box-shadow: 4px 2px 4px #000000;">
+                        <div style="padding-top: 10px; padding-left: 10px;">
+                            @ViewBag.Error
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    }
+}
+
+@section AngularScripts
+{
+   
+}
+

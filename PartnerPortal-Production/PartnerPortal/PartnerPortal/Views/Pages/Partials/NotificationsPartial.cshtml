@@ -1,0 +1,917 @@
+﻿
+<style>
+
+    .daycolodd {
+        background-color: #D3ECFA;
+        color: #133B7C;
+    }
+
+    .daycoleven {
+        background-color: #ECF8FF;
+        color: #133B7C;
+    }
+
+
+
+
+    @@media only screen and (max-width:1400px) {
+    }
+
+    @@media only screen and (max-width:1150px) {
+    }
+
+    @@media only screen and (max-width:940px) {
+    }
+
+    @@media only screen and (max-width:900px) and (min-width:400px) {
+    }
+
+    @@media only screen and (max-width:390px) and (min-width:0px) {
+    }
+
+    .btnExport {
+        width: 60%;
+        height: 30px;
+        color: #ffffff;
+        font-weight: normal;
+        display: inline-block;
+        text-align: center;
+        background-color: #133B7C;
+        font-size: 10pt;
+        padding-top: 10px;
+    }
+
+    .oppHeaderCol1 {
+        width: 50%;
+        float: left;
+        display: inline-block;
+        text-align: left;
+    }
+
+    .oppHeaderCol2 {
+        width: 47%;
+        float: left;
+        display: inline-block;
+        text-align: right;
+        margin-right: 10px;
+    }
+
+    .oppHeaderCol3 {
+        float: right;
+        text-align: right;
+        display: inline-block;
+        font-size: 11pt;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    .clsTextBoxLanding {
+        width: 100% !important;
+        border: 0 !important;
+        border: 1px solid #73C4F2 !important;
+        min-height: 30px !important;
+        margin-top: 10px;
+        padding-left: 15px;
+        padding-right: 15px;
+        box-sizing: border-box;
+    }
+
+    .clsTextBoxSearch {
+        width: 300px !important;
+        border: 0 !important;
+        border: 1px solid #73C4F2 !important;
+        min-height: 30px !important;
+        margin-top: 10px;
+        padding-left: 15px;
+        padding-right: 15px;
+        box-sizing: border-box;
+    }
+
+    .clsTextBoxOpportunity {
+        width: 400px !important;
+        border: 1px solid #969696 !important;
+        min-height: 50px !important;
+        margin-top: 10px;
+        display: inline-block;
+        padding-left: 15px;
+        padding-right: 15px;
+        box-sizing: border-box;
+    }
+
+    .bevelBox {
+        width: 400px;
+        background: #D3ECFA;
+        border: 1px solid #D3ECFA;
+        -moz-box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset 2px 2px 2px rgba(0, 0, 0, .4);
+        -webkit-box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset 2px 2px 2px rgba(0, 0, 0, .4);
+        box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset 2px 2px 2px rgba(0, 0, 0, .4);
+        padding: 10px;
+    }
+
+    .oppTableHeader {
+        padding: 2px;
+        background-color: #ECF8FF;
+        color: #001E4F;
+        height: 30px;
+        font-weight: bold;
+        font-size: 12pt;
+        table-layout: fixed;
+    }
+
+    .oppTableText {
+        padding: 2px;
+        padding-left: 5px;
+        font-size: 12pt;
+    }
+
+    .tabColReseller {
+        width: 92px;
+    }
+
+    .tabColDiscount {
+        width: 105px;
+    }
+
+    .tabColPartnerNo {
+        width: 140px;
+    }
+
+    .tabColPartDist {
+        width: 140px;
+    }
+
+    .tabColCustName {
+        width: 66px;
+    }
+
+    .tabColPartnerType {
+        width: 81px;
+    }
+
+    .pagination {
+        display: inline-block;
+        padding-left: 0;
+        margin: 0px 0;
+        border-radius: 4px;
+        width: 100%;
+        font-size: 14pt;
+    }
+
+    @@media only screen and (max-width:1230px) {
+        .oppHeaderCol1 {
+            width: 100%;
+        }
+
+        .oppHeaderCol2 {
+            width: 100%;
+            float: left;
+            text-align: left;
+        }
+
+            .oppHeaderCol2 table {
+                width: 280px !important;
+                font-size: 14pt !important;
+            }
+    }
+
+    @@media only screen and (max-width:1650px) {
+        .oppTableHeader {
+            font-size: 9pt;
+        }
+
+        .oppTableText {
+            font-size: 9pt;
+        }
+
+        .tabColReseller {
+            width: 85px;
+        }
+
+        .tabColDiscount {
+            width: 91px;
+        }
+
+        .tabColPartnerNo {
+            width: 95px;
+        }
+
+        .tabColPartDist {
+            width: 112px;
+        }
+
+        .tabColCustName {
+            width: 63px;
+        }
+
+        .tabColPartnerType {
+            width: 73px;
+        }
+    }
+
+    @@media only screen and (max-width:1420px) {
+        .oppTableHeader {
+            font-size: 8pt;
+        }
+
+        .oppTableText {
+            font-size: 9pt;
+        }
+
+        .tabColReseller {
+            width: 75px;
+        }
+
+        .tabColDiscount {
+            width: 81px;
+        }
+
+        .tabColPartnerNo {
+            width: 85px;
+        }
+
+        .tabColPartDist {
+            width: 100px;
+        }
+
+        .tabColCustName {
+            width: 52px;
+        }
+
+        .tabColPartnerType {
+            width: 65px;
+        }
+    }
+
+    @@media only screen and (max-width:1300px) {
+        .oppTableHeader {
+            font-size: 7pt;
+        }
+
+        .oppTableText {
+            font-size: 9pt;
+        }
+
+        .tabColReseller {
+            width: 65px;
+        }
+
+        .tabColDiscount {
+            width: 71px;
+        }
+
+        .tabColPartnerNo {
+            width: 75px;
+        }
+
+        .tabColPartDist {
+            width: 87px;
+        }
+
+        #displayOpportunityList {
+            padding: 0px !important;
+            padding-top: 10px !important;
+            width: 101% !important;
+        }
+    }
+
+    @@media only screen and (max-width:1100px) {
+        .oppTableHeader {
+            font-size: 6pt;
+        }
+
+        .oppTableText {
+            font-size: 8pt;
+        }
+
+        .tabColReseller {
+            width: 60px;
+        }
+
+        .tabColDiscount {
+            width: 61px;
+        }
+
+        .tabColPartnerNo {
+            width: 65px;
+        }
+
+        .tabColPartDist {
+            width: 82px;
+        }
+
+        .tabColCustName {
+            width: 45px;
+        }
+
+        .tabColPartnerType {
+            width: 49px;
+        }
+    }
+
+    @@media only screen and (max-width:990px) {
+        .btnExport {
+            width: 80%;
+            height: 30px;
+            color: #ffffff;
+            font-weight: normal;
+            display: inline-block;
+            text-align: center;
+            background-color: #133B7C;
+            font-size: 10pt;
+            padding-top: 10px;
+        }
+
+        .oppTableHeader {
+            font-size: 6pt;
+        }
+
+        .tabColReseller {
+            width: 57px;
+            padding-left: 0px !important;
+        }
+
+        .tabColDiscount {
+            width: 61px;
+            padding-left: 0px !important;
+        }
+
+        .tabColPartDist {
+            width: 75px;
+            padding-left: 0px !important;
+        }
+
+        .tabColPartnerNo {
+            width: 63px;
+        }
+
+        .tabColCustName {
+            width: 39px;
+            padding-left: 0px !important;
+        }
+
+        .tabColPartnerType {
+            width: 49px;
+            padding-left: 0px !important;
+        }
+    }
+
+    @@media only screen and (max-width:951px) and (min-width:900px) {
+        .btnExport {
+            width: 100%;
+            height: 40px;
+            font-size: 10pt;
+            padding-top: 5px;
+        }
+    }
+
+    @@media only screen and (max-width:900px) and (min-width:811px) {
+        .oppTableHeader {
+            font-size: 10pt;
+        }
+
+        .oppTableText {
+            font-size: 10pt;
+        }
+
+        .tabColReseller {
+            width: 100px;
+            padding-left: 5px !important;
+        }
+
+        .tabColDiscount {
+            width: 130px;
+            padding-left: 5px !important;
+        }
+
+        .tabColPartnerNo {
+            width: 130px;
+            padding-left: 5px !important;
+        }
+
+        .tabColPartDist {
+            width: 130px;
+            padding-left: 5px !important;
+        }
+
+        .tabColCustName {
+            width: 65px;
+            padding-left: 5px !important;
+        }
+
+        .tabColPartnerType {
+            width: 81px;
+            padding-left: 5px !important;
+        }
+
+        .btnExport {
+            width: 100%;
+            height: 40px;
+            font-size: 10pt;
+            padding-top: 7px;
+        }
+
+        #displayOpportunityList {
+            padding: 0px !important;
+            padding-top: 10px !important;
+            width: 100% !important;
+        }
+    }
+
+    @@media only screen and (max-width:810px) and (min-width:700px) {
+        .oppTableHeader {
+            font-size: 10pt;
+        }
+
+        .oppTableText {
+            font-size: 10pt;
+        }
+
+        .tabColReseller {
+            width: 93px;
+        }
+
+        .tabColDiscount {
+            width: 102px;
+        }
+
+        .tabColPartnerNo {
+            width: 91px;
+        }
+
+        .tabColPartDist {
+            width: 112px;
+        }
+
+        .tabColCustName {
+            width: 65px;
+            padding-left: 5px !important;
+        }
+
+        .tabColPartnerType {
+            width: 81px;
+            padding-left: 5px !important;
+        }
+
+        .btnExport {
+            width: 100%;
+            height: 40px;
+            font-size: 10pt;
+            padding-top: 7px;
+        }
+    }
+
+    @@media only screen and (max-width:776px) and (min-width:700px) {
+
+        .btnExport {
+            width: 100%;
+            height: 36px;
+            font-size: 10pt;
+            padding-top: 0px;
+        }
+    }
+
+    @@media only screen and (max-width:699px) and (min-width:611px) {
+        .oppTableHeader {
+            font-size: 8pt !important;
+        }
+
+        .oppTableText {
+            font-size: 10pt;
+        }
+
+        .tabColReseller {
+            width: 75px;
+        }
+
+        .tabColDiscount {
+            width: 82px;
+        }
+
+        .tabColPartnerNo {
+            width: 90px;
+        }
+
+        .tabColPartDist {
+            width: 110px;
+        }
+
+        .tabColCustName {
+            width: 55px;
+            padding-left: 5px !important;
+        }
+
+        .tabColPartnerType {
+            width: 66px;
+            padding-left: 5px !important;
+        }
+
+        .btnExport {
+            width: 100%;
+            height: 36px;
+            font-size: 10pt;
+            padding-top: 0px;
+        }
+    }
+
+    @@media only screen and (max-width:610px) and (min-width:530px) {
+        .oppTableHeader {
+            font-size: 7pt !important;
+        }
+
+        .oppTableText {
+            font-size: 10pt;
+        }
+
+        .tabColReseller {
+            width: 65px;
+        }
+
+        .tabColDiscount {
+            width: 71px;
+        }
+
+        .tabColPartnerNo {
+            width: 75px;
+        }
+
+        .tabColPartDist {
+            width: 88px;
+        }
+
+        .tabColCustName {
+            width: 46px;
+            padding-left: 0px !important;
+        }
+
+        .tabColPartnerType {
+            width: 57px;
+            padding-left: 5px !important;
+        }
+
+        .btnExport {
+            width: 100%;
+            height: 36px;
+            font-size: 10pt;
+            padding-top: 0px;
+        }
+    }
+
+    @@media only screen and (max-width:529px) and (min-width:490px) {
+        .oppTableHeader {
+            font-size: 6pt !important;
+        }
+
+        .oppTableText {
+            font-size: 8pt !important;
+        }
+
+        .tabColReseller {
+            width: 60px;
+        }
+
+        .tabColDiscount {
+            width: 85px;
+        }
+
+        .tabColPartnerNo {
+            width: 75px;
+        }
+
+        .tabColPartDist {
+            width: 75px;
+        }
+
+        .btnExport {
+            width: 100%;
+            height: 36px;
+            font-size: 10pt;
+            padding-top: 0px;
+        }
+    }
+
+    @@media only screen and (max-width:489px) and (min-width:350px) {
+        .oppTableHeader {
+            font-size: 5.5pt !important;
+        }
+
+        .oppTableText {
+            font-size: 7pt !important;
+        }
+
+        .tabColReseller {
+            width: 51px;
+            padding-left: 0px !important;
+        }
+
+        .tabColDiscount {
+            width: 56px;
+            padding-left: 0px !important;
+        }
+
+        .tabColPartnerNo {
+            width: 56px;
+            padding-left: 0px !important;
+        }
+
+        .tabColPartDist {
+            width: 69px;
+            padding-left: 0px !important;
+        }
+
+        .tabColCustName {
+            width: 36px;
+            padding-left: 0px !important;
+        }
+
+        .tabColPartnerType {
+            width: 45px;
+            padding-left: 0px !important;
+        }
+
+        #displayOpportunityList {
+            padding: 0px !important;
+        }
+
+        .twelveMonthReseller {
+            font-size: 18pt !important;
+        }
+
+        .btnExport {
+            width: 100%;
+            height: 36px;
+            font-size: 10pt;
+            padding-top: 0px;
+        }
+
+        .pagination {
+            display: inline-block;
+            padding-left: 0;
+            margin: 0px 0;
+            border-radius: 4px;
+            width: 100%;
+            font-size: 10pt;
+        }
+    }
+
+    @@media only screen and (max-width:380px) and (min-width:0px) {
+        .oppTableHeader {
+            font-size: 5.5pt !important;
+        }
+
+        .oppTableText {
+            font-size: 8pt !important;
+        }
+
+        .tabColReseller {
+            width: auto;
+        }
+
+        .tabColDiscount {
+            width: auto;
+        }
+
+        .tabColPartnerNo {
+            width: auto;
+        }
+
+        .tabColPartDist {
+            width: auto;
+        }
+
+        .tabColCustName {
+            width: auto;
+            padding-left: 0px !important;
+        }
+
+        .tabColPartnerType {
+            width: auto;
+            padding-left: 0px !important;
+        }
+    }
+
+    @@media only screen and (max-width:400px) and (min-width:0px) {
+
+        #displayOpportunityList {
+            padding: 0px !important;
+        }
+
+        .twelveMonthReseller {
+            font-size: 18pt !important;
+        }
+
+        .btnExport {
+            width: 100%;
+            height: 36px;
+            font-size: 10pt;
+            padding-top: 0px;
+        }
+
+        .pagination {
+            display: inline-block;
+            padding-left: 0;
+            margin: 0px 0;
+            border-radius: 4px;
+            width: 100%;
+            font-size: 10pt;
+        }
+    }
+</style>
+
+<div id="StarNotificationControllerContent" style="width: 100%; display: none;" ng-controller="StarNotificationController">
+    <div class="fusion-fullwidth fullwidth-box" style="text-align: left; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+
+        <div class="fusion-row" id="displayResellers">
+            <div style="width: 100%; display: inline-block; text-align: left; padding-top: 30px; color: #3D80EB;">
+                <div style="width: 100%; height: 30px; color: #2551A4; margin-top: 40px;margin-bottom:20px; font-size: 22pt; font-weight: bold;" class="twelveMonthReseller">
+                    Notification Center
+                </div>
+                <div style="width: 100%; height: 1px; background-color: #2551A4; font-size: 12pt; font-weight: normal;line-height: 1.5">
+                    
+                </div>
+                <div class="oppHeaderCol1" style="margin-top: 20px;">
+                    <div style="width: 100%; color: #2551A4; font-size: 12pt;">Filter by Subject</div>
+                    <div style="width: 100%; float: left; display: table-cell; vertical-align: middle;">
+                        <input class="clsTextBoxSearch" id="filter" placeholder="&#128269;" type="text" value="" ng-model="filterName">
+                    </div>
+                </div>
+            </div>           
+            <div id="displayOpportunityList" style="padding: 10px; text-align: center;">
+                <table style="cursor: pointer; text-align: left; width: 100%; table-layout: fixed; word-wrap: break-word;">
+                    <thead>
+                        <tr style="text-align: left; border-bottom: 1px solid #000000;">
+                            <th class="oppTableHeader" style="padding-left: 5px;width:80%;">Subject</th>
+                            <th class="oppTableHeader" style="text-align: left;width:20%;">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-show="showLoading">
+                            <td colspan="6">
+                                <div style="font-size: 16pt; font-weight: bold; color: #737373; margin-left: 15px; margin-bottom: 20px; border: 1px solid #ececec; text-align: center;">
+                                    <img src="~/Images/loadingP.gif" />
+                                </div>
+
+                            </td>
+                        </tr>
+                        <tr dir-paginate-start="item in Notifications | filter : doFilter | orderBy : predicate:reverse|itemsPerPage:10" ng-hide="showLoading">
+                            <td style="height: 10px; padding: 0; font-size: 4pt; background-color: #ECF8FF;" colspan="6">&nbsp;</td>
+                        </tr>
+                        <tr style="background-color: #D3ECFA; color: #001E4F; height: 30px;" ng-click="viewDetail(item)">
+                            <td class="oppTableText" style="padding-left: 5px;">{{item.Header}}</td>
+                            <td class="oppTableText" style="padding: 5px; text-align: left;">{{item.CreateDate | date  : "MM/dd/yyyy"}}  >></td>
+                        </tr>
+                        <tr dir-paginate-end>
+                            <td style="height: 1px; padding: 0; font-size: 0pt; background-color: #ECF8FF;" colspan="6"></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+            </div>
+
+
+        </div>
+        @*<div id="displaySearchPartner" class="fusion-row" style="display: none;">
+            <div style="width: 100%; display: inline-block; text-align: left; padding-top: 30px; color: #3D80EB;">
+                <div style="width: 50%; padding-left: 15px; float: left;">
+                    <div style="width: 100%; color: #2551A4; font-weight: bold; font-size: 12pt;line-height: 1.5"></div>
+                </div>
+                <div style="width: 30%; padding-left: 15px;padding-right: 25px; float: right; text-align: right;">
+                    <div class="btnExport" ng-click="exportExcelSearched()" style="cursor: pointer;">Export</div>
+                    <button ng-json-export-excel data="ResellersToExportSearched" report-fields="ColumnListSearched" optional-Texts="disclaimerList" filename="'ResellerList'" style="display: none;" id="btnExportSearched">Export Excel</button>
+                </div>
+            </div>            
+        </div>*@
+
+    </div>
+
+</div>
+
+
+<Style>
+
+
+    @@media only screen and (max-width: 759px) {
+    }
+
+    @@font-face {
+        font-family: 'Sintony';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Sintony'), url(https://fonts.gstatic.com/s/sintony/v7/XoHm2YDqR7-98cVUET0tuv0rnjrQ8Q.woff2) format('woff2');
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    /* latin */
+    @@font-face {
+        font-family: 'Sintony';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Sintony'), url(https://fonts.gstatic.com/s/sintony/v7/XoHm2YDqR7-98cVUETMtuv0rnjo.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+</Style>
+
+<script>
+
+
+    app.controller("StarNotificationController", function ($controller, $scope, $http, $sce,
+        notificationFactory, $location,
+        validationFactory, filterFilter, helperFactory, dbUtilFactory) {
+        //var d = new Date();
+        //$scope.TodayDate = new Date();//d.getMonth() + "/" + d.getDate() + "/" + d.getFullYear();
+        //$scope.ResellersToExport = [];
+        //$scope.ResellersToExportSearched = [];
+       // $scope.disclaimerList = [];
+        $scope.showLoading = true;
+       // $scope.ExportFileName = 'ResellerList.csv';
+        $scope.Account = {};
+      //  $scope.disclaimerLine = "";
+        $scope.Notifications = [];
+        $scope.getTime = function () {
+            var d = new Date();
+            d.setHours(d.getHours()); // offset from local time
+            var h = (d.getHours() % 12) || 12; // show midnight & noon as 12
+            return (
+                (h < 10 ? '0' : '') + h +
+                (d.getMinutes() < 10 ? ':0' : ':') + d.getMinutes() +
+                // optional seconds display
+                // ( d.getSeconds() < 10 ? ':0' : ':') + d.getSeconds() +
+                (d.getHours() < 12 ? ' AM' : ' PM')
+            );
+
+        }
+
+
+        //$scope.ColumnList = { CustomerName: 'Account #', ResellerAccountName: 'Reseller Name', ResellerPartnerType: 'Partner Type', SuggestedMarkup: "Suggested Markup", DistributorDiscount: "Distributor DRD", ResellerDiscount: 'Reseller’s  Discount', ResellerPartnerNumber: 'Partner Number', DateCreated: 'Date Added' };
+        //$scope.ColumnListSearched = { ResellerAccountName: 'Reseller Name', ResellerPartnerType: 'Partner Type', SuggestedMarkup: "Suggested Markup", DistributorDiscount: "Distributor DRD", ResellerDiscount: 'Reseller’s  Discount', ResellerPartnerNumber: 'Partner Number', DateCreated: 'Date Added' };
+
+        //   $scope.disclaimerList = { line: $scope.disclaimerLine1, line1: $scope.disclaimerLine2, line2: $scope.disclaimerLine3 };
+
+        $scope.getAccount = function () {
+            dbUtilFactory.get(root + 'api/ppcmsapi/GetAccountFromSessionData/', "", function (d) {
+                $("#StarNotificationControllerContent").show();
+                $scope.Account = d;
+                //$scope.disclaimerLine = "(c) " + (new Date()).getFullYear() + " Star Micronics America. All rights reserved.";
+                //$scope.disclaimerList.push({ description: $scope.disclaimerLine });
+                //$scope.disclaimerLine = "Confidential Information - Do Not Distribute.";
+                //$scope.disclaimerList.push({ description: $scope.disclaimerLine });
+                //$scope.disclaimerLine = "Generated By: " + $scope.Account.AccountName + " " + ((new Date()).getMonth() + 1) + "/" + (new Date()).getDate() + "/" + (new Date()).getFullYear() + " " + $scope.getTime();
+                //$scope.disclaimerList.push({ description: $scope.disclaimerLine });
+            }, '', 'Error getting data ');
+        };
+        $scope.getAccount();
+
+        //$scope.searchPartnerForReseller = function () {
+        //    var obj = {};
+        //    obj.ResellerAccountName = $("#tdResellerAccountName").html();
+        //    obj.ResellerPartnerType = $("#tdResellerPartnerType").html();
+        //    obj.SuggestedMarkup = $("#tdResellerSuggestedMarkup").html();
+        //    obj.DistributorDiscount = $("#tdResellerDistDrd").html();
+        //    obj.ResellerDiscount = $("#tdResellerDiscount").html();
+        //    obj.ResellerPartnerNumber = $("#tdResellerPartnerNumber").html();
+        //    $scope.ResellersToExportSearched.push(obj);
+        //}
+        $scope.viewDetail = function (item) {
+            window.location.href = root + "pages/NotificationDetail" + "/" + item.Id;
+        }
+        $scope.getNotifications = function () {
+            dbUtilFactory.get(root + 'api/ppcmsapi/GetNotificationsForUser/', "", function (d) {
+                $scope.Notifications = d;
+                //$scope.ResellersToExport = d;
+                $scope.showLoading = false;
+            }, '', 'Error getting data ');
+        };
+        $scope.getNotifications();
+        $scope.exportExcel = function () {
+            //2 execute the hidden button
+            document.getElementById('btnExport').click();
+            //$scope.GetResellersToExport();
+        }
+        $scope.exportExcelSearched = function () {
+            //2 execute the hidden button
+            document.getElementById('btnExportSearched').click();
+            //$scope.GetResellersToExport();
+        }
+
+        //$scope.$watch('filterName', function (newVal, oldVal, scope) {
+        //    var query = $("#filter").val();
+        //    if (query != undefined && query != "") {
+        //        var temp = [];
+        //        for (var i = 0; i < $scope.Resellers.length; i++) {
+        //            if ((($scope.Resellers[i].ResellerAccountName != null) && (angular.lowercase($scope.Resellers[i].ResellerAccountName).indexOf(angular.lowercase(query) || '') !== -1)) ||
+        //                (($scope.Resellers[i].CustomerName != null) && (angular.lowercase($scope.Resellers[i].CustomerName).indexOf(angular.lowercase(query) || '') !== -1))) {
+        //                temp.push($scope.Resellers[i]);
+        //            }
+        //        }
+        //        $scope.ResellersToExport = temp;
+
+        //    } else {
+        //        $scope.ResellersToExport = $scope.Resellers;
+        //    }
+        //});
+
+        $scope.doFilter = function (row) {
+            return ((row.Header != null) && (angular.lowercase(row.Header).indexOf(angular.lowercase($scope.filterName) || '') !== -1));
+        }
+
+    });
+</script>

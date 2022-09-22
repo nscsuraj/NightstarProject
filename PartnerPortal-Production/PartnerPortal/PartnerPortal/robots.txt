@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /cms
+Sitemap: https://www.starmicronics.com/sitemap.xml

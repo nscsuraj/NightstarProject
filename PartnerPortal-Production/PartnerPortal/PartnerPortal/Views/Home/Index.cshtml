@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+           
+            <p>
+                A demonstartion to display wordpress pages on mvc pages 
+            </p>
+        </div>
+    </section>
+    
+}
+@section scripts
+{
+
+}
+@section MainContent {
+    <div id="frameWrap" class="iframeWrapper">
+        <img src="~/Images/3Dloading.gif" id="contentLoadingImage"/>
+    </div>
+}

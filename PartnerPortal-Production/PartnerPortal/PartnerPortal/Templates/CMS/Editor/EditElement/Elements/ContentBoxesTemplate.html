@@ -1,0 +1,668 @@
+﻿<style>
+    .colorSelector {
+        position: relative;
+        width: 36px;
+        height: 36px;
+    }
+
+        .colorSelector div {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 30px;
+            height: 30px;
+        }
+
+    .colorpicker {
+        z-index: 1120;
+    }
+</style>
+<script>
+    var uploaderOpenedBy = {};
+    var contentBoxCounter = 0;
+    tinymce.remove();
+    $(document).ready(function () {
+        $(".ui-dialog").css("height", $(window).height() - 60);
+
+        //get the object and set values
+        var carrierObj = JSON.parse($("#dialog_form").attr("data-obj"));
+        try {
+            $(".objectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(carrierObj[$(this).attr("data-PropertyIndex")]);
+                } else {
+                    if (carrierObj[$(this).attr("data-PropertyIndex")] != null && carrierObj[$(this).attr("data-PropertyIndex")] != undefined && carrierObj[$(this).attr("data-PropertyIndex")].length > 0)
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                }
+            });
+        } catch (e) {
+
+        }
+
+        $("#contentBoxesContainer tr:first").hide();
+        var tempContentBoxes = carrierObj[611];
+        if (tempContentBoxes != undefined && tempContentBoxes.length > 0) {
+            for (var i = 0; i < tempContentBoxes.length; i++) {
+                addNewContentBox($("#fusion-child-add"), tempContentBoxes[i]);
+            }
+        } else {//First Time
+            addNewContentBox($("#fusion-child-add"));
+        }
+    });
+
+    function toggleContentBoxDetail(ctrl) {
+        var state = $(ctrl).attr("data-state");
+        var index = $(ctrl).attr("data-boxIndex");
+
+        if (state == 0) {
+            $(ctrl).parent().find(".boxDetail").show();
+            $(ctrl).attr("data-state", "1");
+            $(ctrl).html("Content Boxes Item " + index + "<i class='fusiona-minus'>");
+        }
+        else if (state == 1) {
+            $(ctrl).parent().find(".boxDetail").hide();
+            $(ctrl).attr("data-state", "0");
+            $(ctrl).html("Content Boxes Item " + index + "<i class='fusiona-plus2'>");
+        }
+    }
+
+    function addNewContentBox(ctrl, obj) {
+        var tr = $(ctrl).parents("tr:first");
+        var prevTr = $(tr).prev()[0];
+        var cloneTr = $(prevTr).clone(true);
+        $(cloneTr).css("display", "");
+        $(cloneTr).addClass("child-clone-row");
+        var td = $(cloneTr).find("td:first");
+        var linkHeader = $(td).find(".linkHeader");
+        contentBoxCounter += 1;
+        $(linkHeader).attr("data-boxIndex", contentBoxCounter);
+        $(linkHeader).html("Content Boxes Item " + contentBoxCounter + "<i class='fusiona-plus2'>");
+        //$(linkHeader).attr("data-state", contentBoxCounter);
+        var borderColorSelector = 'borderColorSelector' + contentBoxCounter;
+        var iconColorSelector = 'iconColorSelector' + contentBoxCounter;
+        var iconCircleColorSelector = 'iconCircleColorSelector' + contentBoxCounter;
+        var iconCircleBorderColorSelector = 'iconCircleBorderColorSelector' + contentBoxCounter;
+
+        cloneTr.find('.borderColorSelector').prop('id', borderColorSelector);
+        cloneTr.find('.iconColorSelector').prop('id', iconColorSelector);
+        cloneTr.find('.iconCircleColorSelector').prop('id', iconCircleColorSelector);
+        cloneTr.find('.iconCircleBorderColorSelector').prop('id', iconCircleBorderColorSelector);
+        cloneTr.find('.borderColor').prop('id', 'borderColor' + contentBoxCounter);
+        cloneTr.find('.iconColor').prop('id', 'iconColor' + contentBoxCounter);
+        cloneTr.find('.iconCircleColor').prop('id', 'iconCircleColor' + contentBoxCounter);
+        cloneTr.find('.iconCircleBorderColor').prop('id', 'iconCircleBorderColor' + contentBoxCounter);
+        cloneTr.find('.hiddenIcon').prop('id', 'hiddenIcon' + contentBoxCounter);
+        cloneTr.find(".textContentTemplateArea").prop('id', 'textContentTemplateArea' + contentBoxCounter);
+        cloneTr.find(".fusionb-upload-button").prop('id', 'contentBoxUpload' + contentBoxCounter);
+
+        cloneTr.find('.colorSelector div').css('backgroundColor', '#ffffff');
+        cloneTr.find('#' + borderColorSelector).ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#' + borderColorSelector + ' div').css('backgroundColor', '#' + hex);
+                $('#' + 'borderColor' + $(linkHeader).attr("data-boxIndex")).html('#' + hex);
+            }
+        });
+
+        cloneTr.find('#' + iconColorSelector).ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#' + iconColorSelector + ' div').css('backgroundColor', '#' + hex);
+                $('#' + 'iconColor' + $(linkHeader).attr("data-boxIndex")).html('#' + hex);
+            }
+        });
+
+
+        cloneTr.find('#' + iconCircleColorSelector).ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#' + iconCircleColorSelector + ' div').css('backgroundColor', '#' + hex);
+                $('#' + 'iconCircleColor' + $(linkHeader).attr("data-boxIndex")).html('#' + hex);
+            }
+        });
+
+        cloneTr.find('#' + iconCircleBorderColorSelector).ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#' + iconCircleBorderColorSelector + ' div').css('backgroundColor', '#' + hex);
+                $('#' + 'iconCircleBorderColor' + $(linkHeader).attr("data-boxIndex")).html('#' + hex);
+            }
+        });
+
+        if (obj != undefined) {
+            $(cloneTr).find(".subObjectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(obj[$(this).attr("data-subPropertyIndex")]);
+                } else {
+                    $(this).val(obj[$(this).attr("data-subPropertyIndex")]);
+                }
+            });
+            $(cloneTr).find(".uploaded-image").each(function () {
+                $(this).attr("src", obj[10]);
+                if (obj[10].length > 0) {
+                    $(this).parent().find('.fusionb-upload-button').text('Remove').addClass('remove-image');
+                }
+            });
+            $(cloneTr).find(".hiddenIcon").each(function () {
+                if (obj[2] != '') {
+                    $(cloneTr).find('.' + $(this).val()).parent().addClass('selected-element');
+                }
+            });
+        }
+
+        $(prevTr).before($(cloneTr));
+        //Start tinymce
+        tinymce.init({
+            selector: '#textContentTemplateArea' + contentBoxCounter,
+            plugins: ['hr link fullscreen table textcolor charmap template code wordcount'],
+            menubar: 'false',
+            toolbar: 'bold italic strikethrough underline fontsizeselect | bullist numlist blockquote hr alignleft aligncenter alignright alignjustify outdent indent | link unlink fullscreen table styleselect forecolor | removeformat charmap undo redo template code',
+            fontsize_formats: '8pt 9pt 10pt 11pt 12pt 14pt 16pt 18pt 20pt 22pt 24px 32px 36px',
+            templates: [
+                {
+                    title: 'Test template 1',
+                    content: 'Test 1'
+                }, {
+                    title: 'Test template 2',
+                    content: 'Test 2'
+                }
+            ],
+            table_default_styles: {
+                width: '100%'
+            }
+        });
+        //End tinymce
+        //set color
+        if (obj != undefined) {
+            $('#' + borderColorSelector + ' div').css('backgroundColor', $('#' + 'borderColor' + contentBoxCounter).html());
+            $('#' + iconColorSelector + ' div').css('backgroundColor', $('#' + 'iconColor' + contentBoxCounter).html());
+            $('#' + iconCircleColorSelector + ' div').css('backgroundColor', $('#' + 'iconCircleColor' + contentBoxCounter).html());
+            $('#' + iconCircleBorderColorSelector + ' div').css('backgroundColor', $('#' + 'iconCircleBorderColor' + contentBoxCounter).html());
+
+        }
+
+        cloneTr.find('#contentBoxUpload' + contentBoxCounter).click(function () {
+            $("#dialog_uploadMedia").empty();
+            var template = root + "/Templates/CMS/Editor/UploadMediaTemplate.html";
+            $("#dialog_uploadMedia").load(template);
+            uploaderOpenedBy = $(this);
+
+            if (uploaderOpenedBy.hasClass('remove-image')) {
+                uploaderOpenedBy.parent().find('img').attr('src', '');
+                uploaderOpenedBy.parent().find('input').attr('value', '');
+                uploaderOpenedBy.hide();
+                uploaderOpenedBy.text('Upload').removeClass('remove-image').attr('style', '');
+
+                return;
+            }
+            //$("#dialog_uploadMedia").attr("data-allowMultiSelect",false); //Add this line only if you want to add multiselect option
+            var dialog = $("#dialog_uploadMedia").dialog({
+                autoOpen: false,
+                width: "96%",
+                modal: true,
+                resizable: false,
+                position: [30, 30],
+                dialogClass: "no-titlebar",
+                create: function (event) { $(event.target).parent().css('position', 'fixed'); $(".ui-widget-header").hide(); },
+                open: function () { $(".ui-widget-header").hide(); },
+                close: function () {
+                    //for (var i = 0; i < selectedUploadedObjectsToUse.length; i++) {
+                    //    alert(selectedUploadedObjectsToUse[i].FilePath);
+                    //}
+                    $(".ui-widget-header").show();
+                    if (selectedUploadedObjectsToUse.length > 0) {
+                        uploaderCallback(selectedUploadedObjectsToUse[0].FilePath);
+                        uploaderOpenedBy.text('Remove').addClass('remove-image');
+                    }
+
+                }
+            });
+            dialog.dialog("open");
+        });
+
+        // iconpicker select/deselect handler
+        $('.icon_select_container .icon_preview').live('click', function (e) {
+            if (e.handled !== true) // This will prevent event firing more than one time
+            {
+                e.handled = true;
+                e.preventDefault();
+                var fontName = $(this).find('i').attr('data-name');
+                if ($(this).hasClass('selected-element')) {
+                    $(this).find('i').parent().parent().find('.selected-element').removeClass('selected-element');
+                    $(this).find('i').parent().parent().parent().find('input').attr('value', '');
+
+                } else {
+                    $(this).find('i').parent().parent().find('.selected-element').removeClass('selected-element');
+                    $(this).find('i').parent().addClass('selected-element');
+                    $(this).find('i').parent().parent().parent().find('input').attr('value', fontName);
+                }
+            }
+        });
+    }
+
+    function uploaderCallback(filePath) {
+        if ($(uploaderOpenedBy) != undefined) {
+            $(uploaderOpenedBy).parent().find("input[type='hidden']").val(filePath);
+            $(uploaderOpenedBy).parent().find("img").attr("src", filePath);
+        }
+    }
+
+    function removeContentBox(ctrl) {
+        var tr = $(ctrl).parents("tr:first");
+        if (contentBoxCounter == 1) {
+            alert("You need a minimum of one row");
+            return false;
+        }
+        $(tr).remove();
+        contentBoxCounter -= 1;
+        var c = 1;
+        $("#contentBoxesContainer tr.child-clone-row").each(function () {
+            var linkHeader = $(this).find(".linkHeader");
+            $(linkHeader).attr("data-boxIndex", c);
+            $(linkHeader).html("Content Boxes Item " + c + "<i class='fusiona-plus2'>");
+            c = c + 1;
+        });
+    }
+</script>
+
+<div style="width: 95%; display: inline-block; position: absolute; left: 2%">
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Box Layout</strong><span>Select the layout for the content box</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_layout" name="fusion_layout" class="select-field objectProperty" data-propertyindex="412">
+                <option value="icon-with-title" selected="">Icon beside Title</option>
+                <option value="icon-on-top">Icon on Top of Title</option>
+                <option value="icon-on-side">Icon beside Title and Content aligned with Title</option>
+                <option value="icon-boxed">Icon Boxed</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Title Size</strong><span>Controls the size of the title. Leave blank for theme option selection. In pixels ex: 18px.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="413"
+                value="" id="fusion_title_size" name="fusion_title_size" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Icon Circle</strong><span>Controls the circle behind the icon. Select default for theme option selection.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_icon_circle" name="fusion_icon_circle" class="select-field objectProperty" data-propertyindex="414">
+                <option value="" selected="">Default</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Icon Size</strong><span>Controls the size of the icon.  Leave blank for theme option selection. In pixels ex: 18px.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="415" value="" id="fusion_icon_size" name="fusion_icon_size" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Content Alignment</strong><span>Works with "Icon beside Title",  "Content aligned with Title" and "Icon Beside Title" layout options.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_circle_align" name="fusion_circle_align" class="select-field objectProperty" data-propertyindex="416">
+                <option value="left" selected="">Left</option>
+                <option value="right">Right</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Number of Columns</strong><span>Set the number of columns per row.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_columns" name="fusion_columns" class="select-field objectProperty" data-propertyindex="417">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected="">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Margin Top</strong><span>In pixels (px), ex: 1px.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="418" value="" id="margin_top" name="margin_top" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Margin Bottom</strong><span>In pixels (px), ex: 1px.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="419" value="" id="margin_bottom" name="margin_bottom" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS Class</strong><span>Add a class to the wrapping HTML element.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="420" value="" id="fusion_class" name="fusion_class" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS ID</strong><span>Add an ID to the wrapping HTML element.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="421" value="" id="fusion_id" name="fusion_id" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <table class="clearfix has-children" id="contentBoxesContainer">
+        <tr data-boxindex="0">
+            <td>
+                <a href="#" class="fusion-expand-child linkHeader" data-boxindex="1" onclick="toggleContentBoxDetail(this)" data-state="0">Content Boxes Item 1<i class="fusiona-plus2"></i></a>
+                <div class="child-options boxDetail" style="display: none;" data-boxindex="1">
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-input">
+                        <div class="name-description"><strong>Title</strong><span>The box title.</span></div>
+                        <div class="element-type">
+                            <input type="text" class="text-field subObjectProperty" data-subpropertyindex="1" value="" name="fusion_title[0]" size="50" style="padding: 6px 0px !important;">
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-icon_box">
+                        <div class="name-description"><strong>Icon</strong><span>Click an icon to select, click again to deselect</span></div>
+                        <div class="element-type">
+                            <div class="icon_select_container"><span class="icon_preview"><i class="fa fa-glass" data-name="fa-glass"></i></span><span class="icon_preview"><i class="fa fa-music" data-name="fa-music"></i></span><span class="icon_preview"><i class="fa fa-search" data-name="fa-search"></i></span><span class="icon_preview"><i class="fa fa-envelope-o" data-name="fa-envelope-o"></i></span><span class="icon_preview"><i class="fa fa-heart" data-name="fa-heart"></i></span><span class="icon_preview"><i class="fa fa-star" data-name="fa-star"></i></span><span class="icon_preview"><i class="fa fa-star-o" data-name="fa-star-o"></i></span><span class="icon_preview"><i class="fa fa-user" data-name="fa-user"></i></span><span class="icon_preview"><i class="fa fa-film" data-name="fa-film"></i></span><span class="icon_preview"><i class="fa fa-th-large" data-name="fa-th-large"></i></span><span class="icon_preview"><i class="fa fa-th" data-name="fa-th"></i></span><span class="icon_preview"><i class="fa fa-th-list" data-name="fa-th-list"></i></span><span class="icon_preview"><i class="fa fa-check" data-name="fa-check"></i></span><span class="icon_preview"><i class="fa fa-times" data-name="fa-times"></i></span><span class="icon_preview"><i class="fa fa-search-plus" data-name="fa-search-plus"></i></span><span class="icon_preview"><i class="fa fa-search-minus" data-name="fa-search-minus"></i></span><span class="icon_preview"><i class="fa fa-power-off" data-name="fa-power-off"></i></span><span class="icon_preview"><i class="fa fa-signal" data-name="fa-signal"></i></span><span class="icon_preview"><i class="fa fa-cog" data-name="fa-cog"></i></span><span class="icon_preview"><i class="fa fa-trash-o" data-name="fa-trash-o"></i></span><span class="icon_preview"><i class="fa fa-home" data-name="fa-home"></i></span><span class="icon_preview"><i class="fa fa-file-o" data-name="fa-file-o"></i></span><span class="icon_preview"><i class="fa fa-clock-o" data-name="fa-clock-o"></i></span><span class="icon_preview"><i class="fa fa-road" data-name="fa-road"></i></span><span class="icon_preview"><i class="fa fa-download" data-name="fa-download"></i></span><span class="icon_preview"><i class="fa fa-arrow-circle-o-down" data-name="fa-arrow-circle-o-down"></i></span><span class="icon_preview"><i class="fa fa-arrow-circle-o-up" data-name="fa-arrow-circle-o-up"></i></span><span class="icon_preview"><i class="fa fa-inbox" data-name="fa-inbox"></i></span><span class="icon_preview"><i class="fa fa-play-circle-o" data-name="fa-play-circle-o"></i></span><span class="icon_preview"><i class="fa fa-repeat" data-name="fa-repeat"></i></span><span class="icon_preview"><i class="fa fa-refresh" data-name="fa-refresh"></i></span><span class="icon_preview"><i class="fa fa-list-alt" data-name="fa-list-alt"></i></span><span class="icon_preview"><i class="fa fa-lock" data-name="fa-lock"></i></span><span class="icon_preview"><i class="fa fa-flag" data-name="fa-flag"></i></span><span class="icon_preview"><i class="fa fa-headphones" data-name="fa-headphones"></i></span><span class="icon_preview"><i class="fa fa-volume-off" data-name="fa-volume-off"></i></span><span class="icon_preview"><i class="fa fa-volume-down" data-name="fa-volume-down"></i></span><span class="icon_preview"><i class="fa fa-volume-up" data-name="fa-volume-up"></i></span><span class="icon_preview"><i class="fa fa-qrcode" data-name="fa-qrcode"></i></span><span class="icon_preview"><i class="fa fa-barcode" data-name="fa-barcode"></i></span><span class="icon_preview"><i class="fa fa-tag" data-name="fa-tag"></i></span><span class="icon_preview"><i class="fa fa-tags" data-name="fa-tags"></i></span><span class="icon_preview"><i class="fa fa-book" data-name="fa-book"></i></span><span class="icon_preview"><i class="fa fa-bookmark" data-name="fa-bookmark"></i></span><span class="icon_preview"><i class="fa fa-print" data-name="fa-print"></i></span><span class="icon_preview"><i class="fa fa-camera" data-name="fa-camera"></i></span><span class="icon_preview"><i class="fa fa-font" data-name="fa-font"></i></span><span class="icon_preview"><i class="fa fa-bold" data-name="fa-bold"></i></span><span class="icon_preview"><i class="fa fa-italic" data-name="fa-italic"></i></span><span class="icon_preview"><i class="fa fa-text-height" data-name="fa-text-height"></i></span><span class="icon_preview"><i class="fa fa-text-width" data-name="fa-text-width"></i></span><span class="icon_preview"><i class="fa fa-align-left" data-name="fa-align-left"></i></span><span class="icon_preview"><i class="fa fa-align-center" data-name="fa-align-center"></i></span><span class="icon_preview"><i class="fa fa-align-right" data-name="fa-align-right"></i></span><span class="icon_preview"><i class="fa fa-align-justify" data-name="fa-align-justify"></i></span><span class="icon_preview"><i class="fa fa-list" data-name="fa-list"></i></span><span class="icon_preview"><i class="fa fa-outdent" data-name="fa-outdent"></i></span><span class="icon_preview"><i class="fa fa-indent" data-name="fa-indent"></i></span><span class="icon_preview"><i class="fa fa-video-camera" data-name="fa-video-camera"></i></span><span class="icon_preview"><i class="fa fa-picture-o" data-name="fa-picture-o"></i></span><span class="icon_preview"><i class="fa fa-pencil" data-name="fa-pencil"></i></span><span class="icon_preview"><i class="fa fa-map-marker" data-name="fa-map-marker"></i></span><span class="icon_preview"><i class="fa fa-adjust" data-name="fa-adjust"></i></span><span class="icon_preview"><i class="fa fa-tint" data-name="fa-tint"></i></span><span class="icon_preview"><i class="fa fa-pencil-square-o" data-name="fa-pencil-square-o"></i></span><span class="icon_preview"><i class="fa fa-share-square-o" data-name="fa-share-square-o"></i></span><span class="icon_preview"><i class="fa fa-check-square-o" data-name="fa-check-square-o"></i></span><span class="icon_preview"><i class="fa fa-arrows" data-name="fa-arrows"></i></span><span class="icon_preview"><i class="fa fa-step-backward" data-name="fa-step-backward"></i></span><span class="icon_preview"><i class="fa fa-fast-backward" data-name="fa-fast-backward"></i></span><span class="icon_preview"><i class="fa fa-backward" data-name="fa-backward"></i></span><span class="icon_preview"><i class="fa fa-play" data-name="fa-play"></i></span><span class="icon_preview"><i class="fa fa-pause" data-name="fa-pause"></i></span><span class="icon_preview"><i class="fa fa-stop" data-name="fa-stop"></i></span><span class="icon_preview"><i class="fa fa-forward" data-name="fa-forward"></i></span><span class="icon_preview"><i class="fa fa-fast-forward" data-name="fa-fast-forward"></i></span><span class="icon_preview"><i class="fa fa-step-forward" data-name="fa-step-forward"></i></span><span class="icon_preview"><i class="fa fa-eject" data-name="fa-eject"></i></span><span class="icon_preview"><i class="fa fa-chevron-left" data-name="fa-chevron-left"></i></span><span class="icon_preview"><i class="fa fa-chevron-right" data-name="fa-chevron-right"></i></span><span class="icon_preview"><i class="fa fa-plus-circle" data-name="fa-plus-circle"></i></span><span class="icon_preview"><i class="fa fa-minus-circle" data-name="fa-minus-circle"></i></span><span class="icon_preview"><i class="fa fa-times-circle" data-name="fa-times-circle"></i></span><span class="icon_preview"><i class="fa fa-check-circle" data-name="fa-check-circle"></i></span><span class="icon_preview"><i class="fa fa-question-circle" data-name="fa-question-circle"></i></span><span class="icon_preview"><i class="fa fa-info-circle" data-name="fa-info-circle"></i></span><span class="icon_preview"><i class="fa fa-crosshairs" data-name="fa-crosshairs"></i></span><span class="icon_preview"><i class="fa fa-times-circle-o" data-name="fa-times-circle-o"></i></span><span class="icon_preview"><i class="fa fa-check-circle-o" data-name="fa-check-circle-o"></i></span><span class="icon_preview"><i class="fa fa-ban" data-name="fa-ban"></i></span><span class="icon_preview"><i class="fa fa-arrow-left" data-name="fa-arrow-left"></i></span><span class="icon_preview"><i class="fa fa-arrow-right" data-name="fa-arrow-right"></i></span><span class="icon_preview"><i class="fa fa-arrow-up" data-name="fa-arrow-up"></i></span><span class="icon_preview"><i class="fa fa-arrow-down" data-name="fa-arrow-down"></i></span><span class="icon_preview"><i class="fa fa-share" data-name="fa-share"></i></span><span class="icon_preview"><i class="fa fa-expand" data-name="fa-expand"></i></span><span class="icon_preview"><i class="fa fa-compress" data-name="fa-compress"></i></span><span class="icon_preview"><i class="fa fa-plus" data-name="fa-plus"></i></span><span class="icon_preview"><i class="fa fa-minus" data-name="fa-minus"></i></span><span class="icon_preview"><i class="fa fa-asterisk" data-name="fa-asterisk"></i></span><span class="icon_preview"><i class="fa fa-exclamation-circle" data-name="fa-exclamation-circle"></i></span><span class="icon_preview"><i class="fa fa-gift" data-name="fa-gift"></i></span><span class="icon_preview"><i class="fa fa-leaf" data-name="fa-leaf"></i></span><span class="icon_preview"><i class="fa fa-fire" data-name="fa-fire"></i></span><span class="icon_preview"><i class="fa fa-eye" data-name="fa-eye"></i></span><span class="icon_preview"><i class="fa fa-eye-slash" data-name="fa-eye-slash"></i></span><span class="icon_preview"><i class="fa fa-exclamation-triangle" data-name="fa-exclamation-triangle"></i></span><span class="icon_preview"><i class="fa fa-plane" data-name="fa-plane"></i></span><span class="icon_preview"><i class="fa fa-calendar" data-name="fa-calendar"></i></span><span class="icon_preview"><i class="fa fa-random" data-name="fa-random"></i></span><span class="icon_preview"><i class="fa fa-comment" data-name="fa-comment"></i></span><span class="icon_preview"><i class="fa fa-magnet" data-name="fa-magnet"></i></span><span class="icon_preview"><i class="fa fa-chevron-up" data-name="fa-chevron-up"></i></span><span class="icon_preview"><i class="fa fa-chevron-down" data-name="fa-chevron-down"></i></span><span class="icon_preview"><i class="fa fa-retweet" data-name="fa-retweet"></i></span><span class="icon_preview"><i class="fa fa-shopping-cart" data-name="fa-shopping-cart"></i></span><span class="icon_preview"><i class="fa fa-folder" data-name="fa-folder"></i></span><span class="icon_preview"><i class="fa fa-folder-open" data-name="fa-folder-open"></i></span><span class="icon_preview"><i class="fa fa-arrows-v" data-name="fa-arrows-v"></i></span><span class="icon_preview"><i class="fa fa-arrows-h" data-name="fa-arrows-h"></i></span><span class="icon_preview"><i class="fa fa-bar-chart" data-name="fa-bar-chart"></i></span><span class="icon_preview"><i class="fa fa-twitter-square" data-name="fa-twitter-square"></i></span><span class="icon_preview"><i class="fa fa-facebook-square" data-name="fa-facebook-square"></i></span><span class="icon_preview"><i class="fa fa-camera-retro" data-name="fa-camera-retro"></i></span><span class="icon_preview"><i class="fa fa-key" data-name="fa-key"></i></span><span class="icon_preview"><i class="fa fa-cogs" data-name="fa-cogs"></i></span><span class="icon_preview"><i class="fa fa-comments" data-name="fa-comments"></i></span><span class="icon_preview"><i class="fa fa-thumbs-o-up" data-name="fa-thumbs-o-up"></i></span><span class="icon_preview"><i class="fa fa-thumbs-o-down" data-name="fa-thumbs-o-down"></i></span><span class="icon_preview"><i class="fa fa-star-half" data-name="fa-star-half"></i></span><span class="icon_preview"><i class="fa fa-heart-o" data-name="fa-heart-o"></i></span><span class="icon_preview"><i class="fa fa-sign-out" data-name="fa-sign-out"></i></span><span class="icon_preview"><i class="fa fa-linkedin-square" data-name="fa-linkedin-square"></i></span><span class="icon_preview"><i class="fa fa-thumb-tack" data-name="fa-thumb-tack"></i></span><span class="icon_preview"><i class="fa fa-external-link" data-name="fa-external-link"></i></span><span class="icon_preview"><i class="fa fa-sign-in" data-name="fa-sign-in"></i></span><span class="icon_preview"><i class="fa fa-trophy" data-name="fa-trophy"></i></span><span class="icon_preview"><i class="fa fa-github-square" data-name="fa-github-square"></i></span><span class="icon_preview"><i class="fa fa-upload" data-name="fa-upload"></i></span><span class="icon_preview"><i class="fa fa-lemon-o" data-name="fa-lemon-o"></i></span><span class="icon_preview"><i class="fa fa-phone" data-name="fa-phone"></i></span><span class="icon_preview"><i class="fa fa-square-o" data-name="fa-square-o"></i></span><span class="icon_preview"><i class="fa fa-bookmark-o" data-name="fa-bookmark-o"></i></span><span class="icon_preview"><i class="fa fa-phone-square" data-name="fa-phone-square"></i></span><span class="icon_preview"><i class="fa fa-twitter" data-name="fa-twitter"></i></span><span class="icon_preview"><i class="fa fa-facebook" data-name="fa-facebook"></i></span><span class="icon_preview"><i class="fa fa-github" data-name="fa-github"></i></span><span class="icon_preview"><i class="fa fa-unlock" data-name="fa-unlock"></i></span><span class="icon_preview"><i class="fa fa-credit-card" data-name="fa-credit-card"></i></span><span class="icon_preview"><i class="fa fa-rss" data-name="fa-rss"></i></span><span class="icon_preview"><i class="fa fa-hdd-o" data-name="fa-hdd-o"></i></span><span class="icon_preview"><i class="fa fa-bullhorn" data-name="fa-bullhorn"></i></span><span class="icon_preview"><i class="fa fa-bell" data-name="fa-bell"></i></span><span class="icon_preview"><i class="fa fa-certificate" data-name="fa-certificate"></i></span><span class="icon_preview"><i class="fa fa-hand-o-right" data-name="fa-hand-o-right"></i></span><span class="icon_preview"><i class="fa fa-hand-o-left" data-name="fa-hand-o-left"></i></span><span class="icon_preview"><i class="fa fa-hand-o-up" data-name="fa-hand-o-up"></i></span><span class="icon_preview"><i class="fa fa-hand-o-down" data-name="fa-hand-o-down"></i></span><span class="icon_preview"><i class="fa fa-arrow-circle-left" data-name="fa-arrow-circle-left"></i></span><span class="icon_preview"><i class="fa fa-arrow-circle-right" data-name="fa-arrow-circle-right"></i></span><span class="icon_preview"><i class="fa fa-arrow-circle-up" data-name="fa-arrow-circle-up"></i></span><span class="icon_preview"><i class="fa fa-arrow-circle-down" data-name="fa-arrow-circle-down"></i></span><span class="icon_preview"><i class="fa fa-globe" data-name="fa-globe"></i></span><span class="icon_preview"><i class="fa fa-wrench" data-name="fa-wrench"></i></span><span class="icon_preview"><i class="fa fa-tasks" data-name="fa-tasks"></i></span><span class="icon_preview"><i class="fa fa-filter" data-name="fa-filter"></i></span><span class="icon_preview"><i class="fa fa-briefcase" data-name="fa-briefcase"></i></span><span class="icon_preview"><i class="fa fa-arrows-alt" data-name="fa-arrows-alt"></i></span><span class="icon_preview"><i class="fa fa-users" data-name="fa-users"></i></span><span class="icon_preview"><i class="fa fa-link" data-name="fa-link"></i></span><span class="icon_preview"><i class="fa fa-cloud" data-name="fa-cloud"></i></span><span class="icon_preview"><i class="fa fa-flask" data-name="fa-flask"></i></span><span class="icon_preview"><i class="fa fa-scissors" data-name="fa-scissors"></i></span><span class="icon_preview"><i class="fa fa-files-o" data-name="fa-files-o"></i></span><span class="icon_preview"><i class="fa fa-paperclip" data-name="fa-paperclip"></i></span><span class="icon_preview"><i class="fa fa-floppy-o" data-name="fa-floppy-o"></i></span><span class="icon_preview"><i class="fa fa-square" data-name="fa-square"></i></span><span class="icon_preview"><i class="fa fa-bars" data-name="fa-bars"></i></span><span class="icon_preview"><i class="fa fa-list-ul" data-name="fa-list-ul"></i></span><span class="icon_preview"><i class="fa fa-list-ol" data-name="fa-list-ol"></i></span><span class="icon_preview"><i class="fa fa-strikethrough" data-name="fa-strikethrough"></i></span><span class="icon_preview"><i class="fa fa-underline" data-name="fa-underline"></i></span><span class="icon_preview"><i class="fa fa-table" data-name="fa-table"></i></span><span class="icon_preview"><i class="fa fa-magic" data-name="fa-magic"></i></span><span class="icon_preview"><i class="fa fa-truck" data-name="fa-truck"></i></span><span class="icon_preview"><i class="fa fa-pinterest" data-name="fa-pinterest"></i></span><span class="icon_preview"><i class="fa fa-pinterest-square" data-name="fa-pinterest-square"></i></span><span class="icon_preview"><i class="fa fa-google-plus-square" data-name="fa-google-plus-square"></i></span><span class="icon_preview"><i class="fa fa-google-plus" data-name="fa-google-plus"></i></span><span class="icon_preview"><i class="fa fa-money" data-name="fa-money"></i></span><span class="icon_preview"><i class="fa fa-caret-down" data-name="fa-caret-down"></i></span><span class="icon_preview"><i class="fa fa-caret-up" data-name="fa-caret-up"></i></span><span class="icon_preview"><i class="fa fa-caret-left" data-name="fa-caret-left"></i></span><span class="icon_preview"><i class="fa fa-caret-right" data-name="fa-caret-right"></i></span><span class="icon_preview"><i class="fa fa-columns" data-name="fa-columns"></i></span><span class="icon_preview"><i class="fa fa-sort" data-name="fa-sort"></i></span><span class="icon_preview"><i class="fa fa-sort-desc" data-name="fa-sort-desc"></i></span><span class="icon_preview"><i class="fa fa-sort-asc" data-name="fa-sort-asc"></i></span><span class="icon_preview"><i class="fa fa-envelope" data-name="fa-envelope"></i></span><span class="icon_preview"><i class="fa fa-linkedin" data-name="fa-linkedin"></i></span><span class="icon_preview"><i class="fa fa-undo" data-name="fa-undo"></i></span><span class="icon_preview"><i class="fa fa-gavel" data-name="fa-gavel"></i></span><span class="icon_preview"><i class="fa fa-tachometer" data-name="fa-tachometer"></i></span><span class="icon_preview"><i class="fa fa-comment-o" data-name="fa-comment-o"></i></span><span class="icon_preview"><i class="fa fa-comments-o" data-name="fa-comments-o"></i></span><span class="icon_preview"><i class="fa fa-bolt" data-name="fa-bolt"></i></span><span class="icon_preview"><i class="fa fa-sitemap" data-name="fa-sitemap"></i></span><span class="icon_preview"><i class="fa fa-umbrella" data-name="fa-umbrella"></i></span><span class="icon_preview"><i class="fa fa-clipboard" data-name="fa-clipboard"></i></span><span class="icon_preview"><i class="fa fa-lightbulb-o" data-name="fa-lightbulb-o"></i></span><span class="icon_preview"><i class="fa fa-exchange" data-name="fa-exchange"></i></span><span class="icon_preview"><i class="fa fa-cloud-download" data-name="fa-cloud-download"></i></span><span class="icon_preview"><i class="fa fa-cloud-upload" data-name="fa-cloud-upload"></i></span><span class="icon_preview"><i class="fa fa-user-md" data-name="fa-user-md"></i></span><span class="icon_preview"><i class="fa fa-stethoscope" data-name="fa-stethoscope"></i></span><span class="icon_preview"><i class="fa fa-suitcase" data-name="fa-suitcase"></i></span><span class="icon_preview"><i class="fa fa-bell-o" data-name="fa-bell-o"></i></span><span class="icon_preview"><i class="fa fa-coffee" data-name="fa-coffee"></i></span><span class="icon_preview"><i class="fa fa-cutlery" data-name="fa-cutlery"></i></span><span class="icon_preview"><i class="fa fa-file-text-o" data-name="fa-file-text-o"></i></span><span class="icon_preview"><i class="fa fa-building-o" data-name="fa-building-o"></i></span><span class="icon_preview"><i class="fa fa-hospital-o" data-name="fa-hospital-o"></i></span><span class="icon_preview"><i class="fa fa-ambulance" data-name="fa-ambulance"></i></span><span class="icon_preview"><i class="fa fa-medkit" data-name="fa-medkit"></i></span><span class="icon_preview"><i class="fa fa-fighter-jet" data-name="fa-fighter-jet"></i></span><span class="icon_preview"><i class="fa fa-beer" data-name="fa-beer"></i></span><span class="icon_preview"><i class="fa fa-h-square" data-name="fa-h-square"></i></span><span class="icon_preview"><i class="fa fa-plus-square" data-name="fa-plus-square"></i></span><span class="icon_preview"><i class="fa fa-angle-double-left" data-name="fa-angle-double-left"></i></span><span class="icon_preview"><i class="fa fa-angle-double-right" data-name="fa-angle-double-right"></i></span><span class="icon_preview"><i class="fa fa-angle-double-up" data-name="fa-angle-double-up"></i></span><span class="icon_preview"><i class="fa fa-angle-double-down" data-name="fa-angle-double-down"></i></span><span class="icon_preview"><i class="fa fa-angle-left" data-name="fa-angle-left"></i></span><span class="icon_preview"><i class="fa fa-angle-right" data-name="fa-angle-right"></i></span><span class="icon_preview"><i class="fa fa-angle-up" data-name="fa-angle-up"></i></span><span class="icon_preview"><i class="fa fa-angle-down" data-name="fa-angle-down"></i></span><span class="icon_preview"><i class="fa fa-desktop" data-name="fa-desktop"></i></span><span class="icon_preview"><i class="fa fa-laptop" data-name="fa-laptop"></i></span><span class="icon_preview"><i class="fa fa-tablet" data-name="fa-tablet"></i></span><span class="icon_preview"><i class="fa fa-mobile" data-name="fa-mobile"></i></span><span class="icon_preview"><i class="fa fa-circle-o" data-name="fa-circle-o"></i></span><span class="icon_preview"><i class="fa fa-quote-left" data-name="fa-quote-left"></i></span><span class="icon_preview"><i class="fa fa-quote-right" data-name="fa-quote-right"></i></span><span class="icon_preview"><i class="fa fa-spinner" data-name="fa-spinner"></i></span><span class="icon_preview"><i class="fa fa-circle" data-name="fa-circle"></i></span><span class="icon_preview"><i class="fa fa-reply" data-name="fa-reply"></i></span><span class="icon_preview"><i class="fa fa-github-alt" data-name="fa-github-alt"></i></span><span class="icon_preview"><i class="fa fa-folder-o" data-name="fa-folder-o"></i></span><span class="icon_preview"><i class="fa fa-folder-open-o" data-name="fa-folder-open-o"></i></span><span class="icon_preview"><i class="fa fa-smile-o" data-name="fa-smile-o"></i></span><span class="icon_preview"><i class="fa fa-frown-o" data-name="fa-frown-o"></i></span><span class="icon_preview"><i class="fa fa-meh-o" data-name="fa-meh-o"></i></span><span class="icon_preview"><i class="fa fa-gamepad" data-name="fa-gamepad"></i></span><span class="icon_preview"><i class="fa fa-keyboard-o" data-name="fa-keyboard-o"></i></span><span class="icon_preview"><i class="fa fa-flag-o" data-name="fa-flag-o"></i></span><span class="icon_preview"><i class="fa fa-flag-checkered" data-name="fa-flag-checkered"></i></span><span class="icon_preview"><i class="fa fa-terminal" data-name="fa-terminal"></i></span><span class="icon_preview"><i class="fa fa-code" data-name="fa-code"></i></span><span class="icon_preview"><i class="fa fa-reply-all" data-name="fa-reply-all"></i></span><span class="icon_preview"><i class="fa fa-star-half-o" data-name="fa-star-half-o"></i></span><span class="icon_preview"><i class="fa fa-location-arrow" data-name="fa-location-arrow"></i></span><span class="icon_preview"><i class="fa fa-crop" data-name="fa-crop"></i></span><span class="icon_preview"><i class="fa fa-code-fork" data-name="fa-code-fork"></i></span><span class="icon_preview"><i class="fa fa-chain-broken" data-name="fa-chain-broken"></i></span><span class="icon_preview"><i class="fa fa-question" data-name="fa-question"></i></span><span class="icon_preview"><i class="fa fa-info" data-name="fa-info"></i></span><span class="icon_preview"><i class="fa fa-exclamation" data-name="fa-exclamation"></i></span><span class="icon_preview"><i class="fa fa-superscript" data-name="fa-superscript"></i></span><span class="icon_preview"><i class="fa fa-subscript" data-name="fa-subscript"></i></span><span class="icon_preview"><i class="fa fa-eraser" data-name="fa-eraser"></i></span><span class="icon_preview"><i class="fa fa-puzzle-piece" data-name="fa-puzzle-piece"></i></span><span class="icon_preview"><i class="fa fa-microphone" data-name="fa-microphone"></i></span><span class="icon_preview"><i class="fa fa-microphone-slash" data-name="fa-microphone-slash"></i></span><span class="icon_preview"><i class="fa fa-shield" data-name="fa-shield"></i></span><span class="icon_preview"><i class="fa fa-calendar-o" data-name="fa-calendar-o"></i></span><span class="icon_preview"><i class="fa fa-fire-extinguisher" data-name="fa-fire-extinguisher"></i></span><span class="icon_preview"><i class="fa fa-rocket" data-name="fa-rocket"></i></span><span class="icon_preview"><i class="fa fa-maxcdn" data-name="fa-maxcdn"></i></span><span class="icon_preview"><i class="fa fa-chevron-circle-left" data-name="fa-chevron-circle-left"></i></span><span class="icon_preview"><i class="fa fa-chevron-circle-right" data-name="fa-chevron-circle-right"></i></span><span class="icon_preview"><i class="fa fa-chevron-circle-up" data-name="fa-chevron-circle-up"></i></span><span class="icon_preview"><i class="fa fa-chevron-circle-down" data-name="fa-chevron-circle-down"></i></span><span class="icon_preview"><i class="fa fa-html5" data-name="fa-html5"></i></span><span class="icon_preview"><i class="fa fa-css3" data-name="fa-css3"></i></span><span class="icon_preview"><i class="fa fa-anchor" data-name="fa-anchor"></i></span><span class="icon_preview"><i class="fa fa-unlock-alt" data-name="fa-unlock-alt"></i></span><span class="icon_preview"><i class="fa fa-bullseye" data-name="fa-bullseye"></i></span><span class="icon_preview"><i class="fa fa-ellipsis-h" data-name="fa-ellipsis-h"></i></span><span class="icon_preview"><i class="fa fa-ellipsis-v" data-name="fa-ellipsis-v"></i></span><span class="icon_preview"><i class="fa fa-rss-square" data-name="fa-rss-square"></i></span><span class="icon_preview"><i class="fa fa-play-circle" data-name="fa-play-circle"></i></span><span class="icon_preview"><i class="fa fa-ticket" data-name="fa-ticket"></i></span><span class="icon_preview"><i class="fa fa-minus-square" data-name="fa-minus-square"></i></span><span class="icon_preview"><i class="fa fa-minus-square-o" data-name="fa-minus-square-o"></i></span><span class="icon_preview"><i class="fa fa-level-up" data-name="fa-level-up"></i></span><span class="icon_preview"><i class="fa fa-level-down" data-name="fa-level-down"></i></span><span class="icon_preview"><i class="fa fa-check-square" data-name="fa-check-square"></i></span><span class="icon_preview"><i class="fa fa-pencil-square" data-name="fa-pencil-square"></i></span><span class="icon_preview"><i class="fa fa-external-link-square" data-name="fa-external-link-square"></i></span><span class="icon_preview"><i class="fa fa-share-square" data-name="fa-share-square"></i></span><span class="icon_preview"><i class="fa fa-compass" data-name="fa-compass"></i></span><span class="icon_preview"><i class="fa fa-caret-square-o-down" data-name="fa-caret-square-o-down"></i></span><span class="icon_preview"><i class="fa fa-caret-square-o-up" data-name="fa-caret-square-o-up"></i></span><span class="icon_preview"><i class="fa fa-caret-square-o-right" data-name="fa-caret-square-o-right"></i></span><span class="icon_preview"><i class="fa fa-eur" data-name="fa-eur"></i></span><span class="icon_preview"><i class="fa fa-gbp" data-name="fa-gbp"></i></span><span class="icon_preview"><i class="fa fa-usd" data-name="fa-usd"></i></span><span class="icon_preview"><i class="fa fa-inr" data-name="fa-inr"></i></span><span class="icon_preview"><i class="fa fa-jpy" data-name="fa-jpy"></i></span><span class="icon_preview"><i class="fa fa-rub" data-name="fa-rub"></i></span><span class="icon_preview"><i class="fa fa-krw" data-name="fa-krw"></i></span><span class="icon_preview"><i class="fa fa-btc" data-name="fa-btc"></i></span><span class="icon_preview"><i class="fa fa-file" data-name="fa-file"></i></span><span class="icon_preview"><i class="fa fa-file-text" data-name="fa-file-text"></i></span><span class="icon_preview"><i class="fa fa-sort-alpha-asc" data-name="fa-sort-alpha-asc"></i></span><span class="icon_preview"><i class="fa fa-sort-alpha-desc" data-name="fa-sort-alpha-desc"></i></span><span class="icon_preview"><i class="fa fa-sort-amount-asc" data-name="fa-sort-amount-asc"></i></span><span class="icon_preview"><i class="fa fa-sort-amount-desc" data-name="fa-sort-amount-desc"></i></span><span class="icon_preview"><i class="fa fa-sort-numeric-asc" data-name="fa-sort-numeric-asc"></i></span><span class="icon_preview"><i class="fa fa-sort-numeric-desc" data-name="fa-sort-numeric-desc"></i></span><span class="icon_preview"><i class="fa fa-thumbs-up" data-name="fa-thumbs-up"></i></span><span class="icon_preview"><i class="fa fa-thumbs-down" data-name="fa-thumbs-down"></i></span><span class="icon_preview"><i class="fa fa-youtube-square" data-name="fa-youtube-square"></i></span><span class="icon_preview"><i class="fa fa-youtube" data-name="fa-youtube"></i></span><span class="icon_preview"><i class="fa fa-xing" data-name="fa-xing"></i></span><span class="icon_preview"><i class="fa fa-xing-square" data-name="fa-xing-square"></i></span><span class="icon_preview"><i class="fa fa-youtube-play" data-name="fa-youtube-play"></i></span><span class="icon_preview"><i class="fa fa-dropbox" data-name="fa-dropbox"></i></span><span class="icon_preview"><i class="fa fa-stack-overflow" data-name="fa-stack-overflow"></i></span><span class="icon_preview"><i class="fa fa-instagram" data-name="fa-instagram"></i></span><span class="icon_preview"><i class="fa fa-flickr" data-name="fa-flickr"></i></span><span class="icon_preview"><i class="fa fa-adn" data-name="fa-adn"></i></span><span class="icon_preview"><i class="fa fa-bitbucket" data-name="fa-bitbucket"></i></span><span class="icon_preview"><i class="fa fa-bitbucket-square" data-name="fa-bitbucket-square"></i></span><span class="icon_preview"><i class="fa fa-tumblr" data-name="fa-tumblr"></i></span><span class="icon_preview"><i class="fa fa-tumblr-square" data-name="fa-tumblr-square"></i></span><span class="icon_preview"><i class="fa fa-long-arrow-down" data-name="fa-long-arrow-down"></i></span><span class="icon_preview"><i class="fa fa-long-arrow-up" data-name="fa-long-arrow-up"></i></span><span class="icon_preview"><i class="fa fa-long-arrow-left" data-name="fa-long-arrow-left"></i></span><span class="icon_preview"><i class="fa fa-long-arrow-right" data-name="fa-long-arrow-right"></i></span><span class="icon_preview"><i class="fa fa-apple" data-name="fa-apple"></i></span><span class="icon_preview"><i class="fa fa-windows" data-name="fa-windows"></i></span><span class="icon_preview"><i class="fa fa-android" data-name="fa-android"></i></span><span class="icon_preview"><i class="fa fa-linux" data-name="fa-linux"></i></span><span class="icon_preview"><i class="fa fa-dribbble" data-name="fa-dribbble"></i></span><span class="icon_preview"><i class="fa fa-skype" data-name="fa-skype"></i></span><span class="icon_preview"><i class="fa fa-foursquare" data-name="fa-foursquare"></i></span><span class="icon_preview"><i class="fa fa-trello" data-name="fa-trello"></i></span><span class="icon_preview"><i class="fa fa-female" data-name="fa-female"></i></span><span class="icon_preview"><i class="fa fa-male" data-name="fa-male"></i></span><span class="icon_preview"><i class="fa fa-gittip" data-name="fa-gittip"></i></span><span class="icon_preview"><i class="fa fa-sun-o" data-name="fa-sun-o"></i></span><span class="icon_preview"><i class="fa fa-moon-o" data-name="fa-moon-o"></i></span><span class="icon_preview"><i class="fa fa-archive" data-name="fa-archive"></i></span><span class="icon_preview"><i class="fa fa-bug" data-name="fa-bug"></i></span><span class="icon_preview"><i class="fa fa-vk" data-name="fa-vk"></i></span><span class="icon_preview"><i class="fa fa-weibo" data-name="fa-weibo"></i></span><span class="icon_preview"><i class="fa fa-renren" data-name="fa-renren"></i></span><span class="icon_preview"><i class="fa fa-pagelines" data-name="fa-pagelines"></i></span><span class="icon_preview"><i class="fa fa-stack-exchange" data-name="fa-stack-exchange"></i></span><span class="icon_preview"><i class="fa fa-arrow-circle-o-right" data-name="fa-arrow-circle-o-right"></i></span><span class="icon_preview"><i class="fa fa-arrow-circle-o-left" data-name="fa-arrow-circle-o-left"></i></span><span class="icon_preview"><i class="fa fa-caret-square-o-left" data-name="fa-caret-square-o-left"></i></span><span class="icon_preview"><i class="fa fa-dot-circle-o" data-name="fa-dot-circle-o"></i></span><span class="icon_preview"><i class="fa fa-wheelchair" data-name="fa-wheelchair"></i></span><span class="icon_preview"><i class="fa fa-vimeo-square" data-name="fa-vimeo-square"></i></span><span class="icon_preview"><i class="fa fa-try" data-name="fa-try"></i></span><span class="icon_preview"><i class="fa fa-plus-square-o" data-name="fa-plus-square-o"></i></span><span class="icon_preview"><i class="fa fa-space-shuttle" data-name="fa-space-shuttle"></i></span><span class="icon_preview"><i class="fa fa-slack" data-name="fa-slack"></i></span><span class="icon_preview"><i class="fa fa-envelope-square" data-name="fa-envelope-square"></i></span><span class="icon_preview"><i class="fa fa-wordpress" data-name="fa-wordpress"></i></span><span class="icon_preview"><i class="fa fa-openid" data-name="fa-openid"></i></span><span class="icon_preview"><i class="fa fa-university" data-name="fa-university"></i></span><span class="icon_preview"><i class="fa fa-graduation-cap" data-name="fa-graduation-cap"></i></span><span class="icon_preview"><i class="fa fa-yahoo" data-name="fa-yahoo"></i></span><span class="icon_preview"><i class="fa fa-google" data-name="fa-google"></i></span><span class="icon_preview"><i class="fa fa-reddit" data-name="fa-reddit"></i></span><span class="icon_preview"><i class="fa fa-reddit-square" data-name="fa-reddit-square"></i></span><span class="icon_preview"><i class="fa fa-stumbleupon-circle" data-name="fa-stumbleupon-circle"></i></span><span class="icon_preview"><i class="fa fa-stumbleupon" data-name="fa-stumbleupon"></i></span><span class="icon_preview"><i class="fa fa-delicious" data-name="fa-delicious"></i></span><span class="icon_preview"><i class="fa fa-digg" data-name="fa-digg"></i></span><span class="icon_preview"><i class="fa fa-pied-piper" data-name="fa-pied-piper"></i></span><span class="icon_preview"><i class="fa fa-pied-piper-alt" data-name="fa-pied-piper-alt"></i></span><span class="icon_preview"><i class="fa fa-drupal" data-name="fa-drupal"></i></span><span class="icon_preview"><i class="fa fa-joomla" data-name="fa-joomla"></i></span><span class="icon_preview"><i class="fa fa-language" data-name="fa-language"></i></span><span class="icon_preview"><i class="fa fa-fax" data-name="fa-fax"></i></span><span class="icon_preview"><i class="fa fa-building" data-name="fa-building"></i></span><span class="icon_preview"><i class="fa fa-child" data-name="fa-child"></i></span><span class="icon_preview"><i class="fa fa-paw" data-name="fa-paw"></i></span><span class="icon_preview"><i class="fa fa-spoon" data-name="fa-spoon"></i></span><span class="icon_preview"><i class="fa fa-cube" data-name="fa-cube"></i></span><span class="icon_preview"><i class="fa fa-cubes" data-name="fa-cubes"></i></span><span class="icon_preview"><i class="fa fa-behance" data-name="fa-behance"></i></span><span class="icon_preview"><i class="fa fa-behance-square" data-name="fa-behance-square"></i></span><span class="icon_preview"><i class="fa fa-steam" data-name="fa-steam"></i></span><span class="icon_preview"><i class="fa fa-steam-square" data-name="fa-steam-square"></i></span><span class="icon_preview"><i class="fa fa-recycle" data-name="fa-recycle"></i></span><span class="icon_preview"><i class="fa fa-car" data-name="fa-car"></i></span><span class="icon_preview"><i class="fa fa-taxi" data-name="fa-taxi"></i></span><span class="icon_preview"><i class="fa fa-tree" data-name="fa-tree"></i></span><span class="icon_preview"><i class="fa fa-spotify" data-name="fa-spotify"></i></span><span class="icon_preview"><i class="fa fa-deviantart" data-name="fa-deviantart"></i></span><span class="icon_preview"><i class="fa fa-soundcloud" data-name="fa-soundcloud"></i></span><span class="icon_preview"><i class="fa fa-database" data-name="fa-database"></i></span><span class="icon_preview"><i class="fa fa-file-pdf-o" data-name="fa-file-pdf-o"></i></span><span class="icon_preview"><i class="fa fa-file-word-o" data-name="fa-file-word-o"></i></span><span class="icon_preview"><i class="fa fa-file-excel-o" data-name="fa-file-excel-o"></i></span><span class="icon_preview"><i class="fa fa-file-powerpoint-o" data-name="fa-file-powerpoint-o"></i></span><span class="icon_preview"><i class="fa fa-file-image-o" data-name="fa-file-image-o"></i></span><span class="icon_preview"><i class="fa fa-file-archive-o" data-name="fa-file-archive-o"></i></span><span class="icon_preview"><i class="fa fa-file-audio-o" data-name="fa-file-audio-o"></i></span><span class="icon_preview"><i class="fa fa-file-video-o" data-name="fa-file-video-o"></i></span><span class="icon_preview"><i class="fa fa-file-code-o" data-name="fa-file-code-o"></i></span><span class="icon_preview"><i class="fa fa-vine" data-name="fa-vine"></i></span><span class="icon_preview"><i class="fa fa-codepen" data-name="fa-codepen"></i></span><span class="icon_preview"><i class="fa fa-jsfiddle" data-name="fa-jsfiddle"></i></span><span class="icon_preview"><i class="fa fa-life-ring" data-name="fa-life-ring"></i></span><span class="icon_preview"><i class="fa fa-circle-o-notch" data-name="fa-circle-o-notch"></i></span><span class="icon_preview"><i class="fa fa-rebel" data-name="fa-rebel"></i></span><span class="icon_preview"><i class="fa fa-empire" data-name="fa-empire"></i></span><span class="icon_preview"><i class="fa fa-git-square" data-name="fa-git-square"></i></span><span class="icon_preview"><i class="fa fa-git" data-name="fa-git"></i></span><span class="icon_preview"><i class="fa fa-hacker-news" data-name="fa-hacker-news"></i></span><span class="icon_preview"><i class="fa fa-tencent-weibo" data-name="fa-tencent-weibo"></i></span><span class="icon_preview"><i class="fa fa-qq" data-name="fa-qq"></i></span><span class="icon_preview"><i class="fa fa-weixin" data-name="fa-weixin"></i></span><span class="icon_preview"><i class="fa fa-paper-plane" data-name="fa-paper-plane"></i></span><span class="icon_preview"><i class="fa fa-paper-plane-o" data-name="fa-paper-plane-o"></i></span><span class="icon_preview"><i class="fa fa-history" data-name="fa-history"></i></span><span class="icon_preview"><i class="fa fa-circle-thin" data-name="fa-circle-thin"></i></span><span class="icon_preview"><i class="fa fa-header" data-name="fa-header"></i></span><span class="icon_preview"><i class="fa fa-paragraph" data-name="fa-paragraph"></i></span><span class="icon_preview"><i class="fa fa-sliders" data-name="fa-sliders"></i></span><span class="icon_preview"><i class="fa fa-share-alt" data-name="fa-share-alt"></i></span><span class="icon_preview"><i class="fa fa-share-alt-square" data-name="fa-share-alt-square"></i></span><span class="icon_preview"><i class="fa fa-bomb" data-name="fa-bomb"></i></span><span class="icon_preview"><i class="fa fa-futbol-o" data-name="fa-futbol-o"></i></span><span class="icon_preview"><i class="fa fa-tty" data-name="fa-tty"></i></span><span class="icon_preview"><i class="fa fa-binoculars" data-name="fa-binoculars"></i></span><span class="icon_preview"><i class="fa fa-plug" data-name="fa-plug"></i></span><span class="icon_preview"><i class="fa fa-slideshare" data-name="fa-slideshare"></i></span><span class="icon_preview"><i class="fa fa-twitch" data-name="fa-twitch"></i></span><span class="icon_preview"><i class="fa fa-yelp" data-name="fa-yelp"></i></span><span class="icon_preview"><i class="fa fa-newspaper-o" data-name="fa-newspaper-o"></i></span><span class="icon_preview"><i class="fa fa-wifi" data-name="fa-wifi"></i></span><span class="icon_preview"><i class="fa fa-calculator" data-name="fa-calculator"></i></span><span class="icon_preview"><i class="fa fa-paypal" data-name="fa-paypal"></i></span><span class="icon_preview"><i class="fa fa-google-wallet" data-name="fa-google-wallet"></i></span><span class="icon_preview"><i class="fa fa-cc-visa" data-name="fa-cc-visa"></i></span><span class="icon_preview"><i class="fa fa-cc-mastercard" data-name="fa-cc-mastercard"></i></span><span class="icon_preview"><i class="fa fa-cc-discover" data-name="fa-cc-discover"></i></span><span class="icon_preview"><i class="fa fa-cc-amex" data-name="fa-cc-amex"></i></span><span class="icon_preview"><i class="fa fa-cc-paypal" data-name="fa-cc-paypal"></i></span><span class="icon_preview"><i class="fa fa-cc-stripe" data-name="fa-cc-stripe"></i></span><span class="icon_preview"><i class="fa fa-bell-slash" data-name="fa-bell-slash"></i></span><span class="icon_preview"><i class="fa fa-bell-slash-o" data-name="fa-bell-slash-o"></i></span><span class="icon_preview"><i class="fa fa-trash" data-name="fa-trash"></i></span><span class="icon_preview"><i class="fa fa-copyright" data-name="fa-copyright"></i></span><span class="icon_preview"><i class="fa fa-at" data-name="fa-at"></i></span><span class="icon_preview"><i class="fa fa-eyedropper" data-name="fa-eyedropper"></i></span><span class="icon_preview"><i class="fa fa-paint-brush" data-name="fa-paint-brush"></i></span><span class="icon_preview"><i class="fa fa-birthday-cake" data-name="fa-birthday-cake"></i></span><span class="icon_preview"><i class="fa fa-area-chart" data-name="fa-area-chart"></i></span><span class="icon_preview"><i class="fa fa-pie-chart" data-name="fa-pie-chart"></i></span><span class="icon_preview"><i class="fa fa-line-chart" data-name="fa-line-chart"></i></span><span class="icon_preview"><i class="fa fa-lastfm" data-name="fa-lastfm"></i></span><span class="icon_preview"><i class="fa fa-lastfm-square" data-name="fa-lastfm-square"></i></span><span class="icon_preview"><i class="fa fa-toggle-off" data-name="fa-toggle-off"></i></span><span class="icon_preview"><i class="fa fa-toggle-on" data-name="fa-toggle-on"></i></span><span class="icon_preview"><i class="fa fa-bicycle" data-name="fa-bicycle"></i></span><span class="icon_preview"><i class="fa fa-bus" data-name="fa-bus"></i></span><span class="icon_preview"><i class="fa fa-ioxhost" data-name="fa-ioxhost"></i></span><span class="icon_preview"><i class="fa fa-angellist" data-name="fa-angellist"></i></span><span class="icon_preview"><i class="fa fa-cc" data-name="fa-cc"></i></span><span class="icon_preview"><i class="fa fa-ils" data-name="fa-ils"></i></span><span class="icon_preview"><i class="fa fa-meanpath" data-name="fa-meanpath"></i></span></div>
+                            <input type="hidden" class="subObjectProperty hiddenIcon" data-subpropertyindex="2" value="" name="icon[0]">
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-input">
+                        <div class="name-description"><strong>Content Box Height</strong><span>Content box height in pixels. ex: 100px</span></div>
+                        <div class="element-type">
+                            <input type="text" class="text-field subObjectProperty" data-subpropertyindex="49" value="100px" name="fusion_contentBox_height[0]" size="50" style="padding: 6px 0px !important;">
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-color">
+                        <div class="name-description">
+                            <strong>Content Box Background Color</strong>
+                            <span>Leave blank for theme option selection.</span>
+                        </div>
+                        <div class="element-type">
+                            <div class="wp-picker-container">
+                                <table style="width: 100%" colspacing="10" class="subColorTable">
+                                    <tr>
+                                        <td style="width: 75%; text-align: right;">
+                                            <div class="colorSelector borderColorSelector" style="width: 90%;">
+                                                <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                                </div>
+                                                <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                                </span>
+
+                                            </div>
+                                        </td>
+                                        <td style="width: 25%; vertical-align: middle;">
+                                            <div class="subObjectProperty borderColor" style="width: 90%; height: 30px; text-align: center; border: 1px solid black; vertical-align: middle; top: 3px;"
+                                                data-subpropertyindex="3">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-color">
+                        <div class="name-description">
+                            <strong>Icon Color</strong>
+                            <span>Leave blank for theme option selection.</span>
+                        </div>
+                        <div class="element-type">
+                            <div class="wp-picker-container">
+                                <table style="width: 100%" colspacing="10">
+                                    <tr>
+                                        <td style="width: 75%; text-align: right;">
+                                            <div class="colorSelector iconColorSelector" style="width: 90%;">
+                                                <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                                </div>
+                                                <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                                </span>
+
+                                            </div>
+                                        </td>
+                                        <td style="width: 25%; vertical-align: middle;">
+                                            <div class="subObjectProperty iconColor" style="width: 90%; height: 30px; text-align: center; border: 1px solid black; vertical-align: middle; top: 3px;"
+                                                data-subpropertyindex="4">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-color">
+                        <div class="name-description">
+                            <strong>Icon Circle Background Color</strong>
+                            <span>Leave blank for theme option selection.</span>
+                        </div>
+                        <div class="element-type">
+                            <div class="wp-picker-container">
+                                <table style="width: 100%" colspacing="10">
+                                    <tr>
+                                        <td style="width: 75%; text-align: right;">
+                                            <div class="colorSelector iconCircleColorSelector" style="width: 90%;">
+                                                <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                                </div>
+                                                <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                                </span>
+
+                                            </div>
+                                        </td>
+                                        <td style="width: 25%; vertical-align: middle;">
+                                            <div class="subObjectProperty iconCircleColor" style="width: 90%; height: 30px; text-align: center; border: 1px solid black; vertical-align: middle; top: 3px;"
+                                                data-subpropertyindex="5">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-color">
+                        <div class="name-description">
+                            <strong>Icon Circle Border Color</strong>
+                            <span>Leave blank for theme option selection.</span>
+                        </div>
+                        <div class="element-type">
+                            <div class="wp-picker-container">
+                                <table style="width: 100%" colspacing="10">
+                                    <tr>
+                                        <td style="width: 75%; text-align: right;">
+                                            <div class="colorSelector iconCircleBorderColorSelector" style="width: 90%;">
+                                                <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                                </div>
+                                                <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                                </span>
+
+                                            </div>
+                                        </td>
+                                        <td style="width: 25%; vertical-align: middle;">
+                                            <div class="subObjectProperty iconCircleBorderColor"
+                                                style="width: 90%; height: 30px; text-align: center; border: 1px solid black; vertical-align: middle; top: 3px;"
+                                                data-subpropertyindex="6">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-select">
+                        <div class="name-description"><strong>Flip Icon</strong><span>Choose to flip the icon.</span></div>
+                        <div class="element-type">
+                            <div class="select_arrow"></div>
+                            <select name="fusion_iconflip[0]" class="select-field subObjectProperty" data-subpropertyindex="7">
+                                <option value="" selected="">None</option>
+                                <option value="horizontal">Horizontal</option>
+                                <option value="vertical">Vertical</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-select">
+                        <div class="name-description"><strong>Rotate Icon</strong><span>Choose to rotate the icon.</span></div>
+                        <div class="element-type">
+                            <div class="select_arrow"></div>
+                            <select name="fusion_iconrotate[0]" class="select-field subObjectProperty" data-subpropertyindex="8">
+                                <option value="90">90</option>
+                                <option value="180">180</option>
+                                <option value="270">270</option>
+                                <option value="" selected="">None</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-select">
+                        <div class="name-description"><strong>Spinning Icon</strong><span>Choose to let the icon spin.</span></div>
+                        <div class="element-type">
+                            <div class="select_arrow"></div>
+                            <select name="fusion_iconspin[0]" class="select-field subObjectProperty" data-subpropertyindex="9">
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-upload">
+                        <div class="name-description"><strong>Icon Image</strong><span>To upload your own icon image, deselect the icon above and then upload your icon image</span></div>
+                        <div class="element-type">
+                            <div class="fusion-upload-container">
+                                <img src="" alt="Image" class="uploaded-image" style="height: 192px; width: 311px; padding-bottom: 3px;">
+                                <div style="clear: both;"></div>
+                                <input type="hidden" class="fusion-form-text fusion-form-upload fusion-input subObjectProperty" name="fusion_image" id="hidden_fusion_image" value="" data-subpropertyindex="10">
+                                <a href="#" class="fusionb-upload-button " data-upid="1">Upload</a>
+                                <a href="#" style="display: none" class="fusionb-edit-button" data-upid="1">Edit</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-input">
+                        <div class="name-description"><strong>Icon Image Width</strong><span>If using an icon image, specify the image width in pixels but do not add px, ex: 35</span></div>
+                        <div class="element-type">
+                            <input type="text" class="text-field subObjectProperty" data-subpropertyindex="11" value="35" name="fusion_image_width[0]" size="50" style="padding: 6px 0px !important;">
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-input">
+                        <div class="name-description"><strong>Icon Image Height</strong><span>If using an icon image, specify the image height in pixels but do not add px, ex: 35</span></div>
+                        <div class="element-type">
+                            <input type="text" class="text-field subObjectProperty" data-subpropertyindex="12" value="35" name="fusion_image_height[0]" size="50" style="padding: 6px 0px !important;">
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-input">
+                        <div class="name-description"><strong>Read More Link Url</strong><span>Add the link's url ex: http://example.com</span></div>
+                        <div class="element-type">
+                            <input type="text" class="text-field subObjectProperty" data-subpropertyindex="13" value="" name="fusion_link[0]" size="50" style="padding: 6px 0px !important;">
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-input">
+                        <div class="name-description"><strong>Read More Link Text</strong><span>Insert the text to display as the link</span></div>
+                        <div class="element-type">
+                            <input type="text" class="text-field subObjectProperty" data-subpropertyindex="14" value="" name="fusion_linktext[0]" size="50" style="padding: 6px 0px !important;">
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-select">
+                        <div class="name-description">
+                            <strong>Read More Link Target</strong><span>_self = open in same window<br>
+                                _blank = open in new window</span>
+                        </div>
+                        <div class="element-type">
+                            <div class="select_arrow"></div>
+                            <select name="fusion_target[0]" class="select-field subObjectProperty" data-subpropertyindex="15">
+                                <option value="_self" selected="">_self</option>
+                                <option value="_blank">_blank</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container-html_editor paddingbottom20">
+                        <div class="name-description paddingtop10"><strong>Content Box Content</strong><span>Add content for content box</span></div>
+                        <div class="width100p leftFloat">
+                            <textarea class="subObjectProperty textContentTemplateArea" data-subpropertyindex="16"
+                                style="width: 100%; height: 250px; padding-top: 20px;"></textarea>
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-select">
+                        <div class="name-description"><strong>Animation Type</strong><span>Select the type on animation to use on the shortcode</span></div>
+                        <div class="element-type">
+                            <div class="select_arrow"></div>
+                            <select name="fusion_animation_type[0]" class="select-field subObjectProperty" data-subpropertyindex="17">
+                                <option value="0">None</option>
+                                <option value="bounce">Bounce</option>
+                                <option value="fade">Fade</option>
+                                <option value="flash">Flash</option>
+                                <option value="rubberBand">Rubberband</option>
+                                <option value="shake">Shake</option>
+                                <option value="slide">Slide</option>
+                                <option value="zoom">Zoom</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-select">
+                        <div class="name-description"><strong>Direction of Animation</strong><span>Select the incoming direction for the animation</span></div>
+                        <div class="element-type">
+                            <div class="select_arrow"></div>
+                            <select name="fusion_animation_direction[0]" class="select-field subObjectProperty" data-subpropertyindex="18">
+                                <option value="down">Down</option>
+                                <option value="left">Left</option>
+                                <option value="right">Right</option>
+                                <option value="up">Up</option>
+                                <option value="static">Static</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="clearfix form-element-container funsion-element-child form-element-container-select">
+                        <div class="name-description"><strong>Speed of Animation</strong><span>Type in speed of animation in seconds (0.1 - 1)</span></div>
+                        <div class="element-type">
+                            <div class="select_arrow"></div>
+                            <select name="fusion_animation_speed[0]" class="select-field subObjectProperty" data-subpropertyindex="19">
+                                <option value="1">1</option>
+                                <option value="0.1" selected="">0.1</option>
+                                <option value="0.2">0.2</option>
+                                <option value="0.3">0.3</option>
+                                <option value="0.4">0.4</option>
+                                <option value="0.5">0.5</option>
+                                <option value="0.6">0.6</option>
+                                <option value="0.7">0.7</option>
+                                <option value="0.8">0.8</option>
+                                <option value="0.9">0.9</option>
+                            </select>
+                        </div>
+                    </div>
+                    <a class="child-clone-row-remove fusion-shortcodes-button" href="#" onclick="removeContentBox(this)">Remove</a>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a id="fusion-child-add" href="#" data-itemcount="1" onclick="addNewContentBox(this)">Add New Content Box</a>
+            </td>
+        </tr>
+    </table>
+</div>

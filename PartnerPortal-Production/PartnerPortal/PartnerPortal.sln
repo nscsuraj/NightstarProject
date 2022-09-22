@@ -1,0 +1,105 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartnerPortal", "PartnerPortal\PartnerPortal.csproj", "{4FE74E66-E4D6-4610-801C-E95495C2ED37}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Binaries", "Binaries", "{974D9274-3904-4AD8-9084-39C3CACF2D66}"
+	ProjectSection(SolutionItems) = preProject
+		Binaries\AutoMapper.dll = Binaries\AutoMapper.dll
+		Binaries\EntityFramework.dll = Binaries\EntityFramework.dll
+		Binaries\itextsharp.dll = Binaries\itextsharp.dll
+		Binaries\LinqKit.dll = Binaries\LinqKit.dll
+		Binaries\log4net.dll = Binaries\log4net.dll
+		Binaries\Microsoft.ApplicationBlocks.Data.dll = Binaries\Microsoft.ApplicationBlocks.Data.dll
+		Binaries\Microsoft.Practices.EnterpriseLibrary.Common.dll = Binaries\Microsoft.Practices.EnterpriseLibrary.Common.dll
+		Binaries\Microsoft.Practices.EnterpriseLibrary.Data.dll = Binaries\Microsoft.Practices.EnterpriseLibrary.Data.dll
+		Binaries\Microsoft.Practices.EnterpriseLibrary.Logging.dll = Binaries\Microsoft.Practices.EnterpriseLibrary.Logging.dll
+		Binaries\Microsoft.Practices.ObjectBuilder.dll = Binaries\Microsoft.Practices.ObjectBuilder.dll
+		Binaries\Microsoft.Practices.ServiceLocation.dll = Binaries\Microsoft.Practices.ServiceLocation.dll
+		Binaries\Microsoft.Practices.Unity.dll = Binaries\Microsoft.Practices.Unity.dll
+		Binaries\Microsoft.Practices.Unity.Interception.dll = Binaries\Microsoft.Practices.Unity.Interception.dll
+		Binaries\MvcCodeRouting.dll = Binaries\MvcCodeRouting.dll
+		Binaries\MvcCodeRouting.Web.Http.dll = Binaries\MvcCodeRouting.Web.Http.dll
+		Binaries\Newtonsoft.Json.dll = Binaries\Newtonsoft.Json.dll
+		Binaries\SRVTextToImage.dll = Binaries\SRVTextToImage.dll
+		Binaries\StructureMap.dll = Binaries\StructureMap.dll
+		Binaries\StructureMap.Net4.dll = Binaries\StructureMap.Net4.dll
+		Binaries\StructureMap.Web.dll = Binaries\StructureMap.Web.dll
+		Binaries\System.Net.Http.dll = Binaries\System.Net.Http.dll
+		Binaries\System.Net.Http.Formatting.dll = Binaries\System.Net.Http.Formatting.dll
+		Binaries\System.Web.Http.dll = Binaries\System.Web.Http.dll
+		Binaries\System.Web.Mvc.dll = Binaries\System.Web.Mvc.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{4B1D8AD0-3578-4ED2-A2C5-11F5CDD8C853}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartnerPortal.Business", "Components\PartnerPortal.Business\PartnerPortal.Business.csproj", "{EA88BBAD-414C-4F9B-A459-E8810A4F200D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartnerPortal.Core", "Components\PartnerPortal.Core\PartnerPortal.Core.csproj", "{C7CCEAD4-5002-4D87-B523-DBD48C2A68EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartnerPortal.Domain", "Components\PartnerPortal.Domain\PartnerPortal.Domain.csproj", "{D458EEEF-CC4D-4129-8E1E-E4342B60FCA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartnerPortal.Repository", "Components\PartnerPortal.Repository\PartnerPortal.Repository.csproj", "{D3035E27-65C3-4823-BA7C-F754ECD5F018}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://nscserver:8080/tfs/nscprojects
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = PartnerPortal\\PartnerPortal.csproj
+		SccProjectName1 = PartnerPortal
+		SccLocalPath1 = PartnerPortal
+		SccProjectUniqueName2 = Components\\PartnerPortal.Business\\PartnerPortal.Business.csproj
+		SccProjectTopLevelParentUniqueName2 = PartnerPortal.sln
+		SccProjectName2 = Components/PartnerPortal.Business
+		SccLocalPath2 = Components\\PartnerPortal.Business
+		SccProjectUniqueName3 = Components\\PartnerPortal.Core\\PartnerPortal.Core.csproj
+		SccProjectTopLevelParentUniqueName3 = PartnerPortal.sln
+		SccProjectName3 = Components/PartnerPortal.Core
+		SccLocalPath3 = Components\\PartnerPortal.Core
+		SccProjectUniqueName4 = Components\\PartnerPortal.Domain\\PartnerPortal.Domain.csproj
+		SccProjectTopLevelParentUniqueName4 = PartnerPortal.sln
+		SccProjectName4 = Components/PartnerPortal.Domain
+		SccLocalPath4 = Components\\PartnerPortal.Domain
+		SccProjectUniqueName5 = Components\\PartnerPortal.Repository\\PartnerPortal.Repository.csproj
+		SccProjectTopLevelParentUniqueName5 = PartnerPortal.sln
+		SccProjectName5 = Components/PartnerPortal.Repository
+		SccLocalPath5 = Components\\PartnerPortal.Repository
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4FE74E66-E4D6-4610-801C-E95495C2ED37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FE74E66-E4D6-4610-801C-E95495C2ED37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FE74E66-E4D6-4610-801C-E95495C2ED37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FE74E66-E4D6-4610-801C-E95495C2ED37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA88BBAD-414C-4F9B-A459-E8810A4F200D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA88BBAD-414C-4F9B-A459-E8810A4F200D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA88BBAD-414C-4F9B-A459-E8810A4F200D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA88BBAD-414C-4F9B-A459-E8810A4F200D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7CCEAD4-5002-4D87-B523-DBD48C2A68EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7CCEAD4-5002-4D87-B523-DBD48C2A68EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7CCEAD4-5002-4D87-B523-DBD48C2A68EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7CCEAD4-5002-4D87-B523-DBD48C2A68EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D458EEEF-CC4D-4129-8E1E-E4342B60FCA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D458EEEF-CC4D-4129-8E1E-E4342B60FCA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D458EEEF-CC4D-4129-8E1E-E4342B60FCA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D458EEEF-CC4D-4129-8E1E-E4342B60FCA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3035E27-65C3-4823-BA7C-F754ECD5F018}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3035E27-65C3-4823-BA7C-F754ECD5F018}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3035E27-65C3-4823-BA7C-F754ECD5F018}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3035E27-65C3-4823-BA7C-F754ECD5F018}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EA88BBAD-414C-4F9B-A459-E8810A4F200D} = {4B1D8AD0-3578-4ED2-A2C5-11F5CDD8C853}
+		{C7CCEAD4-5002-4D87-B523-DBD48C2A68EF} = {4B1D8AD0-3578-4ED2-A2C5-11F5CDD8C853}
+		{D458EEEF-CC4D-4129-8E1E-E4342B60FCA4} = {4B1D8AD0-3578-4ED2-A2C5-11F5CDD8C853}
+		{D3035E27-65C3-4823-BA7C-F754ECD5F018} = {4B1D8AD0-3578-4ED2-A2C5-11F5CDD8C853}
+	EndGlobalSection
+EndGlobal

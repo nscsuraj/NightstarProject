@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Site Header Content";
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+}
+
+@section featured {
+}
+@section scripts
+{
+    <style>
+        .ui-button-text {
+            font-size: 1.4rem;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: 'GET',
+                url: root + "api/pppageinfo/GetPageById/3",
+                success: function (data) {
+                    if (data != undefined) {
+                        if (data.PageJson != undefined) {
+                            editorContent = data.PageJson;
+                            if (editorContent.Children.length > 0) {
+                                parseFullObject();
+                            }
+                        }
+                        $("#PageId").val(data.Id);
+                    }
+                },
+                error: function (data) {
+                }
+            });
+        });
+    </script>
+}
+@section MainContent {
+    <div ng-controller="PageCMSController">
+        <div style="width: 100%; height: 30px; font-size: 20pt; font-weight: bold; color: #2F6A79; text-shadow: 4px 4px 4px #BCBEBF; padding-top: 15px;">
+            &nbsp;&nbsp;Create the html for Site Top Header
+        </div>
+        <input type="hidden" id="PageId" value="3" />
+        <br />
+        <input type="button" id="saveContent" class="btn btn-primary" ng-click="saveContent()" value="Save Page" style="width: 100px; margin-top: 10px;">
+        <div class="divFullBorderCMS"></div>
+        @Html.Action("Editor", "Dashboard")
+    </div>
+
+}
+
+@section AngularScripts
+{
+    <script>
+        app.controller("PageCMSController", function ($controller, $scope, $http, $rootScope, SweetAlert,
+            notificationFactory, $location,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory, $window, $modal, $log) {
+
+            $scope.cmsData = {};
+
+            $scope.saveContent = function () {
+                $scope.cmsData = {};
+                $scope.cmsData.Id = $("#PageId").val();
+                $scope.cmsData.PageType = 1;
+                $scope.cmsData.PageTitle = 'Site Header';
+                $scope.cmsData.Description = 'Site Header section Content for the site pages user defined content';
+                $scope.cmsData.Status = 1;
+                $scope.cmsData.IsTemplate = false;
+                $scope.cmsData.PageJson = editorContent;
+                dbUtilFactory.postp(root + '/api/pppageinfo/SavePage', $scope.cmsData, function (d) {
+                    SweetAlert.swal(d, "", "success");
+                }, '', 'Error getting data ');
+            };
+
+        });
+    </script>
+}
+

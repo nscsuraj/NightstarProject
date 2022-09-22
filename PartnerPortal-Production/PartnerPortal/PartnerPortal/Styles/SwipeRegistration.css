@@ -1,0 +1,455 @@
+﻿.background {
+	clear: both;
+    min-height: 500px;
+    background: url(Images/SwipeRegistration/Warranty-Bkgd-1960px-X2.jpg);
+	text-align: center;
+}
+
+.contentHolder {
+	width: 620px;
+	margin: auto;
+	font-size: 18px;
+	font-weight: bold;
+	color: #ffffff; 
+	display: inline-block; 
+	clear: left; 
+	padding-left: 5px; 
+	margin-top: 40px;
+	text-align: center;
+}
+.contentHeader {
+	background: rgb(54, 25, 25); /* Fall-back for browsers that don't
+                                    support rgba */
+    background: rgba(54, 25, 25, .5);
+	padding: 5px;
+}
+.contentBox {
+	padding: 5px;
+	margin-top: 10px;
+	background-color: #F5FAFE;
+	border: 1px solid;
+    border-radius: 10px;
+	min-height: 200px;
+}
+.btnClass {
+	width: 200px; 
+	margin-top: 10px; 
+	box-shadow: 4px 4px 5px #888888; 
+	font-weight: bold; border-radius: 5px;
+}
+
+@media only screen and (min-width:1280px) and (max-width:1800px)
+{
+	.background
+	{
+		clear: both;
+		min-height: 500px;
+		background: url(Images/SwipeRegistration/warranty-bkgd-1920px.jpg);
+		text-align: center;
+	}
+}
+
+@media only screen and (min-width:980px) and (max-width:1280px)
+{
+	.background
+	{
+		clear: both;
+		min-height: 500px;
+		background: url(Images/SwipeRegistration/Warranty-Bkgd-1280px-X2.jpg);
+		text-align: center;
+	}
+}
+
+@media only screen and (min-width:640px) and (max-width:980px)
+{
+	.background
+	{
+		clear: both;
+		min-height: 500px;
+		background: url(Images/SwipeRegistration/Warranty-Bkgd-980px.jpg);
+		text-align: center;
+	}
+}
+@media only screen and (min-width:600px) and (max-width:640px)
+{
+	.background
+	{
+		clear: both;
+		min-height: 500px;
+		background: url(Images/SwipeRegistration/Warranty-Bkgd-640px.jpg);
+		text-align: center;
+	}
+	.contentHolder {
+	width: calc(100% - 40px);
+	margin: auto;
+	font-size: 18px;
+	font-weight: bold;
+	color: #ffffff; 
+	display: inline-block; 
+	clear: left; 
+	padding-left: 5px; 
+	margin-top: 40px;
+	text-align: center;
+	}
+	.contentHeader {
+		background: rgb(54, 25, 25); /* Fall-back for browsers that don't
+										support rgba */
+		background: rgba(54, 25, 25, .5);
+		padding: 5px;
+	}
+	.contentBox {
+		padding: 5px;
+		margin-top: 10px;
+		background-color: #F5FAFE;
+		border: 1px solid;
+		border-radius: 10px;
+		min-height: 200px;
+	}
+}
+@media only screen and (min-width:540px) and (max-width:600px)
+{
+	.background
+	{
+		clear: both;
+		min-height: 500px;
+		background: url(Images/SwipeRegistration/Warranty-Bkgd-640px.jpg);
+		text-align: center;
+	}
+	.contentHolder {
+	width: calc(100% - 40px);
+	margin: auto;
+	font-size: 18px;
+	font-weight: bold;
+	color: #ffffff; 
+	display: inline-block; 
+	clear: left; 
+	padding-left: 5px; 
+	margin-top: 40px;
+	text-align: center;
+	}
+	.contentHeader {
+		background: rgb(54, 25, 25); /* Fall-back for browsers that don't
+										support rgba */
+		background: rgba(54, 25, 25, .5);
+		padding: 5px;
+	}
+	.contentBox {
+		padding: 5px;
+		margin-top: 10px;
+		background-color: #F5FAFE;
+		border: 1px solid;
+		border-radius: 10px;
+		min-height: 200px;
+	}
+}
+@media only screen and (min-width:480px) and (max-width:540px)
+{
+	.background
+	{
+		clear: both;
+		min-height: 500px;
+		background: url(Images/SwipeRegistration/Warranty-Bkgd-640px.jpg);
+		text-align: center;
+	}
+	.contentHolder {
+	width: calc(100% - 40px);
+	margin: auto;
+	font-size: 18px;
+	font-weight: bold;
+	color: #ffffff; 
+	display: inline-block; 
+	clear: left; 
+	padding-left: 5px; 
+	margin-top: 40px;
+	text-align: center;
+	}
+	.contentHeader {
+		background: rgb(54, 25, 25); /* Fall-back for browsers that don't
+										support rgba */
+		background: rgba(54, 25, 25, .5);
+		padding: 5px;
+	}
+	.contentBox {
+		padding: 5px;
+		margin-top: 10px;
+		background-color: #F5FAFE;
+		border: 1px solid;
+		border-radius: 10px;
+		min-height: 200px;
+	}
+
+		.btnClass {
+		width: 150px; 
+		margin-top: 10px;
+		word-wrap: break-word;
+		box-shadow: 4px 4px 5px #888888; 
+		font-weight: bold; border-radius: 5px;
+	}
+}
+@media only screen and (min-width:440px) and (max-width:480px)
+{
+	.background
+	{
+		clear: both;
+		min-height: 500px;
+		background: url(Images/SwipeRegistration/Warranty-Bkgd-640px.jpg);
+		text-align: center;
+	}
+	.contentHolder {
+	width: calc(100% - 40px);
+	margin: auto;
+	font-size: 18px;
+	font-weight: bold;
+	color: #ffffff; 
+	display: inline-block; 
+	clear: left; 
+	padding-left: 5px; 
+	margin-top: 40px;
+	text-align: center;
+	}
+	.contentHeader {
+		background: rgb(54, 25, 25); /* Fall-back for browsers that don't
+										support rgba */
+		background: rgba(54, 25, 25, .5);
+		padding: 5px;
+	}
+	.contentBox {
+		padding: 5px;
+		margin-top: 10px;
+		display: inline-block;
+		background-color: #F5FAFE;
+		border: 1px solid;
+		border-radius: 10px;
+		min-height: 200px;
+	}
+	.showHide {
+		display: none;
+	}
+	.hideWidth {
+		width: 100% !important;
+	}
+	.btnClass {
+		width: 150px; 
+		margin-top: 10px;
+		word-wrap: break-word;
+		box-shadow: 4px 4px 5px #888888; 
+		font-weight: bold; border-radius: 5px;
+	}
+}
+@media only screen and (min-width:380px) and (max-width:440px)
+{
+	.background
+	{
+		clear: both;
+		min-height: 500px;
+		background: url(Images/SwipeRegistration/Warranty-Bkgd-640px.jpg);
+		text-align: center;
+	}
+	.contentHolder {
+	width: calc(100% - 40px);
+	margin: auto;
+	font-size: 18px;
+	font-weight: bold;
+	color: #ffffff; 
+	display: inline-block; 
+	clear: left; 
+	padding-left: 5px; 
+	margin-top: 40px;
+	text-align: center;
+	}
+	.contentHeader {
+		background: rgb(54, 25, 25); /* Fall-back for browsers that don't
+										support rgba */
+		background: rgba(54, 25, 25, .5);
+		padding: 5px;
+	}
+	.contentBox {
+		padding: 5px;
+		margin-top: 10px;
+		display: inline-block;
+		background-color: #F5FAFE;
+		border: 1px solid;
+		border-radius: 10px;
+		min-height: 200px;
+	}
+	.showHide {
+		display: none;
+	}
+	.hideWidth {
+		width: 100% !important;
+	}
+	.btnClass {
+		width: 150px; 
+		margin-top: 10px;
+		word-wrap: break-word;
+		box-shadow: 4px 4px 5px #888888; 
+		font-weight: bold; border-radius: 5px;
+	}
+}
+@media only screen and (min-width:320px) and (max-width:380px)
+{
+	.background
+	{
+		clear: both;
+		min-height: 500px;
+		background: url(Images/SwipeRegistration/Warranty-Bkgd-640px.jpg);
+		text-align: center;
+	}
+	.contentHolder {
+	width: calc(100% - 40px);
+	margin: auto;
+	font-size: 18px;
+	font-weight: bold;
+	color: #ffffff; 
+	display: inline-block; 
+	clear: left; 
+	padding-left: 5px; 
+	margin-top: 40px;
+	text-align: center;
+	}
+	.contentHeader {
+		background: rgb(54, 25, 25); /* Fall-back for browsers that don't
+										support rgba */
+		background: rgba(54, 25, 25, .5);
+		padding: 5px;
+	}
+	.contentBox {
+		padding: 5px;
+		margin-top: 10px;
+		display: inline-block;
+		background-color: #F5FAFE;
+		border: 1px solid;
+		border-radius: 10px;
+		min-height: 200px;
+	}
+	.showHide {
+		display: none;
+	}
+	.hideWidth {
+		width: 100% !important;
+	}
+	.btnClass {
+		width: 110px !important;
+		white-space: normal;
+		margin-top: 10px;
+		word-wrap: break-word;
+		box-shadow: 4px 4px 5px #888888; 
+		font-weight: bold; border-radius: 5px;
+	}
+}
+@media only screen and (min-width:240px) and (max-width:320px)
+{
+	.background
+	{
+		clear: both;
+		min-height: 500px;
+		background: url(Images/SwipeRegistration/Warranty-Bkgd-640px.jpg);
+		text-align: center;
+	}
+	.contentHolder {
+	width: calc(100% - 40px);
+	margin: auto;
+	font-size: 18px;
+	font-weight: bold;
+	color: #ffffff; 
+	display: inline-block; 
+	clear: left; 
+	padding-left: 5px; 
+	margin-top: 40px;
+	text-align: center;
+	}
+	.contentHeader {
+		background: rgb(54, 25, 25); /* Fall-back for browsers that don't
+										support rgba */
+		background: rgba(54, 25, 25, .5);
+		padding: 5px;
+	}
+	.contentBox {
+		padding: 5px;
+		margin-top: 10px;
+		display: inline-block;
+		background-color: #F5FAFE;
+		border: 1px solid;
+		border-radius: 10px;
+		min-height: 200px;
+	}
+	.showHide {
+		display: none;
+	}
+	.hideWidth {
+		width: 100% !important;
+	}
+	.btnClass {
+		width: 75px !important;
+		font-size: 8pt;
+		white-space: normal;
+		margin-top: 10px;
+		word-wrap: break-word;
+		box-shadow: 4px 4px 5px #888888; 
+		font-weight: bold; border-radius: 5px;
+	}
+}
+
+@media only screen and (min-width:200px) and (max-width:240px)
+{
+	.background
+	{
+		clear: both;
+		min-height: 500px;
+		background: url(Images/SwipeRegistration/Warranty-Bkgd-640px.jpg);
+		text-align: center;
+	}
+	.contentHolder {
+	width: calc(100% - 40px);
+	margin: auto;
+	font-size: 18px;
+	font-weight: bold;
+	color: #ffffff; 
+	display: inline-block; 
+	clear: left; 
+	padding-left: 5px; 
+	margin-top: 40px;
+	text-align: center;
+	}
+	.contentHeader {
+		background: rgb(54, 25, 25); /* Fall-back for browsers that don't
+										support rgba */
+		background: rgba(54, 25, 25, .5);
+		padding: 5px;
+	}
+	.contentBox {
+		padding: 5px;
+		margin-top: 10px;
+		display: inline-block;
+		background-color: #F5FAFE;
+		border: 1px solid;
+		border-radius: 10px;
+		min-height: 200px;
+	}
+	.showHide {
+		display: none;
+	}
+	.hideWidth {
+		width: 100% !important;
+	}
+	.btnClass {
+		width: 50px !important;
+		white-space: normal;
+		font-size: 6pt;
+		margin-top: 10px;
+		word-wrap: break-word;
+		box-shadow: 4px 4px 5px #888888; 
+		font-weight: bold; border-radius: 5px;
+	}
+}
+
+@media only screen and (min-width:0px) and (max-width:640px)
+{
+	.background
+	{
+		clear: both;
+		min-height: 500px;
+		background: url(Images/SwipeRegistration/Warranty-Bkgd-640px.jpg);
+		text-align: center;
+	}
+}

@@ -1,0 +1,149 @@
+﻿<link rel="stylesheet" href="@Url.Content("~/Styles/font-awesome.css")"/>
+<script src="~/Scripts/navAccordion.js"></script>
+<style>
+    .mainNav {
+        background: #4f7db4;
+        width: 100%;
+        margin: 0px auto;
+    }
+
+    /* First Level */
+
+
+    .mainNav ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border-bottom: 1px solid #4f7db4
+    }
+
+    .mainNav ul li { border-top: 1px solid #4f7db4; }
+
+    .mainNav ul li a {
+        color: #FFFFFF;
+        display: block;
+        line-height: normal;
+        padding: 12px 5px;
+        text-decoration: none;
+    }
+
+    .mainNav ul li a:hover {
+        background: #A4C6F0;
+        text-decoration: none;
+    }
+
+    /* Second Level */
+
+
+    .mainNav ul ul { border-bottom: none }
+
+    .mainNav ul ul li {
+        border-top: 1px solid #4f7db4;
+        background: #2282F6;
+    }
+
+    .mainNav ul ul li a {
+        color: #FFFFFF;
+        display: block;
+        line-height: normal;
+        padding: 0.5em 1em 0.5em 12px;
+    }
+
+    .mainNav ul ul li a:hover { background: #A4C6F0; }
+
+    /* Third Level */
+
+
+    .mainNav ul ul ul { border-top: 1px solid #46CFB0; }
+
+    .mainNav ul ul ul li { border: none; }
+
+    .mainNav ul ul ul li a {
+        padding-left: 1.7em;
+        padding-top: 0.25em;
+        padding-bottom: 0.25em;
+    }
+
+    /* Accordion Button */
+
+
+    ul li.has-subnav .accordion-btn {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.15);
+        font-size: 16px;
+    }
+</style>
+
+<nav class="mainNav">
+    <ul>
+        <li class="selected" style="background-color: rgba(255, 255, 255, 0.15)"><a>Site Management</a>
+            <ul>
+                <li>@Html.ActionLink("Top Header", "SiteHeaderContent", "Configure")</li>
+                <li>@Html.ActionLink("Site Banner", "SiteBannerContent", "Configure")</li>
+                <li>@Html.ActionLink("Gateway Content", "SiteGatewayContent", "Configure")</li>
+                <li>@Html.ActionLink("Manage Notifications", "NotificationManager", "Configure")</li>
+            </ul>
+        </li>
+        <li><a href="#">Configuration</a>
+            <ul>
+                <li class="selected">
+                    <a>Menu</a>
+                    <ul>
+                        <li style="background-color: #ffffff; color: #4f7db4;">@Html.ActionLink("Configure", "MegaMenu", "Configure", null, new {@style = "color:#4f7db4;"})</li>
+                        <li style="background-color: #ffffff; color: #4f7db4;">@Html.ActionLink("Menu Permission", "ManageAllowedPartnerTypesForMenu", "Configure", null, new {@style = "color:#4f7db4;"})</li>
+                        @*<li style="background-color: #ffffff; color: #4f7db4;">@Html.ActionLink("Recover Deleted Mega Menu Item", "DeletedMegaMenuItem", "Configure",null,new{@style="color:#4f7db4;" })</li>*@
+                    </ul>
+                </li>
+             
+                <li class="selected">
+                    <a>Pages</a>
+                    <ul>
+                        <li style="background-color: #ffffff; color: #4f7db4;">@Html.ActionLink("Manage Normal Pages", "ManageCommonPages", "Configure", null, new {@style = "color:#4f7db4;"})</li>
+                        <li style="background-color: #ffffff; color: #4f7db4;">@Html.ActionLink("Manage Page Properties", "ManagePageProperties", "Configure", null, new {@style = "color:#4f7db4;"})</li>
+                        <li style="background-color: #ffffff; color: #4f7db4;">@Html.ActionLink("Manage Hybrid Page Sections", "ManageHybridPages", "Configure", null, new {@style = "color:#4f7db4;"})</li>
+                        <li style="background-color: #ffffff; color: #4f7db4;">@Html.ActionLink("Manage Page Section Permission", "ManageAllowedPartnerTypesForPageSections", "Configure", null, new {@style = "color:#4f7db4;"})</li>
+                        <li style="background-color: #ffffff; color: #4f7db4;">@Html.ActionLink("Associate Menu With Page", "TagMegaMenuAndPage", "Configure", null, new {@style = "color:#4f7db4;"})</li>
+                        <li style="background-color: #ffffff; color: #4f7db4;">@Html.ActionLink("Manage Page Meta Tags", "MetaTagManagement", "Configure", null, new {@style = "color:#4f7db4;"})</li>
+                    </ul>
+                </li>
+                <li class="selected">
+                    <a>Library</a>
+                    <ul>
+                        <li style="background-color: #ffffff; color: #4f7db4;">@Html.ActionLink("File Type Management", "FileTypeManagement", "Configure", null, new {@style = "color:#4f7db4;"})</li>
+                        <li style="background-color: #ffffff; color: #4f7db4;">@Html.ActionLink("Library Category Management", "LibraryCategoryManagement", "Configure", null, new {@style = "color:#4f7db4;"})</li>
+                        <li style="background-color: #ffffff; color: #4f7db4;">@Html.ActionLink("Library Files Management", "LibraryFileManagement", "Configure", null, new {@style = "color:#4f7db4;"})</li>
+                    </ul>
+                </li>
+
+                @*<li>@Html.ActionLink("Manage Software Partners", "SupportSoftwarePartners", "Configure")</li>*@
+            </ul>
+        </li>
+        @*<li>@Html.ActionLink("File Type Management", "FileTypeManagement", "Configure")</li>*@
+        @if (ViewBag.IsAdmin != null && ViewBag.IsAdmin)
+        {
+            <li>
+                <a href="@Url.Action("Users", "Configure")">Manage Users</a>
+            </li>
+        }
+        <li class="selected" style="background-color: rgba(255, 255, 255, 0.15)">
+            @Html.ActionLink("Password Email Message", "PasswordEmail", "Configure")
+        </li>
+        <li class="selected" style="background-color: rgba(255, 255, 255, 0.15)">
+            @Html.ActionLink("Restart Application", "RestartApplication", "Configure")
+        </li>
+        <li class="selected" style="background-color: rgba(255, 255, 255, 0.15)">
+            @Html.ActionLink("Log Out", "Logout", "Login")
+        </li>
+
+    </ul>
+</nav>
+<script>
+	$(document).ready(function(){
+		//Accordion Nav
+		//jQuery('.mainNav').navAccordion({
+		//	expandButtonText: '+',  //Text inside of buttons can be HTML
+		//	collapseButtonText: '-'
+		//});
+			
+	});
+</script>

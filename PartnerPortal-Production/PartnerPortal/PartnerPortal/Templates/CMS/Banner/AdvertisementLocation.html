@@ -1,0 +1,42 @@
+﻿<div class="modal-header">
+    <a class="close" ng-click="$dismiss()" aria-hidden="true">&times;</a>
+    <h4 class="modal-title"><strong>Advertisement Locations</strong></h4>
+</div>
+<div class="modal-body">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th ng-click="predicate = 'isSelected'; reverse=!reverse">Select</th>
+                <th ng-click="predicate = 'PositionName'; reverse=!reverse">Location</th>
+                <th ng-click="predicate = 'Description'; reverse=!reverse">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in LocationList | filter:filterName | orderBy:predicate:reverse">
+                <td class="TextAlignCenter">
+                    <input type="checkbox" ng-model="item.isSelected" /></td>
+                <td>{{item.PositionName}}</td>
+                <td>{{item.Description}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div style="height: 76%; width: 100%; position: absolute; text-align: center; background-color: #ffffff; opacity: 0.8; z-index: 10000;" ng-show="loader">
+    <br />
+    <br />
+    <br />
+    <img src="/Images/3Dloading.gif" />
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-4">
+            <input class="btn btn-primary pull-left modal-submit-btn" type="button" ng-click="Submit()" value="Submit" />
+        </div>
+        <div class="col-md-4 pull-right">
+            <input class="btn btn-primary pull-right" type="button" ng-click="cancel()" value="Cancel"/>
+        </div>
+    </div>
+</div>
+
+
+

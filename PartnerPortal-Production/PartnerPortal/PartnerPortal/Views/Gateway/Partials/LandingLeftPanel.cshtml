@@ -1,0 +1,168 @@
+﻿@model PartnerPortal.Models.GatewayVM
+
+<style>
+    .landingLeftPanel {
+        clear: both;
+        display: inline-block;
+        width: 400px;
+        min-height: 500px;
+        background-color: #ffffff;
+    }
+    .landingLeftPanelContentBox {
+        display: inline-block;
+        margin-top: 60px;
+        margin-left: 40px;
+        margin-right: 40px;
+        min-width: 80%;
+    }
+    .clsTextBoxLanding {
+        width: 80% !important;
+        border: 0 !important;
+        border-bottom: 1px solid black !important;
+        min-height: 30px !important;
+        padding-left: 15px; padding-right: 15px; margin-right: 1%; box-sizing: border-box;
+    }
+    .invalidated {
+        border-bottom: 1px solid #FF0208 !important;
+        background-color: #FFBABC !important;
+    }
+    .btnLanding {
+        background-color: #21459A;
+        border: none;
+        color: #FFFFFF;
+        text-align: center;
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        margin: 10px 0 !important;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+        height: 40px;
+        width: 100%;
+    }
+    input[type=button] {
+        -webkit-appearance: none;
+        -webkit-border-radius: 0;
+    }
+    .remLinks {
+      color: #000000; font-size: 8pt; width: 45%; display: inline-block;  
+    }
+    .forgotPassLink {
+      color: #000000; font-size: 8pt; width: 45%; display: inline-block;text-align: right;  
+    }
+    @@media only screen and (min-width: 0px) and (max-width: 420px) {
+        .remLinks {
+          width: 100%;font-size: 10pt;
+        }
+        .forgotPassLink {
+          width: 100%; text-align: left;  font-size: 10pt;padding-left: 12px;
+        }
+        .landingLeftPanelContentBox {
+            display: inline-block;
+            margin-top: 20px;
+            margin-left: 10px;
+            margin-right: 10px;
+            width: 94%;
+        }
+        .landingLeftPanel {
+            width: 90% !important;
+        }
+        .clsTextBoxLanding {
+            width: 90% !important;
+            padding-left: 0px !important; padding-right: 0px !important; margin-right: 1%; box-sizing: border-box;
+        }
+    }
+</style>
+
+<div class="leftFloat outer landingLeftPanel">
+
+    <div style="text-align: center;">
+        <div class="landingLeftPanelContentBox">
+            <div style="color: #000000; font-size: 26pt; font-weight: bold;letter-spacing: 4px; line-height: 1.2em;">
+                Partner Portal
+            </div>
+            <div style="color: #C5C7CA; font-size: 10pt; margin-top: 30px; font-weight: bold;">
+                Welcome back! Please login to your account.
+            </div>
+            <div style="color: #C5C7CA; font-size: 10pt; margin-top: 10px; font-weight: bold;">
+                    @using (Html.BeginForm("DoLogin", "PPLogIn", FormMethod.Post,new {onsubmit="return ValidateLogin()"}))
+                        {
+                            if (Request.QueryString["Terminated"] == "True")
+                            {
+                                <div class="leftFloat width100p paddingtop10" style="color: #ca0808">Your session has terminated.</div>
+                            }
+                            else
+                            {
+                                <div class="leftFloat width100p paddingtop10">&nbsp;</div>
+                            }
+                            <div class="leftFloat width100p paddingtop10">
+                                @Html.TextBoxFor(m => m.LoginId, new {placeholder = "User Name", @class = "clsTextBoxLanding"})
+                                @Html.ValidationMessageFor(m => m.LoginId, "*")
+                            </div>
+                            <div class="leftFloat width80p paddingtop10" style="padding-top: 20px; ">
+                                @Html.PasswordFor(m => m.LoginPassword, new {placeholder = "Password", @class = "clsTextBoxLanding"})
+                                @Html.ValidationMessageFor(m => m.LoginPassword, "*")
+                            </div>
+                            <div class="leftFloat width100p paddingtop10" style="text-align: left; font-size: 8pt; font-weight: normal; padding-left: 20px;">
+                                &nbsp;@Html.ValidationMessageFor(m => m.LoginFailed)
+                            </div>
+                            <div class="leftFloat width100p paddingtop5" style="text-align: left; padding-left: 15px;">
+                                <span class="remLinks">
+                                    @Html.CheckBoxFor(m=> m.RememberMe)   <a>Remember Me</a>
+                                    @*<input type="checkbox"/>   <a>Remember Me</a>*@
+                                </span>
+                                <span class="forgotPassLink">
+                                    @Html.ActionLink("Forgot Password", "ForgotPassword", "Gateway")
+                                </span>
+
+
+                            </div>
+
+                            <div class="leftFloat width100p paddingtop20" style="margin-top: 20px; padding-left: 15px; padding-right: 15px;">
+                                 <span style="color: #000000; font-size: 8pt;width: 45%; display: inline-block;">
+                                    <input type="submit" name="commit" class="btnLanding" value="Login">
+                                </span>
+                                <span style="color: #000000; font-size: 8pt; display: inline-block; text-align: right; width: 45%;">
+                                    <input type="button" name="register" class="btnLanding" value="Register" onclick="gotoRegistration()">
+                                </span>
+                                
+                            </div>
+                            <div class="leftFloat width100p paddingtop20" style="margin-top: 20px; font-size: 6pt;">
+                                <a href="https://www.starmicronics.com/pages/terms-of-use" target="_blank">Term of use.</a>  |  <a href="https://www.starmicronics.com/pages/Privacy-Policy" target="_blank"> Privacy Policy.</a>
+                            </div>
+
+                        
+                        }
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    var registrationPageUrl = '@Url.Content("~/Register")';
+    function gotoRegistration() {
+        window.location.href = registrationPageUrl;
+    }
+    function ValidateLogin() {
+        var loginId = document.getElementById("LoginId").value;
+        var loginPass = document.getElementById("LoginPassword").value;
+        var doSubmit = false;
+        if (loginId == "") {
+            doSubmit = false;
+            document.getElementById("LoginId").classList.add("invalidated");
+        } else {
+            document.getElementById("LoginId").classList.remove("invalidated");
+            doSubmit = true;
+        }
+
+        if (loginPass == "") {
+            document.getElementById("LoginPassword").classList.add("invalidated");
+            doSubmit = false;
+        } else {
+            document.getElementById("LoginPassword").classList.remove("invalidated");
+        }
+
+        return doSubmit;
+    }
+</script>

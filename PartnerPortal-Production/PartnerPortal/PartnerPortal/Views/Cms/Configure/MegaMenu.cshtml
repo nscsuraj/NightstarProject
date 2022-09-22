@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "Configure mega menu";
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+}
+
+@section featured {
+
+}
+@section scripts
+{
+  
+}
+@section MainContent {
+    <div ng-controller="MenuController">
+        <div style="width: 100%; height: 30px; font-size: 20pt; font-weight: bold; color: #2F6A79; text-shadow: 4px 4px 4px #BCBEBF; padding-top: 15px; ">
+            &nbsp;&nbsp;Configure Mega Menu
+        </div>
+        <br/>
+        <input type="button" id="submitButton" class="btn btn-primary" ng-click="UpdateMenuStructure()" value="Save" style="width: 100px; margin-top: 10px;"/>
+        <div class="divFullBorderCMS"></div>
+        <input type="button" id="addNewparentButton" class="btn btn-primary" ng-click="newItem(this)" value="Add New Parent Menu" style="width: 400px; margin-top: 10px;"/>
+        <div ui-tree id="tree2-root" data-clone-enabled="true">
+          <ol ui-tree-nodes="" ng-model="menuItems">
+            <li ng-repeat="node in menuItems" ui-tree-node ng-include="'nodes_renderer2.html'"></li>
+          </ol>
+        </div>
+    </div>
+}
+
+@section AngularScripts
+{
+    <script type="text/ng-template" id="nodes_renderer2.html">
+         
+      <div class="tree-node tree-node-content" style="padding: 5px;">
+        <div class="pull-left tree-handle" ui-tree-handle>
+          <span class="glyphicon glyphicon-list"></span>
+       
+        </div>
+        <div class="tree-node-content">
+          <a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this)">
+            <span class="glyphicon" ng-class="{
+              'glyphicon-chevron-right': collapsed,
+              'glyphicon-chevron-down': !collapsed
+              }">
+            </span>
+          </a>
+
+          <input type="text" ng-model="node.title" style="width:80%; padding: 5px;">
+
+          <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
+          <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
+        </div>
+      </div>
+      <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer2.html'">
+        </li>
+      </ol>
+    
+    </script>
+    <script>
+        app.controller("MenuController", function($controller, $scope, $http, $rootScope,SweetAlert,
+            notificationFactory, $location,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory, $window, $modal) {
+            $scope.menuItems = [];
+
+            dbUtilFactory.get(root + '/api/megamenu/GetAll/', "", function (d) {
+                   $scope.menuItems = d;
+            }, '', 'Error getting data ');
+
+            $scope.UpdateMenuStructure = function () {
+                dbUtilFactory.postp(root + '/api/megamenu/update/', $scope.menuItems, function (d) {
+                    SweetAlert.swal("Data Saved", "", "success");
+                    dbUtilFactory.get(root + '/api/megamenu/GetAll/', "", function (d) {
+                        $scope.menuItems = d;
+                    }, '', 'Error getting data ');
+                }, '', 'Error getting data ');
+            }
+
+            $scope.remove = function (scope) {
+                scope.remove();
+            };
+
+            $scope.toggle = function (scope) {
+                scope.toggle();
+            };
+
+            $scope.newSubItem = function (scope) {
+                var nodeData = scope.$modelValue;
+                nodeData.nodes.push({
+                    id: -1,
+                    title: "",
+                    nodes: []
+                });
+            };
+            $scope.newItem = function (scope) {
+                var nodeData = scope.$modelValue;
+                //alert(nodeData.nodes.title);
+                //nodeData.nodes.push({
+                //    id: 0,
+                //    title: "",
+                //    nodes: []
+                //});
+                
+
+                $scope.menuItems.push({
+                    id: -1,
+                    title: "",
+                    nodes: []
+                });
+            };
+        });
+    </script>
+}

@@ -1,0 +1,99 @@
+﻿@model SMNResponsive.Models.PageInfoVM
+@{
+    ViewBag.Title = "Home Page";
+    if (Model.PageType == 1)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutLeftMenu.cshtml";
+    }
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+           
+            <p>
+                A demonstartion to display wordpress pages on mvc pages 
+            </p>
+        </div>
+    </section>
+    
+}
+@section scripts
+{
+    <script type="text/javascript">
+        
+        $(document).ready(function () {
+            $("#iContent").attr("src", cmsroot + '@Model.PartPageName').load(function() {
+                $("#contentLoadingImage").hide();
+                
+                
+//                AdjustIframeHeightOnLoad();
+                $("#iContent").show();
+                setIframeHeight("iContent");
+               // setInterval(alert($("#iContent").contents().find("html").height(), 100000));
+                //alert(document.getElementById("iContent").style.height);
+            });
+     
+        });
+        function getDocHeight(doc) {
+            doc = doc || document;
+            // stackoverflow.com/questions/1145850/
+            var body = doc.body, html = doc.documentElement;
+           // alert(body.offsetHeight);
+            var height = Math.max(body.scrollHeight, body.offsetHeight,
+                html.clientHeight, html.scrollHeight, html.offsetHeight);
+            return height;
+        }
+
+        function setIframeHeight(id) {
+            var ifrm = document.getElementById(id);
+            var doc = ifrm.contentDocument ? ifrm.contentDocument :
+                ifrm.contentWindow.document;
+            ifrm.style.visibility = 'hidden';
+            ifrm.style.height = "10px"; // reset to minimal height ...
+            // IE opt. for bing/msn needs a bit added or scrollbar appears
+            ifrm.style.height = getDocHeight(doc) + 4 + "px";
+            ifrm.style.visibility = 'visible';
+            document.getElementById("body").style.height = getDocHeight(doc) + 100 + "px";
+        }
+        function AdjustIframeHeightOnLoad() {
+            alert(document.getElementById("iContent").contentWindow.document.body.scrollHeight);
+            document.getElementById("iContent").style.height = document.getElementById("iContent").contentWindow.document.body.scrollHeight + "px";
+            document.getElementById("body").style.height = document.getElementById("iContent").contentWindow.document.body.scrollHeight + "px";
+        }
+        function AdjustIframeHeight(i) {
+            document.getElementById("iContent").style.height = parseInt(i) + "px";
+            document.getElementById("body").style.height = parseInt(i) + 100 + "px";
+        }
+    </script>
+    <style>
+        
+        .iframeWrapper {
+            height: 100%;
+            max-width: 950px;
+        }
+
+
+         #contentLoadingImage {
+             position:absolute;
+             left:45%;
+             top:45%;
+             border-radius:20px;
+             padding:25px;
+             border:1px solid #777777;
+             background:#ffffff;
+             box-shadow:0px 0px 10px #777777;
+         }
+    </style>
+}
+@section MainContent {
+    <div id="frameWrap" class="iframeWrapper">
+        @*<iframe id = "iContent" src="@Url.Content("WPFiles/test-partpage/")" frameBorder="0" style="width: 98%; height: 80%;"></iframe>*@
+        <img src="~/Images/3Dloading.gif" id="contentLoadingImage"/>
+        <iframe id = "iContent"  seamless="seamless" style="width: 100%; display: none;" frameborder="0" scrolling="no"></iframe>
+        
+    </div>
+}

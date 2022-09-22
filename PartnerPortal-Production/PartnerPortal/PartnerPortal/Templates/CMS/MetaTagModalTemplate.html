@@ -1,0 +1,148 @@
+﻿ 
+<style>
+    .daycolodd {
+        background-color: #CDD0D1;
+        color: #000000;
+    }
+    .daycoleven {
+        background-color: #f1f1f1;
+        color: #000000;
+    }
+    #displayTopicList tr:hover {
+        background-color: #51808F;
+        color: #ffffff;
+    }
+    #displayTopicList table {
+        border-collapse: separate;
+        border: solid black 1px;
+        border-radius: 6px;
+        -moz-border-radius: 6px;
+    }
+
+    #displayTopicList td, th {
+        border-top: solid black 1px;
+    }
+
+    #displayTopicList th {
+        background-color: blue;
+        border-top: none;
+        border-left: none;
+    }
+
+    #displayTopicList td:first-child {
+        border-left: none;
+        border-right: none;
+    }
+</style>
+
+<div class="modal-header" style="background-color: #005D7C; color: #ffffff; font-size: 16pt; font-weight: bold; height: 30px; box-shadow: 4px 4px 20px #888888;">
+    Meta Tag Management
+</div>
+
+<br/><br/>
+<div class="modal-body" id="angController">
+    <div id="displayTopicList">
+        <div class="leftFloat width100p">
+            <div class="leftFloat paddingtop5 paddingleft10" style="color: #000000; text-align: right;"><b>Filter</b>
+            </div>
+            <div class="leftFloat width85p paddingleft2p">
+                <input id="filter" class="width90p" style="height: 30px; color: #000000; border: 1px solid black; border-radius: 5px;" ng-model="filterName"/>
+            </div>
+        </div>
+        <br/><br/>
+        <div class="leftFloat width100p paddingtop5 paddingleft10 paddingbottom10" style="color: #000000;">
+            <input type="button" id="submitButton" class="btn btn-primary" ng-click="AddMetaTag()" value="Add New Meta Tag" style="width: auto; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;"/>
+        </div>
+        <div style="padding: 10px; text-align: center;">
+            <table style="cursor: pointer; text-align: left; width: 100%; table-layout: fixed; word-wrap: break-word;">
+                <thead>
+                <tr style="text-align: left; background-color: #007BA3;">
+                    <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; font-size: 14pt; table-layout: fixed"> Meta Tag Type</th>
+                    <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; width: 10px;">&nbsp;</th>
+                    <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; font-size: 14pt; table-layout: fixed"> Meta Tag Key</th>
+                    <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; width: 10px;">&nbsp;</th>
+                    <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; font-size: 14pt;"> Meta Tag Value</th>
+                    <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; width: 10px;">&nbsp;</th>
+                    <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; font-size: 14pt; text-align: center;"> View / Edit</th>
+                    <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; font-size: 14pt; text-align: center;"> Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="tag in MetaTags | filter:filterName " ng-class-odd="'daycolodd'" ng-class-even="'daycoleven'">
+
+                    <td style="padding: 5px; width: 150px;">{{tag.TagTypeTitle}}</td>
+                    <td style="width: 10px;">&nbsp;</td>
+                    <td style="padding: 5px; width: 120px;">{{tag.TagKey}}</td>
+                    <td style="width: 10px;">&nbsp;</td>
+                    <td style="padding: 5px;">{{tag.TagValue}}</td>
+                    <td style="width: 10px;">&nbsp;</td>
+                    <td style="padding: 5px; font-size: 14pt; color: #ffffff; width: 80px; text-align: center;" ng-click="EditMetaTag(tag)">
+                        <a href="#" style="color: #835000;"><i class="fa fa-eye"></i></a>
+                    </td>
+
+                    <td style="padding: 5px; font-size: 14pt; color: #ffffff; width: 80px; text-align: center;" ng-click="DeleteMetaTag(tag)">
+                        <a href="#" style="color: #FB1800;"><i class="fa fa-scissors"></i></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="leftFloat width100p paddingtop5 paddingright10 paddingbottom10" style="color: #000000; text-align: right;">
+            <input type="button" class="btn btn-primary" ng-click="AddMetaTag()" value="Add New Meta Tag" style="width: auto; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;"/>
+        </div>
+    </div>
+    <br/>
+    <div id="UpdateTopic" style="padding: 10px; float: left; width: 90%; display: none;">
+        <div style="padding: 10px; width: 100%; border: 1px solid black; border-radius: 5px;">
+            <table style="text-align: left; width: 100%; padding: 10px; color: #000000;">
+                <tr>
+                    <td style="height: 20px;" colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border: none; font-weight: bold;">Tag Type</td>
+                    <td style="border: none;">
+                        <select ng-model="MetaTag.TagType" style="width: 90%; padding: 5px; height: 30px; border: 1px solid black; border-radius: 4px; cursor: pointer;">
+                            <option value="0">Open Graph Protocol Tag</option>
+                            <option value="1">Normal Tag</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height: 20px;" colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border: none; font-weight: bold;">Tag Key</td>
+                    <td style="border: none;"><input type="text" ng-model="MetaTag.TagKey" style="width: 90%; border: 1px solid black; border-radius: 5px;"/></td>
+                </tr>
+                <tr>
+                    <td style="height: 20px;" colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border: none; font-weight: bold;">Tag Value</td>
+                    <td style="border: none;">
+                        <input type="text" ng-model="MetaTag.TagValue" style="width: 90%; border: 1px solid black; border-radius: 5px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height: 20px;" colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border: none; font-weight: bold;">&nbsp;</td>
+                    <td style="border: none;">
+                        <input type="button" class="btn btn-primary" ng-click="SaveMetaTag()" value="Save" style="width: 200px; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;"/>
+                        <input type="button" class="btn btn-primary" ng-click="CancelUpdate()" value="Cancel" style="width: 200px; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;"/>
+                        
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-4 pull-right">
+            <input class="btn  btn-primary" type="button" style="width: 200px; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;" ng-click="CloseModal()" value="Close" />
+        </div>
+        </div>
+</div>

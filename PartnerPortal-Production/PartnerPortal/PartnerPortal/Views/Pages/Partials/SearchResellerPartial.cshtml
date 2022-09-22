@@ -1,0 +1,181 @@
+﻿<style>
+    .boxShadow {
+
+    }
+</style>
+<style>
+    
+    .rightPanelResellerContainer {
+
+        margin-top: 20px;
+         max-width: 300px;
+         min-height: 350px;
+         background-color: #ECF8FF
+
+    }
+    .rightPanelResellerContent {
+
+        text-align: left; 
+        float: left; 
+        min-width: 250px; 
+        min-height: 350px; 
+    }
+@@media only screen and (max-width:1399px){
+
+}
+@@media only screen and (max-width:1150px){
+      .rightPanelResellerContainer {
+
+        margin-top: 20px;
+         max-width: 300px;
+         min-height: 350px;
+         margin-right: 0px; 
+         background-color: #ECF8FF
+
+    }
+     .rightPanelResellerContent {
+
+        text-align: left; 
+        float: none; 
+        min-width: 0; 
+        min-height: 350px; 
+    }
+}
+@@media only screen and (max-width:940px){
+
+}
+@@media only screen and (max-width:900px){
+    .rightPanelResellerContainer {
+        margin-top: 20px; 
+        float: none; 
+        max-width: 100%;
+        min-height: 350px;
+        margin-right: 20px;
+	    margin-left: 5px;
+        margin-bottom: 40px;
+    }
+        .rightPanelResellerContent {
+
+        text-align: left; 
+        float: none; 
+        min-width: 0; 
+        min-height: 350px; 
+        margin: 20px; 
+    }
+}
+
+     .btnSearchPartner {
+         background-color: #ffffff;
+         border: 1px solid #2551A4;
+        color: #000000;
+        text-align: center;
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+        height: 40px;
+        width: 100% !important;
+    }
+    .clsTextBoxSearchPartner {
+        width: 100% !important;
+        border: 0 !important;
+        border: 1px solid #2551A4 !important;
+        min-height: 30px !important;
+        margin-top: 10px;
+    }
+</style>
+<div class="rightPanelResellerContainer">
+    <div class="rightPanelResellerContent">
+
+        <div style="font-weight: bold; font-size: 24pt; width: 90%; margin: 10px; color: #2551A4">New Reseller</div>
+        <div style="font-weight: bold; font-size: 24pt; width: 90%; margin: 10px; margin-top: 20px;color:#2551A4">Lookup</div>
+        <div style="width: 90%; display: inline-block; height: 30px; color: #2551A4; margin: 10px;  font-size: 12pt; font-weight: normal; clear: both;">
+            Use this tool to find the most current SSRP discount for Star Partners Program resellers.
+        </div>
+        <div style="width: 90%; margin: 10px; display: inline-block; margin-top: 20px; clear: both;">
+            <div style="width: 100%; color: #2551A4; font-size: 12pt;">Partner Account #</div>
+            <div style="width: 100%; float: left; display: table-cell; vertical-align: middle;">
+                <input class="clsTextBoxSearchPartner" id="txtSearchPartnerForReseller" placeholder="&#128269;" type="text" value="">
+            </div>
+        </div>
+
+        <div style="width: 90%; margin: 10px;margin-top: 20px; clear: both; text-align: left;">
+            <input type="button" name="searchPartner" id="searchPartner" class="btnSearchPartner" value="Submit" onclick="searchPartnerForReseller()">
+        </div>
+        <div style="width: 90%; height: 30px;margin: 10px;margin-top: 20px; clear: both; text-align: left; display: none;" id="dvReturnToPreferredPartners">
+            <a href="#" style="color: #2551A4; font-size: 10pt;" onclick="ReturnToPreferredPartners()">Return to Preferred Partners ></a>
+        </div>
+
+    </div>
+
+
+</div>
+
+<script>
+    function searchPartnerForReseller() {
+        if ($("#txtSearchPartnerForReseller").val() != "") {
+            $.ajax({
+                type: 'GET',
+                url: root + "api/ppcmsapi/GetAccountByPartnerNumber/" + $("#txtSearchPartnerForReseller").val(),
+                success: function(data) {
+                    if (data != undefined) {
+                        $("#tdResellerAccountName").html(data.AccountName);
+                        if (data.PartnerProgramStatus != undefined && data.PartnerProgramStatus === "Credentials Sent") {
+                            $("#tdResellerPartnerType").html(data.PartnerType);
+                            if (data.SuggestedMarkup != undefined && data.SuggestedMarkup !== "") {
+                                $("#tdResellerSuggestedMarkup").html(data.SuggestedMarkup + "%");
+                            }
+                            if (data.DistributorDiscount != undefined && data.DistributorDiscount !== "") {
+                                $("#tdResellerDistDrd").html(data.DistributorDiscount + "%");
+                            }
+                            if (data.DiscountRate != undefined && data.DiscountRate !== "") {
+                                $("#tdResellerDiscount").html(data.DiscountRate + "%");
+                            }
+                        } else {
+                            $("#tdResellerPartnerType").html("-");
+                            $("#tdResellerSuggestedMarkup").html("-");
+                            $("#tdResellerDistDrd").html("-");
+                            $("#tdResellerDiscount").html("-");
+                        }
+
+                        $("#tdResellerPartnerNumber").html(data.PartnerNumber);
+                        $("#dvReturnToPreferredPartners").show();
+                        $("#displaySearchPartner").show();
+                        $("#displayResellers").hide();
+                    } else {
+                        var text = "Partner not found for the partner# " + $("#txtSearchPartnerForReseller").val() + ". Please check the partner#.";
+                        swal({
+                            title: "Error",
+                            text: text,
+                            type: "error"
+                        });
+                    }
+
+                    angular.element(document.getElementById('StarDistResellersControllerContent')).scope().searchPartnerForReseller();
+                    angular.element(document.getElementById('StarDistResellersControllerContent')).scope().$apply();
+                },
+                error: function(data) {
+                }
+            });
+        } else {
+
+            var text = "Please provide prtner number to search.";
+            swal({
+                title: "Error",
+                text: text,
+                type: "error"
+            });
+        }
+
+    };
+
+    function ReturnToPreferredPartners() {
+        $("#tdResellerAccountName").html("");
+        $("#tdResellerDiscount").html("");
+        $("#tdResellerPartnerNumber").html("");
+        $("#dvReturnToPreferredPartners").hide();
+        $("#displaySearchPartner").hide();
+        $("#displayResellers").show();
+    }
+</script>

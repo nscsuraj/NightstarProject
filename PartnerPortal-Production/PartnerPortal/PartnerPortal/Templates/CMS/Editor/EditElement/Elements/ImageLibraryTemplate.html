@@ -1,0 +1,322 @@
+﻿<style>
+    .colorSelector {
+        position: relative;
+        width: 36px;
+        height: 36px;
+    }
+    .colorSelector div {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 30px;
+        height: 30px;
+    }
+    .colorpicker {
+        z-index: 1120;
+    }
+</style>
+<script>
+    var uploaderOpenedBy = {};
+    var ImageLibrary = 0;
+    $(document).ready(function () {
+        $(".ui-dialog").css("height", $(window).height() - 60);
+
+        //get the object and set values
+        var carrierObj = JSON.parse($("#dialog_form").attr("data-obj"));
+        try {
+            $(".objectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(carrierObj[$(this).attr("data-PropertyIndex")]);
+                } else {
+                    if (carrierObj[$(this).attr("data-PropertyIndex")] != null && carrierObj[$(this).attr("data-PropertyIndex")] != undefined && carrierObj[$(this).attr("data-PropertyIndex")].length > 0) {
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                    }
+                }
+            });
+        } catch (e) {
+
+        }
+
+        //set color
+        $('#borderColorSelector div').css('backgroundColor', $('#borderColor').val());
+        $('#borderColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#borderColorSelector div').css('backgroundColor', '#' + hex);
+                $('#borderColor').val('#' + hex);
+            }
+        });
+
+        $("#ImageLibraryContainer tr:first").hide();
+        var tempImageLibrarys = carrierObj[702];
+        if (tempImageLibrarys != undefined && tempImageLibrarys.length > 0) {
+            for (var i = 0; i < tempImageLibrarys.length; i++) {
+                addNewImageLibrary($("#fusion-child-add"), tempImageLibrarys[i]);
+            }
+        } else { //First Time
+            addNewImageLibrary($("#fusion-child-add"));
+        }
+    });
+
+    function toggleImageLibraryDetail(ctrl) {
+        var state = $(ctrl).attr("data-state");
+        var index = $(ctrl).attr("data-boxIndex");
+
+        if (state == 0) {
+            $(ctrl).parent().find(".boxDetail").show();
+            $(ctrl).attr("data-state", "1");
+            $(ctrl).html("Image Library Item " + index + "<i class='fusiona-minus'>");
+        } else if (state == 1) {
+            $(ctrl).parent().find(".boxDetail").hide();
+            $(ctrl).attr("data-state", "0");
+            $(ctrl).html("Image Library Item " + index + "<i class='fusiona-plus2'>");
+        }
+    }
+
+    function addNewImageLibrary(ctrl, obj) {
+        var tr = $(ctrl).parents("tr:first");
+        var prevTr = $(tr).prev()[0];
+        var cloneTr = $(prevTr).clone(true);
+        $(cloneTr).css("display", "");
+        $(cloneTr).addClass("child-clone-row");
+        var td = $(cloneTr).find("td:first");
+        var linkHeader = $(td).find(".linkHeader");
+        ImageLibrary += 1;
+        $(linkHeader).attr("data-boxIndex", ImageLibrary);
+        $(linkHeader).html("Image Library Item " + ImageLibrary + "<i class='fusiona-plus2'>");
+        cloneTr.find(".fusionb-upload-button").prop('id', 'ImageLibraryUpload' + ImageLibrary);
+
+        cloneTr.find('#ImageLibraryUpload' + ImageLibrary).click(function () {
+            $("#dialog_uploadMedia").empty();
+            var template = root + "/Templates/CMS/Editor/UploadMediaTemplate.html";
+            $("#dialog_uploadMedia").load(template);
+            uploaderOpenedBy = $(this);
+
+            if (uploaderOpenedBy.hasClass('remove-image')) {
+                uploaderOpenedBy.parent().find('img').attr('src', '');
+                uploaderOpenedBy.parent().find('input').attr('value', '');
+                uploaderOpenedBy.hide();
+                uploaderOpenedBy.text('Upload').removeClass('remove-image').attr('style', '');
+
+                return;
+            }
+            //$("#dialog_uploadMedia").attr("data-allowMultiSelect",false); //Add this line only if you want to add multiselect option
+            var dialog = $("#dialog_uploadMedia").dialog({
+                autoOpen: false,
+                width: "96%",
+                modal: true,
+                resizable: false,
+                position: [30, 30],
+                dialogClass: "no-titlebar",
+                create: function (event) {
+                    $(event.target).parent().css('position', 'fixed');
+                    $(".ui-widget-header").hide();
+                },
+                open: function () { $(".ui-widget-header").hide(); },
+                close: function () {
+                    $(".ui-widget-header").show();
+                    if (selectedUploadedObjectsToUse.length > 0) {
+                        uploaderCallback(selectedUploadedObjectsToUse[0].FilePath);
+                        uploaderOpenedBy.text('Remove').addClass('remove-image');
+                    }
+                }
+            });
+            dialog.dialog("open");
+        });
+
+        if (obj != undefined) {
+            $(cloneTr).find(".subObjectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(obj[$(this).attr("data-subPropertyIndex")]);
+                } else {
+                    $(this).val(obj[$(this).attr("data-subPropertyIndex")]);
+                }
+            });
+            $(cloneTr).find(".uploaded-image").each(function () {
+                $(this).attr("src", obj[108]);
+                if (obj[108] != '') {
+                    $(this).parent().find('.fusionb-upload-button').text('Remove').addClass('remove-image');
+                }
+            });
+        }
+        $(prevTr).before($(cloneTr));
+    };
+
+    function removeImageLibrary(ctrl) {
+        var tr = $(ctrl).parents("tr:first");
+        if (ImageLibrary == 1) {
+            alert("You need a minimum of one row");
+            return false;
+        }
+        $(tr).remove();
+        ImageLibrary -= 1;
+        var c = 1;
+        $("#ImageLibraryContainer tr.child-clone-row").each(function () {
+            var linkHeader = $(this).find(".linkHeader");
+            $(linkHeader).attr("data-boxIndex", c);
+            $(linkHeader).html("Image Library Item " + c + "<i class='fusiona-plus2'>");
+            c = c + 1;
+        });
+    };
+
+    function createObjects(ctrl) {
+
+    }
+
+    function uploaderCallback(filePath) {
+        if ($(uploaderOpenedBy) != undefined) {
+            $(uploaderOpenedBy).parent().find("input[type='hidden']").val(filePath);
+            $(uploaderOpenedBy).parent().find("img").attr("src", filePath);
+        }
+    }
+</script>
+
+<div style="width: 95%; display: inline-block; position: absolute; left: 2%;">
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description">
+            <strong>Header Text</strong>
+        </div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="703" value="" id="fusion_header_Text" name="fusion_header_Text" size="200" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+     <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Header Text Align</strong><span>Choose how to align the header text.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="Select1" name="fusion_align" class="select-field objectProperty" data-propertyindex="710">
+                <option value="none" selected="">None</option>
+                <option value="left">Left</option>
+                <option value="right">Right</option>
+                <option value="center">Center</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Image Align</strong><span>Choose how to align the image.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_align" name="fusion_align" class="select-field objectProperty" data-propertyindex="704">
+                <option value="none" selected="">None</option>
+                <option value="left">Left</option>
+                <option value="right">Right</option>
+                <option value="center">Center</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Maximum Columns</strong><span>Select the number of max columns to display.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_columns" name="fusion_columns" class="select-field objectProperty" data-propertyindex="705">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5" selected="">5</option>
+                <option value="6">6</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-color">
+        <div class="name-description"><strong>Border Color</strong><span>Controls the color of the outer tab border. Leave blank for theme option selection.</span></div>
+        <div class="element-type">
+            <div class="wp-picker-container">
+                <table style="width: 100%" colspacing="10">
+                    <tr>
+                        <td style="width: 75%; text-align: right;">
+                            <div id="borderColorSelector" class="colorSelector" style="width: 90%;">
+                                <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                </div>
+                                <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                </span>
+                            </div>
+                        </td>
+                        <td style="width: 25%; vertical-align: middle;">
+                            <input type="text" class="objectProperty" data-propertyindex="707" value="" id="borderColor" name="borderColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Border Width</strong><span>Custom setting. For custom alert boxes. In pixels (px), ex: 1px.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="706" value="" id="fusion_bordersize" name="fusion_bordersize" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS Class</strong><span>Add a class to the wrapping HTML element.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="708" value="" id="fusion_class" name="fusion_class" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS ID</strong><span>Add an ID to the wrapping HTML element.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="709" value="" id="fusion_id" name="fusion_id" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+
+    <table class="clearfix has-children" id="ImageLibraryContainer">
+        <!--ImageLibraryContainer-->
+        <tbody>
+            <tr data-boxindex="0">
+                <td><a href="#" class="fusion-expand-child linkHeader" data-boxindex="" onclick="toggleImageLibraryDetail(this)" data-state="0">Image Library Item 1<i class="fusiona-plus2"></i></a>
+                    <div class="child-options boxDetail" style="display: none;" data-boxindex="">
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-input">
+                            <div class="name-description"><strong>Image Website Link</strong><span>Add the url to image's website. If lightbox option is enabled, you have to add the full image link to show it in the lightbox.</span></div>
+                            <div class="element-type">
+                                <input type="text" class="text-field subObjectProperty" data-subpropertyindex="106" value="" id="fusion_url[0]" name="fusion_url[0]" size="50" style="padding: 6px 0px !important;">
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-select">
+                            <div class="name-description">
+                                <strong>Link Target</strong><span>_self = open in same window<br>
+                                    _blank = open in new window</span>
+                            </div>
+                            <div class="element-type">
+                                <div class="select_arrow"></div>
+                                <select id="fusion_target[0]" name="fusion_target[0]" class="select-field subObjectProperty" data-subpropertyindex="107">
+                                    <option value="_self" selected="">_self</option>
+                                    <option value="_blank">_blank</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-upload">
+                            <div class="name-description"><strong>Image</strong><span>Upload an image to display.</span></div>
+                            <div class="element-type">
+                                <div class="fusion-upload-container">
+                                    <img src="" alt="Image" class="uploaded-image" style="height: 192px; width: 311px; padding-bottom: 3px;">
+                                    <div style="clear: both;"></div>
+                                    <input type="hidden" class="fusion-form-text fusion-form-upload fusion-input subObjectProperty" name="fusion_image" value="" data-subpropertyindex="108">
+                                    <a href="#" class="fusionb-upload-button " data-upid="1">Upload</a>
+                                    <a href="#" style="display: none" class="fusionb-edit-button" data-upid="1">Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-input">
+                            <div class="name-description"><strong>Image Alt Text</strong><span>The alt attribute provides alternative information if an image cannot be viewed.</span></div>
+                            <div class="element-type">
+                                <input type="text" class="text-field subObjectProperty" data-subpropertyindex="109" value="" id="fusion_alt[0]" name="fusion_alt[0]" size="50" style="padding: 6px 0px !important;">
+                            </div>
+                        </div>
+                        <a class="child-clone-row-remove fusion-shortcodes-button" href="JavaScript:void(0)" onclick="removeImageLibrary(this)">Remove</a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><a id="fusion-child-add" data-itemcount="1" href="JavaScript:void(0)" onclick="addNewImageLibrary(this)">Add New Image</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

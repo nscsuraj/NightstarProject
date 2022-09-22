@@ -1,0 +1,49 @@
+﻿@model PartnerPortal.Models.GatewayVM
+@{
+    ViewBag.Title = Model.PageTitle;
+    Layout = "~/Views/Shared/_LayoutLanding.cshtml";
+}
+
+@section MetaTags
+{
+     @foreach (var m in Model.MetaTags)
+     {
+         if (m.TagType == 0)
+         {
+             <meta property="og:@m.TagKey" content="@m.TagValue"/>
+         }
+         else
+         {
+            <meta name="@m.TagKey" content="@m.TagValue"/>
+         }
+     
+     }
+}
+
+@section scripts
+{
+
+}
+@section MainContent {
+    <style>
+        .landingRightPanel {
+            clear: both;
+            display: inline-block;
+            width: 90%;
+            min-height: 500px;
+            background-color: #ffffff;
+
+        }
+        p {
+            text-align: justify !important;
+        }
+    </style>
+
+    <div class="landingRightPanel">
+        <div style="margin-top: 7%; margin-left: 4%; margin-right: 4%; text-align: justify;">
+            @{ Html.RenderAction("GetPageHtml", "Utility", new {id = 11}); }
+        </div>
+
+    </div>
+
+}

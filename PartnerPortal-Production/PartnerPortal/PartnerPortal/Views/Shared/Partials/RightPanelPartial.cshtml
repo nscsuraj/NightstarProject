@@ -1,0 +1,147 @@
+﻿<style>
+    .boxShadow {
+    }
+</style>
+<style>
+
+    .rightPanelContainer {
+        margin-top: 80px;
+        max-width: 300px;
+        min-height: 350px;
+        background-color: #ECF8FF
+    }
+
+    .rightPanelContent {
+        text-align: left;
+        float: left;
+        min-width: 300px;
+        min-height: 350px;
+        background-color: #ffffff;
+        -webkit-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: -1px 0px 3px 1px rgba(0, 0, 0, 0.15);
+    }
+
+    @@media only screen and (max-width:1399px) {
+    }
+
+    @@media only screen and (max-width:1150px) {
+        .rightPanelContainer {
+            margin-top: 80px;
+            max-width: 250px;
+            min-height: 350px;
+            margin-right: 0px;
+            background-color: #ECF8FF
+        }
+
+        .rightPanelContent {
+            text-align: left;
+            float: none;
+            min-width: 0;
+            min-height: 350px;
+            background-color: #ffffff;
+            -webkit-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+            -moz-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+            box-shadow: -1px 0px 3px 1px rgba(0, 0, 0, 0.15);
+        }
+    }
+
+    @@media only screen and (max-width:940px) {
+    }
+
+    @@media only screen and (max-width:900px) {
+        .rightPanelContainer {
+            margin-top: 80px;
+            float: none;
+            max-width: 80%;
+            min-height: 350px;
+            margin-left: 10%;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .rightPanelContent {
+            text-align: left;
+            float: none;
+            min-width: 0;
+            min-height: 350px;
+            background-color: #ffffff;
+            -webkit-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+            -moz-box-shadow: -1px 0px 7px 0px rgba(0, 0, 0, 0.75);
+            box-shadow: -1px 0px 3px 1px rgba(0, 0, 0, 0.15);
+        }
+    }
+</style>
+
+<div id="requestTrainingLink" class="" style="display: inline-block;">
+    <div id="requestTraining" style="font-weight: bold; font-size: 11pt; width: 90%;text-align: center; margin-top: 60px; color: #383737">
+        <a href="~/pages/request-training" target="_self" style="cursor:pointer;"><img src="~/Images/RequestTraining.png" style="width:330px;" /></a>
+    </div>
+</div>
+<div class="rightPanelContainer" id="dedicatedSupport" style="display: none;" ng-controller="StarRoghtPanelAccountDetailController">
+    <div class="rightPanelContent" ng-show="showPanel">
+        <div style="font-weight: bold; font-size: 13pt; width: 90%; margin: 10px;color:#383737">Star Dedicated Resources</div>
+        <br />
+        <div style="font-weight: bold; font-size: 11pt; width: 90%; margin: 10px; color: #383737">
+            <div style="font-size: 12pt;">{{Account.AccountExpert}}</div>
+            <div style="font-size: 9pt;">Dedicated Channel Account Manager</div>
+            <div style="font-size: 9pt;"><a href="mailto:{{Account.AccountExpertEmail}}" target="_blank">{{Account.AccountExpertEmail}}</a></div>
+            <div style="font-size: 9pt;"><a href="tel:{{Account.AccountExpertPhone}}">{{Account.AccountExpertPhone}}</a></div>
+        </div>
+        <br />
+        <div style="font-weight: bold; font-size: 11pt; width: 90%; margin: 10px;color:#383737">
+            <div style="font-size: 12pt;">{{Account.SupportExpert}}</div>
+            <div style="font-size: 9pt;">Dedicated Support Manager</div>
+            <div style="font-size: 9pt;"><a href="mailto:{{Account.SupportExpertEmail}}" target="_blank">{{Account.SupportExpertEmail}}</a></div>
+            <div style="font-size: 9pt;"><a href="tel:{{Account.SupportExpertPhone}}">{{Account.SupportExpertPhone}}</a></div>
+        </div>
+
+    </div>
+
+
+</div>
+<div class="rightPanelContainer" id="supportNumber" style="display: none;margin-top:20px;">
+    <div class="rightPanelContent" style="min-height:80px !important">
+        <div style="font-weight: bold; font-size: 11pt; width: 90%; margin: 10px; text-align: center; margin-top: 5px; color: #383737">
+            <div style="font-size: 12pt;">Support Number</div>
+            <div style="font-size: 9pt; color: #133496;"><a href="tel:(800) 782-7636 x995">(800) 782-7636 x995</a></div>
+        </div>
+    </div>
+</div>
+<script>
+
+
+    app.controller("StarRoghtPanelAccountDetailController", function ($controller, $scope, $http, $sce,
+        notificationFactory, $location,
+        validationFactory, filterFilter, helperFactory, dbUtilFactory) {
+
+
+        $scope.Account = {};
+        $scope.showPanel = false;
+        $scope.getAccount = function () {
+            dbUtilFactory.get(root + 'api/ppcmsapi/GetAccountFromSessionData/', "", function (d) {
+                $scope.Account = d;
+
+                //$scope.showLoading = false;
+                //if (d.length <= 0) {
+                //    $scope.showNoData = true;
+                //} else {
+                //    $scope.showData = true;
+                //}
+                if (angular.lowercase($scope.Account.PartnerType) !== "distributor") {
+                    if (angular.lowercase($scope.Account.LoyaltyLevel).indexOf("platinum") >= 0) {
+                        $("#dedicatedSupport").show();
+                        $scope.showPanel = true;
+                    }
+                    else {
+                        $("#supportNumber").show();
+                    }
+                }
+            }, '', 'Error getting data ');
+        };
+        $scope.getAccount();
+
+
+
+    });
+</script>

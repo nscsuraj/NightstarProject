@@ -1,0 +1,40 @@
+﻿
+<div style="margin-top: 60px; text-align: center; width: 100%;" ng-controller="PPAdminPieChartController">
+    <canvas id="pie" class="chart chart-pie"  chart-type="type" chart-data="data" chart-labels="labels" chart-colors="chartColors" chart-options="options" >
+    </canvas>
+    <button type="button" class="btn btn-primary pull-right" ng-click="toggle()">Toggle</button>
+</div>
+
+<script>
+     
+
+    app.controller("PPAdminPieChartController", function ($controller, $scope, $http, $sce,
+            notificationFactory, $location,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory) {
+
+            $scope.data = [];
+            $scope.chartColors = ['#0074D9', '#FF4136', '#2ECC40', '#FF851B', '#7FDBFF', '#B10DC9', '#FFDC00', '#001f3f', '#39CCCC', '#01FF70', '#85144b', '#F012BE', '#3D9970', '#111111', '#AAAAAA'];
+            //Pie
+            $scope.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            $scope.GetVisits = function () {
+                dbUtilFactory.get(root + 'api/ppcmsapi/GetVisitsAndPageViewsSummary/', "", function (d) {
+                    $scope.data = d.Visits;
+                }, '', 'Error getting data ');
+            };
+            $scope.GetVisits();
+            $scope.type = 'pie';
+            $scope.options = {
+                legend: { display: true },
+                title: {
+                    display: true,
+                    text: "Visits"
+                }
+            };
+            $scope.toggle = function () {
+                $scope.type = $scope.type === 'polarArea' ?
+                  'pie' : 'polarArea';
+                
+            };
+          
+        });
+    </script>

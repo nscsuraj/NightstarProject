@@ -1,0 +1,306 @@
+﻿
+<style>
+    .clsTextBoxOpportunity {
+        min-height: 50px !important;
+        font-size: 20px !important;
+    }
+    .btnLanding {
+        background-color: #21459A;
+        border: none;
+        color: #FFFFFF;
+        text-align: center;
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        margin: 10px 0 !important;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+        height: 40px;
+        width: 150px;
+    }
+    .invalidated {
+        border-bottom: 1px solid #FF0208 !important;
+        background-color: #FFBABC !important;
+    }
+</style>
+
+<div style="width: 100%;">
+    <div class="fusion-fullwidth fullwidth-box" style="margin-top:50px;margin-bottom:90px; text-align: left; background-color:#111c4e;background-repeat:no-repeat;background-position:left top;border:0px solid ;padding-top:20px;padding-bottom:20px;padding-left:20px;padding-right:20px;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;" id="">
+        <div class="fusion-row">
+            <div>
+                <div>
+                    <div style="text-size-adjust: auto; font-family: Calibri, Arial, Helvetica, sans-serif; font-size: 12pt;"><span style="color: #ffffff; font-family: Arial, Helvetica, sans-serif; text-align: justify;"><strong>Need a demo unit for testing or integration purposes?</strong></span></div>
+                    <div style="text-size-adjust: auto; font-family: Calibri, Arial, Helvetica, sans-serif; font-size: 12pt;"><span style="color: #ffffff; font-family: Arial, Helvetica, sans-serif; text-align: justify;">Demo requests will be reviewed by our team and a response will be sent within two business days.</span></div>
+                </div>
+            </div>
+        </div>
+    
+</div>
+
+</div>
+<div style="width: 100%; " ng-controller="StarMdfRequestController">
+    <div class="fusion-fullwidth fullwidth-box" style="text-align: left; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; " id="form1">
+        <div style="padding-left: 20px;">
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 250px; padding-left: 20px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 12pt;">Business Case *</div>
+                <div style="width: 500px;  float: left; display: table-cell; vertical-align: middle;">
+                    <input class="clsTextBoxOpportunity" style="width: 100%;" placeholder="Request for (max 250 characters)" type="text" maxlength="250" value="" ng-model="Case.Subject">
+                </div>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 250px; padding-left: 20px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 12pt;">Description</div>
+                <div style="width: 500px;  float: left; display: table-cell; vertical-align: middle;">
+                    <input class="clsTextBoxOpportunity" style="width: 100%;" placeholder="Description" type="text" value="" ng-model="Case.Description">
+                </div>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 250px; padding-left: 20px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 12pt;">Product Name *</div>
+                <div style="width: 500px;  float: left; display: table-cell; vertical-align: middle;">
+                    <select ng-model="Case.Product_Name__c" style="width: 100%; padding: 5px;padding-left: 15px; font-size: 11pt; height: 50px; border: 1px solid #d2d2d2; cursor: pointer;">
+                        <option value="">--None--</option>
+                        <option value="AirPrint">AirPrint</option>
+                        <option value="All Accessories">All Accessories</option>
+                        <option value="AllReceipts">AllReceipts</option>
+                        <option value="Antimicrobial Covers AMC">Antimicrobial Covers AMC</option>
+                        <option value="Bluetooth">Bluetooth</option>
+                        <option value="BSC10">BSC10</option>
+                        <option value="CD3-1313">CD3-1313</option>
+                        <option value="CD3-1616">CD3-1616</option>
+                        <option value="CD4-1313">CD4-1313</option>
+                        <option value="CD4-1616">CD4-1616</option>
+                        <option value="Choice Series">Choice Series</option>
+                        <option value="cloudPRNT">cloudPRNT</option>
+                        <option value="Customer Surveys">Customer Surveys</option>
+                        <option value="Data Facilitation">Data Facilitation</option>
+                        <option value="Device Management">Device Management</option>
+                        <option value="Engage Now">Engage Now</option>
+                        <option value="futurePRNT">futurePRNT</option>
+                        <option value="HL2-SCU-46M">HL2-SCU-46M</option>
+                        <option value="HSP7543">HSP7543</option>
+                        <option value="HSP7743">HSP7743</option>
+                        <option value="Max Series">Max Series</option>
+                        <option value="mC-Sound">mC-Sound</option>
+                        <option value="mEnclosure">mEnclosure</option>
+                        <option value="mG-S1501">mG-S1501</option>
+                        <option value="mG-S8200">mG-S8200</option>
+                        <option value="mG-Scales Support">mG-Scales Support</option>
+                        <option value="mG-Sound">mG-Sound</option>
+                        <option value="Micro Receipt">Micro Receipt</option>
+                        <option value="MP500">MP500</option>
+                        <option value="MP929">MP929</option>
+                        <option value="mPOP">mPOP</option>
+                        <option value="mUnite">mUnite</option>
+                        <option value="Paper &amp; Consumables">Paper &amp; Consumables</option>
+                        <option value="PassPrnt">PassPrnt</option>
+                        <option value="POSShield">POSShield</option>
+                        <option value="PromoPRNT">PromoPRNT</option>
+                        <option value="Receipt Flip">Receipt Flip</option>
+                        <option value="SK1-211">SK1-211</option>
+                        <option value="SK1-221">SK1-221</option>
+                        <option value="SK1-311">SK1-311</option>
+                        <option value="SK1-321">SK1-321</option>
+                        <option value="SK1-41">SK1-41</option>
+                        <option value="SMD2-1317">SMD2-1317</option>
+                        <option value="SMD2-1617">SMD2-1617</option>
+                        <option value="SM-L200">SM-L200</option>
+                        <option value="SM-L300">SM-L300</option>
+                        <option value="SM-S230i">SM-S230i</option>
+                        <option value="SM-T300i">SM-T300i</option>
+                        <option value="SM-T400i">SM-T400i</option>
+                        <option value="SP742">SP742</option>
+                        <option value="StarPRNT SDK">StarPRNT SDK</option>
+                        <option value="StarXpand™">StarXpand™</option>
+                        <option value="SteadyLAN®">SteadyLAN®</option>
+                        <option value="Tamper-Proof Labels">Tamper-Proof Labels</option>
+                        <option value="TMP900">TMP900</option>
+                        <option value="TSP1000">TSP1000</option>
+                        <option value="TSP143III">TSP143III</option>
+                        <option value="TSP654II">TSP654II</option>
+                        <option value="TSP654SK">TSP654SK</option>
+                        <option value="TSP743II">TSP743II</option>
+                        <option value="TSP847II">TSP847II</option>
+                        <option value="TSP847IIRX">TSP847IIRX</option>
+                        <option value="TUP500">TUP500</option>
+                        <option value="TUP900">TUP900</option>
+                        <option value="Value Series">Value Series</option>
+                        <option value="WebPRNT">WebPRNT</option>
+                        <option value="WebPRNT Browser">WebPRNT Browser</option>
+                        </select>
+                </div>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 250px; padding-left: 20px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 12pt;">Product Color *</div>
+                <div style="width: 500px;  float: left; display: table-cell; vertical-align: middle;">
+                    <select ng-model="Case.Product_Color__c" style="width: 100%; padding: 5px;padding-left: 15px; font-size: 11pt; height: 50px; border: 1px solid #d2d2d2; cursor: pointer;">
+                        <option value="">--None--</option>
+                        <option value="Black">Black</option>
+                        <option value="White">White</option>
+                    </select>
+                </div>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 250px; padding-left: 20px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 12pt;">Product Interface *</div>
+                <div style="width: 500px;  float: left; display: table-cell; vertical-align: middle;">
+                    <select ng-model="Case.Product_Interface__c" style="width: 100%; padding: 5px;padding-left: 15px; font-size: 11pt; height: 50px; border: 1px solid #d2d2d2; cursor: pointer;">
+                        <option value="">--None--</option>
+                        <option value="Bluetooth">Bluetooth</option>
+                        <option value="WiFi">WiFi</option>
+                        <option value="Ethernet">Ethernet</option>
+                        <option value="AirPrint">AirPrint</option>
+                        <option value="CloudPRNT">CloudPRNT</option>
+                        <option value="USB">USB</option>
+                        <option value="Parallel">Parallel</option>
+                        <option value="Serial">Serial</option>
+                    </select>
+                   </div> 
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 30px;"></div>
+            <div style="width: 100%; height: 30px;">
+                <span style="color: #2551A4; font-size: 10pt; font-weight: bold;">By clicking "I Agree", you agree to Star Micronics Privacy Policy and Terms of Use. This may include product related emails..</span>
+                <div style="width: 770px;  float: left; display: table-cell; vertical-align: middle;">
+                    <span style="display:inline-block;width:500px;float:left;color: #2551A4;"><input type="checkbox" style="width:30px;height:30px;color: #2551A4;cursor:pointer;" ng-model="AgreedToPrivacyTerms" /> I Agree</span>
+                </div>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both; text-align: left;">
+                <input type="button" name="Submit" class="btnLanding" value="Submit" ng-click="SaveData()">
+            </div>
+        </div>
+
+    </div>    
+    <div style="width: 100%; height: 500px; opacity: .5; display: inline-block; position: absolute; top: 0; left: 0; z-index: 99;" ng-show="showProcessing">
+        <div style="font-size: 22pt; height: 80px; padding-top: 200px;">
+            <img src="~/Images/processing10.gif" />
+
+        </div>
+    </div>
+</div>
+
+    <style>
+        textarea::-webkit-input-placeholder {
+            color: #aaa9a9;
+        }
+
+        textarea:-moz-placeholder { /* Firefox 18- */
+            color: #aaa9a9;
+        }
+
+        textarea::-moz-placeholder { /* Firefox 19+ */
+            color: #aaa9a9;
+        }
+
+        textarea:-ms-input-placeholder {
+            color: #aaa9a9;
+        }
+
+        textarea::placeholder {
+            color: #aaa9a9;
+        }
+    </style>
+    <script>
+
+    $(document).ready(function () {
+        $(".rightPanelContainer").hide();
+    });
+    function validateEmail(email) {
+        var re = /^(([^<>()[\]\\.,;:\s@@\"]+(\.[^<>()[\]\\.,;:\s@@\"]+)*)|(\".+\"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+        app.controller("StarMdfRequestController", function ($controller, $scope, $http, $sce,
+            notificationFactory, $location,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory) {
+
+            $scope.showProcessing = false;
+            $scope.Account = {};
+            $scope.Case = {};
+            $scope.AgreedToPrivacyTerms = false;
+
+            $scope.inIt = function () {
+                $scope.Case = {};
+                $scope.Case.RecordTypeId = "0120h000000UqScAAK";
+                $scope.Case.Subject = "";
+                $scope.Case.Description = "";
+                $scope.Case.AccountId = "";
+                $scope.Case.Product_Name__c = "";
+                $scope.Case.Product_Interface__c = "";
+                $scope.Case.Product_Color__c = "";
+                $scope.Case.Quantity_of_Printers__c = 1;
+            };
+            $scope.inIt();
+
+            $scope.getAccount = function () {
+                dbUtilFactory.get(root + 'api/ppcmsapi/GetAccountFromSessionData/', "", function (d) {
+                    $scope.Account = d;
+                    $scope.Case.AccountId = d.AccountId;
+                }, '', 'Error getting data ');              
+
+            };
+            $scope.getAccount();           
+
+            $scope.SaveData = function () {
+                if (!$scope.AgreedToPrivacyTerms) {
+                    swal({
+                        title: "Error",
+                        text: "Please accept terms.",
+                        type: "error"
+                    });
+                    return false;
+                }
+                if ($scope.Case.Subject == "") {
+                    swal({
+                        title: "Error",
+                        text: "Please provide Case.",
+                        type: "error"
+                    });
+                    return false;
+                }
+                if ($scope.Case.Product_Name__c == "") {
+                    swal({
+                        title: "Error",
+                        text: "Please chose product.",
+                        type: "error"
+                    });
+                    return false;
+                }
+                if ($scope.Case.Product_Color__c == "") {
+                    swal({
+                        title: "Error",
+                        text: "Please chose product color.",
+                        type: "error"
+                    });
+                    return false;
+                }
+                if ($scope.Case.Product_Interface__c == "") {
+                    swal({
+                        title: "Error",
+                        text: "Please chose product interface.",
+                        type: "error"
+                    });
+                    return false;
+                }
+                $scope.showProcessing = true;
+                dbUtilFactory.postp(root + 'api/ppcmsapi/SaveDemoUnitRequested/', $scope.Case, function () {
+                    var redUrl = '@Url.Content("~/Pages/Dashboard")';
+                    swal({
+                        title: "Done",
+                        text: "Thank you for requesting a demo unit. A Star expert will respond within two business days.",
+                        type: "success"
+                    }).then(function () {
+                        $scope.showProcessing = false;
+                        window.location.href = redUrl;
+                    });
+                }, '', 'Error getting data ');
+
+
+
+
+                return true;
+            };
+
+
+        });
+    </script>

@@ -1,0 +1,166 @@
+﻿<div style="width: 95%; display: inline-block; position: absolute; left: 2%">
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description">
+            <strong>Width</strong><span>In pixels but only enter a number, ex: 600</span>
+        </div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-PropertyIndex="637" value="600" id="width" name="width" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description">
+            <strong>Height</strong><span>In pixels but only enter a number, ex: 350</span>
+        </div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-PropertyIndex="638" value="350" id="height" name="height" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Video Link URL</strong><span>Add the URL the video will link to, ex: http://example.com.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="639" value="" id="fusion_link" name="fusion_link" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Link Target</strong><span>_self = open in same window<br>
+            _blank = open in new window.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_target" name="fusion_target" class="select-field objectProperty" data-propertyindex="640">
+                <option value="_self" selected="">_self</option>
+                <option value="_blank">_blank</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description">
+            <strong>Autoplay Video</strong><span>Set to yes to make video autoplaying</span>
+        </div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="autoplay" name="autoplay" class="select-field objectProperty" data-PropertyIndex="641"><option value="no" selected="">No</option><option value="yes">Yes</option></select>
+        </div>
+    </div>
+    
+    <div class="clearfix form-element-container form-element-container-upload">
+        <div class="name-description"><strong>Video</strong><span>Upload an video to display.</span></div>
+        <div class="element-type">
+            <div class="fusion-upload-container">
+                <video id="imageDisplay" class="uploaded-image" controls style="height: 192px; width: 311px; padding-bottom: 3px; object-fit: fill;">
+                    <source src="" type="video/mp4">
+                </video>
+                <div style="clear: both;"></div>
+                <input type="hidden" class="fusion-form-text fusion-form-upload fusion-input objectProperty" 
+                    name="fusion_image" id="hidden_fusion_image" value="" data-propertyindex="642">
+                <a href="#" class="fusionb-upload-button " data-upid="1">Upload</a>
+                <a href="#" style="display: none" class="fusionb-edit-button" data-upid="1">Edit</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description">
+            <strong>CSS Class</strong><span>Add a class to the wrapping HTML element.</span>
+        </div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-PropertyIndex="643" value="" id="class" name="class" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS ID</strong><span>Add an ID to the wrapping HTML element.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="644" value="" id="fusion_id" name="fusion_id" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Alignment Type</strong><span>Select a type to choose the video <br>
+            to be appeared on which side of the page.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_float" name="fusion_float" class="select-field objectProperty" data-propertyindex="645">
+                <option value="center">center</option>
+                <option value="end">end</option>
+                <option value="inherit" selected="">inherit</option>
+                <option value="initial">initial</option>
+                <option value="justify">justify</option>
+                <option value="left">left</option>
+                <option value="right">right</option>
+                <option value="start">start</option>
+            </select>
+</div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $(".ui-dialog").css("height", $(window).height() - 70);
+
+        //get the object and set values
+        var carrierObj = JSON.parse($("#dialog_form").attr("data-obj"));
+        try {
+            $(".objectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(carrierObj[$(this).attr("data-PropertyIndex")]);
+                } else {
+                    if (carrierObj[$(this).attr("data-PropertyIndex")] != null && carrierObj[$(this).attr("data-PropertyIndex")] != undefined && carrierObj[$(this).attr("data-PropertyIndex")].length > 0)
+                    $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                }
+            });
+            if (carrierObj[299].length > 0) {
+                $("#imageDisplay").parent().find('.fusionb-upload-button').text('Remove').addClass('remove-image');
+            }
+        } catch (e) {
+
+        }
+        $("#imageDisplay").attr("src", $("#hidden_fusion_image").val());
+
+        $(".fusionb-upload-button").click(function () {
+            $("#dialog_uploadMedia").empty();
+            var template = root + "/Templates/CMS/Editor/UploadMediaTemplate.html";
+            $("#dialog_uploadMedia").load(template);
+            uploaderOpenedBy = $(this);
+
+            if ($(this).hasClass('remove-image')) {
+                $(this).parent().find('video').attr('src', '');
+                //$(this).parent().find('video').prop("controls", false);
+                $(this).parent().find('input').attr('value', '');
+                $(this).hide();
+                $(this).text('Upload').removeClass('remove-image').attr('style', '');
+                return;
+            }
+            //$("#dialog_uploadMedia").attr("data-allowMultiSelect",false); //Add this line only if you want to add multiselect option
+            var dialog = $("#dialog_uploadMedia").dialog({
+                autoOpen: false,
+                width: "96%",
+                modal: true,
+                resizable: false,
+                position: [30, 30],
+                dialogClass: "no-titlebar",
+                create: function (event) { $(event.target).parent().css('position', 'fixed'); $(".ui-widget-header").hide(); },
+                open: function () { $(".ui-widget-header").hide(); },
+                close: function () {
+                    //for (var i = 0; i < selectedUploadedObjectsToUse.length; i++) {
+                    //    alert(selectedUploadedObjectsToUse[i].FilePath);
+                    //}
+                    $(".ui-widget-header").show();
+                    if (selectedUploadedObjectsToUse.length > 0) {
+                        uploaderCallback(selectedUploadedObjectsToUse[0].FilePath);
+                        //$(this).parent().find('video').prop("controls", true);
+                        uploaderOpenedBy.text('Remove').addClass('remove-image');
+                    }
+                }
+            });
+            dialog.dialog("open");
+        });
+    });
+
+    function uploaderCallback(filePath) {
+        if ($(uploaderOpenedBy) != undefined) {
+            $(uploaderOpenedBy).parent().find("input[type='hidden']").val(filePath);
+            $(uploaderOpenedBy).parent().find("video").attr("src", filePath);
+        }
+    }
+</script>

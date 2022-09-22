@@ -1,0 +1,360 @@
+﻿
+<style>
+    
+    .thirdDivider {
+        width: 100%;
+        height: 5px;
+        clear: both;
+    }
+    .secondDivider {
+        width: 100%;
+        height: 5px;
+        clear: both;
+        display: none;
+
+    }
+
+        #filter::placeholder {  
+                  
+            /* Firefox, Chrome, Opera */ 
+            text-align: right; 
+        } 
+
+        #filter::-webkit-input-placeholder {
+          /* WebKit browsers */
+          text-align: right;
+        }
+        #filter:-moz-placeholder {
+          /* Mozilla Firefox 4 to 18 */
+          text-align: right;
+        }
+        #filter::-moz-placeholder {
+          /* Mozilla Firefox 19+ but I'm not sure about working */
+          text-align: right;
+        }
+        #filter:-ms-input-placeholder {
+          /* Internet Explorer 10 */
+          text-align: right;
+        }
+   .divSearchContainer {
+       float: right;
+       width: 465px; 
+       padding-left: 5px; 
+       padding-top: 5px; 
+       border-radius: 5px; 
+       padding-right: 5px; 
+       min-height: 45px; 
+       background-color: #ececec;
+   }
+   .searchBox {
+       width: 300px !important; 
+       font-size: 12pt !important; 
+       margin: 10px;
+       color: #000000;
+   }
+
+  @@media only screen and (max-width: 500px) {
+       .divSearchContainer {
+           width: 100%;
+           float: left;
+           padding-left: 5px; 
+           padding-top: 5px; 
+           border-radius: 5px; 
+           padding-right: 5px; 
+           min-height: 45px; 
+           background-color: #ececec;
+       }
+       .searchBox {
+           width: 90% !important;
+           margin-top: 10px;
+           margin-bottom: 10px;
+           font-size: 12pt !important; 
+           color: #000000;
+       }
+
+
+}
+</style>
+<script>
+
+    function articleMouseIn(ctrl) {
+        var h = $(ctrl).find(".entry-media-wrapper").height();
+        $(ctrl).find(".czr-caption").height(h - 10);
+        $(ctrl).find(".entry-media-wrapper").hide();
+        $(ctrl).find(".czr-caption").show();
+    }
+
+    function articleMouseOut(ctrl) {
+        var h = $(ctrl).find(".entry-media-wrapper").height();
+        $(ctrl).find(".czr-caption").height(h - 10);
+        $(ctrl).find(".entry-media-wrapper").show();
+        $(ctrl).find(".czr-caption").hide();
+    }
+</script>
+<div style="width: 100%;" ng-controller="StarSupportResellerController">
+    <div class="fusion-fullwidth fullwidth-box" style="text-align: left; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; margin-bottom: 10px;" id="">
+
+        <div class="fusion-row">
+            <div style="width: 100%; float: right; display: inline-block; text-align: left; padding-top: 30px; color: #3D80EB;">
+                <div style="text-align: right; height: 60px; color: #001E4F; font-size: 14pt; font-weight: normal;">
+                    <div class="divSearchContainer">
+                        <span style="margin-right: 10px;">Support Search</span> <input class="clsTextBoxLanding searchBox" id="filter" placeholder="&#128269;" type="text" value="" ng-model="query">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="fusion-fullwidth fullwidth-box" style="text-align: left; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;" id="">
+        <div style="width: 100%;">
+            <div class="fusion-fullwidth fullwidth-box" style="text-align: left; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;" id="">
+
+                <div style="font-size: 16pt; font-weight: bold; color: #737373; margin-left: 15px; margin-bottom: 20px; border: 1px solid #ececec; background-color: #ffffff; text-align: center;" ng-show="showLoading">
+                    <img src="~/Images/tenor.gif"/>
+                </div>
+                <div style="font-size: 16pt; font-weight: bold; color: #737373; margin-left: 15px; margin-bottom: 20px;" ng-show="showNoData"> No files available.</div>
+
+                <div class="fusion-row" ng-show="showData" id="dataContainer" style="display: none;">
+                    <div class="fusion-fullwidth fullwidth-box" style="text-align: left; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; margin-bottom: 30px; padding: 10px;" id="" ng-repeat="lib in Library" ng-hide="lib.LibraryFiles.length==0">
+                        <fieldset style="padding: 10px;">
+                            <legend style="margin-left: 20px; font-size: 16pt; font-weight: bold; color: #001E4F; margin-bottom: 10px;" class="galleryCategoryText">{{lib.CategoryName}}</legend>
+                           <div ng-repeat="item in lib.LibraryFiles | filter : query" style="text-align: center;" class="galleryContainer" ng-show="ShowLibraryFiles($index,lib.ShowMore)">
+                               <a ng-href="{{item.FilePath}}" target="_blank" title="{{item.Description}}">
+                                   <div class="fusion-one-fourth one_fourth fusion-layout-column fusion-spacing-yes galleryItem" style="text-align: center;">
+                                       <div class="fusion-column-wrapper">
+                                           <div style="min-height: 250px; background-color: #D3ECFA; cursor: pointer;" class="boxShadowWithoutBorder">
+                                               <table style="width: 100%;">
+                                                   <tr>
+                                                       <td style="height: 60px; background-color: #5EB2E1; color: #001E4F; text-align: left; padding: 10px; font-size: 12pt; font-weight: bold; overflow: hidden;">
+                                                           {{item.Title}}
+                                                       </td>
+                                                   </tr>
+                                                   <tr>
+                                                       <td class="galItemDescrTd" style="height: 190px; color: #001E4F; padding: 0px; text-align: justify; vertical-align: bottom; overflow: hidden; background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url({{item.FileThumbnailPath}}); background-size: 100% 100%;">
+                                                           <div class="galleryItemDescriptionBox">{{item.Description}}</div>
+                                                       </td>
+                                                   </tr>
+
+                                               </table>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </a>
+                                @*                                <div class="thirdDivider" ng-if="!(($index + 1) % 4)"></div>
+                                <div class="secondDivider" ng-if="!(($index + 1) % 2)"></div>*@
+                            </div>
+                        </fieldset>
+                        <div style="text-align: right; width: 100%; cursor: pointer; font-size: 10pt;" ng-show="lib.LibraryFiles.length>4">
+                            <a ng-hide="lib.ShowMore" ng-click="lib.ShowMore = true">Show More <img src="@Url.Content("~/Images/multiDownArrow.png")" style="width: 20px; height: 20px;"/>
+                            </a>
+                            <a ng-show="lib.ShowMore" ng-click="lib.ShowMore = false">Show Less <img src="@Url.Content("~/Images/multiDownArrow.png")" style="width: 20px; height: 20px;" class="rotateimg180"/>
+                            </a>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<Style>
+    
+    /* latin-ext */
+    .galleryItemDescriptionBox {
+        z-index: 9999;
+        padding: 10px; 
+        background-color: #000000; 
+        opacity: .5; 
+        color: #ffffff; 
+        overflow: hidden; 
+        transition: height 4s;
+        font-size: 9pt;
+        height: 40px;
+        -webkit-transition: height 1s;
+    }
+    .galItemDescrTd:hover .galleryItemDescriptionBox,.galItemDescrTd.hover .galleryItemDescriptionBox {
+        /*height: 170px;*/
+    }
+
+
+    .galleryContainer {
+        margin-left: 1%;
+    }
+    .galleryItem {
+        width: 22% !important;
+        margin-top: 20px;
+        margin-left: 2%;
+    }
+    @@media only screen and (max-width: 1500px)
+    {
+        .galleryContainer {
+            margin-left: 1%;
+        }
+        .galleryItem {
+            width: 23% !important;
+            margin-top: 20px;
+            margin-left: 1%;
+        }
+    }
+    @@media only screen and (max-width: 1400px)
+    {
+        .galleryContainer {
+            margin-left: 0%;
+        }
+        .galleryItem {
+            width: 23% !important;
+            margin-top: 20px;
+            margin-left: 1%;
+        }
+    }
+     @@media only screen and (max-width: 1300px)
+    {
+        .galleryItem {
+            width: 30% !important;
+            margin-top: 20px;
+        }
+    }
+    @@media only screen and (max-width: 990px)
+    {
+        .galleryItem {
+            width: 45% !important;
+            margin-top: 20px;
+        }
+    }
+    @@media only screen and (max-width: 900px)
+    {
+        .galleryContainer {
+            margin-left: 4%;
+        }
+        .galleryItem {
+            width: 23% !important;
+            margin-top: 20px;
+        }
+    }
+    @@media only screen and (max-width: 800px)
+    {
+        .galleryContainer {
+            margin-left: 4%;
+        }
+        .galleryItem {
+            width: 32% !important;
+            margin-top: 20px;
+            margin-left: 1%;
+        }
+    }
+    @@media only screen and (max-width: 500px)
+    {
+        .galleryContainer {
+            margin-left: 4%;
+        }
+        .galleryItem {
+            width: 45% !important;
+            margin-top: 20px;
+            margin-left: 1%;
+        }
+        .galleryCategoryText {
+            font-size: 22pt !important;
+        }
+    }
+    @@media only screen and (max-width: 400px)
+    {
+        .galleryContainer {
+            margin-left: 1%;
+        }
+        .galleryItem {
+            width: 48% !important;
+            margin-top: 20px;
+            margin-left: 1%;
+        }
+        .galleryCategoryText {
+            font-size: 18pt !important;
+        }
+    }
+    @@media only screen and (max-width: 300px)
+    {
+        .galleryContainer {
+            margin-left: 1%;
+        }
+        .galleryItem {
+            width: 91% !important;
+            margin-top: 20px;
+            margin-left: 2%;
+        }
+        .galleryCategoryText {
+            font-size: 16pt !important;
+        }
+    }
+    @@font-face {
+        font-family: 'Sintony';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Sintony'), url(https://fonts.gstatic.com/s/sintony/v7/XoHm2YDqR7-98cVUET0tuv0rnjrQ8Q.woff2) format('woff2');
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    /* latin */
+    @@font-face {
+        font-family: 'Sintony';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Sintony'), url(https://fonts.gstatic.com/s/sintony/v7/XoHm2YDqR7-98cVUETMtuv0rnjo.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+
+   
+</Style>
+
+<script>
+
+
+        app.controller("StarSupportResellerController", function ($controller, $scope, $http, $sce,
+            notificationFactory, $location,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory) {
+
+
+            $scope.Library = [];
+            $scope.showLoading = true;
+            $scope.showNoData = false;
+            $scope.showData = false;
+
+            $scope.articleHover = function () { }
+
+            $scope.formatDate = function (date, format) {
+                if (date == undefined) return '';
+                return $.format.date(new Date(date), format);
+            };
+
+            $scope.getLibrary = function () {
+                var url = root + 'api/ppcmsapi/GetLibraryFilesForSupport';
+                dbUtilFactory.get(url, "", function (d) {
+                    $scope.Library = d;
+                    $scope.showLoading = false;
+                    if (d.length <= 0) {
+                        $scope.showNoData = true;
+                    } else {
+                        $scope.showData = true;
+                        $("#dataContainer").show();
+                    }
+
+                }, '', 'Error getting data ');
+            };
+            $scope.getLibrary();
+
+            $scope.ShowLibraryFiles = function (index, show) {
+                if (show) return true;
+                if (!show) {
+                    if (index < 4) return true;
+
+                }
+                return false;
+            }
+
+        });
+    </script>

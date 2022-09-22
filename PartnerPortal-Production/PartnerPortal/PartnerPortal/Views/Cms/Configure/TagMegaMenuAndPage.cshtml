@@ -1,0 +1,195 @@
+﻿@{
+    ViewBag.Title = "Associate Mega Menu Item With Page";
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+}
+
+@section featured {
+}
+@section scripts
+{
+    <style>
+        .ui-button-text {
+            font-size: 1.4rem;
+        }
+    </style>
+    <script>
+    </script>
+}
+@section MainContent {
+    <div ng-controller="MenuAndPageTaggingController">
+        <table style="width: 100%; height: 100%;">
+            <tr>
+                <td style="background-color: #026F8A; color: #ffffff; text-align: center; vertical-align: middle; font-size: 24px; font-weight: bold; padding: 10px;">Associate Page With Menu</td>
+            </tr>
+            <tr>
+                <td style="text-align: left; vertical-align: middle; font-size: 24px; font-weight: bold; padding: 10px;">
+                    <input type="button" id="submitButton" class="btn btn-primary" ng-click="save()" value="Save" style="width: 100px; margin-top: 10px; box-shadow: 4px 4px 5px #888888;"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: left; vertical-align: middle; font-size: 24px; font-weight: bold; padding: 10px;">
+                    <div class="divFullBorderCMS"></div>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: left; vertical-align: middle; font-size: 24px; font-weight: bold; padding: 10px;">
+                    <div class="leftFloat width99p paddingtop10 paddingleft1p" style="background-color: rgb(234, 234, 234);">
+                        <div class="leftFloat width99p">
+                            <div class="leftFloat width100p">
+                                <div class="leftFloat width5p paddingtop5" style="font-size: 16px;"><b>Filter</b>
+                                </div>
+                                <div class="leftFloat width93p paddingleft2p">
+                                    <input id="filter" class="form-control width100p" ng-model="filterName" style="font-size: 14px; width: 99%; padding: 5px;"/>
+                                </div>
+                            </div>
+                            <div class="leftFloat width100p paddingtop10" style="font-size: 16px;">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr style="color: #428bca; cursor: pointer;">
+                                            <th ng-click="predicate = 'Title'; reverse=!reverse" style="cursor: pointer; font-size: 18px;">Menu</th>
+                                            <th ng-click="predicate = 'PageTitle'; reverse=!reverse" style="cursor: pointer; font-size: 18px;">Page</th>
+                                            <th ng-click="predicate = 'Url'; reverse=!reverse" style="cursor: pointer; font-size: 18px;">Url</th>
+                                            <th ng-click="predicate = 'Url'; reverse=!reverse" style="cursor: pointer; font-size: 18px;">Sites</th>
+                                            <th style="cursor: pointer; font-size: 18px; text-align: center;">Clear Association</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <tr dir-paginate="item in menuList | filter:filterName | filter:filterStatus | orderBy:predicate:reverse|itemsPerPage:10" style="height: 35px;" pagination-id="cust">
+                                        <td data-placement="right" style="width: 30%;">
+                                            {{item.Title}}
+                                        </td>
+                                        <td data-placement="right" style="width: 15%; cursor: pointer;" title="Click to choose page" ng-click="selectPage(item)">
+                                            {{item.PageTitle}}
+                                        </td>
+                                        <td data-placement="right" style="width: 20%; cursor: pointer;" title="Click to provide Url">
+                                            <input type="text" ng-model="item.Url" style="width: 96%; padding: 5px;"/>
+                                        </td>
+                                         <td data-placement="right" style="width: 33%; cursor: pointer;" title="Click to provide Url">
+                                            <b>English</b>&nbsp;&nbsp;<input type="checkbox" ng-model="item.IsEnglish" ng-change="setSite(item,'EN')" style="width: 20px; height: 20px;"/>
+                                            <b>Espanol</b>&nbsp;&nbsp;<input type="checkbox" ng-model="item.IsEspanol" ng-change="setSite(item,'ES')" style="width: 20px; height: 20px;"/>
+                                            <b>Portuguese</b>&nbsp;&nbsp;<input type="checkbox" ng-model="item.IsPortu" ng-change="setSite(item,'PT')" style="width: 20px; height: 20px;"/>
+                                        </td>
+                                        <td data-placement="right" style="width: 2%; cursor: pointer; text-align: center;" title="Click to choose page" ng-click="clearAssociation(item)">
+                                            <a class="btn-small btn-enable-disable-user" title="Clear page menu association" href="#" ng-click="clearAssociation(item)">
+                                                <img src="~/Images/delete-24.png" height="20px" width="20px"></img>
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="cust"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: left; vertical-align: middle; font-size: 24px; font-weight: bold; padding: 10px;">
+                    <div class="divFullBorderCMS"></div>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right; vertical-align: middle; font-size: 24px; font-weight: bold; padding: 10px;">
+                    <input type="button" id="submitButton1" class="btn btn-primary" ng-click="save()" value="Save" style="width: 100px; margin-top: 10px; box-shadow: 4px 4px 5px #888888;"/>
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+}
+
+@section AngularScripts
+{
+    <script>
+        app.controller("MenuAndPageTaggingController", function($controller, $scope, $http, $rootScope, SweetAlert,
+            notificationFactory, $location,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory, $window, $modal, $log) {
+            $scope.menuList = [];
+            $scope.init = function() {
+
+                dbUtilFactory.get(root + '/api/megamenu/GetMenuAndTaggingPage/', "", function(d) {
+                    $scope.menuList = d;
+                }, '', 'Error getting data ');
+            };
+            $scope.setSite = function (item, val) {
+                item.Sites = '';
+                if (item.IsEnglish) {
+                    item.Sites = 'EN';
+                }
+                if (item.IsEspanol) {
+                    item.Sites = item.IsEnglish ? item.Sites + ',ES' : 'ES';
+                }
+                if (item.IsPortu) {
+                    item.Sites = (item.IsEnglish || item.IsEspanol) ? item.Sites + ',PT' : 'PT';
+                }
+            }
+            $scope.selectPage = function(menu) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: root + 'Templates/CMS/SelectPage.html',
+                    controller: 'modalSelectPageCtrl',
+                    resolve: { Menu: function() { return menu; } }
+                });
+                modalInstance.result.then(function(Menu) {
+                    menu = Menu;
+                }, function() {
+                    $log.info('Modal dismissed at: ' + new Date());
+                });
+            };
+
+            $scope.init();
+
+            $scope.clearAssociation = function(menu) {
+                //alert(menu.Id);
+                dbUtilFactory.postp(root + '/api/megamenu/deassociatePageId', menu, function (d) {
+                    SweetAlert.swal("Data saved", "", "success");
+                    $scope.init();
+                }, '', 'Error getting data ');
+            };
+
+            $scope.save = function() {
+                //var sites = ($scope.SitesArray.English ? "EN" : "") + "," + ($scope.SitesArray.Espanol ? "ES" : "") + "," + ($scope.SitesArray.Portugese ? "PT" : "");
+                //$scope.cmsData.Sites = sites;
+                dbUtilFactory.postp(root + '/api/megamenu/UpdatePageId', $scope.menuList, function (d) {
+                    SweetAlert.swal("Data saved", "", "success");
+                    $scope.init();
+                }, '', 'Error getting data ');
+            };
+
+        });
+
+        app.controller("modalSelectPageCtrl", function($controller, $scope, $http, $rootScope, SweetAlert,
+            notificationFactory, $location, $modalInstance,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory, $window, $modal, $log, Menu) {
+
+            $scope.PageList = [];
+            $scope.PageType = 2;
+
+            $scope.formatDate = function(date, format) {
+                if (date == undefined) return '';
+                return $.format.date(new Date(date), format);
+            };
+
+            $scope.getPageList = function() {
+                dbUtilFactory.get(root + '/api/pppageinfo/GetPageListForMenuAssociation/', "", function (d) {
+                    $scope.PageList = d;
+                }, '', 'Error getting data ');
+            };
+            $scope.getPageList();
+
+            $scope.pageSelected = function(page) {
+                Menu.PageId = page.Id;
+                Menu.PageTitle = page.Title;
+                $modalInstance.close(Menu);
+            };
+
+            $scope.close = function() { $modalInstance.dismiss('cancel'); }
+        });
+    </script>
+}
+

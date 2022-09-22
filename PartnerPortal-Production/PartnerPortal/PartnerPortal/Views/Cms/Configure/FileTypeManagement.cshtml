@@ -1,0 +1,345 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutCMS.cshtml";
+}
+
+
+@section MainContent
+{
+    <link href="~/Styles/Editor/Editor.css" rel="stylesheet"/>
+    <link href="~/Styles/Editor/Symbols.css" rel="stylesheet"/>
+    <link href="~/Styles/Editor/application.css" rel="stylesheet"/>
+    <link href="~/Styles/Editor/colorpicker.css" rel="stylesheet"/>
+
+    <style>
+        .ui-button-text {
+            font-size: 1.4rem;
+        }
+        .fusionb-remove-button {
+            display: inline-block;
+            height: 34px;
+            line-height: 34px;
+            margin: 0;
+            font-size: 13px;
+            color: #333333;
+            background: #fff;
+            border: 1px solid #c7c5c5;
+            width: 95px;
+            text-align: center;
+            text-decoration: none;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+
+    </style>
+    <style>
+        .daycolodd {
+            background-color: #CDD0D1;
+            color: #000000;
+        }
+        .daycoleven {
+            background-color: #f1f1f1;
+            color: #000000;
+        }
+        #displayTopicList tr:hover {
+            background-color: #51808F;
+            color: #ffffff;
+        }
+        #displayTopicList table {
+            border-collapse: separate;
+            border: solid black 1px;
+            border-radius: 6px;
+            -moz-border-radius: 6px;
+        }
+
+        #displayTopicList td, th {
+            border-top: solid black 1px;
+        }
+
+        #displayTopicList th {
+            background-color: blue;
+            border-top: none;
+            border-left: none;
+        }
+
+        #displayTopicList td:first-child {
+            border-left: none;
+            border-right: none;
+        }
+    </style>
+    @*    <script>
+        $('.dropdown-menu').find('input').click(function(e) {
+            e.stopPropagation();
+        });
+    </script>*@
+
+    <div style="background-color: #005D7C; color: #ffffff; font-size: 16pt; font-weight: bold; padding-left: 20px; padding-top: 10px; height: 30px; width: 99%; box-shadow: 4px 4px 20px #888888;">
+        File Type Management
+    </div>
+    <br/><br/>
+    <div id="angController" ng-controller="FileTypeManagementController">
+        <div id="displayTopicList">
+            <div class="leftFloat width100p">
+                <div class="leftFloat paddingtop5 paddingleft10" style="color: #000000; text-align: right;"><b>Filter</b>
+                </div>
+                <div class="leftFloat width85p paddingleft2p">
+                    <input id="filter" class="width90p" style="height: 30px; color: #000000; border: 1px solid black; border-radius: 5px;" ng-model="filterName"/>
+                </div>
+            </div>
+            <br/><br/>
+            <div class="leftFloat width100p paddingtop5 paddingleft10 paddingbottom10" style="color: #000000;">
+                <input type="button" id="submitButton" class="btn btn-primary" ng-click="AddFileType()" value="Add New File type" style="width: auto; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;"/>
+            </div>
+            <div style="padding: 10px; text-align: center;">
+                <table style="cursor: pointer; text-align: left; width: 100%; table-layout: fixed; word-wrap: break-word;">
+                    <thead>
+                    <tr style="text-align: left;">
+                        <th ng-click="predicate = 'Name'; reverse=!reverse" style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; font-size: 14pt; table-layout: fixed"> File Type</th>
+                        <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; width: 10px;">&nbsp;</th>
+                        <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; font-size: 14pt;"> Description</th>
+                        <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; font-size: 14pt; text-align: center;"> View / Edit</th>
+                        <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; font-size: 14pt; text-align: center;"> Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in FileTypes | filter : filterName | orderBy : predicate:reverse" ng-class-odd="'daycolodd'" ng-class-even="'daycoleven'">
+                        <td style="padding: 5px;">{{item.FileType}}</td>
+                        <td style="width: 10px;">&nbsp;</td>
+                        <td style="padding: 5px;">{{item.Description}}</td>
+                        <td style="padding: 5px; font-size: 14pt; color: #ffffff; text-align: center;" ng-click="EditFileType(item)">
+                            <a href="#" style="color: #835000;"><i class="fa fa-eye"></i></a>
+                        </td>
+                        <td style="padding: 5px; font-size: 14pt; color: #ffffff; text-align: center;" ng-click="DeleteFileType(item)">
+                            <a href="#" style="color: #FB1800;"><i class="fa fa-scissors"></i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="leftFloat width100p paddingtop5 paddingright10 paddingbottom10" style="color: #000000; text-align: right;">
+                <input type="button" id="submitButton" class="btn btn-primary" ng-click="AddFileType()" value="Add New File type" style="width: auto; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;"/>
+            </div>
+        </div>
+        <br/>
+        <div id="UpdateTopic" style="padding: 10px; float: left; width: 90%; display: none;">
+            <div style="padding: 10px; width: 100%; border: 1px solid black; border-radius: 5px;">
+                <table style="text-align: left; width: 100%; padding: 10px; color: #000000;">
+                  <tr>
+                        <td style="border: none; font-weight: bold;">File Type</td>
+                        <td style="border: none;"><input type="text" ng-model="FileType.FileType" style="width: 90%; border: 1px solid black; border-radius: 5px;"/></td>
+                    </tr>
+                    <tr>
+                        <td style="height: 20px;" colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="border: none; font-weight: bold;">Extension</td>
+                        <td style="border: none;"><input type="text" ng-model="FileType.Extension" style="width: 90%; border: 1px solid black; border-radius: 5px;"/></td>
+                    </tr>
+                    <tr>
+                        <td style="height: 20px;" colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="border: none; font-weight: bold;">Description</td>
+                        <td style="border: none;">
+                            <textarea ng-model="FileType.Description" style="width: 90%; border: 1px solid black; border-radius: 5px;" rows="5"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height: 20px;" colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="border: none; font-weight: bold;">Thumbnail Image <br/>(Width:130PX, Height:150PX)</td>
+                        <td style="border: none;">
+                            <div class="fusion-upload-container" style="width: 400px;">
+                                <img id="imgF" style="border: 1px solid black; height: 200px; width: 200px;" src="">
+                                <a href="#" id="displayImage" class="fusionb-upload-button fusionb-upload-button1">Upload</a>
+                                <a href="#" class="fusionb-remove-button fusionb-remove-button1" ng-click="removeLogo()">Remove</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height: 20px;" colspan="2">&nbsp;</td>
+                    </tr>
+                   <tr>
+                        <td style="border: none; font-weight: bold;">&nbsp;</td>
+                        <td style="border: none;">
+                            <input type="button" class="btn btn-primary" ng-click="SaveFileType()" value="Save" style="width: 200px; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;"/>
+                            <input type="button" class="btn btn-primary" ng-click="CancelUpdate()" value="Close" style="width: 200px; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;"/>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <div id="dialog_uploadMedia" style="display: none;"></div>
+
+    <input type="hidden" id="mediaUploaderUploadType" value="1"/>
+    <script type="text/javascript">
+        var uploaderOpenedBy = {};
+        var logoPath = "";
+        $(document).ready(function() {
+            $(".ui-dialog").css("height", $(window).height() - 60);
+
+            $("#displayImage").click(function() {
+                $("#dialog_uploadMedia").empty();
+                $("#mediaUploaderUploadType").val(3);
+                var template = '@Url.Content("~/Templates/CMS/Editor/UploadMediaTemplate.html")';
+                $("#dialog_uploadMedia").load(template);
+                uploaderOpenedBy = $(this);
+                var dialog = $("#dialog_uploadMedia").dialog({
+                    autoOpen: false,
+                    width: "96%",
+                    modal: true,
+                    resizable: false,
+                    position: [30, 30],
+                    dialogClass: "no-titlebar",
+                    create: function(event) {
+                        $(event.target).parent().css('position', 'fixed');
+                        $(".ui-widget-header").hide();
+                    },
+                    open: function() { $(".ui-widget-header").hide(); },
+                    close: function() {
+                        $(".ui-widget-header").show();
+                        if (selectedUploadedObjectsToUse.length > 0) {
+                            uploaderCallback(1, selectedUploadedObjectsToUse[0].FilePath);
+                        }
+                    }
+                });
+                dialog.dialog("open");
+            });
+
+        });
+
+        function uploaderCallback(type, filePath) {
+            if ($(uploaderOpenedBy) != undefined) {
+                document.getElementById("imgF").src = filePath;
+                logoPath = filePath;
+                if (logoPath != undefined && logoPath != "") {
+                    $(".fusionb-remove-button" + type).show();
+                    $(".fusionb-upload-button" + type).hide();
+                } else {
+                    $(".fusionb-remove-button" + type).hide();
+                    $(".fusionb-upload-button" + type).show();
+                }
+            }
+        }
+    </script>
+
+    <script>
+        app.controller("FileTypeManagementController", function($controller, $scope, $http, $rootScope,
+            notificationFactory, validationFactory, dbUtilFactory, $window, $modal, $log) {
+            $scope.FileTypes = [];
+            $scope.FileType = {};
+
+            $scope.inIt = function() {
+                var url = rootUrl + 'api/ppcmsapi/GetFileTypes';
+                dbUtilFactory.get(url, "", function(d) {
+                    $scope.FileTypes = d;
+
+                }, '', 'Error getting data ');
+            };
+
+            $scope.inIt();
+
+            $scope.removeLogo = function () {
+                logoPath = "";
+                $(".fusionb-remove-button1").hide();
+                $(".fusionb-upload-button1").show();
+                document.getElementById("imgF").src = logoPath;
+            };
+
+            $scope.AddFileType = function() {
+                $scope.FileType = {};
+                $scope.FileType.FileType = "";
+                $scope.FileType.Description = "";
+                $scope.FileType.Extension = "";
+                $scope.FileType.Thumbnail = "";
+                var logoPath = "";
+                document.getElementById("imgF").src = "";
+                $("#ebookPath").html();
+                $(".fusionb-remove-button1").hide();
+                $(".fusionb-upload-button1").show();
+                $(".fusionb-remove-button2").hide();
+                $(".fusionb-upload-button2").show();
+                $("#displayTopicList").slideUp("slow", function() {
+                    $("#UpdateTopic").slideDown("slow", function() {
+                        // Animation complete.
+                    });
+                });
+            };
+
+            $scope.CancelUpdate = function () {
+                $("#UpdateTopic").slideUp("slow", function () {
+                    $("#displayTopicList").slideDown("slow", function () {
+                        // Animation complete.
+                    });
+                });
+            };
+
+            $scope.EditFileType = function (item) {
+                $scope.FileType = item;
+                logoPath = $scope.FileType.Thumbnail;
+                document.getElementById("imgF").src = logoPath;
+                
+                if (logoPath != undefined && logoPath != "") {
+                    $(".fusionb-remove-button1").show();
+                    $(".fusionb-upload-button1").hide();
+                } else {
+                    $(".fusionb-remove-button1").hide();
+                    $(".fusionb-upload-button1").show();
+                }
+                $("#displayTopicList").slideUp("slow", function () {
+                    $("#UpdateTopic").slideDown("slow", function () {
+                        // Animation complete.
+                    });
+                });
+            };
+
+            $scope.DeleteFileType = function (item) {
+                var text = "You won't be able to revert this!";
+                swal({
+                    title: "Are you sure?",
+                    text: text,
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, delete the file type.",
+                    closeOnConfirm: true
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        dbUtilFactory.postp(rootUrl + 'api/ppcmsapi/DeleteFileType/', item, function () {
+                            swal(
+                                'Deleted!',
+                                'The file type has been deleted.',
+                                'success'
+                            );
+                            $scope.inIt();
+                        }, '', 'Error getting data ');
+                    }
+                });
+            };
+
+            $scope.SaveFileType = function () {
+                if ($scope.FileType.FileType == "") {
+                    swal("File Type is required");
+                    return;
+                }
+                if (logoPath == "") {
+                    swal("Thumbnail is required");
+                    return;
+                }
+                $scope.FileType.Thumbnail = logoPath;
+
+                dbUtilFactory.postp(rootUrl + 'api/ppcmsapi/SaveFileType/', $scope.FileType, function (d) {
+                    $scope.inIt();
+                    $scope.FileType = {};
+                    $scope.CancelUpdate();
+                }, '', 'Error getting data ');
+
+            };
+        });
+    </script>
+}

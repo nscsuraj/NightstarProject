@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+           
+            <p>
+                A demonstartion to display wordpress pages on mvc pages 
+            </p>
+        </div>
+    </section>
+    
+}
+@section scripts
+{
+    <script type="text/javascript">
+
+    </script>
+    <style>
+
+    </style>
+}
+@section MainContent {
+    <div id="frameWrap" class="iframeWrapper">
+        @*<iframe id = "iContent" src="@Url.Content("WPFiles/test-partpage/")" frameBorder="0" style="width: 98%; height: 80%;"></iframe>*@
+@*        <img src="~/Images/3Dloading.gif" id="contentLoadingImage"/>
+        <iframe id = "iContent"  seamless="seamless" style="width: 100%; height: 100%;display: none;" frameborder="0" scrolling="no"></iframe>*@
+        <h2>Choose the page to edit</h2>
+        <a href="@Url.Action("EditPage","Cms",new {pageId=1})">Product</a>
+        <a href="@Url.Action("EditPage","Cms",new {pageId=2})">About Star</a>
+        <a href="@Url.Action("EditPage","Cms",new {pageId=3})">Contact Us</a>
+    </div>
+}
+

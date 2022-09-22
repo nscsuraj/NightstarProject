@@ -1,0 +1,490 @@
+﻿<style>
+    .colorSelector {
+        position: relative;
+        width: 36px;
+        height: 36px;
+    }
+
+        .colorSelector div {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 30px;
+            height: 30px;
+        }
+
+    .colorpicker {
+        z-index: 1120;
+    }
+</style>
+<script type="text/javascript">
+    var uploaderOpenedBy = {};
+    $(document).ready(function () {
+        $('#colorSelector div').css('backgroundColor', '#ffffff');
+
+        //get the object and set values
+        
+        var carrierObj = JSON.parse($("#dialog_form").attr("data-obj"));
+        try {
+            $(".objectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(carrierObj[$(this).attr("data-PropertyIndex")]);
+                } else {
+                    if (carrierObj[$(this).attr("data-PropertyIndex")] != null && carrierObj[$(this).attr("data-PropertyIndex")] != undefined && carrierObj[$(this).attr("data-PropertyIndex")].length > 0) {
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                    }
+                }
+            });
+            tinymce.get('textAlertBoxTemplateArea').setContent(carrierObj[582]);
+
+        } catch (e) {
+
+        }
+//        alert($('#borderTopColor').val());
+        //set color
+        $('#backgroundColorSelector div').css('backgroundColor', $('#backgroundColor').val());
+        $('#borderColorSelector div').css('backgroundColor', $('#borderColor').val());
+        $('#borderTopColorSelector div').css('backgroundColor', $('#borderTopColor').val());
+        $('#titleColor div').css('backgroundColor', $('#txtTitleColor').val());
+
+        $('#backgroundColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#backgroundColorSelector div').css('backgroundColor', '#' + hex);
+                $('#backgroundColor').val('#' + hex);
+            }
+        });
+
+        $('#borderColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#borderColorSelector div').css('backgroundColor', '#' + hex);
+                $('#borderColor').val('#' + hex);
+            }
+        });
+        $('#borderTopColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#borderTopColorSelector div').css('backgroundColor', '#' + hex);
+                $('#borderTopColor').val('#' + hex);
+            }
+        });
+        $('#titleColor').ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#titleColor div').css('backgroundColor', '#' + hex);
+                $('#txtTitleColor').val('#' + hex);
+            }
+        });
+        $(".ui-dialog").css("height", $(window).height() - 60);
+
+        $(".fusionb-upload-button").click(function () {
+            $("#dialog_uploadMedia").empty();
+            var template = root + "/Templates/CMS/Editor/UploadMediaTemplate.html";
+            $("#dialog_uploadMedia").load(template);
+            uploaderOpenedBy = $(this);
+            //$("#dialog_uploadMedia").attr("data-allowMultiSelect",false); //Add this line only if you want to add multiselect option
+            var dialog = $("#dialog_uploadMedia").dialog({
+                autoOpen: false,
+                width: "96%",
+                modal: true,
+                resizable: false,
+                position: [30, 30],
+                dialogClass: "no-titlebar",
+                create: function (event) { $(event.target).parent().css('position', 'fixed'); $(".ui-widget-header").hide(); },
+                open: function () { $(".ui-widget-header").hide(); },
+                close: function () {
+                    $(".ui-widget-header").show();
+                    if (selectedUploadedObjectsToUse.length > 0) {
+                        uploaderCallback(selectedUploadedObjectsToUse[0].FilePath);
+                    }
+                }
+            });
+            dialog.dialog("open");
+        });
+    });
+
+    function uploaderCallback(filePath) {
+        if ($(uploaderOpenedBy) != undefined) {
+            tinyMCE.execCommand('mceInsertContent', false, '<img src="' + filePath + '"/>');
+        }
+    }
+
+    //Start tinymce
+    tinymce.remove();
+    tinymce.init({
+        selector: '#textTaglineBoxTemplateArea',
+        plugins: ['hr link fullscreen table textcolor charmap template code wordcount'],
+        menubar: 'false',
+        toolbar: 'bold italic strikethrough underline fontsizeselect | bullist numlist blockquote hr alignleft aligncenter alignright alignjustify outdent indent | link unlink fullscreen table styleselect forecolor | removeformat charmap undo redo template code',
+        fontsize_formats: '8pt 9pt 10pt 11pt 12pt 14pt 16pt 18pt 20pt 22pt 24px 32px 36px',
+        templates: [
+            {
+                title: 'Test template 1',
+                content: 'Test 1'
+            }, {
+                title: 'Test template 2',
+                content: 'Test 2'
+            }
+        ],
+        table_default_styles: {
+            width: '100%'
+        }
+    });
+    //End tinymce
+</script>
+<div style="width: 95%; display: inline-block; position: absolute; left: 2%">
+    <div class="clearfix form-element-container form-element-container-color">
+        <div class="name-description"><strong>Background Color</strong><span>Controls the background color. Leave blank for theme option selection.</span></div>
+        <div class="element-type">
+            <div class="wp-picker-container">
+                <table style="width: 100%" colspacing="10">
+                    <tr>
+                        <td style="width: 75%; text-align: right;">
+                            <div id="backgroundColorSelector" class="colorSelector" style="width: 90%;">
+                                <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                </div>
+                                <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                </span>
+                            </div>
+                        </td>
+                        <td style="width: 25%; vertical-align: middle;">
+                            <input type="text" class="objectProperty" data-propertyindex="565" value="" id="backgroundColor" name="backgroundColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Shadow</strong><span>Show the shadow below the box</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_shadow" name="fusion_shadow" class="select-field objectProperty" data-propertyindex="566">
+                <option value="no" selected="">No</option>
+                <option value="yes">Yes</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Shadow Opacity</strong><span>Choose the opacity of the shadow</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_shadowopacity" name="fusion_shadowopacity" class="select-field objectProperty" data-propertyindex="567">
+                <option value="0.1">0.1</option>
+                <option value="0.2">0.2</option>
+                <option value="0.3">0.3</option>
+                <option value="0.4">0.4</option>
+                <option value="0.5">0.5</option>
+                <option value="0.6">0.6</option>
+                <option value="0.7" selected="">0.7</option>
+                <option value="0.8">0.8</option>
+                <option value="0.9">0.9</option>
+                <option value="1">1</option>
+            </select>
+        </div>
+    </div>
+<div class="clearfix form-element-container form-element-container-input">
+    <div class="name-description"><strong>Border</strong><span>In pixels (px), ex: 1px</span></div>
+    <div class="element-type">
+        <input type="text" class="text-field objectProperty" data-propertyindex="568" value="1px" id="fusion_border" name="fusion_border" size="50" style="padding: 6px 0px !important;">
+    </div>
+</div>
+<div class="clearfix form-element-container form-element-container-input">
+    <div class="name-description"><strong>Border Top Width</strong><span>In pixels (px), ex: 1px</span></div>
+    <div class="element-type">
+        <input type="text" class="text-field objectProperty" data-propertyindex="3" value="1px" id="txtBorderTopWidth" name="fusion_border" size="50" style="padding: 6px 0px !important;">
+    </div>
+</div>
+
+<div class="clearfix form-element-container form-element-container-color">
+    <div class="name-description"><strong>Border Color</strong><span>Controls the border color. Leave blank for theme option selection.</span></div>
+    <div class="element-type">
+        <div class="wp-picker-container">
+            <table style="width: 100%" colspacing="10">
+                <tr>
+                    <td style="width: 75%; text-align: right;">
+                        <div id="borderColorSelector" class="colorSelector" style="width: 90%;">
+                            <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                            </div>
+                            <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                </span>
+                        </div>
+                    </td>
+                    <td style="width: 25%; vertical-align: middle;">
+                        <input type="text" class="objectProperty" data-propertyindex="569" id="borderColor" name="borderColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="clearfix form-element-container form-element-container-color">
+    <div class="name-description"><strong>Border Top Color</strong><span>Controls the border top color. Leave blank for theme option selection.</span></div>
+    <div class="element-type">
+        <div class="wp-picker-container">
+            <table style="width: 100%" colspacing="10">
+                <tr>
+                    <td style="width: 75%; text-align: right;">
+                        <div id="borderTopColorSelector" class="colorSelector" style="width: 90%;">
+                            <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                            </div>
+                            <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                </span>
+                        </div>
+                    </td>
+                    <td style="width: 25%; vertical-align: middle;">
+                        <input type="text" class="objectProperty" data-propertyindex="1" id="borderTopColor" name="borderTopColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="clearfix form-element-container form-element-container-color">
+    <div class="name-description"><strong>Title Color</strong><span>Controls the title color. Leave blank for theme option selection.</span></div>
+    <div class="element-type">
+        <div class="wp-picker-container">
+            <table style="width: 100%" colspacing="10">
+                <tr>
+                    <td style="width: 75%; text-align: right;">
+                        <div id="titleColor" class="colorSelector" style="width: 90%;">
+                            <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                            </div>
+                            <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                </span>
+                        </div>
+                    </td>
+                    <td style="width: 25%; vertical-align: middle;">
+                        <input type="text" class="objectProperty" data-propertyindex="2" id="txtTitleColor" name="txtTitleColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Highlight Border Position</strong><span>Choose the position of the highlight. This border highlight is from theme options primary color and does not take the color from border color above</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_highlightposition" name="fusion_highlightposition" class="select-field objectProperty" data-propertyindex="570">
+                <option value="top" selected="">Top</option>
+                <option value="bottom">Bottom</option>
+                <option value="left">Left</option>
+                <option value="right">Right</option>
+                <option value="none">None</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Content Alignment</strong><span>Choose how the content should be displayed.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_contentalignment" name="fusion_contentalignment" class="select-field objectProperty" data-propertyindex="571">
+                <option value="left">Left</option>
+                <option value="center">Center</option>
+                <option value="right">Right</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Button Text</strong><span>Insert the text that will display in the button</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="572" value="" id="fusion_button" name="fusion_button" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Link</strong><span>The url the button will link to</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="573" value="" id="fusion_url" name="fusion_url" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description">
+            <strong>Link Target</strong><span>_self = open in same window<br>
+                _blank = open in new window</span>
+        </div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_target" name="fusion_target" class="select-field objectProperty" data-propertyindex="574">
+                <option value="_self" selected="">_self</option>
+                <option value="_blank">_blank</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Modal Window Anchor</strong><span>Add the class name of the modal window you want to open on button click.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="575" value="" id="fusion_modalanchor" name="fusion_modalanchor" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Button Size</strong><span>Select the button's size.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_buttonsize" name="fusion_buttonsize" class="select-field objectProperty" data-propertyindex="576">
+                <option value="" selected="">Default</option>
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+                <option value="xlarge">XLarge</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Button Type</strong><span>Select the button's type.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_buttontype" name="fusion_buttontype" class="select-field objectProperty" data-propertyindex="577">
+                <option value="" selected="">Default</option>
+                <option value="flat">Flat</option>
+                <option value="3D">3D</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Button Shape</strong><span>Select the button's shape.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_buttonshape" name="fusion_buttonshape" class="select-field objectProperty" data-propertyindex="578">
+                <option value="" selected="">Default</option>
+                <option value="square">Square</option>
+                <option value="pill">Pill</option>
+                <option value="round">Round</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description">
+            <strong>Button Color</strong><span>Choose the button color<br>
+                Default uses theme option selection</span>
+        </div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_buttoncolor" name="fusion_buttoncolor" class="select-field objectProperty" data-propertyindex="579">
+                <option value="" selected="">Default</option>
+                <option value="green">Green</option>
+                <option value="darkgreen">Dark Green</option>
+                <option value="orange">Orange</option>
+                <option value="blue">Blue</option>
+                <option value="red">Red</option>
+                <option value="pink">Pink</option>
+                <option value="darkgray">Dark Gray</option>
+                <option value="lightgray">Light Gray</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-textarea">
+        <div class="name-description"><strong>Tagline Title</strong><span>Insert the title text</span></div>
+        <div class="element-type">
+            <textarea rows="5" cols="55" class="textarea-field objectProperty" data-propertyindex="580" id="fusion_title" name="fusion_title"></textarea>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-textarea">
+        <div class="name-description"><strong>Tagline Description</strong><span>Insert the description text</span></div>
+        <div class="element-type">
+            <textarea rows="5" cols="55" class="textarea-field objectProperty" data-propertyindex="581" id="fusion_description" name="fusion_description"></textarea>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-html_editor">
+        <div class="name-description"><strong>Additional Content</strong><span>This is additional content you can add to the tagline box. This will show below the title and description if one is used.</span></div>
+        <div class="leftFloat width99p">
+            <a href="fusion_image" class="fusionb-upload-button" data-upid="1" style="position: relative;">Add Media</a>
+        </div>
+        <div class="leftFloat width99p paddingtop5 element-type">
+            <textarea id="textTaglineBoxTemplateArea" class="objectProperty" style="width: 100%; height: 150px; padding-top: 20px;" data-propertyindex="582"></textarea>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Margin Top</strong><span>Add a custom top margin. In pixels.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="583" value="" id="fusion_margin_top" name="fusion_margin_top" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Margin Bottom</strong><span>Add a custom bottom margin. In pixels.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="584" value="" id="fusion_margin_bottom" name="fusion_margin_bottom" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Animation Type</strong><span>Select the type on animation to use on the shortcode</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_animation_type" name="fusion_animation_type" class="select-field objectProperty" data-propertyindex="585">
+                <option value="0">None</option>
+                <option value="bounce">Bounce</option>
+                <option value="fade">Fade</option>
+                <option value="flash">Flash</option>
+                <option value="rubberBand">Rubberband</option>
+                <option value="shake">Shake</option>
+                <option value="slide">Slide</option>
+                <option value="zoom">Zoom</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Direction of Animation</strong><span>Select the incoming direction for the animation</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_animation_direction" name="fusion_animation_direction" class="select-field objectProperty" data-propertyindex="586">
+                <option value="down">Down</option>
+                <option value="left">Left</option>
+                <option value="right">Right</option>
+                <option value="up">Up</option>
+                <option value="static">Static</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Speed of Animation</strong><span>Type in speed of animation in seconds (0.1 - 1)</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="587" value="0.1" id="fusion_animation_speed" name="fusion_animation_speed" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS Class</strong><span>Add a class to the wrapping HTML element.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="588" value="" id="fusion_class" name="fusion_class" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS ID</strong><span>Add an ID to the wrapping HTML element.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="589" value="" id="fusion_id" name="fusion_id" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,424 @@
+﻿<style>
+    .colorSelector {
+        position: relative;
+        width: 36px;
+        height: 36px;
+    }
+
+    .colorSelector div {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 30px;
+        height: 30px;
+    }
+
+    .colorpicker {
+        z-index: 1120;
+    }
+    .multiselect {
+    width:100%;
+    height:15em;
+    border:solid 1px #c0c0c0;
+    overflow:auto;
+        padding: 10px;
+}
+ 
+.multiselect label {
+    display:block;
+    font-size: 14px;
+}
+ 
+.multiselect-on {
+    color:#ffffff;
+    background-color:#000099;
+}
+</style>
+
+<script>
+    var counter = 0;
+    var textareaID;
+    //tinymce.remove();
+    var uploaderOpenedBy = {};
+    var productList = [];
+    var selectedList1 = [];
+    var selectedList2 = [];
+
+    $(document).ready(function() {
+        //$('#colorSelector div').css('backgroundColor', '#ffffff');
+        //fill up product number
+        $.ajax({
+            type: 'GET',
+            url: root + "api/pppageinfo/GetProductNumbers/",
+            success: function (data) {
+                
+               
+                //get the object and set values
+                productList = data;
+                var carrierObj = JSON.parse($("#dialog_form").attr("data-obj"));
+                var tempSelectedList1 = [];
+                var tempSelectedList2 = [];
+                if (carrierObj[700] != undefined) {
+                    tempSelectedList1 = carrierObj[700];
+                }
+                if (carrierObj[701] != undefined) {
+                    tempSelectedList2 = carrierObj[701];
+                }
+                for (var j = 0; j < data.length; j++) {
+                    for (var i = 0; i < tempSelectedList1.length; i++) {
+                        //alert($.grep(data, function (n, i) { return n.ItemCode == tempSelectedList1[i] }).length);
+                        //if ($.grep(data, function(n, i) { return n.ItemCode == tempSelectedList1[i] }).length > 0) {
+                          //  selectedList1.push(tempSelectedList1[i]);
+                        //}
+                        if (data[j].ItemCode == tempSelectedList1[i]) {
+                            selectedList1.push(tempSelectedList1[i]);
+                        }
+                    }
+                }
+
+                for (var j = 0; j < data.length; j++) {
+                    for (var i = 0; i < tempSelectedList2.length; i++) {
+                        if (data[j].ItemCode == tempSelectedList2[i]) {
+                            selectedList2.push(tempSelectedList2[i]);
+                        }
+                    }
+                }
+
+                $("#selectedList1Display").html("Chosen Binding Parts: " + selectedList1.join(",  "));
+                $("#selectedList2Display").html("Chosen Binding Parts: " + selectedList2.join(",  "));
+                fillProductNumber(data, carrierObj[700], "firstProductList");
+                fillProductNumber(data, carrierObj[701], "secondProductList");
+
+                if (carrierObj[1] == 'yes') {
+                    $("#secondProductSelectionContainer").show();
+                }
+                if (carrierObj[2] == 'yes') {
+                    $(".toggleAction").show();
+                }
+                /*try {
+                    $(".objectProperty").each(function() {
+                        if ($(this).is('div')) {
+                            $(this).html(carrierObj[$(this).attr("data-PropertyIndex")]);
+                        } else if ($(this).is('select')) {
+
+                            if ($(this).attr('id') == 'product_numbers') {
+                                $("#product_numbers").val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                            }
+                        } else {
+                            if (carrierObj[$(this).attr("data-PropertyIndex")].length > 0)
+                                $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                        }
+                    });
+                } catch (e) {
+                }*/
+                //set color
+                $('#backgroundColorSelector div').css('backgroundColor', $('#backgroundColor').val());
+                $('#borderColorSelector div').css('backgroundColor', $('#borderColor').val());
+                $('#inactiveColorSelector div').css('backgroundColor', $('#inactiveColor').val());
+                $('#linkTextColorSelector div').css('backgroundColor', $('#linkTextColor').val());
+
+
+            },
+            error: function(data) {
+                return false;
+            }
+        });
+
+
+        var carrierObj = JSON.parse($("#dialog_form").attr("data-obj"));
+        try {
+            $(".objectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(carrierObj[$(this).attr("data-PropertyIndex")]);
+                } else {
+                    if (carrierObj[$(this).attr("data-PropertyIndex")] != null && carrierObj[$(this).attr("data-PropertyIndex")] != undefined && carrierObj[$(this).attr("data-PropertyIndex")].length > 0)
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                }
+            });
+        } catch (e) {
+        }
+        //set color
+        $('#backgroundColorSelector div').css('backgroundColor', $('#backgroundColor').val());
+        $('#borderColorSelector div').css('backgroundColor', $('#borderColor').val());
+        $('#inactiveColorSelector div').css('backgroundColor', $('#inactiveColor').val());
+        $('#linkTextColorSelector div').css('backgroundColor', $('#linkTextColor').val());
+
+        $('#linkTextColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function(colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function(colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function(hsb, hex, rgb) {
+                $('#linkTextColorSelector div').css('backgroundColor', '#' + hex);
+                $('#linkTextColor').val('#' + hex);
+            }
+        });
+
+        $('#backgroundColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function(colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function(colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function(hsb, hex, rgb) {
+                $('#backgroundColorSelector div').css('backgroundColor', '#' + hex);
+                $('#backgroundColor').val('#' + hex);
+            }
+        });
+
+        $('#borderColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function(colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function(colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function(hsb, hex, rgb) {
+                $('#borderColorSelector div').css('backgroundColor', '#' + hex);
+                $('#borderColor').val('#' + hex);
+            }
+        });
+
+        $('#inactiveColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function(colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function(colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function(hsb, hex, rgb) {
+                $('#inactiveColorSelector div').css('backgroundColor', '#' + hex);
+                $('#inactiveColor').val('#' + hex);
+            }
+        });
+
+        $(".ui-dialog").css("height", $(window).height() - 70);
+
+    });
+
+    function uploaderCallback(filePath) {
+        if ($(uploaderOpenedBy) != undefined) {
+            $(uploaderOpenedBy).parent().find("input[type='hidden']").val(filePath);
+            $(uploaderOpenedBy).parent().find("img").attr("src", filePath);
+        }
+    }
+
+    function fillProductNumber(productList, selectList, listId) {
+        var html = "";
+        $.each(productList, function (i, tweet) {
+            html += "<label><input type='checkbox' onclick='ProductSelected(this,\"" + listId + "\")' name='option[]' value='" + tweet.ItemCode + "' ";
+            if (selectList != undefined) {
+                $.each(selectList, function(p, obj) {
+                    if (tweet.ItemCode == obj) {
+                        html += " checked";
+
+                    }
+                });
+            }
+            html += " />   " + tweet.Item + "</label>";
+        });
+        $("#" + listId).html(html);
+    }
+    function ProductSelected(ctrl, listId) {
+        var objId = $(ctrl).val();
+        if ($(ctrl).is(':checked')) {
+            if (listId == "firstProductList") {
+                selectedList1.push(objId);
+            } else {
+                selectedList2.push(objId);
+            }
+        } else {
+            if (listId == "firstProductList") {
+                selectedList1 = $.grep(selectedList1, function (n, i) { return n != objId });
+            } else {
+                selectedList2 = $.grep(selectedList2, function (n, i) { return n != objId });
+            }
+        }
+        $("#selectedList1Display").html("Chosen Binding Parts: " + selectedList1.join(",  "));
+        $("#selectedList2Display").html("Chosen Binding Parts: " + selectedList2.join(",  "));
+    }
+    function searchProduct(dropdown) {
+        if (productList.count <= 0)
+            return;
+        var searchBoxId = "search" + dropdown;
+        var products = productList;
+        
+        if ($("#" + searchBoxId).val().length > 0) {
+            products = productList.filter(function(obj) {
+                return obj.Item.toLowerCase().indexOf($("#" + searchBoxId).val().toLowerCase()) > -1;
+            });
+        }
+
+        if (dropdown === 1) {
+            fillProductNumber(products, selectedList1, "firstProductList");
+        } else {
+            fillProductNumber(products, selectedList2, "secondProductList");
+        }
+    }
+
+    function useOptionRowAction() {
+        if ($("#useOptionsRow").val() == 'yes') {
+            $("#secondProductSelectionContainer").show();
+        } else {
+            $("#secondProductSelectionContainer").hide();
+        }
+    }
+
+    function toggleDropDownChangeAction() {
+        if ($("#toggleDropDown").val() == 'yes') {
+            $(".toggleAction").show();
+        } else {
+            $(".toggleAction").hide();
+        }
+    }
+</script>
+
+
+<div style="width: 95%; display: inline-block; position: absolute; left: 2%" >
+
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Product Number</strong><span>Set the number.</span></div>
+        <div class="element-type">
+            <input type="text" id="search1" name="search1" style="padding: 6px 0px !important; text-align: left;" placeholder="Search Product" onkeyup="searchProduct(1)">
+            <div class="multiselect" id="firstProductList">
+
+                <div style="text-align: center; padding-top: 20px;">Loading......</div>
+            </div>
+            <div id="selectedList1Display" style="overflow: auto; word-wrap: break-word;"></div>
+        </div>
+
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Use Options Row</strong><span>If you choose this, then please select the products that will display after these row from the dropdown below.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="useOptionsRow" name="useOptionsRow" class="select-field objectProperty" data-propertyindex="1" onchange="useOptionRowAction()">
+                <option value="no" selected="">No</option>
+                <option value="yes">Yes</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="clearfix form-element-container form-element-container-select" id="secondProductSelectionContainer" style="display: none;">
+        <div class="name-description"><strong>Product Number</strong><span>Set the number.</span></div>
+        <div class="element-type">
+            <input type="text" id="search2" name="search2" style="padding: 6px 0px !important; text-align: left;" placeholder="Search Product"  onkeyup="searchProduct(2)">
+            <div class="multiselect" id="secondProductList">
+                <div style="text-align: center; padding-top: 20px;">Loading......</div>
+            </div>
+            <div id="selectedList2Display" style="overflow: auto; word-wrap: break-word;"></div>
+        </div>
+
+    </div>
+
+    <div class="clearfix form-element-container form-element-container-color">
+        <div class="name-description"><strong>Background Color</strong><span>Controls the background color. Leave blank for theme option selection.</span></div>
+        <div class="element-type">
+            <div class="wp-picker-container">
+                <table style="width: 100%" colspacing="10">
+                    <tr>
+                        <td style="width: 75%; text-align: right;">
+                            <div id="backgroundColorSelector" class="colorSelector" style="width: 90%;">
+                                <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                </div>
+                                <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                </span>
+                            </div>
+                        </td>
+                        <td style="width: 25%; vertical-align: middle;">
+                            <input type="text" class="objectProperty" data-propertyindex="695" value="" id="backgroundColor" name="backgroundColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="clearfix form-element-container form-element-container-color">
+        <div class="name-description"><strong>Border Color</strong><span>Controls the color of the outer tab border. Leave blank for theme option selection.</span></div>
+        <div class="element-type">
+            <div class="wp-picker-container">
+                <table style="width: 100%" colspacing="10">
+                    <tr>
+                        <td style="width: 75%; text-align: right;">
+                            <div id="borderColorSelector" class="colorSelector" style="width: 90%;">
+                                <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                </div>
+                                <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                </span>
+                            </div>
+                        </td>
+                        <td style="width: 25%; vertical-align: middle;">
+                            <input type="text" class="objectProperty" data-propertyindex="696" value="" id="borderColor" name="borderColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Apply Toggle</strong><span>Clicking on that will show/hide the product details section.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="toggleDropDown" name="toggleDropDown" class="select-field objectProperty" data-propertyindex="2" onchange=" toggleDropDownChangeAction() ">
+                <option value="no" selected="">No</option>
+                <option value="yes">Yes</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="clearfix form-element-container form-element-container-input toggleAction" style="display: none;">
+        <div class="name-description"><strong>Toggle Header</strong><span>Add text which will be displayed as toggle header.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="3" value="" id="Text1" name="fusion_class" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+
+    <div class="clearfix form-element-container funsion-element-child form-element-container-select toggleAction" style="display: none;">
+        <div class="name-description"><strong>Open by Default</strong><span>Choose to have the toggle open when page loads</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select name="fusion_open[0]" class="select-field objectProperty" data-propertyindex="4">
+                <option value="no" selected="">No</option>
+                <option value="yes">Yes</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Border Width</strong><span>Custom setting. For custom alert boxes. In pixels (px), ex: 1px.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="697" value="" id="fusion_bordersize" name="fusion_bordersize" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS Class</strong><span>Add a class to the wrapping HTML element.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="698" value="" id="fusion_class" name="fusion_class" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS ID</strong><span>Add an ID to the wrapping HTML element.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="699" value="" id="fusion_id" name="fusion_id" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+</div>

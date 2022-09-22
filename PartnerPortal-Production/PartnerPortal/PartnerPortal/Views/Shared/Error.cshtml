@@ -1,0 +1,29 @@
+﻿@model SMNResponsive.Models.PageInfoVM
+
+@{
+    ViewBag.Title = "Star Micronics | POS Printers, POS Scales, Kiosk Printers & More";
+    Layout = "~/Views/Shared/_LayoutForPagesWithMenu.cshtml";
+}
+
+
+@section MetaTags
+{
+}
+
+@section scripts
+{
+        <script type="text/javascript" src="~/Scripts/homeScript1.js"></script>
+    <script type="text/javascript" src="~/Scripts/homeScript2.js"></script>
+}
+@section MainContent {
+    <div class="DragAndDropCMSContent">
+        <hgroup class="title" style="padding-top: 40px;">
+            <h1 class="error">Page Not Found</h1>
+        </hgroup>
+    </div>
+
+}
+
+@section FooterContent {
+        @Html.Partial("Partials/FooterContentPartial",Model.Gateway)
+}

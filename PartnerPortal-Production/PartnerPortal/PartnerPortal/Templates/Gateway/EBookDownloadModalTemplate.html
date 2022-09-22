@@ -1,0 +1,94 @@
+﻿ 
+
+
+<div class="modal-header" style="background-color: #005D7C; color: #ffffff; font-size: 16pt; font-weight: bold; height: 30px; box-shadow: 4px 4px 20px #888888;" ng-show="ShowHeader">
+    Register To Download
+</div>
+
+<br/><br/>
+<div class="modal-body">
+    <div ng-show="showProcessing" style="top: 40px; padding-left: 20px;">
+        <img src="/Images/3Dloading.gif" /> Processing. Please wait....
+    </div>
+
+    <div ng-show="showEmailSent">
+        Thank you for downloading our eBook!<br/><br/>
+        An email with the eBook download link is being sent your way! Please check your email to download.<br/><br/>
+        *Please remember to check your spam folder.
+        <br/><br/>
+        Disclaimer: By downloading this eBook, you giving Star Micronics permission to send you emails from &#109;&#97;&#114;&#107;&#101;&#116;&#105;&#110;&#103;&#64;&#115;&#116;&#97;&#114;&#109;&#105;&#99;&#114;&#111;&#110;&#105;&#99;&#115;&#46;&#99;&#111;&#109;
+        <br/>
+        <input type="button" class="btn btn-primary" ng-click="CloseModal()" value="Close" style="width: 200px; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;"/>
+    </div>
+    <table style="text-align: left; width: 100%; padding: 10px; color: #000000;" ng-hide="showProcessing || showEmailSent">
+        <tr>
+            <td style="border: none; font-weight: bold;">Email</td>
+            <td style="border: none;">
+                <input type="email" ng-model="RegistrationInfo.Email" style="width: 90%; border: 1px solid black; color: #000000; border-radius: 5px;"/>
+            </td>
+        </tr>
+        <tr ng-show="ShowHeader">
+            <td style="height: 20px;" colspan="2">&nbsp;</td>
+        </tr>
+        <tr ng-show="ShowHeader">
+            <td style="border: none; font-weight: bold;">First Name</td>
+            <td style="border: none;">
+                <input type="text" ng-model="RegistrationInfo.FirstName" style="width: 90%; border: 1px solid black; color: #000000; border-radius: 5px;"/>
+            </td>
+        </tr>
+        <tr ng-show="ShowHeader">
+            <td style="height: 20px;" colspan="2">&nbsp;</td>
+        </tr>
+
+        <tr ng-show="ShowHeader">
+            <td style="border: none; font-weight: bold;">Last Name</td>
+            <td style="border: none;">
+                <input type="text" ng-model="RegistrationInfo.LastName" style="width: 90%; border: 1px solid black; color: #000000; border-radius: 5px;"/>
+            </td>
+        </tr>
+        <tr ng-show="ShowHeader">
+            <td style="height: 20px;" colspan="2">&nbsp;</td>
+        </tr>
+        <tr ng-show="ShowHeader">
+            <td style="border: none; font-weight: bold;">Business Type</td>
+            <td style="border: none;">
+                <select ng-model="RegistrationInfo.BusinessType" style="width: 90%; padding: 5px; height: 30px; border: 1px solid black; border-radius: 4px; cursor: pointer;">
+                    <option value="Reseller">Reseller</option>
+                    <option value="ISV">ISV</option>
+                    <option value="Distributor">Distributor</option>
+                    <option value="End-User">End-User</option>
+                    <option value="Other">Other</option>
+                </select>
+                <input type="text" ng-model="RegistrationInfo.BusinessTypeOther" ng-show="RegistrationInfo.BusinessType == 'Other'" style="width: 90%; border: 1px solid black; color: #000000; border-radius: 5px;" placeholder="Please specify business type"/>
+            </td>
+        </tr>
+        <tr ng-show="ShowHeader">
+            <td style="height: 20px;" colspan="2">&nbsp;</td>
+        </tr>
+        <tr ng-show="ShowHeader">
+            <td style="border: none; font-weight: bold;">Company</td>
+            <td style="border: none;">
+                <input type="text" ng-model="RegistrationInfo.Company" style="width: 90%; border: 1px solid black; color: #000000; border-radius: 5px;" placeholder=""/>
+            </td>
+        </tr>
+        <tr>
+            <td style="height: 20px;" colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td style="border: none; font-weight: bold;">&nbsp;</td>
+            <td style="border: none;">
+                <input type="button" class="btn btn-primary" ng-click="DoRegistration()" value="Submit" style="width: 200px; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;"/>
+                <input type="button" class="btn btn-primary" ng-click="CloseModal()" value="Close" style="width: 200px; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;"/>
+            </td>
+        </tr>
+    </table>
+
+</div>
+<!--<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-4 pull-right">
+            <input class="btn  btn-primary" type="button" style="width: 200px; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;" ng-click="CloseModal()" value="Close"/>
+        </div>
+    </div>
+
+</div>-->

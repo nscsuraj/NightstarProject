@@ -1,0 +1,71 @@
+﻿@model PartnerPortal.Models.PageInfoVM
+@{
+    ViewBag.Title = Model.TitleTag;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section MetaTags
+{
+    <link rel="canonical" href="https://www.starmicronics.com/partnerportal/pages/resellers/" />
+    @foreach (var m in Model.Gateway.MetaTags)
+    {
+        if (m.TagType == 0)
+        {
+            <meta property="og:@m.TagKey" content="@m.TagValue" />
+        }
+        else
+        {
+            <meta name="@m.TagKey" content="@m.TagValue" />
+        }
+
+    }
+}
+
+@section scripts
+{
+    <Style>
+
+        @@font-face {
+            font-family: 'FontAwesome';
+            src: url('@Url.Content("~/fonts/fontawesome-webfont.eot?v=4.3.0")');
+            src: url('@Url.Content("~/fonts/fontawesome-webfont.eot?#iefix&v=4.3.0")') format('embedded-opentype'),url('@Url.Content("~/fonts/fontawesome-webfont.woff2")') format('woff2'),url('@Url.Content("~/fonts/fontawesome-webfont.woff")') format('woff'),url('@Url.Content("~/fonts/fontawesome-webfont.ttf?v=4.3.0")') format('truetype'),url('@Url.Content("~/fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular")') format('svg');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+
+    </Style>
+    <style>
+        @Html.Action("GetFileContent", "Utility", new {path = Url.Content("~/Styles/bootstrap.css")})
+    </style>
+}
+@section MainContent {
+
+
+    @foreach (var page in Model.PageSections)
+    {
+        @Html.Partial("Partials/PagePartial", page.Id)
+    }
+    @*    @if (Model.Gateway.Identity.PartnerType.ToLower() == "distributor")
+        {
+            @Html.Partial("Partials/SupportDistPartial")
+        }
+        else
+        {
+            @Html.Partial("Partials/SupportResellerPartial")
+        }*@
+
+    @Html.Partial("Partials/MarketingPartial")
+    @Html.HiddenFor(m => m.MenuName)
+    @Html.HiddenFor(m => m.PageHeader)
+
+    <style>
+    </style>
+}
+@section ResellerLookUpContent {
+
+}
+
+@section RightPanelPartial{
+    @Html.Partial("Partials/RightPanelPartial")
+}

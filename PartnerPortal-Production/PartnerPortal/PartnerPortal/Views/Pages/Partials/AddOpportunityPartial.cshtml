@@ -1,0 +1,688 @@
+﻿<link href="~/Styles/jqx.base.css" rel="stylesheet"/>
+<link href="~/Styles/jqx.default.css" rel="stylesheet"/>
+<script src="~/Scripts/jqxcore.js"></script>
+<script src="~/Scripts/jqxdatetimeinput.js"></script>
+<script src="~/Scripts/jqxcalendar.js"></script>
+<script src="~/Scripts/globalize.js"></script>
+<style>
+    .jqx-input-content {
+        color: #aaa9a9 !important;
+        font-size: 11pt !important;
+        font: 100% Arial, Helvetica, sans-serif !important;
+        padding-left: 15px !important;
+    }
+     .clsTextBoxOpportunity {
+         min-height: 50px !important;
+         font-size: 11pt !important;
+     }
+    .btnLanding {
+        background-color: #21459A;
+        border: none;
+        color: #FFFFFF;
+        text-align: center;
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        margin: 10px 0 !important;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+        height: 40px;
+        width: 150px;
+    }
+    .invalidated {
+        border-bottom: 1px solid #FF0208 !important;
+        background-color: #FFBABC !important;
+    }
+
+    textarea::-webkit-input-placeholder {
+        color: #aaa9a9;
+    }
+
+    textarea:-moz-placeholder { /* Firefox 18- */
+        color: #aaa9a9;  
+    }
+
+    textarea::-moz-placeholder {  /* Firefox 19+ */
+        color: #aaa9a9;  
+    }
+
+    textarea:-ms-input-placeholder {
+        color: #aaa9a9;  
+    }
+
+    textarea::placeholder {
+        color: #aaa9a9;  
+    }
+    .clsFieldContainer {
+        width: 500px;
+    }
+    @@media only screen and (max-width:540px){
+        .clsFieldContainer {
+            width: 100%;
+        }
+        .clsTextBoxOpportunity {
+            width: 95% !important;
+        }
+        select,textarea {
+            width: 95% !important;
+        }
+        input[type=date] {
+            width: 87% !important;
+        }
+        .wholeContainer {
+            padding-left: 0px !important;
+        }
+        .header1 {
+            font-size: 18pt !important;
+        }
+        .header2 {
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+    }
+    @@media only screen and (max-width:340px){
+        .clsFieldContainer {
+            width: 100%;
+        }
+        .clsTextBoxOpportunity {
+            width: 95% !important;
+        }
+        select,textarea {
+            width: 95% !important;
+        }
+        input[type=date] {
+            width: 87% !important;
+        }
+        .wholeContainer {
+            padding-left: 0px !important;
+        }
+        .header1 {
+            font-size: 14pt !important;
+        }
+        .header2 {
+            margin-bottom: 15px;
+            line-height: 1.2;
+            font-size: 10pt !important;
+        }
+        .header3 {
+            margin-bottom: 15px;
+            line-height: 1.2;
+            font-size: 10pt !important;
+
+        }
+    }
+</style>
+
+<div style="width: 100%; " ng-controller="StarDistOpportunitiesController">
+    <div class="fusion-fullwidth fullwidth-box" style="text-align: left; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; " id="">
+        <div style="padding-left: 20px;" class="wholeContainer">
+            <div style="width: 100%; height: 30px; color: #2551A4; margin-top: 40px; font-size: 22pt; font-weight: bold;" class="header1">
+                Create a New Opportunity
+            </div>
+            <div style="width: 100%; height: 30px; color: #2551A4; font-size: 12pt; font-weight: normal;" class="header2">
+                Use this form to request Star sale’s team support to secure this project.
+            </div>
+            <div style="width: 100%; height: 30px;" class="header3">
+                <a href="~/Pages/Opportunities" style="color: #2551A4; font-size: 14pt; font-weight: bold;">View Existing Opportunities&#8680;</a>
+            </div>
+            <div style="width: 100%; margin-top: 20px;">
+                <div style="width: 200px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Opportunity Name *</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer" >
+                    <input class="clsTextBoxOpportunity" placeholder="Opportunity Name" id="OppName" type="text" value="" ng-model="Opportunity.Name">
+                </div>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 200px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Opportunity Type *</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer" >
+                    <select ng-model="Opportunity.Type" style="width: 100%; padding: 5px; height: 50px; font-size: 11pt;border: 1px solid #d2d2d2; cursor: pointer;" class="clsFieldContainer" >
+                        <option value="Existing Business">Existing Business</option>
+                        <option value="New Business">New Business</option>
+                    </select>
+
+                </div>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 200px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Expected Order Date</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer" >
+                    @*<input class="clsTextBoxOpportunity" placeholder="Closing Date" type="date" style="width: 485px; border: 1px solid #d2d2d2; padding-left: 15px; font-size: 11pt; color: #aaa9a9;" value="" ng-model="CloseDate">*@
+                    <div class="clsTextBoxOpportunity" id="dtExpectedOrderDate" style="float: left;"></div>
+                </div>
+            </div>
+ @*           <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 200px; padding-left: 20px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 12pt;">Stage</div>
+                <div style="width: 500px; float: left; display: table-cell; vertical-align: middle;">
+                     <select ng-model="Opportunity.StageName" style="width: 100%; padding: 5px;font-size: 20px; height: 50px; border: 1px solid #d2d2d2; cursor: pointer;">
+                        <option value="Qualification">Qualification</option>
+                         <option value="Needs Analysis">Needs Analysis</option>
+                         <option value="Value Proposition">Value Proposition</option>
+                         <option value="Proposal/Price Quote">Proposal/Price Quote</option>
+                         <option value="Negotiation/Review">Negotiation/Review</option>
+                         <option value="Closed Won">Closed Won</option>
+                         <option value="Closed Lost">Closed Lost</option>
+                         <option value="Closed Cancelled">Closed Cancelled</option>
+                         <option value="Project On Hold">Project On Hold</option>
+                         <option value="Open Won">Open Won</option>
+                         <option value="Integration Open">Integration Open</option>
+                        <option value="Integration Closed">Integration Closed</option>
+                    </select>
+                </div>
+            </div>*@
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 200px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Total Opportunity Quantity</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer" >
+                    <input class="clsTextBoxOpportunity" placeholder="Opportunity Quantity" type="text" value="" ng-model="Opportunity.Quantity__c"  onkeypress="return isNumber(event)">
+                </div>
+            </div>
+             <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 200px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Distributor</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer" >
+                    <select ng-model="Opportunity.Distributor_Mark__c" style="width: 100%; padding: 5px; padding-left: 15px; font-size: 11pt; height: 50px; border: 1px solid #d2d2d2; cursor: pointer;">
+                        <option value="">--None--</option>
+                        <option value="Azerty">Azerty</option>
+                        <option value="BlueStar">BlueStar</option>
+                        <option value="BlueStar CA">BlueStar CA</option>
+                        <option value="BlueStar LA">BlueStar LA</option>
+                        <option value="BlueStar MX">BlueStar MX</option>
+                        <option value="Ingram Micro">Ingram Micro</option>
+                        <option value="Ingram Micro CA">Ingram Micro CA</option>
+                        <option value="Ingram Micro LA">Ingram Micro LA</option>
+                        <option value="Ingram Micro MX">Ingram Micro MX</option>
+                        <option value="MS Cash Drawer">MS Cash Drawer</option>
+                        <option value="Nimax">Nimax</option>
+                        <option value="ScanSource">ScanSource</option>
+                        <option value="ScanSource LA">ScanSource LA</option>
+                        <option value="ScanSource MX">ScanSource MX</option>
+                    </select>
+                </div>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            @*        <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 200px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Product Interest</div>
+                <div style="width: 230px; float: left; display: table-cell; vertical-align: middle;">
+                    <select id="AvailableProductInterestList" multiple="multiple" size="6" title="Product Interest - Available" style="width: 100%; padding: 5px; padding-left: 15px; font-size: 11pt; height: 150px; border: 1px solid #d2d2d2; cursor: pointer;">
+                        <optgroup style="text-decoration: none;" label="Available">
+                           <option ng-repeat="x in AvailableProductInterest">{{x.Item}}</option>
+                        </optgroup>
+
+                    </select>
+                </div>
+                <div style="width: 30px; padding-left: 5px; padding-top: 40px; padding-right: 5px; float: left; display: table-cell; vertical-align: middle;">
+                    <a href="#" tabindex="23" title="Add" ng-click="AddToChosen()">
+                        <img src="@Url.Content("~/images/s.gif")" alt="Add" class="picklistArrowRight" style="cursor: pointer;" title="Add"/>
+                    </a>
+                    <br><br>
+                    <a href="#" tabindex="25" title="Remove" ng-click="RemoveFromChosen()">
+                        <img src="@Url.Content("~/images/s.gif")" alt="Remove" class="picklistArrowLeft" style="cursor: pointer;" title="Remove" />
+                    </a>
+
+                </div>
+                <div style="width: 230px; float: left; display: table-cell; vertical-align: middle;">
+                    <select id="ChoosenProductInterestList" multiple="multiple" size="6" title="Product Interest - Available" style="width: 100%; padding: 5px;padding-left: 15px; font-size: 11pt; height: 150px; border: 1px solid #d2d2d2; cursor: pointer;">
+                        <optgroup style="text-decoration: none;" label="Chosen">
+                            <option ng-repeat="x in ChoosenProductInterest">{{x.Item}}</option>
+                        </optgroup>
+
+                    </select>
+                </div>
+            </div>*@
+             <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 200px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Product Interest</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer" >
+                    <input class="clsTextBoxOpportunity" placeholder="Product Interest" type="text" value="" ng-model="Opportunity.Product_s_of_Interest__c" >
+                </div>
+            </div>
+            @*<div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 200px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Product Quantity</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer" >
+                    <input class="clsTextBoxOpportunity" placeholder="Product Quantity" type="text" value="" ng-model="Opportunity.Product_Quantity__c" onkeypress="return isNumber(event)">
+                </div>
+            </div>*@
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 200px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Competitive Products</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer" >
+                    <input class="clsTextBoxOpportunity" placeholder="Competitive Products" type="text" value="" ng-model="Opportunity.Competitive_product_s__c">
+                </div>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 200px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Software</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer" >
+                    <input class="clsTextBoxOpportunity" placeholder="Software" type="text" value="" ng-model="Opportunity.Softwares__c">
+                </div>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 200px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Roll out or Bulk buy?</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer" >
+                    <select ng-model="Opportunity.Roll_out_or_Bulk_buy__c" style="width: 100%; padding: 5px;padding-left: 15px; font-size: 11pt; height: 50px; border: 1px solid #d2d2d2; cursor: pointer;">
+                        <option value="">--None--</option>
+                        <option value="Roll out">Roll out</option>
+                        <option value="Bulk buy">Bulk buy</option>
+                    </select>
+                </div>
+            </div>
+@*            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 200px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">TimeFrame/Launch Date</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer" >
+                    
+                    <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer" >
+                    
+                        <div class="clsTextBoxOpportunity" id="dtLaunchDate" style="float: left;"></div>&nbsp;
+                        <div style="float: left; margin-top: 10px; margin-left: 10px;">[<a style="font-size: 11pt;" href="#" ng-click="SetLaunchDateToTodaysDate()">{{TodaysDate}}</a>]</div>
+                </div>
+                </div>
+            </div>*@
+           @* <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 200px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Demo Products Requested?</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer" >
+                    <select ng-model="Opportunity.Demo_Products_Requested__c" style="width: 100%; padding: 5px;padding-left: 15px; font-size: 11pt; height: 50px; border: 1px solid #d2d2d2; cursor: pointer;">
+                        <option value="">--None--</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+            </div>*@
+        @*  <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 200px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Special Pricing Requested?</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer" >
+                    <select ng-model="Opportunity.Special_Pricing_Requested__c" style="width: 100%; padding: 5px;padding-left: 15px; font-size: 11pt; height: 50px; border: 1px solid #d2d2d2; cursor: pointer;">
+                        <option value="">--None--</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+            </div>*@
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 200px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Reseller Contact Name *</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer">
+                    <input class="clsTextBoxOpportunity" placeholder="Contact Name" type="text" value="" ng-model="Opportunity.Reseller_Contact_Name__c">
+                </div>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+        <div style="width: 100%; margin-top: 20px; clear: both;">
+            <div style="width: 200px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Reseller Contact Email *</div>
+            <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer">
+                <input class="clsTextBoxOpportunity" placeholder="Contact Email" type="text" value="" ng-model="Opportunity.Reseller_Contact_Email__c">
+            </div>
+        </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 200px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Reseller Contact Phone *</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer">
+                    <input class="clsTextBoxOpportunity" placeholder="Contact Phone" type="text" value="" ng-model="Opportunity.Reseller_Contact_Phone__c">
+                </div>
+            </div>
+             <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 200px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">How can we support you?</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer" >
+@*                    <input class="clsTextBoxOpportunity" placeholder="Business Case" type="text" value="" ng-model="Opportunity.Business_case__c">*@
+                    <textarea class="clsTextBoxOpportunity" style="width: 100%; height: 150px; color: #aaa9a9 !important; background-color: #ffffff; border: 1px solid #d2d2d2; padding: 8px 15px; border-color: #d2d2d2; margin-right: 1%; box-sizing: border-box; font: 100% Arial, Helvetica, sans-serif !important;font-size:12pt !important" placeholder="How can we support you?" id="" value="" ng-model="Opportunity.How_can_we_support_you__c">
+                        
+                    </textarea>
+
+                </div>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 200px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">End User</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer" >
+                    <input class="clsTextBoxOpportunity" placeholder="End User" type="text" value="" ng-model="Opportunity.End_user__c">
+                </div>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 200px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Business Case</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer" >
+@*                    <input class="clsTextBoxOpportunity" placeholder="Business Case" type="text" value="" ng-model="Opportunity.Business_case__c">*@
+                    <textarea class="clsTextBoxOpportunity" style="width: 100%; height: 150px; color: #aaa9a9 !important; background-color: #ffffff; border: 1px solid #d2d2d2; padding: 8px 15px; border-color: #d2d2d2; margin-right: 1%; box-sizing: border-box; font: 100% Arial, Helvetica, sans-serif !important;font-size:12pt !important" placeholder="Business Case" id="" value="" ng-model="Opportunity.Business_case__c">
+                        
+                    </textarea>
+
+                </div>
+            </div>
+
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both; text-align: left;">
+                <input type="button" name="addOpportunity" class="btnLanding" value="Submit" ng-click="AddOpportunity()">
+            </div>
+            <br/><br/><br/><br/><br/><br/>
+        </div>
+
+    </div>
+    <div style="width: 100%; height: 500px; opacity: .5; display: inline-block; position: absolute; top: 0; left: 0; z-index: 99;" ng-show="showProcessing">
+        <div style="font-size: 22pt; height: 80px; padding-top: 200px;">
+            <img src="~/Images/loadingP.gif"/>
+
+        </div>
+    </div>
+</div>
+<style>
+    .picklistArrowRight, .rightArrowIcon {
+        background-position: left top;
+    }
+    .picklistArrowLeft, .picklistArrowRight, .rightArrowIcon, .leftArrowIcon, .doubleArrowUp, .upArrowIcon, .downArrowIcon, .doubleArrowDwn {
+        background: transparent url(@Url.Content("~/images/combobox_arrows_sprite.gif")) no-repeat;
+        width: 24px;
+        height: 20px;
+        margin: 0 2px;
+    }
+    .picklistArrowLeft, .leftArrowIcon {
+        background-position: left -60px;
+    }
+
+</style>
+
+<script>
+    $(document).ready(function () {
+
+        $("#dtExpectedOrderDate").jqxDateTimeInput({ width: '100%', height: '50px', theme: 'default', formatString: "MM/dd/yyyy" });
+   //     $("#dtLaunchDate").jqxDateTimeInput({ width: '80%', height: '50px', theme: 'default', formatString: "MM/dd/yyyy" });
+        //$('#dtProceduresStartDate').jqxDateTimeInput('dateTimeInput').val('');
+        //$('#dtProceduresStartDate').jqxDateTimeInput('setMaxDate', new Date());
+
+        //$("#RequestDateForImportFinalStep").jqxDateTimeInput({ width: '134px', height: '22px', theme: 'default', formatString: "MM/dd/yyyy" });
+        //$("#RequestDateForImportFinalStep").jqxDateTimeInput('dateTimeInput').val('');
+
+       
+
+    });
+
+    function isNumber(e) {
+        var keyCode = (e.which) ? e.which : e.keyCode;
+        if ((keyCode >= 48 && keyCode <= 57) || (keyCode === 8))
+            return true;
+        else if (keyCode === 46) {
+            var curVal = document.activeElement.value;
+            if (curVal != null && curVal.trim().indexOf('.') === -1)
+                return true;
+            else
+                return false;
+        }
+        else
+            return false;
+    }
+        app.controller("StarDistOpportunitiesController", function ($controller, $scope, $http, $sce, 
+            notificationFactory, $location,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory) {
+
+            $scope.showProcessing = false;
+
+            $scope.Account = {};
+            $scope.getAccount = function () {
+                dbUtilFactory.get(root + 'api/ppcmsapi/GetAccountFromSessionData/', "", function (d) {
+                    $scope.Account = d;
+                }, '', 'Error getting data ');
+            };
+            $scope.getAccount();
+            $scope.formatDate = function (date, format) {
+                if (date == undefined) return '';
+                return $.format.date(new Date(date), format);
+            };
+
+            $scope.AvailableProductInterest = [];
+            $scope.ChoosenProductInterest = [];
+            $scope.Opportunity = {};
+            $scope.CloseDate = "";
+            $scope.LaunchDate = "";
+            $scope.TodaysDate = ((new Date()).getMonth() + 1) + "/" + (new Date()).getDate() + "/" + (new Date()).getFullYear();
+            $scope.inIt = function () {
+                $scope.Opportunity.Name = "";
+                $scope.Opportunity.AccountId = $scope.Account.AccountId;
+                $scope.Opportunity.CloseDate = "";
+                $scope.Opportunity.Type = "";
+                $scope.Opportunity.StageName = "";
+                $scope.Opportunity.Quantity__c = "";
+                $scope.Opportunity.LeadSource = "Partner Portal";
+                $scope.Opportunity.Amount = "";
+                $scope.Opportunity.RecordTypeId = "012800000003Vsx";
+
+                $scope.Opportunity.Distributor_Mark__c = "";
+                //$scope.Opportunity.Product_Interest__c = "";
+                $scope.Opportunity.Product_s_of_Interest__c = "";
+                $scope.Opportunity.Product_Quantity__c = "";
+                $scope.Opportunity.Competitive_product_s__c = "";
+                $scope.Opportunity.Softwares__c = "";
+                $scope.Opportunity.Roll_out_or_Bulk_buy__c = "";
+               // $scope.Opportunity.TimeFrame_Launch_Date__c = "";
+                $scope.Opportunity.Demo_Products_Requested__c = "";
+                $scope.Opportunity.Special_Pricing_Requested__c = "";
+                $scope.Opportunity.End_user__c = "";
+                $scope.Opportunity.Business_case__c = "";
+                $scope.Opportunity.Reseller_Contact_Name__c = "";
+                $scope.Opportunity.Reseller_Contact_Email__c = "";
+                $scope.Opportunity.Reseller_Contact_Phone__c = "";
+
+                $scope.AvailableProductInterest.push({Item: 'All Receipts',Order: 1});
+                $scope.AvailableProductInterest.push({Item: 'Internal Drive Sounder',Order: 2});
+                $scope.AvailableProductInterest.push({Item: 'Microphone',Order: 3});
+                $scope.AvailableProductInterest.push({Item: 'mPOP',Order: 4});
+                $scope.AvailableProductInterest.push({Item: 'Receivers',Order: 5});
+                $scope.AvailableProductInterest.push({Item: 'SM-L200',Order: 6});
+                $scope.AvailableProductInterest.push({Item: 'SM-S230i',Order: 7});
+                $scope.AvailableProductInterest.push({Item: 'Sounder',Order: 8});
+                $scope.AvailableProductInterest.push({Item: 'SP700 CloudPRNT',Order: 9});
+                $scope.AvailableProductInterest.push({Item: 'Speaker',Order: 10});
+                $scope.AvailableProductInterest.push({Item: 'Surface Mount Sounder',Order: 11});
+                $scope.AvailableProductInterest.push({Item: 'TBD',Order: 12});
+                $scope.AvailableProductInterest.push({Item: 'TSP100ECO',Order: 13});
+                $scope.AvailableProductInterest.push({Item: 'TSP650II CloudPRNT',Order: 14});
+
+
+            };
+            $scope.inIt();
+            $scope.SetCloseDateToTodaysDate = function() {
+                $scope.CloseDate = new Date();
+            }
+            $scope.SetLaunchDateToTodaysDate = function () {
+                $scope.LaunchDate = new Date();
+                $('#dtLaunchDate').jqxDateTimeInput('setDate', new Date());
+            }
+            $scope.getSelectValues = function (select) {
+                var result = [];
+                var options = select && select.options;
+                var opt;
+
+                for (var i=0, iLen=options.length; i<iLen; i++) {
+                    opt = options[i];
+
+                    if (opt.selected) {
+                        result.push(opt.value || opt.text);
+                    }
+                }
+                return result;
+            }
+
+            $scope.IsItemExistsInArray = function(arr, item) {
+                var found = false;
+                for (var i = 0; i < arr.length; i++) {
+                    if(arr[i] === item){found=true;}
+                }
+                return found;
+            }
+
+            $scope.AddToChosen = function () {
+                var temp = [];
+                var el = document.getElementById('AvailableProductInterestList');
+                var selectedList = $scope.getSelectValues(el);
+                for (var j = 0; j < selectedList.length; j++) {
+                    for (var i = 0; i < $scope.AvailableProductInterest.length; i++) {
+                        if ($scope.AvailableProductInterest[i].Item === selectedList[j]) {
+                            $scope.ChoosenProductInterest.push($scope.AvailableProductInterest[i]);
+                        } 
+                    }
+                }
+                temp = $.grep($scope.AvailableProductInterest, function(prod) {
+                    return !$scope.IsItemExistsInArray(selectedList, prod.Item);
+                });
+                $scope.AvailableProductInterest = [];
+                $scope.AvailableProductInterest = temp;
+                $scope.AvailableProductInterest = $scope.AvailableProductInterest.sort(function (a, b) {
+                    if (a.Order < b.Order) return -1;
+                    if (a.Order > b.Order) return 1;
+                    return 0;
+                });
+                $scope.ChoosenProductInterest = $scope.ChoosenProductInterest.sort(function (a, b) {
+                    if (a.Order < b.Order) return -1;
+                    if (a.Order > b.Order) return 1;
+                    return 0;
+                });
+            }
+            $scope.RemoveFromChosen = function () {
+                var temp = [];
+                var el = document.getElementById('ChoosenProductInterestList');
+                var selectedList = $scope.getSelectValues(el);
+                for (var j = 0; j < selectedList.length; j++) {
+                    for (var i = 0; i < $scope.ChoosenProductInterest.length; i++) {
+                        if ($scope.ChoosenProductInterest[i].Item === selectedList[j]) {
+                            $scope.AvailableProductInterest.push($scope.ChoosenProductInterest[i]);
+                        }
+                    }
+                }
+                temp = $.grep($scope.ChoosenProductInterest, function (prod) {
+                    return !$scope.IsItemExistsInArray(selectedList, prod.Item);
+                });
+                $scope.ChoosenProductInterest = [];
+                $scope.ChoosenProductInterest = temp;
+                $scope.AvailableProductInterest = $scope.AvailableProductInterest.sort(function (a, b) {
+                    if (a.Order < b.Order) return -1;
+                    if (a.Order > b.Order) return 1;
+                    return 0;
+                });
+                $scope.ChoosenProductInterest = $scope.ChoosenProductInterest.sort(function (a, b) {
+                    if (a.Order < b.Order) return -1;
+                    if (a.Order > b.Order) return 1;
+                    return 0;
+                });
+            }
+
+            $scope.AddOpportunity = function () {
+                $scope.Opportunity.AccountId = $scope.Account.AccountId;
+                
+
+                var date = $("#dtExpectedOrderDate").jqxDateTimeInput('getDate');
+                //var formattedRequestDate = $.jqx.dataFormat.formatdate(date, 'MM/dd/yyyy');
+                //$scope.TestToImport.RequestDate = formattedRequestDate;
+
+               // var date = new Date($scope.CloseDate);
+                $scope.Opportunity.CloseDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+                
+               // date = $("#dtLaunchDate").jqxDateTimeInput('getDate');
+               // $scope.Opportunity.TimeFrame_Launch_Date__c = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+                //$scope.Opportunity.Product_Interest__c = "";
+                //for (var i = 0; i < $scope.ChoosenProductInterest.length; i++) {
+                //    if ($scope.Opportunity.Product_Interest__c === "") {
+                //        $scope.Opportunity.Product_Interest__c = $scope.ChoosenProductInterest[i].Item;
+                //    } else {
+                //        $scope.Opportunity.Product_Interest__c = $scope.Opportunity.Product_Interest__c + ";" + $scope.ChoosenProductInterest[i].Item;
+                //    }
+                //}
+                //alert($scope.Opportunity.CloseDate);
+                //return false;
+                if ($scope.Opportunity.Name == "") {
+                    
+                    swal({
+                        title: "Error",
+                        text: "Please provide opportunity name.",
+                        type: "error"
+                    });
+                    return false;
+                }
+                if ($scope.Opportunity.Type == "") {
+                    swal({
+                        title: "Error",
+                        text: "Please choose type.",
+                        type: "error"
+                    });
+                    
+                    return false;
+                }
+                if ($scope.Opportunity.Reseller_Contact_Name__c == "") {
+                    swal({
+                        title: "Error",
+                        text: "Please provide reseller contact name.",
+                        type: "error"
+                    });
+
+                    return false;
+                }
+                if ($scope.Opportunity.Reseller_Contact_Email__c == "") {
+                    swal({
+                        title: "Error",
+                        text: "Please provide reseller contact email.",
+                        type: "error"
+                    });
+
+                    return false;
+                }
+                if ($scope.Opportunity.Reseller_Contact_Email__c !== "") {
+                    if (!validationFactory.isEmail($scope.Opportunity.Reseller_Contact_Email__c)) {
+                        swal({
+                            title: "Error",
+                            text: "Please provide valid email for reseller contact email.",
+                            type: "error"
+                        });
+
+                        return false;
+                    }
+                }
+                
+                if ($scope.Opportunity.Reseller_Contact_Phone__c == "") {
+                    swal({
+                        title: "Error",
+                        text: "Please provide reseller contact phone number.",
+                        type: "error"
+                    });
+
+                    return false;
+                }
+                //alert($scope.Opportunity.CloseDate.indexOf("NaN"));
+                if ($scope.Opportunity.CloseDate == "" || $scope.Opportunity.CloseDate.indexOf("NaN") >=0) {
+                    
+                    swal({
+                        title: "Error",
+                        text: "Please provide close date.",
+                        type: "error"
+                    });
+                    return false;
+                }
+                //if ($scope.Opportunity.StageName == "") {
+                //    swal("Please choose stage.");
+                //    return false;
+                //}
+
+                if ($scope.Opportunity.Quantity__c == "") {
+                    $scope.Opportunity.Quantity__c = 0;
+                }
+
+                $scope.showProcessing = true;
+                $scope.Opportunity.StageName = "Qualification";
+                dbUtilFactory.postp(root + 'api/ppcmsapi/AddOpportunity/', $scope.Opportunity, function () {
+                    
+                    var redUrl = '@Url.Content("~/Pages/Opportunities")';
+                    swal({
+                        title: "Done",
+                        text: "Opportunity Created Successfully.",
+                        type: "success"
+                    }).then(function () {
+                        $scope.showProcessing = false;
+                        window.location.href = redUrl;
+                    });
+
+                }, '', 'Error getting data ');
+                return true;
+            };
+
+        });
+    </script>

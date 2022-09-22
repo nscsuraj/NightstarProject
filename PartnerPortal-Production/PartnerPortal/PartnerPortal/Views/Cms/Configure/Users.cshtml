@@ -1,0 +1,171 @@
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutCMS.cshtml";
+}
+
+
+@section MainContent
+{
+    <script src="~/Scripts/UserManagement.js"></script>
+    <style>
+        .daycolodd {
+            background-color: #CDD0D1;
+            color: #000000;
+        }
+        .daycoleven {
+            background-color: #f1f1f1;
+            color: #000000;
+        }
+        #displayTopicList tr:hover {
+            background-color: #51808F;
+            color: #ffffff;
+        }
+        #displayTopicList table {
+            border-collapse: separate;
+            border: solid black 1px;
+            border-radius: 6px;
+            -moz-border-radius: 6px;
+        }
+
+        #displayTopicList td, th {
+            border-top: solid black 1px;
+        }
+
+        #displayTopicList th {
+            background-color: blue;
+            border-top: none;
+            border-left: none;
+        }
+
+        #displayTopicList td:first-child {
+            border-left: none;
+            border-right: none;
+        }
+    </style>
+     
+    <div id="angController" ng-controller="CMSUserManagementController" class="leftFloat width100p">
+          <div style="width: 100%; height: 30px; font-size: 20pt; font-weight: bold; color: #2F6A79; text-shadow: 4px 4px 4px #BCBEBF; padding-top: 15px;">
+            &nbsp;&nbsp;User Management
+        </div>
+        <div id="displayTopicList"  class="leftFloat width100p">
+            <div class="leftFloat width98p paddingtop20">
+                <div class="leftFloat width15p paddingtop5 paddingleft10" style="color: #000000; text-align: right;"><b>Filter</b>
+                </div>
+                <div class="leftFloat width80p paddingleft2p">
+                    <input id="filter" class="width90p" style="height: 30px; color: #000000; border: 1px solid black; border-radius: 5px;" ng-model="filterName"/>
+                </div>
+            </div>
+            <br/><br/>
+            <div class="leftFloat width98p paddingtop5 paddingleft10 paddingbottom10" style="color: #000000;">
+                <input type="button" id="submitButton" class="btn btn-primary" ng-click="AddUser()" value="Add New User" style="width: auto; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;"/>
+            </div>
+            <div style="padding: 10px; text-align: center;">
+                <table style="cursor: pointer; text-align: left; width: 100%; table-layout: fixed; word-wrap: break-word;">
+                    <thead>
+                    <tr style="text-align: left;">
+                        <th ng-click="predicate = 'Name'; reverse=!reverse" style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; font-size: 14pt;table-layout: fixed"> User Name</th>
+                        <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; width: 10px;">&nbsp;</th>
+                        <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; font-size: 14pt;"> Email</th>
+                        <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; font-size: 14pt;text-align: center;"> View / Edit</th>
+                        <th style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; font-size: 14pt;text-align: center;"> Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="user in Users | filter : filterName | orderBy : predicate:reverse" ng-class-odd="'daycolodd'" ng-class-even="'daycoleven'">
+                        <td style="padding: 5px;">{{user.FirstName}} {{user.LastName}}</td>
+                        <td style="width: 10px;">&nbsp;</td>
+                        <td style="padding: 5px;">{{user.Email}}</td>
+                        <td style="padding: 5px; font-size: 14pt; color: #ffffff; text-align: center;" ng-click="EditUser(user)">
+                            <a href="#" ng-click="EditUser(user)" style="color: #835000;"><i class="fa fa-eye"></i></a>
+                        </td>
+                        <td style="padding: 5px; font-size: 14pt; color: #ffffff; text-align: center;" ng-click="DeleteUser(user)" >
+                            <a href="#" style="color: #FB1800;"><i class="fa fa-scissors"></i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="leftFloat width98p paddingtop5 paddingright10 paddingbottom10" style="color: #000000; text-align: right;">
+                <input type="button" class="btn btn-primary" ng-click="AddUser()" value="Add New User" style="width: auto; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;"/>
+            </div>
+        </div>
+        <br/>
+        <div id="UpdateTopic" style="padding: 10px; float: left; width: 97%; display: none;">
+            <div style="padding: 10px; width: 100%; border: 1px solid black; border-radius: 5px;">
+                <table style="text-align: left; width: 100%; padding: 10px; color: #000000;">
+                    <tr>
+                        <td style="border: none; font-weight: bold;">First Name</td>
+                        <td style="border: none;"><input type="text" ng-model="User.FirstName" style="width: 90%; padding: 5px; border: 1px solid black; border-radius: 5px;"/></td>
+                    </tr>
+                    <tr>
+                        <td style="height: 20px;" colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="border: none; font-weight: bold;">Last Name</td>
+                        <td style="border: none;"><input type="text" ng-model="User.LastName" style="width: 90%; padding: 5px; border: 1px solid black; border-radius: 5px;"/></td>
+                    </tr>
+                    <tr>
+                        <td style="height: 20px;" colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="border: none; font-weight: bold;">Email</td>
+                        <td style="border: none;"><input type="email" ng-model="User.Email" style="width: 90%; padding: 5px; border: 1px solid black; border-radius: 5px;"/></td>
+                    </tr>
+                    <tr>
+                        <td style="height: 20px;" colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="border: none; font-weight: bold;">Phone</td>
+                        <td style="border: none;"><input type="email" ng-model="User.Phone" style="width: 90%; padding: 5px; border: 1px solid black; border-radius: 5px;"/></td>
+                    </tr>
+                    <tr>
+                        <td style="height: 20px;" colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="border: none; font-weight: bold;">Log In Name</td>
+                        <td style="border: none;"><input type="text" ng-model="User.LoginId" style="width: 90%; padding: 5px; border: 1px solid black; border-radius: 5px;"/></td>
+                    </tr>
+                    <tr>
+                        <td style="height: 20px;" colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="border: none; font-weight: bold;">Log In Password</td>
+                        <td style="border: none;"><input type="password" ng-model="User.LoginPassword" style="width: 90%; padding: 5px; border: 1px solid black; border-radius: 5px;"/></td>
+                    </tr>
+                    <tr>
+                        <td style="height: 20px;" colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="border: none; font-weight: bold;">Level</td>
+                        <td style="border: none;">
+                            <select ng-model="User.UserLevel" style="width: 91%; padding: 5px; height: 30px; border: 1px solid black; border-radius: 4px; cursor: pointer;">
+                                <option value="0">General</option>
+                                <option value="1">Administrator</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height: 20px;" colspan="2">&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: none; font-weight: bold;">Additional Info</td>
+                        <td style="border: none;"><input type="text" ng-model="User.Additional" style="width: 90%; padding: 5px; border: 1px solid black; border-radius: 5px;"/></td>
+                    </tr>
+                    <tr>
+                        <td style="height: 20px;" colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="border: none; font-weight: bold;">&nbsp;</td>
+                        <td style="border: none;">
+                            <input type="button" class="btn btn-primary" ng-click="SaveUser()" value="Save" style="width: 200px; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;"/>
+                            <input type="button" class="btn btn-primary" ng-click="CancelUpdate()" value="Close" style="width: 200px; margin-top: 10px; box-shadow: 4px 4px 5px #888888; font-weight: bold; border-radius: 5px;"/>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+}

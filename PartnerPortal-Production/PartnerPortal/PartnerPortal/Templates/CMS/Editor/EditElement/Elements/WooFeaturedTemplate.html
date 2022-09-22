@@ -1,0 +1,83 @@
+﻿<div style="width: 95%; display: inline-block; position: absolute; left: 2%">
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Picture Size</strong><span>fixed = width and height will be fixed<br>auto = width and height will adjust to the image.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div><select id="picture_size" name="picture_size" class="select-field objectProperty" data-PropertyIndex="277"><option value="fixed" selected="">Fixed</option><option value="auto">Auto</option></select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Carousel Layout</strong><span>Choose to show titles on rollover image, or below image.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div><select id="carousel_layout" name="carousel_layout" class="select-field objectProperty" data-PropertyIndex="278"><option value="title_on_rollover" selected="">Title on rollover</option><option value="title_below_image">Title below image</option></select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Carousel Autoplay</strong><span>Choose to autoplay the carousel.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div><select id="autoplay" name="autoplay" class="select-field objectProperty" data-PropertyIndex="279"><option value="yes">Yes</option><option value="no" selected="">No</option></select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Maximum Columns</strong><span>Select the number of max columns to display.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div><select id="columns" name="columns" class="select-field objectProperty" data-PropertyIndex="280"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5" selected="">5</option><option value="6">6</option></select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Column Spacing</strong><span>Insert the amount of spacing between items without 'px'. ex: 13.</span></div>
+        <div class="element-type"><input type="text" class="text-field objectProperty" data-PropertyIndex="281" value="0" id="column_spacing" name="column_spacing" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Carousel Scroll Items</strong><span>Insert the amount of items to scroll. Leave empty to scroll number of visible items.</span></div>
+        <div class="element-type"><input type="text" class="text-field objectProperty" data-PropertyIndex="282" value="" id="fusion_scroll_items" name="fusion_scroll_items" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Carousel Show Navigation</strong><span>Choose to show navigation buttons on the carousel.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div><select id="navigation" name="navigation" class="select-field objectProperty" data-PropertyIndex="283"><option value="yes" selected="">Yes</option><option value="no">No</option></select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Carousel Mouse Scroll</strong><span>Choose to enable mouse drag control on the carousel.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div><select id="mouse_scroll" name="mouse_scroll" class="select-field objectProperty" data-PropertyIndex="284"><option value="yes">Yes</option><option value="no" selected="">No</option></select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Show Categories</strong><span>Choose to show or hide the categories</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div><select id="show_cats" name="show_cats" class="select-field objectProperty" data-PropertyIndex="285"><option value="yes" selected="">Yes</option><option value="no">No</option></select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Show Price</strong><span>Choose to show or hide the price</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div><select id="show_price" name="show_price" class="select-field objectProperty" data-PropertyIndex="285"><option value="yes" selected="">Yes</option><option value="no">No</option></select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Show Buttons</strong><span>Choose to show or hide the icon buttons</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div><select id="show_buttons" name="show_buttons" class="select-field objectProperty" data-PropertyIndex="285"><option value="yes" selected="">Yes</option><option value="no">No</option></select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS Class</strong><span>Add a class to the wrapping HTML element.</span></div>
+        <div class="element-type"><input type="text" class="text-field objectProperty" data-PropertyIndex="285" value="" id="class" name="class" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS ID</strong><span>Add an ID to the wrapping HTML element.</span></div>
+        <div class="element-type"><input type="text" class="text-field objectProperty" data-PropertyIndex="285" value="" id="id" name="id" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {        
+        $(".ui-dialog").css("height", $(window).height() - 70);
+    });
+</script>

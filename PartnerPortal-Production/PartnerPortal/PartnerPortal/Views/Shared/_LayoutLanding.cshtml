@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html lang="en-US" class="no-js" ng-app="app">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Expires" content="30" />
+    <meta http-equiv="Cache-Control" content="Public" />
+    <meta name="google-site-verification" content="qG1hz2stDuxUAXRF0SRp5dsnMOIW1IKdjCnxqFp7xJA" />
+    <title>@ViewBag.Title</title>
+    <link rel="canonical" href="https://www.starmicronics.com/partnerportal/" />
+    <link href="~/Images/star_icon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    @RenderSection("MetaTags", required: false)
+    @RenderSection("Styles", required: false)
+    <style>
+        @Html.Action("GetFileContent", "Utility", new {path = "~/Styles/PartnerPortal/site.css"})
+         @Html.Action("GetFileContent", "Utility", new {path = "~/Styles/homeStyle.css"})
+        @Html.Action("GetFileContent", "Utility", new {path = "~/Styles/Editor_style.css"})
+        @Html.Action("GetFileContent", "Utility", new {path = "~/Styles/Editor2.css"})
+
+        .content {
+        @*margin-top: 1%;*@
+            margin-top: 100px;
+            margin-bottom: 0;
+            background: #093883 url(@Url.Content("~/Images/sGNO4U5-.jpeg")) no-repeat fixed center;
+
+            min-height: 400px;
+        }
+
+
+    </style>
+
+    <style>
+        @@media only screen and (max-width: 1470px) and (min-width: 1400px) {
+            .landingRightPanel {
+                width: 95% !important;
+            }
+        }
+
+
+        @@media only screen and (min-width: 1200px) and (max-width: 1400px) {
+            .fusion-one-third { width: 40% !important; }
+            .fusion-two-third { width: 60% !important; }
+        }
+        @@media only screen and (min-width: 1050px) and (max-width: 1199px) {
+            .fusion-one-third { width: 44% !important; }
+            .fusion-two-third { width: 56% !important; }
+        }
+        @@media only screen and (min-width: 990px) and (max-width: 1049px) {
+            .fusion-one-third { width: 48% !important; }
+            .fusion-two-third { width: 52% !important; }
+        }
+        @@media only screen and (max-width: 989px) and (min-width: 0) {
+            .fusion-one-third { width: 100% !important; text-align: center !important;}
+            .fusion-two-third { width: 100% !important;  text-align: center !important;}
+            .landingLeftPanel {
+                width: 80% !important;   
+            }
+            .landingRightPanel {
+                width: 80% !important;   
+            }
+        }
+
+        .fixedHeader {
+             position:fixed;
+             top: 0;
+             left: 0;
+             width: 100%;
+            padding-top: 10px;
+            min-height: 100px;
+            z-index: 99;
+            background-color: #ffffff;
+            border-bottom: 1px solid #21459A;
+        }
+
+        @@media only screen and (min-width: 0px) and (max-width: 420px) {
+            .fixedHeader {
+                padding-top: 1px;
+            }
+            .landingRightPanel {
+                width: 90% !important;   
+            }
+            .landingRightPanelContainer {
+                margin-left: 0px !important;
+            }
+            .landingLeftPanelContainer {
+                margin-right: 0px !important;
+            }
+        }
+
+    </style>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script>
+        //var root = '@Url.Content("~")';
+        //var root = 'http://localhost/';
+        var root = 'http://mdev.starmicronics.com/';
+        var rootUrl = '@Url.Content("~")';        
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-19068382-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-19068382-1');
+    </script>
+</head>
+<body>
+<div class="mainContent">
+    <div class="fixedHeader">
+        @{ Html.RenderAction("GetPageHtml", "Utility", new {id = 3}); }
+    </div>
+
+
+    <div class="fusion-fullwidth fullwidth-box content" style="text-align: left; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;" id="">
+        <div class="fusion-row">
+            <div class=" fusion-one-third fusion-layout-column fusion-spacing-no layoutMiddlePanel" style="text-align: right; background-repeat: no-repeat; background-position: left top; border: 0px solid;" id="">
+                <div class="fusion-column-wrapper">
+                    <div style="margin-top: 60px; margin-right: 10px; margin-bottom: 10px;" class="landingLeftPanelContainer">
+                        @Html.Partial("Partials/LandingLeftPanel")
+                    </div>
+                </div>
+            </div>
+            <div class=" fusion-two-third fusion-layout-column fusion-spacing-no " style="text-align: left; background-repeat: no-repeat; background-position: left top; border: 0px solid;" id="">
+                <div class="fusion-column-wrapper">
+                    <div style="margin-top: 60px; margin-left: 10px; margin-bottom: 10px;" class="landingRightPanelContainer">
+                        @RenderSection("MainContent", required: false)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <br/><br/><br/>
+    </div>
+
+
+
+
+
+
+</div>
+    @RenderSection("scripts", required: false)
+
+<script type="text/javascript" defer="defer" src="https://script.opentracker.net/?site=www.starmicronics.com"></script>
+<script> /*<![CDATA[*/
+    (function (w, a, b, d, s) {
+        w[a] = w[a] || {};
+        w[a][b] = w[a][b] || { q: [], track: function (r, e, t) { this.q.push({ r: r, e: e, t: t || +new Date }); } };
+        var e = d.createElement(s);
+        var f = d.getElementsByTagName(s)[0];
+        e.async = 1;
+        e.src = '//marketing.starmicronics.com/cdnr/32/acton/bn/tracker/34776';
+        f.parentNode.insertBefore(e, f);
+    })(window, 'ActOn', 'Beacon', document, 'script');
+    ActOn.Beacon.track(); /*]]>*/
+</script>
+
+</body>
+</html>

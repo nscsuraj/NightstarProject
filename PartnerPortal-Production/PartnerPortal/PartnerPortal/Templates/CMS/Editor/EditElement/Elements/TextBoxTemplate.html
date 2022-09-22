@@ -1,0 +1,88 @@
+﻿<script type="text/javascript">
+    var uploaderOpenedBy = {};
+    $(document).ready(function () {
+        $(".ui-dialog").css("height", $(window).height() - 60);
+
+        //get the object and set values
+        var carrierObj = JSON.parse($("#dialog_form").attr("data-obj"));
+        try {
+            $(".objectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(carrierObj[$(this).attr("data-PropertyIndex")]);
+                } else {
+                    if (carrierObj[$(this).attr("data-PropertyIndex")] != null && carrierObj[$(this).attr("data-PropertyIndex")] != undefined && carrierObj[$(this).attr("data-PropertyIndex")].length > 0)
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                }
+            });
+            tinymce.get('textTextBoxTemplateArea').setContent(carrierObj[353]);
+
+        } catch (e) {
+
+        }
+
+        $(".fusionb-upload-button").click(function () {
+            $("#dialog_uploadMedia").empty();
+            var template = root + "/Templates/CMS/Editor/UploadMediaTemplate.html";
+            $("#dialog_uploadMedia").load(template);
+            uploaderOpenedBy = $(this);
+            //$("#dialog_uploadMedia").attr("data-allowMultiSelect",false); //Add this line only if you want to add multiselect option
+            var dialog = $("#dialog_uploadMedia").dialog({
+                autoOpen: false,
+                width: "96%",
+                modal: true,
+                resizable: false,
+                position: [30, 30],
+                dialogClass: "no-titlebar",
+                create: function (event) { $(event.target).parent().css('position', 'fixed'); $(".ui-widget-header").hide(); },
+                open: function () { $(".ui-widget-header").hide(); },
+                close: function () {
+                    $(".ui-widget-header").show();
+                    if (selectedUploadedObjectsToUse.length > 0) {
+                        uploaderCallback(selectedUploadedObjectsToUse[0].FilePath);
+                    }
+                }
+            });
+            dialog.dialog("open");
+        });
+    });
+
+    function uploaderCallback(filePath) {
+        if ($(uploaderOpenedBy) != undefined) {
+            tinyMCE.execCommand('mceInsertContent', false, '<img src="' + filePath + '"/>');
+        }
+    }
+    
+    //Start tinymce
+    tinymce.remove();
+    tinymce.init({
+        selector: '#textTextBoxTemplateArea',
+        plugins: ['hr link fullscreen table textcolor charmap template code wordcount'],
+        menubar: 'false',
+        toolbar: 'bold italic strikethrough underline fontsizeselect | bullist numlist blockquote hr alignleft aligncenter alignright alignjustify outdent indent | link unlink fullscreen table styleselect forecolor | removeformat charmap undo redo template code',
+        fontsize_formats: '8pt 9pt 10pt 11pt 12pt 14pt 16pt 18pt 20pt 22pt 24px 32px 36px',
+        templates: [
+            {
+                title: 'Test template 1',
+                content: 'Test 1'
+            }, {
+                title: 'Test template 2',
+                content: 'Test 2'
+            }
+        ],
+        table_default_styles: {
+            width: '100%'
+        }
+    });
+    //End tinymce
+</script>
+<div class="width97p" style="display: inline-block; position: absolute; left: 2%">
+    <div class="clearfix form-element-container-html_editor paddingbottom20">
+        <div class="name-description paddingtop10"><strong>Content</strong><span>Enter some content for this textblock</span></div>
+        <div class="leftFloat width99p">
+            <a href="fusion_image" class="fusionb-upload-button" data-upid="1" style="position: relative;">Add Media</a>
+        </div>
+        <div class="leftFloat width99p paddingtop5">
+            <textarea id="textTextBoxTemplateArea" class="objectProperty" style="width: 100%; height: 200px; padding-top: 20px;" data-propertyindex="353"></textarea>
+        </div>
+    </div>
+</div>

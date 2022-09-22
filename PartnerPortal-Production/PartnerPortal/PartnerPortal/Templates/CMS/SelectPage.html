@@ -1,0 +1,81 @@
+﻿<div class="modal-header">
+    <a class="close" ng-click="$dismiss()" aria-hidden="true">&times;</a>
+    <h4 class="modal-title"><strong>Select Page For Menu</strong></h4>
+</div>
+<div class="modal-body" style="text-align: center; clear: both;background-color: rgb(234, 234, 234);">
+    <div style="background-color: rgb(234, 234, 234); height: 100%;">
+        <div>
+            <div>
+                <div class="leftFloat width10p paddingtop5 TextAlignLeft"><b>Filter</b>
+                </div>
+                <div class="leftFloat width87p paddingleft2p">
+                    <input id="filter" class="form-control" style="width: 99%; padding: 5px;" ng-model="filterName"/>
+                </div>
+            </div>
+            <div ng-init="filterStatus='True'">
+                <table style="width: 100%; height: 40px;">
+                    <tr>
+                        <td style="text-align: left;">
+                            <b>Status</b>
+                        </td>
+                        <td>
+                            <input ng-model="filterStatus" type="radio" name="animal" value=""/>
+                        </td>
+                        <td>
+                            All
+                        </td>
+                        <td>
+                            <input ng-model="filterStatus" type="radio" name="animal" value="True"/>
+                        </td>
+                        <td>
+                            Active
+                        </td>
+                        <td>
+                            <input ng-model="filterStatus" type="radio" name="animal" value="False"/>
+                        </td>
+                        <td>
+                            Inactive
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr style="color: #428bca; cursor: pointer;">
+                        <th ng-click="predicate = 'PartPageName'; reverse=!reverse" style="cursor: pointer;">Page Title</th>
+                        <th ng-click="predicate = 'Description'; reverse=!reverse" style="cursor: pointer;">Description</th>
+                        <th ng-click="predicate = 'CreateDate'; reverse=!reverse" style="cursor: pointer;">Create Date</th>
+                        <th ng-click="predicate = 'Status'; reverse=!reverse" style="cursor: pointer;">Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr dir-paginate="item in PageList | filter:filterName | filter:filterStatus | orderBy:predicate:reverse|itemsPerPage:10" style="cursor: pointer;" ng-click="pageSelected(item)">
+                        <td data-placement="right">{{item.Title}}</td>
+                        <td data-placement="right">{{item.Description}}</td>
+                        <td data-placement="right">{{formatDate(item.CreateDate,'MMM dd yyyy')}}</td>
+                        <td class="TextAlignCenter">
+                            <i class='glyphicon glyphicon-ok' ng-show="item.Status==true"></i>
+                            <i class='glyphicon glyphicon-remove' ng-show="item.Status==false"></i>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+            </div>
+        </div>
+    </div>
+    <br/>
+</div>
+
+
+<div class="modal-footer" style="text-align: center; clear: both;background-color: rgb(234, 234, 234);">
+    <div class="row">
+        <!--<div class="col-md-4">            
+        </div>-->
+        <div class="col-md-4 pull-right">
+            <input class="btn btn-primary pull-right" type="button" ng-click="close()" value="Close" />
+        </div>
+    </div>
+</div>

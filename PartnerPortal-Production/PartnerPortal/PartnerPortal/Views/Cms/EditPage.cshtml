@@ -1,0 +1,120 @@
+﻿@model SMNResponsive.Models.PageInfoVM
+
+@{
+    ViewBag.Title = "EditPage";
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+           
+            <p>
+                A demonstartion to display wordpress pages on mvc pages 
+            </p>
+        </div>
+    </section>
+    
+}
+@section scripts
+{
+    <script type="text/javascript">
+        function setPageName() {
+           // alert(1);
+            if ($("#iwpPage").contents().find("#titlewrap").find("#title") != undefined) {
+
+                $("#iwpPage").contents().find("#titlewrap").find("#title").focus();
+                $("#iwpPage").contents().find("#titlewrap").find("#title").removeAttr('placeholder');
+                $("#iwpPage").contents().find("#titlewrap").find("#title").val($("#PartPageName").val());
+                $("#iwpPage").contents().find("#titlewrap").find("#title").blur();
+                $("#iwpPage").contents().find("#titlewrap").find("#title").focus();
+                if ($("#iwpPage").contents().find("#titlewrap").find("#title").val() != $("#PartPageName").val()) {
+                    setTimeout(setPageName, 1000);
+                }
+            }
+        }
+
+        $(document).ready(function() {
+            $("#lnkCreatePage").click(function() {
+               // alert(1);
+                $("#iwpPage").attr("src", '@Url.Content("~/WPFiles/wp-admin/post-new.php?post_type=page")').load();
+                //alert(2);
+                $("#WPeditPage").dialog({
+                    autoOpen: false,
+                    resizable: false,
+                    modal: true,
+                    height: $(window).height() - 20,
+                    width: $(window).width() - 20,
+                    title: "Create Page",
+                    zIndex: 99999,
+                    open: function(event, ui) {
+                        $('body').css('overflow', 'hidden');
+                        $('.ui-widget-overlay').css('width', '100%');
+                    },
+                    close: function(event, ui) {
+                        $('body').css('overflow', 'auto');
+                        $("#iwpPage").attr("src", '').load();
+                    }
+                });
+                $("#WPeditPage").dialog("open");
+                setTimeout(setPageName, 1000);
+            });
+
+
+        });
+
+    </script>
+    <style>
+
+        </style>
+}
+@section MainContent {
+    @using(Html.BeginForm("EditPage", "Cms", FormMethod.Post))
+    {
+        <h2>Edit Page @Model.PageName</h2>
+        <h6 style="float:right"><a href="@Url.Content("~/cms")">Home</a></h6>
+        @Html.HiddenFor(m=> m.PageId)
+        
+    <div>
+        <h4>Choose layout type</h4>
+        @if (Model.PageType == 1)
+        {
+            <text>
+                <input type="radio" id="PageType" name="PageType" value="1" checked ="checked"/>Full Page<br/>
+            </text>
+            
+        }
+        else
+        {
+            <text>
+                <input type="radio" id="PageType" name="PageType" value="1"/>Full Page<br/>
+            </text>
+        }
+        @if (Model.PageType == 2)
+        {
+            <text>
+                <input type="radio" id="PageType" name="PageType" value="2" checked ="checked"/>Page with right menu<br/>
+            </text>
+            
+        }
+        else
+        {
+            <text>
+                <input type="radio" id="PageType" name="PageType" value="2"/>Page with right menu<br/>
+            </text>
+        }
+        </div>
+        
+        <div style ="background-color: whitesmoke">
+            <h4>Prepare Menu</h4>
+            <h5>This is just to show other section. Currently inactive</h5>
+        </div>
+        
+        <div >
+            <h4>Prepare Part Page</h4>
+            <span>Part Page Name</span>&nbsp;&nbsp;&nbsp;&nbsp;@Html.TextBoxFor(m => m.PartPageName)
+            @*<a href="@Url.Content("~/WPFiles/wp-admin/post-new.php?post_type=page")" target="_blank">Create Page</a>*@
+            <a href="#" id="lnkCreatePage">Create Page</a>
+        </div>
+        <input type="Submit"/>
+    }
+}

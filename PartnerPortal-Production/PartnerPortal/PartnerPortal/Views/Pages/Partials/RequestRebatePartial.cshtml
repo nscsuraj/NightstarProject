@@ -1,0 +1,1107 @@
+﻿<link href="~/Styles/jqx.base.css" rel="stylesheet" />
+<link href="~/Styles/jqx.default.css" rel="stylesheet" />
+<script src="~/Scripts/jqxcore.js"></script>
+<script src="~/Scripts/jqxdatetimeinput.js"></script>
+<script src="~/Scripts/jqxcalendar.js"></script>
+<script src="~/Scripts/globalize.js"></script>
+<style>
+
+    .daycolodd {
+        background-color: #D3ECFA;
+        color: #133B7C;
+    }
+
+    .daycoleven {
+        background-color: #ECF8FF;
+        color: #133B7C;
+    }
+
+
+
+
+    @@media only screen and (max-width:1400px) {
+    }
+
+    @@media only screen and (max-width:1150px) {
+    }
+
+    @@media only screen and (max-width:940px) {
+    }
+
+    @@media only screen and (max-width:900px) and (min-width:400px) {
+    }
+
+    @@media only screen and (max-width:390px) and (min-width:0px) {
+    }
+
+    .oppTableHeader {
+        padding: 2px;
+        background-color: #ECF8FF;
+        color: #133B7C;
+        height: 30px;
+        font-weight: bold;
+        font-size: 12pt;
+        table-layout: fixed;
+    }
+
+    .oppTableText {
+        padding: 4px;
+        font-size: 10pt;
+        height: 30px;
+    }
+
+    .tabRevenue {
+        width: 100px;
+    }
+
+    .tabStatus {
+        width: 80px;
+    }
+
+    .tabName {
+        width: 150px;
+    }
+
+    .tabDateCreated {
+        width: 150px;
+    }
+
+    .oppHeaderCol1 {
+        width: 200px;
+        float: left;
+        display: inline-block;
+        text-align: center;
+        font-size: 12pt;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    .oppHeaderCol2 {
+        width: 200px;
+        float: left;
+        display: inline-block;
+        text-align: center;
+        font-size: 12pt;
+        font-weight: bold;
+        letter-spacing: 1px;
+        margin-left: 10px;
+    }
+
+    .oppHeaderColOpenOpp {
+        width: 170px;
+        float: left;
+        display: inline-block;
+        text-align: center;
+        cursor: pointer;
+        font-size: 10pt;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    .oppHeaderCol3 {
+        float: right;
+        text-align: right;
+        display: inline-block;
+        font-size: 11pt;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    .clsTextBoxLanding {
+        width: 100% !important;
+        border: 0 !important;
+        border: 1px solid #73C4F2 !important;
+        min-height: 30px !important;
+        margin-top: 10px;
+        padding-left: 15px;
+        padding-right: 15px;
+        box-sizing: border-box;
+    }
+
+    .clsTextBoxOpportunity {
+        width: 100% !important;
+        border: 1px solid #969696 !important;
+        min-height: 50px !important;
+/*        margin-top: 10px;*/
+        display: inline-block;
+        padding-left: 15px;
+        padding-right: 15px;
+        box-sizing: border-box;
+    }
+
+    .bevelBox {
+        width: 95% !important;
+        background: #D3ECFA;
+        border: 1px solid #D3ECFA;
+        -moz-box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset 2px 2px 2px rgba(0, 0, 0, .4);
+        -webkit-box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset 2px 2px 2px rgba(0, 0, 0, .4);
+        box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset 2px 2px 2px rgba(0, 0, 0, .4);
+        padding: 10px;
+    }
+
+    @@media only screen and (max-width:1580px) {
+        .oppTableHeader {
+            font-weight: bold;
+            font-size: 11pt;
+        }
+    }
+
+    @@media only screen and (max-width:1490px) {
+        .oppTableHeader {
+            font-weight: bold;
+            font-size: 10pt;
+        }
+
+        .tabDateCreated {
+            width: 100px;
+        }
+    }
+
+    @@media only screen and (max-width:1395px) {
+        .oppTableHeader {
+            font-weight: bold;
+            font-size: 10pt;
+        }
+
+        .oppTableText {
+            font-size: 9pt;
+        }
+
+        .tabRevenue {
+            width: 100px;
+        }
+
+        .tabName {
+            width: 120px;
+        }
+
+        .tabDateCreated {
+            width: 83px;
+        }
+    }
+
+    @@media only screen and (max-width:1240px) {
+        .oppTableHeader {
+            font-weight: bold;
+            font-size: 9pt;
+        }
+
+        .oppTableText {
+            font-size: 8pt;
+        }
+
+        .tabRevenue {
+            width: 60px;
+        }
+
+        .tabName {
+            width: 120px;
+        }
+
+        .tabDateCreated {
+            width: 75px;
+        }
+    }
+
+    @@media only screen and (max-width:1160px) {
+        .oppTableHeader {
+            font-weight: bold;
+            font-size: 8pt;
+        }
+
+        .oppTableText {
+            font-size: 9pt;
+        }
+
+        .tabRevenue {
+            width: 60px;
+        }
+
+        .tabName {
+            width: 120px;
+        }
+
+        .tabDateCreated {
+            width: 66px;
+        }
+    }
+
+    @@media only screen and (max-width:1090px) {
+        .oppTableHeader {
+            font-weight: bold;
+            font-size: 8pt;
+        }
+
+        .oppTableText {
+            font-size: 8pt;
+        }
+
+        .tabRevenue {
+            width: 60px;
+        }
+
+        .tabStatus {
+            width: 60px;
+        }
+
+        .tabName {
+            width: 100px;
+        }
+        .ReturnToRebateRequestHeader{
+            width:100%;
+        }
+        .ReturnToRebateRequest {
+            clear: both;
+            margin-top: 10px;
+        }
+    }
+
+    @@media only screen and (max-width:900px) and (min-width:660px) {
+        .ReturnToRebateRequest{
+            clear:both;
+        }
+        .oppTableHeader {
+            font-weight: bold;
+            font-size: 12pt;
+        }
+
+        .oppTableText {
+            font-size: 11pt;
+        }
+
+        .tabName {
+            width: 140px;
+        }
+
+        .tabRevenue {
+            width: 100px;
+        }
+
+        .tabStatus {
+            width: 100px;
+        }
+
+        .tabDateCreated {
+            width: 100px;
+        }
+    }
+
+    @@media only screen and (max-width:660px) and (min-width:490px) {
+        .totalAmount{
+            float:left !important;
+        }
+        .oppTableHeader {
+            font-weight: bold;
+            font-size: 8pt !important;
+        }
+
+        .oppTableText {
+            font-size: 10pt;
+        }
+
+        .tabRevenue {
+            width: 60px;
+        }
+
+        .tabStatus {
+            width: 60px;
+        }
+
+        .bevelBox {
+            width: 85% !important;
+        }
+
+        .tabName {
+            width: 75px;
+        }
+    }
+
+    @@media only screen and (max-width:489px) and (min-width:391px) {
+        .oppTableHeader {
+            font-weight: bold;
+            font-size: 6pt !important;
+        }
+
+        .oppTableText {
+            font-size: 7pt;
+        }
+
+        .tabRevenue {
+            width: 60px;
+        }
+
+        .tabStatus {
+            width: 60px;
+        }
+
+        .tabName {
+            width: 75px;
+        }
+
+        .tabDateCreated {
+            width: 50px;
+        }
+
+        .bevelBox {
+            width: 85% !important;
+        }
+    }
+
+    @@media only screen and (max-width:390px) and (min-width:0px) {
+        .oppTableHeader {
+            font-weight: bold;
+            font-size: 6pt !important;
+        }
+
+        .oppTableText {
+            font-size: 7pt;
+        }
+
+        .tabRevenue {
+            width: 60px;
+        }
+
+        .tabStatus {
+            width: 60px;
+        }
+
+        .tabDateCreated {
+            width: 50px;
+        }
+
+        .bevelBox {
+            width: 85% !important;
+        }
+    }
+
+    .btnExport {
+        width: 100%;
+        min-height: 60px;
+        color: #ffffff;
+        font-weight: normal;
+        display: inline-block;
+        text-align: center;
+        background-color: #133B7C;
+        font-size: 10pt;
+        border-radius: 5px;
+    }
+</style>
+
+<style>
+    .clsTextBoxOpportunity {
+        min-height: 50px !important;
+        font-size: 20px !important;
+    }
+
+    .btnLanding {
+        background-color: #21459A;
+        border: none;
+        color: #FFFFFF;
+        text-align: center;
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        margin: 10px 0 !important;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+        height: 40px;
+        width: 150px;
+    }
+
+    .invalidated {
+        border-bottom: 1px solid #FF0208 !important;
+        background-color: #FFBABC !important;
+    }
+</style>
+<style>
+    .jqx-input-content {
+        color: #aaa9a9 !important;
+        font-size: 11pt !important;
+        font: 100% Arial, Helvetica, sans-serif !important;
+        padding-left: 15px !important;
+    }
+
+    .clsTextBoxOpportunity {
+        min-height: 50px !important;
+        font-size: 11pt !important;
+    }
+
+    .btnLanding {
+        background-color: #21459A;
+        border: none;
+        color: #FFFFFF;
+        text-align: center;
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        margin: 10px 0 !important;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+        height: 40px;
+        width: 150px;
+    }
+
+    .invalidated {
+        border-bottom: 1px solid #FF0208 !important;
+        background-color: #FFBABC !important;
+    }
+
+    textarea::-webkit-input-placeholder {
+        color: #aaa9a9;
+    }
+
+    textarea:-moz-placeholder { /* Firefox 18- */
+        color: #aaa9a9;
+    }
+
+    textarea::-moz-placeholder { /* Firefox 19+ */
+        color: #aaa9a9;
+    }
+
+    textarea:-ms-input-placeholder {
+        color: #aaa9a9;
+    }
+
+    textarea::placeholder {
+        color: #aaa9a9;
+    }
+
+    .clsFieldContainer {
+        width: 500px;
+    }
+
+    @@media only screen and (max-width:540px) {
+        .clsFieldContainer {
+            width: 100%;
+        }
+
+        .clsTextBoxOpportunity {
+            width: 95% !important;
+        }
+
+        select, textarea {
+            width: 95% !important;
+        }
+
+        input[type=date] {
+            width: 87% !important;
+        }
+
+        .wholeContainer {
+            padding-left: 0px !important;
+        }
+
+        .header1 {
+            font-size: 18pt !important;
+        }
+
+        .header2 {
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+    }
+
+    @@media only screen and (max-width:340px) {
+        .clsFieldContainer {
+            width: 100%;
+        }
+
+        .clsTextBoxOpportunity {
+            width: 95% !important;
+        }
+
+        select, textarea {
+            width: 95% !important;
+        }
+
+        input[type=date] {
+            width: 87% !important;
+        }
+
+        .wholeContainer {
+            padding-left: 0px !important;
+        }
+
+        .header1 {
+            font-size: 14pt !important;
+        }
+
+        .header2 {
+            margin-bottom: 15px;
+            line-height: 1.2;
+            font-size: 10pt !important;
+        }
+
+        .header3 {
+            margin-bottom: 15px;
+            line-height: 1.2;
+            font-size: 10pt !important;
+        }
+    }
+</style>
+<div id="dvController" style="width: 100%; " ng-controller="StarMdfRequestController">
+    <div class="fusion-fullwidth fullwidth-box" style="text-align: left; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; " id="">
+        <div style="padding-left: 20px;">
+            <div style="width:100%;display:inline-block; margin-top: 40px;">
+                <div style="float:left; min-height: 60px; color: #2551A4; font-size: 22pt; font-weight: bold;display:inline-block" class="ReturnToRebateRequestHeader">
+                    Request Rebates <br />
+                    <div style="width: 100%; min-height: 20px;font-size:10pt;margin-top:10px;">
+                        Claims must be submitted within 90 days. All claims are reviewed by Star Micronics.
+                    </div>
+                </div>
+                <div style="width: 250px;float:right; min-height: 30px; color: #ffffff; font-weight: normal; display: inline-block; padding-top: 10px;text-align:center;margin-bottom:10px; background-color: #133B7C; border:1px solid #ffffff;font-size: 10pt;cursor:pointer;" class="ReturnToRebateRequest" ng-click="GoToRequestRebate()">
+                    Return To Rebate Requests
+                </div>
+
+
+            </div>
+            <div style="width:100%;display:inline-block;height: 2px;background-color: #133B7C; "></div>
+
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 250px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Delegate Partner Number *</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer">
+                    <select style="width: 100%; padding: 5px; height: 50px; font-size: 11pt;border: 1px solid #d2d2d2; cursor: pointer;" class="clsTextBoxOpportunity" ng-change="FillUpDelegateRebateItemData()" ng-model="SelectedDPN">
+                        <option value="{{item.DPN}}" ng-repeat="item in Delegates">{{item.DPN}}</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 250px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Month & Year</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer">
+                    @*<input class="clsTextBoxOpportunity" placeholder="Closing Date" type="date" style="width: 485px; border: 1px solid #d2d2d2; padding-left: 15px; font-size: 11pt; color: #aaa9a9;" value="" ng-model="CloseDate">*@
+                    <div class="" id="dtRequestDate" style="float: left;"></div>
+                </div>
+            </div>
+
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 250px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Empower Partner Number</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer">
+                    <input class="clsTextBoxOpportunity" placeholder="Empower Partner Number" type="text" value="" style="background-color:#cecece;color:#000000;" ng-model="RebateRequest.EmpowerPartnerNumber" readonly disabled>
+                </div>
+            </div>
+
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 250px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Purchased on behalf of</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer">
+                    <input class="clsTextBoxOpportunity" placeholder="Purchased on behalf of" type="text" style="background-color:#cecece;color:#000000;" value="" ng-model="RebateRequest.PurchasedOnBehalfOf" readonly disabled>
+                </div>
+            </div>
+
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both;">
+                <div style="width: 250px; padding-left: 10px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 11pt;">Star Vendor Number</div>
+                <div style="float: left; display: table-cell; vertical-align: middle;" class="clsFieldContainer">
+                    <input class="clsTextBoxOpportunity" placeholder="Star Vendor Number" type="text" value=""style="background-color:#cecece;color:#000000;"  ng-model="RebateRequest.StarVendorNumber" readonly disabled>
+                </div>
+            </div>
+            <br /><div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div><br />
+            <div id="displayOpportunityList" style="padding: 2px; text-align: center;">
+                <table style="cursor: pointer; text-align: left; width: 100%; table-layout: fixed; word-wrap: break-word;">
+                    <thead>
+                        <tr style="text-align: left; border-bottom: 1px solid #000000;">
+                            <th class="oppTableHeader tabName">Part Number</th>
+                            <th class="oppTableHeader">Item Name</th>
+                            <th class="oppTableHeader tabName">Delegate Rebate</th>
+                            <th class="oppTableHeader tabName">Quantity</th>
+                            <th class="oppTableHeader tabDateCreated">Distributor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat-start="item in RebateRequest.RebateRequestDetail" ng-hide="showLoading">
+                            <td style="height: 10px; padding: 0; font-size: 4pt; background-color: #ECF8FF;" colspan="5">&nbsp;</td>
+                        </tr>
+                        <tr style="background-color: #D3ECFA; color: #133B7C;">
+                            <td class="oppTableText" style="padding-left: 5px;">
+                                <select style="width: 100%; padding: 5px; height: 50px; font-size: 11pt;border: 1px solid #d2d2d2; cursor: pointer;" class="clsTextBoxOpportunity" ng-change="PartNumberChanged(item,$index)" ng-model="item.PartNumber">
+                                    <option value="{{itemDR.PartNumber}}" ng-repeat="itemDR in DelegateRebateItems">{{itemDR.PartNumber}}</option>
+                                </select>
+                            </td>
+                            <td style="" class="oppTableText">
+                                <input class="clsTextBoxOpportunity" placeholder="Item Name" type="text" value="" ng-model="item.ItemName" readonly>
+                            </td>
+                            <td style="text-align: right;" class="oppTableText">
+                                <input class="clsTextBoxOpportunity" placeholder="Delegate Rebate" type="text" value="" ng-model="item.DelegateRebate">
+                            </td>
+                            <td style="" class="oppTableText">
+                                <input class="clsTextBoxOpportunity" placeholder="Quantity" type="text" value="" ng-model="item.Quantity" onkeypress="return isNumber(event)" ng-blur="UpdateTotalAmount()">
+                            </td>
+                            <td style="" class="oppTableText">
+                                <select style="width: 100%; padding: 5px; height: 50px; font-size: 11pt;border: 1px solid #d2d2d2; cursor: pointer;" class="clsTextBoxOpportunity" ng-model="item.Distributor">
+                                    <option value="{{dist.AccountName}}" ng-repeat="dist in Distributors">{{dist.AccountName}}</option>
+                                </select>
+                            </td>
+
+                        </tr>
+                        <tr ng-repeat-end>
+                            <td style="height: 1px; padding: 0; font-size: 0pt; background-color: #ECF8FF;" colspan="5"></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;text-align:right;">
+                <a href="#" ng-click="AddRows()" style="display:inline-block;border-bottom:1px solid #133B7C;">Add 5 More Rows +</a>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 50%; margin-top: 20px;clear:both;float:right;" class="totalAmount">
+                <div style="width: 150px; padding-left: 20px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 12pt;">Total Rebate</div>
+                <div style="width: 300px; float: left; display: table-cell; vertical-align: middle;">
+                    <input class="clsTextBoxOpportunity" placeholder="Total Amount" type="text" style="background-color:#cecece;color:#000000;"  value="" ng-model="DisplayTotalAmount" readonly>
+                </div>
+            </div>
+
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 50%; margin-top: 20px;clear:both;float:right;" class="totalAmount">
+                <div style="width: 150px; padding-left: 20px; background-color: #2699FB; float: left; padding-top: 15px; min-height: 35px; color: #ffffff; font-size: 12pt;">Notes</div>
+                <div style="width: 300px; float: left; display: table-cell; vertical-align: middle;">
+                    <textarea class="clsTextBoxOpportunity" style="width: 100%; height: 150px; color: #aaa9a9; border: 1px solid #d2d2d2; padding: 8px 15px;border-color: #d2d2d2; margin-right: 1%; box-sizing: border-box; font: 100% Arial, Helvetica, sans-serif;" placeholder="Notes" id="" value="" ng-model="RebateRequest.Notes">
+                        
+                    </textarea>
+                </div>
+            </div>
+
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 80%; margin-top: 20px; clear: both; height: 10px;float:right;color: #2551A4; font-size: 16pt; font-weight: bold;">
+                Back Up Documents:
+            </div>
+            <br />
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width:80%;float:right;border:1px dashed #000000;background-color:#ffffff; text-align: center;min-height:200px;" ondrop="fileDropped(event)" ondragover="allowFileDrop(event)">
+                <table id="tblUploadFile" style="height:200px;width:100%;margin:10px;">
+                    <tr>
+                        <td style="text-align:center;vertical-align:middle;width:100%;">
+                            <div class="uploader-inline-content no-upload-message" style="display:inline-block;">
+                                <div class="upload-ui">
+                                    <div style="display:inline-block;float:left;height:40px;margin-right:20px;"><i class="fa fa-cloud-upload" style="font-size:32pt;color:#aaa9a9"></i></div>
+                                    <div style="font-size:12pt;display:inline-block;float:left;margin-right:20px;height:30px;padding-top:10px;">Upload your files here or</div>
+
+                                    <button type="button" id="upload-file-proxy-button" class="btnLanding" style="height: 40px; width: 150px;border-radius:10px;width:100px;float:left;margin:0px !important;"><span class="wp-media-buttons-icon"></span>Browse</button>
+                                    <input type="file" id="upload-file-button" style="display: none;" multiple onchange="uploadMediaFiles($(this).get(0).files)" />
+                                </div>
+                                @*<div class="post-upload-ui paddingtop5">
+                                <p class="max-upload-size">Maximum upload file size: 50 MB.</p>
+                            </div>*@
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="width:80%;float:right;color:#2551A4;">
+                <div style="width:50px;float:left;font-weight:normal;font-size:12pt;">Files:</div>
+                <div style="float:left;margin-left:20px;font-size:10pt;font-weight:normal;">
+                    <div style="height:15px;" ng-repeat="x in uploadedFiles">{{x}}</div>
+                </div>
+            </div>
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 80%; margin-top: 20px; clear: both; height: 10px;float:right;color: #2551A4; font-size: 10pt; font-weight: bold;">
+                <input type="checkbox" ng-model="isSigned" style="height:20px;width:20px; margin-right:20px;cursor:pointer;"/>I verify that the information is submitted above is accurate.
+            </div>
+            <br />
+
+            <div style="width: 100%; margin-top: 20px; clear: both; height: 10px;"></div>
+            <div style="width: 100%; margin-top: 20px; clear: both; text-align: left;">
+                <input type="button" name="addOpportunity" class="btnLanding" value="Submit" ng-click="AddRebateRequest()">
+            </div>
+            <br /><br /><br /><br /><br /><br />
+        </div>
+
+    </div>
+    <div style="width: 100%; height: 500px; opacity: .5; display: inline-block; position: absolute; top: 0; left: 0; z-index: 99;" ng-show="showProcessing">
+        <div style="font-size: 22pt; height: 80px; padding-top: 200px;">
+            <img src="~/Images/processing10.gif" />
+
+        </div>
+    </div>
+</div>
+
+<style>
+    textarea::-webkit-input-placeholder {
+        color: #aaa9a9;
+    }
+
+    textarea:-moz-placeholder { /* Firefox 18- */
+        color: #aaa9a9;
+    }
+
+    textarea::-moz-placeholder { /* Firefox 19+ */
+        color: #aaa9a9;
+    }
+
+    textarea:-ms-input-placeholder {
+        color: #aaa9a9;
+    }
+
+    textarea::placeholder {
+        color: #aaa9a9;
+    }
+</style>
+<script>
+    var data;
+    function allowFileDrop(ev) {
+        ev.preventDefault();
+    }
+
+    function fileDropped(ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        var files = event.dataTransfer.files;
+        uploadMediaFiles(files);
+    }
+    function uploadMediaFiles(files) {       
+        //var data = new FormData();
+
+        //var okToUpload = true;
+        // Add the uploaded image content to the form data collection
+
+        var scope = angular.element($("#dvController")).scope();
+      
+        for (var i = 0; i < files.length; i++) {
+          //  if (files[i].size <= 52428800) {
+           // alert(files[i].name);
+            data.append("UploadedImage" + i, files[i]);
+            scope.$apply(function () {
+                scope.uploadedFiles.push(files[i].name);               
+            })
+          //  } else {
+          //      alert("File " + files[i].name + " exceeds the size limit. Please select files having maximum size 50 MB.\n\nUpload cancelled.");
+          //      okToUpload = false;
+          //  }
+        }
+
+        //if (okToUpload) {
+        //    //data.append("UploadedType", currState);
+            
+        //}
+    }
+
+    function uploadFilesToServer(reqId) {
+        var scope = angular.element($("#dvController")).scope();       
+        data.append("RequestId", reqId);
+        $.ajax({
+            type: 'POST',
+            url: root + "api/ppcmsapi//UploadRebateRequestFiles",
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function (data) {                
+                if (data == "Success") {
+                    scope.$apply(function () {
+                        scope.ShowSaveMessage();
+                    })
+                } else {
+                    scope.$apply(function () {
+                        scope.ShowSaveErrorMessage();
+                    })
+                }                
+            },
+            error: function (data) {
+                alert(data.responseText);
+                
+            }
+        });
+    }
+
+    function isNumber(e) {
+        var keyCode = (e.which) ? e.which : e.keyCode;
+        if ((keyCode >= 48 && keyCode <= 57) || (keyCode === 8))
+            return true;
+        //else if (keyCode === 46) {
+        //    var curVal = document.activeElement.value;
+        //    if (curVal != null && curVal.trim().indexOf('.') === -1)
+        //        return true;
+        //    else
+        //        return false;
+        //}
+        else
+            return false;
+    }
+</script>
+<script>
+
+    $(document).ready(function () {
+        $(".rightPanelContainer").hide();
+        $("#dtRequestDate").jqxDateTimeInput({ width: '100%', height: '50px', theme: 'default', formatString: "MM - yyyy" });
+        var d = new Date();
+        d.setMonth(d.getMonth() - 3);
+        $('#dtRequestDate').jqxDateTimeInput('setMinDate', d);
+
+        var date = new Date();
+        //var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+        var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        $('#dtRequestDate').jqxDateTimeInput('setMaxDate', lastDay);
+        $("#upload-file-proxy-button").click(function () {
+            $("#upload-file-button").click();
+        });
+        data = new FormData();
+    });
+        app.controller("StarMdfRequestController", function ($controller, $scope, $http, $sce,
+            notificationFactory, $location,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory) {
+
+            $scope.showProcessing = false;
+            $scope.Delegates = [];
+            $scope.DelegateRebateItems = [];
+            $scope.AllDelegateRebateItems = [];
+            $scope.Distributors = [];
+            $scope.RebateRequest = {};
+            $scope.SelectedDPN = "";
+            $scope.DisplayTotalAmount = "";
+            $scope.uploadedFiles = [];
+            $scope.isSigned = false;
+            $scope.getAccount = function () {
+                dbUtilFactory.get(root + 'api/ppcmsapi/GetDelegateRebateItemData/', "", function (d) {
+                    $scope.AllDelegateRebateItems = d;
+                    for (var i = 0; i < $scope.AllDelegateRebateItems.length; i++) {
+                        var exists = false;
+                        for (var j = 0; j < $scope.Delegates.length; j++) {
+                            if ($scope.AllDelegateRebateItems[i].DPN == $scope.Delegates[j].DPN) {
+                                exists = true;
+                            }
+                        }
+                        if (!exists) {
+                            $scope.Delegates.push($scope.AllDelegateRebateItems[i]);
+                        }
+                    }
+                }, '', 'Error getting data ');
+
+
+                dbUtilFactory.get(root + 'api/ppcmsapi/GetDistributorsForAccount/', "", function (d) {
+                    $scope.Distributors = d;
+                }, '', 'Error getting data ');
+
+
+
+            };
+            $scope.getAccount();
+            $scope.formatDate = function (date, format) {
+                if (date == undefined) return '';
+                return $.format.date(new Date(date), format);
+            };
+
+           $scope.FillUpDelegateRebateItemData = function () {
+              //  alert($scope.SelectedDPN);
+               var index = -1;
+               $scope.DelegateRebateItems = [];
+               for (var i = 0; i < $scope.AllDelegateRebateItems.length; i++) {
+                    if ($scope.AllDelegateRebateItems[i].DPN == $scope.SelectedDPN) {
+                        index = i;
+                        $scope.DelegateRebateItems.push($scope.AllDelegateRebateItems[i]);
+                    }
+                }
+               if (index >= 0) {
+                   $scope.RebateRequest.DPN = $scope.SelectedDPN;
+                   $scope.RebateRequest.EmpowerPartnerNumber = $scope.AllDelegateRebateItems[index].TechnologyPartnerEPN;
+                   $scope.RebateRequest.PurchasedOnBehalfOf = $scope.AllDelegateRebateItems[index].TechnologyPartnerAccountName;
+                   $scope.RebateRequest.StarVendorNumber = $scope.AllDelegateRebateItems[index].SapCardCode;
+                }
+            }
+
+            $scope.inIt = function () {
+                $scope.RebateRequest.DPN = "";
+                $scope.RebateRequest.RequestDate = "";
+                $scope.RebateRequest.EmpowerPartnerNumber = "";
+                $scope.RebateRequest.PurchasedOnBehalfOf = "";
+                $scope.RebateRequest.StarVendorNumber = "";
+                $scope.RebateRequest.TotalAmount = 0;
+                $scope.RebateRequest.Notes = "";
+                $scope.RebateRequest.RebateRequestDetail = [];
+                for (var i = 0; i < 3; i++) {
+                    var obj = {};
+                    obj.PartNumber = "";
+                    obj.ItemName = "";
+                    obj.DelegateRebate = "";
+                    obj.Quantity = "";
+                    obj.Distributor = "";
+                    $scope.RebateRequest.RebateRequestDetail.push(obj);
+                }
+            };
+            $scope.inIt();
+
+            $scope.UpdateTotalAmount = function () {
+                var amt = 0;
+                for (var i = 0; i < $scope.RebateRequest.RebateRequestDetail.length; i++) {
+                    var delRebate = $scope.RebateRequest.RebateRequestDetail[i].DelegateRebate.replace("$", "");
+
+                    if ($scope.RebateRequest.RebateRequestDetail[i].Quantity != "" && !isNaN(delRebate)) {
+                        amt += (parseFloat($scope.RebateRequest.RebateRequestDetail[i].Quantity) * parseFloat(delRebate));
+                    }
+                }
+
+                $scope.RebateRequest.TotalAmount = amt;
+                $scope.DisplayTotalAmount = "$" + amt + " USD";
+            }
+            $scope.AddRows = function () {
+                for (var i = 0; i < 5; i++) {
+                    var obj = {};
+                    obj.PartNumber = "";
+                    obj.ItemName = "";
+                    obj.DelegateRebate = "";
+                    obj.Quantity = "";
+                    obj.Distributor = "";
+                    $scope.RebateRequest.RebateRequestDetail.push(obj);
+                }
+            }
+            $scope.PartNumberChanged = function (item, index) {
+
+                for (var i = 0; i < $scope.DelegateRebateItems.length; i++) {
+                    if ($scope.DelegateRebateItems[i].PartNumber == item.PartNumber) {
+                        $scope.RebateRequest.RebateRequestDetail[index].ItemName = $scope.DelegateRebateItems[i].ItemName;
+                        $scope.RebateRequest.RebateRequestDetail[index].DelegateRebate = $scope.DelegateRebateItems[i].DelegateRebate;
+                    }
+                }
+            }
+
+            $scope.GoToRequestRebate = function () {
+                var redUrl = '@Url.Content("~/Pages/RecentRequest")';
+                window.location.href = redUrl;
+            }
+            $scope.AddRebateRequest = function () {
+                if(!$scope.isSigned){
+                    swal({
+                        title: "Error",
+                        text: "Please verify and accept the informations submitted are correct.",
+                        type: "error"
+                    });
+                    return false;
+                }
+                if ($scope.RebateRequest == null || $scope.RebateRequest == undefined || $scope.RebateRequest.DPN == "") {
+                    //swal("You do not have any MDF fund.");
+                    swal({
+                        title: "Error",
+                        text: "Please provide DPN.",
+                        type: "error"
+                    });
+                    return false;
+                }
+
+                var date = $("#dtRequestDate").jqxDateTimeInput('getDate');
+                //var formattedRequestDate = $.jqx.dataFormat.formatdate(date, 'MM/dd/yyyy');
+                //$scope.TestToImport.RequestDate = formattedRequestDate;
+
+                // var date = new Date($scope.CloseDate);
+                if (date != null || date != undefined || date == "") {
+                    $scope.RebateRequest.RequestDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+                } else {
+                    //date = new Date();
+                    //$scope.RebateRequest.RequestDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+                    swal({
+                        title: "Error",
+                        text: "Please provide month & year.",
+                        type: "error"
+                    });
+                    return false;
+                }
+
+
+                if ($scope.RebateRequest == null || $scope.RebateRequest == undefined || $scope.RebateRequest.RequestDate == undefined || $scope.RebateRequest.RequestDate == null || $scope.RebateRequest.RequestDate == "") {
+                    //swal("You do not have any MDF fund.");
+                    swal({
+                        title: "Error",
+                        text: "Please provide request date.",
+                        type: "error"
+                    });
+                    return false;
+                }
+
+                var okToProceed = true;
+                if ($scope.RebateRequest.RebateRequestDetail != null && $scope.RebateRequest.RebateRequestDetail != undefined) {
+                    for (var i = 0; i < $scope.RebateRequest.RebateRequestDetail.length; i++) {
+                        if ($scope.RebateRequest.RebateRequestDetail[i].PartNumber != "") {
+                            if ($scope.RebateRequest.RebateRequestDetail[i].ItemName == "") {
+                                swal({
+                                    title: "Error",
+                                    text: "Please provide item name for part number " + $scope.RebateRequest.RebateRequestDetail[i].PartNumber,
+                                    type: "error"
+                                });
+                                okToProceed = false;
+                                return false;
+                            }
+                            if ($scope.RebateRequest.RebateRequestDetail[i].DelegateRebate == "") {
+                                swal({
+                                    title: "Error",
+                                    text: "Please provide delegate rebate for part number " + $scope.RebateRequest.RebateRequestDetail[i].PartNumber,
+                                    type: "error"
+                                });
+                                okToProceed = false;
+                                return false;
+                            }
+                            if ($scope.RebateRequest.RebateRequestDetail[i].Quantity == "") {
+                                swal({
+                                    title: "Error",
+                                    text: "Please provide quantity for part number " + $scope.RebateRequest.RebateRequestDetail[i].PartNumber,
+                                    type: "error"
+                                });
+                                okToProceed = false;
+                                return false;
+                            }
+                            if ($scope.RebateRequest.RebateRequestDetail[i].Distributor == "") {
+                                swal({
+                                    title: "Error",
+                                    text: "Please provide distributor for part number " + $scope.RebateRequest.RebateRequestDetail[i].PartNumber,
+                                    type: "error"
+                                });
+                                okToProceed = false;
+                                return false;
+                            }
+                        }
+                    }
+                }
+                
+                $scope.RebateRequest.RebateRequestFiles = $scope.uploadedFiles;
+
+               // alert($scope.RebateRequest.RebateRequestFiles);
+                if ($scope.RebateRequest.RebateRequestFiles == null || $scope.RebateRequest.RebateRequestFiles == undefined || $scope.RebateRequest.RebateRequestFiles.length == 0) {
+                    swal({
+                        title: "Error",
+                        text: "Please provide back up documents",
+                        type: "error"
+                    });
+                    okToProceed = false;
+                    return false;
+                }
+                if (!okToProceed) return false;
+
+                $scope.showProcessing = true;
+                dbUtilFactory.postp(root + 'api/ppcmsapi/AddRebateRequest/', $scope.RebateRequest, function (reqId) {
+
+                    //alert(reqId);
+                    if (reqId > 0) {
+                        uploadFilesToServer(reqId);
+                    }
+
+
+
+                }, '', 'Error getting data ');
+                return true;
+            };
+
+
+             $scope.ShowSaveMessage = function () {
+                    var redUrl = '@Url.Content("~/Pages/RecentRequest")';
+                    swal({
+                        title: "Done",
+                        text: "Rebate Request Created Successfully.",
+                        type: "success"
+                    }).then(function () {
+                        $scope.showProcessing = false;
+                        window.location.href = redUrl;
+                    });
+                }
+
+                 $scope.ShowSaveErrorMessage = function () {
+                    swal({
+                        title: "Error",
+                        text: "An error occured. Please try again.",
+                        type: "error"
+                    }).then(function () {
+                        $scope.showProcessing = false;
+                    });
+                }
+
+        });
+</script>

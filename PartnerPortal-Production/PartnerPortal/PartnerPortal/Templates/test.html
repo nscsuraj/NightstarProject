@@ -1,0 +1,187 @@
+﻿
+<script type="text/javascript" src='/Scripts/Sliders/jssor.slider-27.5.0.min.js'></script>
+<script type="text/javascript">
+    JssorBannerSliding_slider_init = function () {
+
+        var JssorBannerSliding_options = {
+            $AutoPlay: 1,
+            $Idle: 6000,
+            $SlideDuration: 1000,
+            $SlideEasing: $Jease$.$Linear,
+
+            $BulletNavigatorOptions: {
+                $Class: $JssorBulletNavigator$,
+                $SpacingX: 10
+            }
+        };
+        var JssorBannerSliding_slider = new $JssorSlider25$("JssorBannerSliding", JssorBannerSliding_options);
+
+        function ScaleBannerSlider() {
+            // var w = JssorBannerSliding_slider.$Elmt.parentNode.clientWidth;
+            // w = w - (w * 10 / 100);
+            // var refSizeNews = w ;
+            var refSizeNews = JssorBannerSliding_slider.$Elmt.parentNode.clientWidth;
+
+            if (refSizeNews) {
+                // alert(refSizeNews);
+                // refSizeNews = Math.min(refSizeNews, 638);
+                JssorBannerSliding_slider.$ScaleWidth(refSizeNews);
+            } else {
+                window.setTimeout(ScaleBannerSlider, 30);
+            }
+        }
+
+        ScaleBannerSlider();
+        $Jssor$.$AddEvent(window, "load", ScaleBannerSlider);
+        $Jssor$.$AddEvent(window, "resize", ScaleBannerSlider);
+        $Jssor$.$AddEvent(window, "orientationchange", ScaleBannerSlider);
+    };
+    $(window).resize(function () {
+
+        // JssorBannerSliding_slider_init();
+    });
+</script>
+<style>
+    /*jssor slider loading skin spin css*/
+    .jssorl-009-spin img {
+        animation-name: jssorl-009-spin;
+        animation-duration: 1.6s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+    /*jssor slider bullet skin 062 css*/
+    .jssorb062 {
+        position: absolute;
+    }
+
+        .jssorb062 .i {
+            position: absolute;
+            cursor: pointer;
+        }
+
+            .jssorb062 .i .b {
+                fill: none;
+                fill-opacity: .5;
+                stroke: #85888A;
+                stroke-width: 1000;
+                stroke-miterlimit: 10;
+                stroke-opacity: 0.5;
+                 box-shadow: 5px 10px #000000;
+            }
+
+            .jssorb062 .i:hover .b {
+                fill-opacity: .8;
+            }
+
+        .jssorb062 .iav .b {
+            fill: #85888A;
+            fill-opacity: 1;
+            stroke: #85888A;
+            stroke-opacity: .7;
+            stroke-width: 400;
+             box-shadow: 5px 10px #000000;
+        }
+
+        .jssorb062 .iav:hover .b {
+            fill-opacity: .6;
+        }
+
+        .jssorb062 .i.idn {
+            opacity: .3;
+        }
+
+    /*jssor slider arrow skin 051 css*/
+    .jssora051 {
+        display: block;
+        position: absolute;
+        cursor: pointer;
+    }
+
+        .jssora051 .a {
+            fill: none;
+            stroke: #fff;
+            stroke-width: 360;
+            stroke-miterlimit: 10;
+        }
+
+        .jssora051:hover {
+            opacity: .8;
+        }
+
+        .jssora051.jssora051dn {
+            opacity: .5;
+        }
+
+        .jssora051.jssora051ds {
+            opacity: .3;
+            pointer-events: none;
+        }
+</style>
+<div id="JssorBannerSliding"  style="position: relative; margin: 0 auto; top: 0px; left: 0px;width:1876px;height:350px; visibility: hidden;">
+    <div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 1876px; height: 350px;">
+        <!-- mp_trans_remove_start -->
+        <div>
+            <a href='https://www.starmicronics.com/pages/mcollection'>
+                <img data-u='image' class='sliderImage' src='https://www.starmicronics.com/Resources/CMSFiles/Homepage-banner-New-Layout.jpg'/>
+            </a>
+        </div>
+        <div>
+            <a href='https://www.starmicronics.com/pages/mcollection'>
+                <img data-u='image' class='sliderImage' src='https://www.starmicronics.com/Resources/CMSFiles/fabfa80b-88a1-4f4a-bce4-6de5e1f9902b.jpg'/>
+            </a>
+        </div>
+        <div>
+            <a href='https://www.starmicronics.com/pages/mcollection'>
+                <img data-u='image' class='sliderImage' src='https://www.starmicronics.com/Resources/CMSFiles/Homepage-banner-New-Layout-CD.jpg'/>
+            </a>
+        </div>
+        <div>
+            <a href='https://www.starmicronics.com/pages/mcollection'>
+                <img data-u='image' class='sliderImage' src='https://www.starmicronics.com/Resources/CMSFiles/Homepage-banner-New-Layout-mcp3.jpg'/>
+            </a>
+        </div>
+        <!-- mp_trans_remove_end -->
+        <!-- mp_trans_add='es'
+        <div>
+            <a href='https://www.starmicronics.com/pages/mcollection'>
+                <img data-u='image' class='sliderImage' src='https://www.starmicronics.com/Resources/CMSFiles/Homepage-banner-New-Layout-Spanish.jpg'/>
+            </a>
+        </div>
+        <div>
+            <a href='https://www.starmicronics.com/pages/mcollection'>
+                <img data-u='image' class='sliderImage' src='https://www.starmicronics.com/Resources/CMSFiles/fabfa80b-88a1-4f4a-bce4-6de5e1f9902b-Spanish.jpg'/>
+            </a>
+        </div>
+        <div>
+            <a href='https://www.starmicronics.com/pages/mcollection'>
+                <img data-u='image' class='sliderImage' src='https://www.starmicronics.com/Resources/CMSFiles/Homepage-banner-New-Layout-CD-Spanish.jpg'/>
+            </a>
+        </div>
+        <div>
+            <a href='https://www.starmicronics.com/pages/mcollection'>
+                <img data-u='image' class='sliderImage' src='https://www.starmicronics.com/Resources/CMSFiles/Homepage-banner-New-Layout-mcp3-Spanish.jpg'/>
+            </a>
+        </div>
+            -->
+    </div>
+    <!-- Bullet Navigator -->
+    <div data-u="navigator" class="jssorb062" style="position: absolute; bottom: 15px; right: 0px;" data-autocenter="1" data-scale="0.5" data-scale-bottom="0.75">
+        <div data-u="prototype" class="i" style="width: 16px; height: 16px;">
+            <svg viewbox="0 0 16000 16000" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                <circle class="b" cx="8000" cy="8000" r="5800"></circle>
+            </svg>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    JssorBannerSliding_slider_init();
+</script>
+<!-- #endregion Jssor Slider End -->
+<script>
+    //$(document).ready(function () {
+    //    var h = $(".bannerSliding").width() / 3.6;
+
+    //    $(".bannerSliding").css('height', h);
+    //    $(".sliderImage").css('height', h);
+    //});
+</script>

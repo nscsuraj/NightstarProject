@@ -1,0 +1,35 @@
+
+.leftWidth{width:180px;}
+.row{padding-right:25px;}
+.nav-tabs > li > a{margin-right:0px;line-height:1.42857143;border:0px solid transparent;border-radius:0px 0px 0 0;}
+.nav-tabs > li.active > a{background-color:#e0dada;border:0px solid transparent;}
+.nav-tabs > li.active > a:hover{background-color:#e0dada;border:0px solid transparent;}
+.row{margin-right:0px;margin-left:0px;}
+.col-md-4{padding-right:0px;}
+.form-horizontal .control-label{padding-top:5px;}
+.bottomBorder{}
+.bar{fill:steelblue;}
+.bar:hover{fill:brown;}
+.axis{font:10px sans-serif;}
+.axis path,
+.axis line{fill:none;stroke:#000;shape-rendering:crispEdges;}
+.x.axis path{display:none;}
+.table_wrap{height:500px !important;overflow:auto;}
+.modal-header{background-color:#009BD1;color:white;}
+.btn-primary{background-color:#009BD1;color:white;}
+.ext{visibility:hidden;}
+div[data-angular-treeview]{-moz-user-select:-moz-none;-khtml-user-select:none;-webkit-user-select:none;-ms-user-select:none;user-select:none;font-family:Tahoma;font-size:13px;color:#555;text-decoration:none;}
+div[data-tree-model] ul{margin:0;padding:0;list-style:none;border:none;overflow:hidden;}
+div[data-tree-model] li{position:relative;padding:0 0 0 20px;line-height:20px;}
+div[data-tree-model] li .expanded{padding:1px 10px;background-image:url("http://cfile23.uf.tistory.com/image/205B973A50C13F4B19D9BD");background-repeat:no-repeat;}
+div[data-tree-model] li .collapsed{padding:1px 10px;background-image:url("http://cfile23.uf.tistory.com/image/1459193A50C13F4B1B05FB");background-repeat:no-repeat;}
+div[data-tree-model] li .normal{padding:1px 10px;background-image:url("http://cfile23.uf.tistory.com/image/165B663A50C13F4B196CCA");background-repeat:no-repeat;}
+div[data-tree-model] li i, div[data-tree-model] li span{cursor:pointer;}
+div[data-tree-model] li .selected{background-color:#aaddff;font-weight:bold;padding:1px 5px;}
+.node{stroke:#fff;stroke-width:1.5px;}
+.link{stroke:#999;stroke-opacity:.6;}
+.modal.center .modal-dialog{position:absolute !important;top:40%;left:50%;min-width:320px;max-width:630px;width:50%;-webkit-transform:translateX(-50%) translateY(-50%);transform:translateX(-50%) translateY(-50%);}
+.requiredField{border-color:red;}
+.my-modal-popup{@media (min-width:1400px){.modal-lg{width:1308px;}
+}
+}

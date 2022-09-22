@@ -1,0 +1,989 @@
+﻿<template id="image_frame_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle image_holder" id="element_image_frame_" data-elementType ="image_frame"  draggable="true" ondragstart="drag(event)">
+        <div class="handler pop-up-element menu-item-handle">
+            <div id="simple_option" class="fusion-columns-options fusion-builder-element ">
+                <a id="edit_element-" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+                <a id="clone_element" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+                <a id="delete_element" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+            </div>
+        </div>
+        <div class="innerElement editable-element ui-droppable" id="image_element">
+            <div class="fusion_iconbox textblock_element textblock_element_style">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon">
+                        <i class="fusiona-image"></i>
+                        <sub class="sub">Image Frame</sub>
+                        <div class="img_frame_section"><img src=""></div>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="button_block_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle button_holder" id="element_button_" data-elementType="button" draggable="true" ondragstart="drag(event)">
+        <div class="handler pop-up-element menu-item-handle">
+            <div id="simple_option_1" class="fusion-columns-options fusion-builder-element ">
+                <a id="edit_element_button_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+                <a id="clone_element_button_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+                <a id="delete_element_button_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick="deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+            </div>
+        </div>
+        <div class="innerElement editable-element ui-droppable" id="button_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_button">
+                <div class="bilder_icon_container">
+                    <a title="" target="_self" class="button default">
+                        <span class="fusion-button-text textboxContent">Button Text</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="button_with_icon_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle button_holder" id="element_button_with_icon_" data-elementType="button" draggable="true" ondragstart="drag(event)">
+        <div class="handler pop-up-element menu-item-handle">
+            <div id="simple_option_1_with_icon_" class="fusion-columns-options fusion-builder-element ">
+                <a id="edit_element_button_with_icon_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+                <a id="clone_element_button_with_icon_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+                <a id="delete_element_button_with_icon_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick="deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+            </div>
+        </div>
+         <div class="innerElement editable-element ui-droppable" id="button_element_with_icon" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_button_with_icon">
+                <div class="bilder_icon_container">
+                    <a title="" target="_self" class="button default">
+                        <i class="fusiona-check-empty"></i>&nbsp;&nbsp;&nbsp;
+                        <span class="fusion-button-text textboxContent">Button With Icon</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="google_map_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle google_map_holder" id="element_google_map_" data-elementType ="google_map" draggable="true" ondragstart="drag(event)">		 
+		<div class="handler pop-up-element menu-item-handle">
+			<div id="simple_option_2" class="fusion-columns-options fusion-builder-element "> 				 
+				<a id="edit_element_google_map" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>				 
+			    <a id="clone_element_google_map" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick="cloneElement(this)"><i class="fusiona-file-add"></i></a>
+			    <a id="delete_element_google_map" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick="deleteElement(this)"><i class="fusiona-trash-o"></i></a>
+			</div>
+		</div>
+		<div class="innerElement editable-element ui-droppable" id="google_map_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_google_map">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon">
+                        <i class="fusiona-map"></i>
+                        <sub class="sub">Google Map</sub>
+                        <p class="google_map_address"></p>
+                    </span>
+                </div>
+            </div>
+		</div>			
+	</div>
+</template> 
+<template id="back_to_top_block_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle back_to_top_block_holder" id="element_back_to_top_block" data-elementType ="back_to_top_block" draggable="true" ondragstart="drag(event)">		 
+		<div class="handler pop-up-element menu-item-handle">
+			<div id="simple_option_backtotop" class="fusion-columns-options fusion-builder-element "> 				 
+				<a id="edit_element_backtoptop" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>				 
+			    <a id="clone_element_backtoptop" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick="cloneElement(this)"><i class="fusiona-file-add"></i></a>
+			    <a id="delete_element_backtoptop" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick="deleteElement(this)"><i class="fusiona-trash-o"></i></a>
+			</div>
+		</div>
+		<div class="innerElement editable-element ui-droppable" id="back_to_top_block_element" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon">
+                        <i class="fusiona-hand-up"></i>
+                        <sub class="sub">Back To Top</sub>
+                    </span>
+                </div>
+            </div>
+		</div>			
+	</div>
+</template>
+<template id="menu_anchor_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle menu_anchor_holder" id="element_menu_anchor_" data-elementType ="menu_anchor" draggable="true" ondragstart="drag(event)">		 
+		<div class="handler pop-up-element menu-item-handle">
+			<div id="simple_option_3" class="fusion-columns-options fusion-builder-element "> 				 
+				<a id="edit_element_menu_anchor" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>				 
+			    <a id="clone_element_menu_anchor" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick="cloneElement(this)"><i class="fusiona-file-add"></i></a>
+			    <a id="delete_element_menu_anchor" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick="deleteElement(this)"><i class="fusiona-trash-o"></i></a>
+			</div>
+		</div>
+		<div class="innerElement editable-element ui-droppable" id="menu_anchor_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon">
+                        <i class="fusiona-anchor"></i>
+                        <sub class="sub">Menu Anchor</sub>
+                        <p>menu anchor name = <span class="anchor_name"></span></p>
+                    </span>
+                </div>
+            </div>
+		</div>			
+	</div>
+</template>
+
+<template id="check_list_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle check_list_holder" id="element_check_list_" data-elementType ="check_list" draggable="true" ondragstart="drag(event)">
+		<div class="handler pop-up-element menu-item-handle">
+			<div id="simple_option_4" class="fusion-columns-options fusion-builder-element "> 
+				<a id="edit_element_check_list_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+                <a id="clone_element_check_list_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+                <a id="delete_element_check_list_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+			</div>
+		</div>
+        <div class="innerElement editable-element ui-droppable" id="check_list_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_ckecklist">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon">
+                        <i class="fusiona-list-ul"></i>
+                        <sub class="sub">Checklist</sub>
+                        <ul class="checklist_elements"></ul>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template  id="modal_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle modal_holder" id="element_modal_" data-elementType ="modal" draggable="true" ondragstart="drag(event)">		 
+		<div class="handler pop-up-element menu-item-handle">
+			<div id="simple_option_modal" class="fusion-columns-options fusion-builder-element "> 				 
+				<a id="edit_element_modal" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>				 
+			    <a id="clone_element_modal" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick="cloneElement(this)"><i class="fusiona-file-add"></i></a>
+			    <a id="delete_element_modal" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick="deleteElement(this)"><i class="fusiona-trash-o"></i></a>
+			</div>
+		</div>
+		<div class="innerElement editable-element ui-droppable" id="modal_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_modal">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon">
+                        <i class="fusiona-external-link"></i>
+                        <sub class="sub">Modal</sub>
+                        <p>modal name = <span class="modal_name"></span></p>
+                    </span>
+                </div>
+            </div>
+		</div>			
+	</div>
+</template>
+
+<template id="content_boxes_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle content_boxes_holder" id="element_content_boxes_" data-elementType ="content_boxes" draggable="true" ondragstart="drag(event)">
+        <div class="handler pop-up-element menu-item-handle">
+            <div id="simple_option_content_boxes" class="fusion-columns-options fusion-builder-element ">
+                <a id="editedit_element_content_boxes_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+                <a id="clone_element_content_boxes_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+                <a id="delete_element_content_boxes_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+            </div>
+        </div>
+        <div class="innerElement editable-element ui-droppable" id="content_boxes_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_content_box">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon">
+                        <i class="fusiona-newspaper"></i><sub class="sub">Content Boxes</sub>
+                        <p>
+                            layout = <span class="content_boxes_layout">icon-with-title</span> <br> 
+                            columns = <font class="content_boxes_columns">4</font>
+                        </p>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<template id="table_box_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle table_box_holder" id="element_table_box_" data-elementType="table_box" draggable="true" ondragstart="drag(event)">
+        <div class="handler pop-up-element menu-item-handle">
+            <div id="simple_option_table_box" class="fusion-columns-options fusion-builder-element ">
+                <a id="editedit_element_table_box_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this) "><i class="fusiona-pen"></i></a>
+                <a id="clone_element_table_box_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+                <a id="delete_element_table_box_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+            </div>
+        </div>
+        <div class="innerElement editable-element ui-droppable" id="table_box_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_table">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon">
+                        <i class="fusiona-table"></i>
+                        <sub class="sub">Table</sub>
+                        <p   style="display: none;">style = <span class="table_style">1</span> columns = <font class="table_columns">1</font></p>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<template id="page_scroller_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle page_scroller_holder" id="element_page_scroller" data-elementType ="page_scroller" draggable="true" ondragstart="drag(event)">
+        <div class="handler pop-up-element menu-item-handle">
+            <div id="page_scroller_box" class="fusion-columns-options fusion-builder-element ">
+                <a id="edit_page_scroller" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+                <a id="clone_page_scroller" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+                <a id="delete_page_scroller" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+            </div>
+        </div>
+        <div class="innerElement editable-element ui-droppable" id="page_scroller_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="nsc_page_scroller">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon">
+                        <i class="fusiona-layers-alt"></i>
+                        <sub class="sub">Page Scroller</sub><ul class="tabs_elements"></ul>
+                    </span>
+                </div>
+            </div>
+        </div>
+			
+		</div>    
+</template>
+
+<template id="tabs_box_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle tabs_box_holder" id="element_tabs_box" data-elementType ="tabs_box" draggable="true" ondragstart="drag(event)">
+        <div class="handler pop-up-element menu-item-handle">
+            <div id="simple_option_tabs_box" class="fusion-columns-options fusion-builder-element ">
+                <a id="editedit_element_tabs_box_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+                <a id="clone_element_tabs_box_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+                <a id="delete_element_tabs_box_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+            </div>
+        </div>
+        <div class="innerElement editable-element ui-droppable" id="tabs_box_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_tabs">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon">
+                        <i class="fusiona-folder"></i>
+                        <sub class="sub">Tabs</sub><ul class="tabs_elements"></ul>
+                    </span>
+                </div>
+            </div>
+        </div>
+			
+		</div>    
+</template>
+
+<template id="separator_element_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle separator_element_holder" id="element_separator_element_" data-elementType ="separator_element" draggable="true" ondragstart="drag(event)">		 
+		<div class="handler pop-up-element menu-item-handle">
+			<div id="simple_option_separator_element_" class="fusion-columns-options fusion-builder-element "> 				 
+				<a id="edit_element_separator_element_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>				 
+			    <a id="clone_element_separator_element_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick="cloneElement(this)"><i class="fusiona-file-add"></i></a>
+			    <a id="delete_element_separator_element_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick="deleteElement(this)"><i class="fusiona-trash-o"></i></a>
+			</div>
+		</div>
+		<div class="innerElement editable-element ui-droppable" id="separator_element_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_seprator">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon">
+                        <span class="upper_container" style="">
+                            <i class="fusiona-minus"></i><sub class="sub">Separator</sub></span>
+                        <section class="separator none" style="selector:sattrib"><i class="fake_class" style="color:;border-color:;"></i></section>
+                    </span>
+                </div>
+            </div>
+		</div>			
+	</div>
+</template>
+
+<template id="progress_bar_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle progress_bar_holder" id="element_progress_bar_" data-elementType ="progress_bar" draggable="true" ondragstart="drag(event)">		 
+		<div class="handler pop-up-element menu-item-handle">
+			<div id="simple_option_progress_bar_" class="fusion-columns-options fusion-builder-element "> 				 
+				<a id="edit_element_progress_bar_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>				 
+			    <a id="clone_element_progress_bar_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick="cloneElement(this)"><i class="fusiona-file-add"></i></a>
+			    <a id="delete_element_progress_bar_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick="deleteElement(this)"><i class="fusiona-trash-o"></i></a>
+			</div>
+		</div>
+		<div class="innerElement editable-element ui-droppable" id="progress_bar_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_progress_bar">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon"><i class="fusiona-tasks"></i><sub class="sub">Progress Bar</sub><p class="progress_bar_text"></p></span>
+                </div>
+            </div>
+		</div>			
+	</div>
+</template>
+
+<template id="text_box_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle text_box_holder" id="element_text_box" data-elementType ="text_box" draggable="true" ondragstart="drag(event)">
+        <div class="handler pop-up-element menu-item-handle">
+            <div id="simple_option_text_box" class="fusion-columns-options fusion-builder-element ">
+                <a id="editedit_element_text_box_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+                <a id="clone_element_text_box_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+                <a id="delete_element_text_box_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+            </div>
+        </div>
+        <div class="innerElement editable-element ui-droppable" id="text_box_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon textboxContent"><small>Click edit button to change this text.</small></span>
+                </div>
+            </div>
+		</div>				
+	</div>  
+</template>
+
+<template id="toggles_box_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle toggles_box_holder" id="element_toggles_box_" data-elementType ="toggles_box" draggable="true" ondragstart="drag(event)">		 
+		<div class="handler pop-up-element menu-item-handle">
+			<div id="simple_option_toggles_box_" class="fusion-columns-options fusion-builder-element "> 
+				<a id="edit_element_toggles_box_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>				 
+			    <a id="clone_element_toggles_box_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick="cloneElement(this)"><i class="fusiona-file-add"></i></a>
+			    <a id="delete_element_toggles_box_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick="deleteElement(this)"><i class="fusiona-trash-o"></i></a>
+			</div>
+		</div>	
+		<div class="innerElement editable-element ui-droppable" id="toggles_box_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_toggles">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon"><i class="fusiona-expand-alt"></i><sub class="sub">Toggles</sub><ul class="toggles_content"></ul></span>
+                </div>
+            </div>
+		</div>
+	</div>
+</template>
+
+<template id="title_box_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle title_box_holder" id="element_title_box_" data-elementType ="title_box_" draggable="true" ondragstart="drag(event)">
+        <div class="handler pop-up-element menu-item-handle">
+            <div id="simple_option_title_box_" class="fusion-columns-options fusion-builder-element ">
+                <a id="edit_element_title_box_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+                <a id="clone_element_title_box_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+                <a id="delete_element_title_box_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+            </div>
+        </div>
+        <div class="innerElement editable-element ui-droppable" id="title_box_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusian_title">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon"><section class="" style="border-color: "><sub class="title_text align_left">Title</sub></section></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="video_youtube_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle video_youtube_holder" id="element_video_youtube_" data-elementType ="video_youtube_" draggable="true" ondragstart="drag(event)">
+        <div class="handler pop-up-element menu-item-handle" draggable="false">
+            <div id="simple_option_video_youtube" class="fusion-columns-options fusion-builder-element " draggable="false">
+                <a id="edit_element_video_youtube_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick="editElement(this)" draggable="false"><i class="fusiona-pen"></i></a>
+                <a id="clone_element_video_youtube_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick="cloneElement(this)" draggable="false"><i class="fusiona-file-add"></i></a>
+                <a id="delete_element_video_youtube_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick="deleteElement(this)" draggable="false"><i class="fusiona-trash-o"></i></a>
+            </div>
+        </div>
+        <div class="innerElement editable-element ui-droppable" id="video_youtube_element_" data-drop_level="4" draggable="false">
+            <div class="fusion_iconbox textblock_element textblock_element_style" draggable="false">
+                <div class="bilder_icon_container"><span class="fusion_iconbox_icon" draggable="false">
+                    <i class="fusiona-youtube"></i><sub class="sub">Youtube</sub><p class="youtube_url" draggable="false">http://www.youtube.com/</p>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="video_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle video_holder" id="element_video_" data-elementType ="video_" draggable="true" ondragstart="drag(event)">
+        <div class="handler pop-up-element menu-item-handle" draggable="false">
+            <div id="simple_option_video" class="fusion-columns-options fusion-builder-element " draggable="false">
+                <a id="edit_element_video_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick="editElement(this)" draggable="false"><i class="fusiona-pen"></i></a>
+                <a id="clone_element_video_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick="cloneElement(this)" draggable="false"><i class="fusiona-file-add"></i></a>
+                <a id="delete_element_video_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick="deleteElement(this)" draggable="false"><i class="fusiona-trash-o"></i></a>
+            </div>
+        </div>
+        <div class="innerElement editable-element ui-droppable" id="video_element_" data-drop_level="4" draggable="false">
+            <div class="fusion_iconbox textblock_element textblock_element_style" draggable="false">
+                <div class="bilder_icon_container"><span class="fusion_iconbox_icon" draggable="false">
+                    <i class="fusiona-star-empty"></i><sub class="sub">Video</sub><!--<p class="youtube_url" draggable="false">http://www.youtube.com/</p>-->
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="alert_box_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle alert_box_holder" id="element_alert_box_" data-elementType ="alert_box" draggable="true" ondragstart="drag(event)">		 
+		<div class="handler pop-up-element menu-item-handle">
+			<div id="simple_option_alert_box_" class="fusion-columns-options fusion-builder-element "> 
+				<a id="edit_element_alert_box_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+			    <a id="clone_element_alert_box_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick="cloneElement(this)"><i class="fusiona-file-add"></i></a>
+			    <a id="delete_element_alert_box_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick="deleteElement(this)"><i class="fusiona-trash-o"></i></a>
+			</div>
+		</div>
+		<div class="innerElement editable-element ui-droppable" id="alert_box_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_alert">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon"><i class="fa fa-lg fa-info-circle"></i><sub class="sub textboxContent">Your Content Goes Here</sub></span>
+                </div>
+            </div>
+		</div>
+	</div>
+</template>
+
+<template id="wp_blog_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle wp_blog_holder" id="element_wp_blog_" data-elementType ="wp_blog" draggable="true" ondragstart="drag(event)">
+		<div class="handler pop-up-element menu-item-handle">
+			<div id="simple_option_wp_blog_" class="fusion-columns-options fusion-builder-element ">
+				<a id="edit_element_wp_blog_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+			    <a id="clone_element_wp_blog_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick="cloneElement(this)"><i class="fusiona-file-add"></i></a>
+			    <a id="delete_element_wp_blog_-" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick="deleteElement(this)"><i class="fusiona-trash-o"></i></a>
+			</div>
+		</div>
+		<div class="innerElement editable-element ui-droppable" id="wp_blog_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_blog">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon"><i class="fusiona-blog"></i><sub class="sub">Blog</sub><p>layout = <span class="blog_layout">large</span><font class="blog_columns"></font></p></span>
+                </div>
+            </div>
+		</div>			
+	</div>
+</template>
+
+<template id="woo_shortcodes_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle woo_shortcodes_holder" id="element_woo_shortcodes_" data-elementType ="woo_shortcodes" draggable="true" ondragstart="drag(event)">
+        <div class="handler pop-up-element menu-item-handle">
+            <div id="simple_option_woo_shortcodes" class="fusion-columns-options fusion-builder-element ">
+                <a id="edit_element_woo_shortcodes_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+                <a id="clone_element_woo_shortcodes_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+                <a id="delete_element_woo_shortcodes_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+            </div>
+        </div>
+        <div class="innerElement editable-element ui-droppable" id="woo_shortcodes_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_shortcodes">
+                <div class="bilder_icon_container"><span class="fusion_iconbox_icon"><i class="fusiona-shopping-cart"></i>
+                    <sub class="sub">Woo Shortcodes</sub><p class="woo_shortcode">[woocommerce_order_tracking]</p></span></div>
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<template  id="woo_featured_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle woo_featured_holder" id="element_woo_featured_" data-elementType ="woo_featured" draggable="true" ondragstart="drag(event)">
+        <div class="handler pop-up-element menu-item-handle">
+            <div id="simple_option_woo_featured" class="fusion-columns-options fusion-builder-element ">
+                <a id="edit_element_woo_featured_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+                <a id="clone_element_woo_featured_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+                <a id="delete_element_woo_featured_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+            </div>
+        </div>
+        <div class="innerElement editable-element ui-droppable" id="woo_featured_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style">
+                <div class="bilder_icon_container"><span class="fusion_iconbox_icon"><i class="fusiona-star-empty"></i>
+                    <sub class="sub">Woo Featured</sub></span>
+
+                </div></div></div>
+		</div>
+</template>
+
+<template id="fusion_code_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle fusion_code_holder" id="element_fusion_code_" data-elementType ="fusion_code"  draggable="true" ondragstart="drag(event)">
+		<div class="handler pop-up-element menu-item-handle">
+			<div id="simple_option_fusion_code_" class="fusion-columns-options fusion-builder-element "> 
+				<a id="edit_element_fusion_code_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+			    <a id="clone_element_fusion_code_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick="cloneElement(this)"><i class="fusiona-file-add"></i></a>
+			    <a id="delete_element_fusion_code_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick="deleteElement(this)"><i class="fusiona-trash-o"></i></a>
+			</div>
+		</div>
+		<div class="innerElement editable-element ui-droppable" id="fusion_code_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_client_slider">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon"><i class="fusiona-code"></i><sub class="sub">Code Block</sub></span>
+                </div>
+            </div>
+		</div>			
+	</div>
+</template>
+
+<template id="countdown_box_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle countdown_box_holder" id="element_countdown_box_" data-elementType="countdown_box" draggable="true" ondragstart="drag(event)">
+        <div class="handler pop-up-element menu-item-handle">
+            <div id="simple_option_countdown_box_" class="fusion-columns-options fusion-builder-element ">
+                <a id="edit_element_countdown_box_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+                <a id="clone_element_countdown_box_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick="cloneElement(this)"><i class="fusiona-file-add"></i></a>
+                <a id="delete_element_countdown_box_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick="deleteElement(this)"><i class="fusiona-trash-o"></i></a>
+            </div>
+        </div>
+        <div class="innerElement editable-element ui-droppable" id="countdown_box_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_countdown_box">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon"><i class="fusiona-clock"></i>
+                        <sub class="sub">Countdown Box</sub>
+                        <p>columns = <font class="countdown_box_columns">4</font></p>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!--<template id="counter_box_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle counter_box_holder" id="element_counter_box_" data-elementType ="counter_box"  draggable="true" ondragstart="drag(event)">
+		<div class="handler pop-up-element menu-item-handle">
+			<div id="simple_option_counter_box_" class="fusion-columns-options fusion-builder-element "> 
+				<a id="edit_element_counter_box_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+			    <a id="clone_element_counter_box_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick="cloneElement(this)"><i class="fusiona-file-add"></i></a>
+			    <a id="delete_element_counter_box_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick="deleteElement(this)"><i class="fusiona-trash-o"></i></a>
+			</div>
+		</div>
+		<div class="innerElement editable-element ui-droppable" id="counter_box_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_counter_box">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon"><i class="fusiona-clock"></i>
+                        <sub class="sub">Counter Box</sub>
+                        <p>columns = <font class="counter_box_columns">4</font></p>
+                    </span>
+                </div>
+            </div>
+		</div>			
+	</div>
+</template>-->
+
+<!--<template id="counter_circle_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle counter_circle_holder" id="element_counter_circle_" data-elementType ="counter_circle"  draggable="true" ondragstart="drag(event)">
+		<div class="handler pop-up-element menu-item-handle">
+			<div id="simple_option_counter_circle_" class="fusion-columns-options fusion-builder-element "> 
+				<a id="edit_element_counter_circle_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+			    <a id="clone_element_counter_circle_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick="cloneElement(this)"><i class="fusiona-file-add"></i></a>
+			    <a id="delete_element_counter_circle_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick="deleteElement(this)"><i class="fusiona-trash-o"></i></a>
+			</div>
+		</div>
+		<div class="innerElement editable-element ui-droppable" id="counter_circle_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon"><i class="fusiona-clock"></i><sub class="sub">Counter Circle</sub></span>
+                </div>
+            </div>
+		</div>
+	</div>
+</template>-->
+
+<template id="flip_boxes_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle flip_boxes_holder" id="element_flip_boxes_" data-elementType ="flip_boxes"  draggable="true" ondragstart="drag(event)">		 
+		<div class="handler pop-up-element menu-item-handle">
+			<div id="simple_option_flip_boxes_" class="fusion-columns-options fusion-builder-element "> 				 
+				<a id="edit_element_flip_boxes_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick="editElement(this)"><i class="fusiona-pen"></i></a>				 
+			    <a id="clone_element_flip_boxes_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick="cloneElement(this)"><i class="fusiona-file-add"></i></a>
+			    <a id="delete_element-_flip_boxes_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick="deleteElement(this)"><i class="fusiona-trash-o"></i></a>
+			</div>
+		</div>
+		<div class="innerElement editable-element ui-droppable" id="flip_boxes_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="Div3">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon"><i class="fusiona-loop-alt2"></i>
+                        <sub class="sub">Flip Boxes</sub><p>columns = <font class="flip_boxes_columns">1</font></p></span>
+	</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template id="woo_carousel_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle woo_carousel_holder" id="element_woo_carousel_" data-elementType ="woo_carousel"  draggable="true" ondragstart="drag(event)">
+			<div class="handler pop-up-element menu-item-handle">
+				<div id="simple_option_woo_carousel" class="fusion-columns-options fusion-builder-element ">
+				 <a id="edit_element_woo_carousel_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+				<a id="clone_element_woo_carousel_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+				<a id="delete_element_woo_carousel_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+				</div>
+			</div>
+				<div class="innerElement editable-element ui-droppable" id="woo_carousel_element_" data-drop_level="4">
+                    <div class="fusion_iconbox textblock_element textblock_element_style">
+                        <div class="bilder_icon_container"><span class="fusion_iconbox_icon"><i class="fusiona-tag"></i>
+                            <sub class="sub">Woo Carousel</sub></span></div></div></div>
+			
+		</div>
+</template>
+
+<template id="testimonial_box_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle testimonial_box_holder" id="element_testimonial_box_" data-elementType ="testimonial_box"  draggable="true" ondragstart="drag(event)">
+		 <div class="handler pop-up-element menu-item-handle">
+			<div id="simple_option_testimonial_box" class="fusion-columns-options fusion-builder-element "> 
+				 <a id="edit_element_testimonial_box_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+				<a id="clone_element_testimonial_box_" class="clone-element" href="javascript:void(0);" title="Clone Element"  onclick=" cloneElement(this) " ><i class="fusiona-file-add"></i></a>
+				<a id="delete_element_testimonial_box_" class="delete-element" href="javascript:void(0);" title="Delete Element"  onclick=" deleteElement(this) " ><i class="fusiona-trash-o"></i></a>
+				</div>
+			</div>
+				<div class="innerElement editable-element ui-droppable" id="testimonial_box_element_" data-drop_level="4">
+                    <div class="fusion_iconbox textblock_element textblock_element_style">
+                        <div class="bilder_icon_container"><span class="fusion_iconbox_icon"><i class="fusiona-bubbles"></i>
+                            <sub class="sub">Testimonial</sub><p class="testimonial_content">, <br></p></span></div></div></div>
+			
+		</div>
+</template>
+
+<template id="video_vimeo_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle video_vimeo_holder" id="element_video_vimeo_" data-elementType ="video_vimeo"  draggable="true" ondragstart="drag(event)">
+			<div class="handler pop-up-element menu-item-handle">
+				<div id="simple_option_video_vimeo" class="fusion-columns-options fusion-builder-element "> 
+				 <a id="edit_element_video_vimeo_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+				<a id="clone_element_video_vimeo_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+				<a id="delete_element_video_vimeo_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+				</div>
+			</div>
+				<div class="innerElement editable-element ui-droppable" id="video_vimeo_element_" data-drop_level="4">
+                    <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_vimeo">
+                        <div class="bilder_icon_container"><span class="fusion_iconbox_icon"><i class="fusiona-vimeo2"></i>
+                            <sub class="sub">Vimeo</sub><p>https://vimeo.com/<span class="viemo_url"></span></p></span></div></div></div> 
+		</div>
+</template>
+
+<template id="tagline_box_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle tagline_box_holder " id="element_tagline_box_" data-elementType ="tagline_box"  draggable="true" ondragstart="drag(event)">
+		 
+			<div class="handler pop-up-element menu-item-handle">
+				<div id="simple_option_tagline_box" class="fusion-columns-options fusion-builder-element "> 
+				 <a id="edit_element_tagline_box_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+				<a id="clone_element_tagline_box_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+				<a id="delete_element_tagline_box_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+				</div>
+			</div>
+				<div class="innerElement editable-element ui-droppable" id="tagline_box_element_" data-drop_level="4">
+                    <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_tagline_box">
+                        <div class="bilder_icon_container"><span class="fusion_iconbox_icon"><i class="fusiona-list-alt"></i>
+                            <sub class="sub">Tagline Box</sub><p class="tagline_title"></p></span></div></div></div>
+			
+		</div>
+</template>
+
+<template id="sound_cloud_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle sound_cloud_holder " id="element_sound_cloud_" data-elementType ="sound_cloud"  draggable="true" ondragstart="drag(event)">
+			<div class="handler pop-up-element menu-item-handle">
+				<div id="simple_option_sound_cloud" class="fusion-columns-options fusion-builder-element "> 
+				<a id="edit_element_sound_cloud_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+			    <a id="clone_element_sound_cloud_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+				<a id="delete_element_sound_cloud_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+				</div>
+			</div>
+				<div class="innerElement editable-element ui-droppable" id="sound_cloud_element_" data-drop_level="4">
+                    <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_soundcloud">
+                        <div class="bilder_icon_container"><span class="fusion_iconbox_icon"><i class="fusiona-soundcloud"></i>
+                            <sub class="sub">Soundcloud</sub><p class="soundcloud_url"></p></span></div></div></div>
+		</div>
+</template>
+
+<template id="social_link_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle social_link_holder " id="element_social_link_" data-elementType ="social_link"  draggable="true" ondragstart="drag(event)">
+		 	<div class="handler pop-up-element menu-item-handle">
+				<div id="simple_option_social_link" class="fusion-columns-options fusion-builder-element "> 
+				 <a id="edit_element_social_link_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+				 <a id="clone_element_social_link_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+				 <a id="delete_element_social_link_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+				</div>
+			</div>
+				<div class="innerElement editable-element ui-droppable" id="social_link_element_" data-drop_level="4">
+                    <div class="fusion_iconbox textblock_element textblock_element_style">
+                        <div class="bilder_icon_container"><span class="fusion_iconbox_icon"><i class="fusiona-link"></i>
+                    <sub class="sub">Social Links</sub></span>
+				</div>
+            </div>
+		</div>
+	</div>
+</template>
+
+<template id="slider_element_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle slider_element_holder" id="element_slider_element" data-elementType ="slider_element" draggable="true" ondragstart="drag(event)">
+			<div class="handler pop-up-element menu-item-handle">
+				<div id="simple_option_slider_element" class="fusion-columns-options fusion-builder-element "> 
+				 <a id="edit_element_slider_element_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+				<a id="clone_element_slider_element_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) " ><i class="fusiona-file-add"></i></a>
+				<a id="delete_element_slider_element_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+				</div>
+			</div>
+				<div class="innerElement editable-element ui-droppable" id="slider_element_element_" data-drop_level="4">
+                    <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_slider">
+                        <div class="bilder_icon_container"><span class="fusion_iconbox_icon"><i class="fusiona-uniF61C"></i>
+                            <sub class="sub">Slider</sub><div class="check_section"><ul class="slider_elements"><li> <img src=""></li></ul></div></span></div></div></div>
+		</div>
+</template>
+
+<template id="sharing_box_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle sharing_box_holder" id="element_sharing_box_" data-elementType ="sharing_box"  draggable="true" ondragstart="drag(event)">
+		<div class="handler pop-up-element menu-item-handle">
+			<div id="simple_option_sharing_box" class="fusion-columns-options fusion-builder-element "> 
+				<a id="edit_element_sharing_box_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+				<a id="clone_element_sharing_box_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+			    <a id="delete_element_sharing_box_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+		     </div>
+		</div>
+		<div class="innerElement editable-element ui-droppable" id="sharing_box_element_" data-drop_level="4">
+                <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_sharing_box">
+                    <div class="bilder_icon_container"><span class="fusion_iconbox_icon"><i class="fusiona-share2"></i>
+                        <sub class="sub">Sharing Box</sub><p class="sharing_tagline">Share This Story, Choose Your Platform!</p></span>
+                    </div>
+                </div>
+			   </div>
+	</div>
+</template>
+
+<template id="font_awesome_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle font_awesome_holder" id="font_awesome_element_" data-elementType ="font_awesome" draggable="true" ondragstart="drag(event)">		 
+		<div class="handler pop-up-element menu-item-handle">
+			<div id="simple_option_font_awesome" class="fusion-columns-options fusion-builder-element "> 				 
+				<a id="edit_element_font_awesome_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick="editElement(this)"><i class="fusiona-pen"></i></a>				 
+			    <a id="clone_element_font_awesome_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick="cloneElement(this)"><i class="fusiona-file-add"></i></a>
+			    <a id="delete_element_font_awesome_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick="deleteElement(this)"><i class="fusiona-trash-o"></i></a>
+			</div>
+		</div>
+		<div class="innerElement editable-element ui-droppable" id="element_font_awesome_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_font_awesome">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon"><h3 style="background:"><i class="fa fa-flag" style="color:"></i></h3></span>
+                </div>
+            </div>
+		</div>			
+	</div>
+</template>
+
+<template id="fusionslider_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle fusionslider_holder" id="fusionslider_element_"  data-elementType ="fusionslider" draggable="true" ondragstart="drag(event)">		 
+		<div class="handler pop-up-element menu-item-handle">
+			<div id="simple_option_fusionslider" class="fusion-columns-options fusion-builder-element "> 
+				<a id="edit_element_fusionslider_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick="editElement(this)"><i class="fusiona-pen"></i></a>				 
+			    <a id="clone_element_fusionslider_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick="cloneElement(this)"><i class="fusiona-file-add"></i></a>
+			    <a id="delete_element_fusionslider" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick="deleteElement(this)"><i class="fusiona-trash-o"></i></a>
+			</div>
+		</div>
+		<div class="innerElement editable-element ui-droppable" id="element_fusionslider_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon"><i class="fusiona-TFicon"></i><sub class="sub">Fusion Slider</sub><p>[fusionslider name="<span class="fusion_slider_name"></span>"]</p></span>
+                </div>
+            </div>
+		</div>
+	</div>
+</template>
+
+<template id="section_separator_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle section_separator_holder" id="element_section_separator" data-elementType ="section_separator"  draggable="true" ondragstart="drag(event)">
+		<div class="handler pop-up-element menu-item-handle">
+			<div id="simple_option_section_separator" class="fusion-columns-options fusion-builder-element "> 
+				<a id="edit_element_section_separator_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)" ><i class="fusiona-pen"></i></a>
+				<a id="clone_element_section_separator_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+				<a id="delete_element_section_separator_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+				</div>
+			</div>
+        <div class="innerElement editable-element ui-droppable" id="section_separator_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style">
+                <div class="bilder_icon_container"><span class="fusion_iconbox_icon"><i class="fusiona-ellipsis"></i>
+                <sub class="sub">Section Separator</sub></span>
+                </div>
+            </div>
+        </div>
+		</div>
+</template>
+
+<template id="revolution_slider_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle revolution_slider_holder " id="element_revolution_slider" data-elementType ="revolution_slider"  draggable="true" ondragstart="drag(event)">
+			<div class="handler pop-up-element menu-item-handle">
+				<div id="simple_option_revolution_slider" class="fusion-columns-options fusion-builder-element "> 
+				  <a id="edit_element_revolution_slider_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+				  <a id="clone_element_revolution_slider_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+				  <a id="delete_element_revolution_slider_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+				</div>
+			</div>
+			<div class="innerElement editable-element ui-droppable" id="revolution_slider_element_" data-drop_level="4">
+                <div class="fusion_iconbox textblock_element textblock_element_style">
+                    <div class="bilder_icon_container"><span class="fusion_iconbox_icon"><i class="fusiona-air"></i>
+                        <sub class="sub">Revolution Slider</sub>
+                        <p>[rev_slider <span class="rev_slider_name"></span>]</p></span>
+                    </div>
+                </div>
+			</div>
+	</div>
+</template>
+
+<template id="recent_works_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle recent_works_holder" id="element_recent_works" data-elementType ="recent_works"  draggable="true" ondragstart="drag(event)">
+			<div class="handler pop-up-element menu-item-handle">	
+                <div id="simple_option_recent_works" class="fusion-columns-options fusion-builder-element "> 
+				    <a id="edit_element_recent_works_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)" ><i class="fusiona-pen"></i></a>
+				    <a id="clone_element_recent_works_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+				    <a id="delete_element_recent_works_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+				</div>
+	        </div>	
+				<div class="innerElement editable-element ui-droppable" id="recent_works_element_" data-drop_level="4">
+                    <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_recent_works">
+                        <div class="bilder_icon_container"><span class="fusion_iconbox_icon"><i class="fusiona-insertpicture"></i>
+                            <sub class="sub">Recent Works</sub><p>layout = <span class="recent_works_layout">carousel</span><span class="columns_container" style="display:none"> <br>columns = <font class="recent_works_columns">3</font></span><span class="rw_cats_container"><br>categories = <font class="recent_works_cats">All</font></span></p></span>
+                        </div>
+                    </div>
+				</div>
+		</div>
+</template>
+
+<template id="recent_posts_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle recent_posts_holder" id="element_recent_posts" data-elementType ="recent_posts"  draggable="true" ondragstart="drag(event)">
+			<div class="handler pop-up-element menu-item-handle">
+				<div id="simple_option_recent_posts" class="fusion-columns-options fusion-builder-element ">
+				    <a id="edit_element_recent_posts" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+				    <a id="clone_element_recent_posts" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+				    <a id="delete_element_recent_posts" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+				</div>
+			</div>
+				<div class="innerElement editable-element ui-droppable" id="recent_posts_element_" data-drop_level="4"><div class="fusion_iconbox textblock_element textblock_element_style"><div class="bilder_icon_container"><span class="fusion_iconbox_icon"><i class="fusiona-feather"></i><sub class="sub">Recent Posts</sub><p>layout = <span class="recent_posts_layout">default</span> <br> columns = <font class="recent_posts_columns">1</font><span class="rp_cats_container"><br>categories = <font class="recent_posts_cats">All</font></span></p></span></div></div></div>
+		</div>
+</template>
+
+<template id="pricing_table_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle pricing_table_holder" id="element_pricing_table" data-elementType ="pricing_table"  draggable="true" ondragstart="drag(event)"> 
+			<div class="handler pop-up-element menu-item-handle">
+				<div id="simple_option_pricing_table" class="fusion-columns-options fusion-builder-element "> 
+				 <a id="edit_element_pricing_table_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+				 <a id="clone_element_pricing_table_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+				 <a id="delete_element_pricing_table_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+				</div>
+			</div>
+				<div class="innerElement editable-element ui-droppable" id="pricing_table_element_" data-drop_level="4">
+                    <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_pricing_table">
+                        <div class="bilder_icon_container"><span class="fusion_iconbox_icon"><i class="fusiona-dollar"></i>
+                            <sub class="sub">Pricing Table</sub>
+                            <p>style = <span class="pricing_table_style">1</span> 
+                                columns = <font class="pricing_table_columns">1</font></p>
+
+                                                           </span>
+                        </div>
+                        </div>
+				</div>	
+		</div>
+</template>
+
+<template id="post_slider_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle post_slider_holder" id="element_post_slider" data-elementType ="post_slider"  draggable="true" ondragstart="drag(event)">
+			<div class="handler pop-up-element menu-item-handle">
+				<div id="simple_option_post_slider" class="fusion-columns-options fusion-builder-element "> 
+				 <a id="edit_element_post_slider_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)" ><i class="fusiona-pen"></i></a>
+				<a id="clone_element_post_slider_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+				<a id="delete_element_post_slider_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+				</div>
+			</div>
+				<div class="innerElement editable-element ui-droppable" id="post_slider_element_" data-drop_level="4">
+                    <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_post_slider">
+                        <div class="bilder_icon_container"><span class="fusion_iconbox_icon"><i class="fusiona-layers-alt"></i>
+                            <sub class="sub">Post Slider</sub><p>layout = <span class="post_slider_layout">posts</span><br><span class="cat_container" style="display:"> category = <span class="post_slider_cat">all</span></span></p></span></div></div></div>
+
+		</div>
+</template>
+
+<template id="person_box_template">
+   <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle person_box_holder" id="element_person_box" data-elementType ="person_box"  draggable="true" ondragstart="drag(event)">
+			<div class="handler pop-up-element menu-item-handle">
+				<div id="simple_option_person_box" class="fusion-columns-options fusion-builder-element "> 
+				 <a id="edit_element_person_box_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+				<a id="clone_element_person_box_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+				<a id="delete_element_person_box_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+				</div>
+			</div>
+				<div class="innerElement editable-element ui-droppable" id="person_box_element_" data-drop_level="4"><div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_person"><div class="bilder_icon_container"><span class="fusion_iconbox_icon"><i class="fusiona-user"></i><sub class="sub">Person</sub><div class="img_frame_section"><img src=""></div><p class="person_name"></p></span></div></div></div>
+			
+		</div>
+</template>
+
+<template id="layer_sldier_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle layer_sldier_holder" id="element_layer_sldier" data-elementType="layer_sldier" draggable="true" ondragstart="drag(event)">
+        <div class="handler pop-up-element menu-item-handle">
+            <div id="simple_option_layer_sldier" class="fusion-columns-options fusion-builder-element ">
+                <a id="edit_element_layer_sldier_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+                <a id="clone_element_layer_sldier_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+                <a id="delete_element_layer_sldier_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+            </div>
+        </div>
+        <div class="innerElement editable-element ui-droppable" id="layer_sldier_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_layer_slider">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon"><i class="fusiona-stack"></i><sub class="sub">Layer Slider</sub>
+                                <div class="check_section"><ul class="layer_slider_id"><li> <img src=""></li></ul></div>                           
+                                </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="image_carousel_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle image_carousel_holder" id="element_image_carousel" data-elementType="image_carousel" draggable="true" ondragstart="drag(event)">
+        <div class="handler pop-up-element menu-item-handle">
+            <div id="simple_option_image_carousel" class="fusion-columns-options fusion-builder-element ">
+                <a id="edit_element_image_carousel_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+                <a id="clone_element_image_carousel_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+                <a id="delete_element_image_carousel_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+            </div>
+        </div>
+        <div class="innerElement editable-element ui-droppable" id="image_carousel_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_image_carousel">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon"><i class="fusiona-images"></i><sub class="sub">Image Carousel</sub>
+                        <ul class="image_carousel_elements"><li> <img src=""></li></ul>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="slider_Thumb_element_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle slider_element_Thumb_holder" id="element_slider_element_Thumb" data-elementType="slider_with_thumb" draggable="true" ondragstart="drag(event)">
+        <div class="handler pop-up-element menu-item-handle">
+            <div id="simple_option_slider_element_Thumb" class="fusion-columns-options fusion-builder-element ">
+                <a id="edit_element_slider_element_Thumb_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this) "><i class="fusiona-pen"></i></a>
+                <a id="clone_element_slider_element_Thumb_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+                <a id="delete_element_slider_element_Thumb_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+            </div>
+        </div>
+        <div class="innerElement editable-element ui-droppable" id="slider_element_element_Thumb_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_slider_Thumb">
+                <div class="bilder_icon_container"><span class="fusion_iconbox_icon"><i class="fusiona-uniF61C"></i>
+                            <sub class="sub">Slider With Thumb</sub><div class="check_section"><ul class="slider_Thumb_id"><li> <img src=""></li></ul></div></span></div>
+            </div>
+        </div>
+    </div>
+</template>
+<template id="apn_element_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle apn_element_holder" id="element_apn" data-elementType="apn" draggable="true" ondragstart="drag(event)">
+        <div class="handler pop-up-element menu-item-handle">
+            <div id="simple_option_apn" class="fusion-columns-options fusion-builder-element ">
+                <a id="edit_element_apn" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this) "><i class="fusiona-pen"></i></a>
+                <a id="clone_element_apn" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+                <a id="delete_element_apn" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+            </div>
+        </div>
+        <div class="innerElement editable-element ui-droppable" id="apn_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_apn">
+                <div class="bilder_icon_container">
+                    Product Number :<span class="fusion-button-text productNumberContent"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="imagelibrary_element_template">
+    <div class="item-wrapper sortable-element drag-element fusion_element_box ui-draggable ui-draggable-handle imagelibrary_element_holder" id="element_imagelibrary" data-elementType="imagelibrary" draggable="true" ondragstart="drag(event)">
+        <div class="handler pop-up-element menu-item-handle">
+            <div id="simple_option_imagelibrary" class="fusion-columns-options fusion-builder-element ">
+                <a id="edit_element_imagelibrary_" class="edit-element " href="javascript:void(0);" title="Edit Element" onclick=" editElement(this)"><i class="fusiona-pen"></i></a>
+                <a id="clone_element_imagelibrary_" class="clone-element" href="javascript:void(0);" title="Clone Element" onclick=" cloneElement(this) "><i class="fusiona-file-add"></i></a>
+                <a id="delete_element_imagelibrary_" class="delete-element" href="javascript:void(0);" title="Delete Element" onclick=" deleteElement(this) "><i class="fusiona-trash-o"></i></a>
+            </div>
+        </div>
+        <div class="innerElement editable-element ui-droppable" id="imagelibrary_element_" data-drop_level="4">
+            <div class="fusion_iconbox textblock_element textblock_element_style" id="fusion_imagelibrary">
+                <div class="bilder_icon_container">
+                    <span class="fusion_iconbox_icon"><i class="fusiona-images"></i><sub class="sub">Image Library</sub>
+                        <ul class="imagelibrary_elements" style="list-style: none; padding-top: 10px; display: block; text-align: center;"><li><img src=""></li></ul>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

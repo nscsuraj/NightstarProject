@@ -1,0 +1,374 @@
+﻿<script>
+    var uploaderOpenedBy = {};
+    var Slider = 0;
+    $(document).ready(function () {
+        $(".ui-dialog").css("height", $(window).height() - 60);
+
+        //get the object and set values
+        var carrierObj = JSON.parse($("#dialog_form").attr("data-obj"));
+        try {
+            $(".objectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(carrierObj[$(this).attr("data-PropertyIndex")]);
+                } else if ($(this).is('textarea')) {
+                    if (!(carrierObj[$(this).attr("data-PropertyIndex")] == undefined)) {
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                    }
+                } else {
+                    if (carrierObj[$(this).attr("data-PropertyIndex")] != null && carrierObj[$(this).attr("data-PropertyIndex")] != undefined && carrierObj[$(this).attr("data-PropertyIndex")].length > 0)
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                }
+            });
+        } catch (e) {
+
+        }
+        $("#SliderContainer tr:first").hide();
+        var tempSliders = carrierObj[668];
+        if (tempSliders != undefined && tempSliders.length > 0) {
+            for (var i = 0; i < tempSliders.length; i++) {
+                addNewSlider($("#fusion-child-add"), tempSliders[i]);
+            }
+        } else {//First Time
+            addNewSlider($("#fusion-child-add"));
+        }
+
+        $('.fusion_SliderType').change(function () {
+            if (this.value == "2") {
+                $("#fusion_VideoType_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).show();
+                $("#fusion_VideoFrom_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).show();
+                $("#fusion_VideoType1_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).show();
+                $("#fusion_VideoType2_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).hide();
+                $("#fusion_VideoType1and2_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).show();
+                $("#fusion_VideoType3_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).hide();
+                $("#fusion_VideoTypeOnly3_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).hide();
+                $("#fusion_SlideImage_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).hide();
+                $('.fusion_VideoTypeDropDown option[value="1"]').attr("selected", "selected");
+
+            } else {
+                $("#fusion_VideoType_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).hide();
+                $("#fusion_VideoFrom_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).hide();
+                $("#fusion_VideoType1_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).hide();
+                $("#fusion_VideoType2_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).hide();
+                $("#fusion_VideoType1and2_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).hide();
+                $("#fusion_VideoType3_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).hide();
+                $("#fusion_VideoTypeOnly3_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).hide();
+                $("#fusion_SlideImage_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).show();
+            }
+        });
+
+        $('.fusion_VideoTypeDropDown').change(function () {
+            if (this.value == "1") {
+                $("#fusion_VideoType1_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).show();
+                $("#fusion_VideoType2_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).hide();
+                $("#fusion_VideoType1and2_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).show();
+                $("#fusion_VideoType3_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).hide();
+                $("#fusion_VideoTypeOnly3_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).hide();
+            }
+            if (this.value == "2") {
+                $("#fusion_VideoType1_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).hide();
+                $("#fusion_VideoType2_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).show();
+                $("#fusion_VideoType1and2_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).show();
+                $("#fusion_VideoType3_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).hide();
+                $("#fusion_VideoTypeOnly3_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).hide();
+            }
+            if (this.value == "3") {
+                $("#fusion_VideoType1_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).hide();
+                $("#fusion_VideoType2_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).hide();
+                $("#fusion_VideoType1and2_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).hide();
+                $("#fusion_VideoType3_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).show();
+                $("#fusion_VideoTypeOnly3_" + (this.id.substr(this.id.lastIndexOf("_") + 1))).show();
+            }
+        });
+    });
+
+    function toggleSliderDetail(ctrl) {
+        var state = $(ctrl).attr("data-state");
+        var index = $(ctrl).attr("data-boxIndex");
+        if (state == 0) {
+            $(ctrl).parent().find(".boxDetail").show();
+            $(ctrl).attr("data-state", "1");
+            $(ctrl).html("Slider Item " + index + "<i class='fusiona-minus'>");
+        }
+        else if (state == 1) {
+            $(ctrl).parent().find(".boxDetail").hide();
+            $(ctrl).attr("data-state", "0");
+            $(ctrl).html("Slider Item " + index + "<i class='fusiona-plus2'>");
+        }
+    }
+
+    function addNewSlider(ctrl, obj) {
+        var tr = $(ctrl).parents("tr:first");
+        var prevTr = $(tr).prev()[0];
+        var cloneTr = $(prevTr).clone(true);
+        $(cloneTr).css("display", "");
+        $(cloneTr).addClass("child-clone-row");
+        var td = $(cloneTr).find("td:first");
+        var linkHeader = $(td).find(".linkHeader");
+        Slider += 1;
+        $(linkHeader).attr("data-boxIndex", Slider);
+        $(linkHeader).html("Slider Item " + Slider + "<i class='fusiona-plus2'>");
+        cloneTr.find(".fusionb-upload-button").prop('id', 'sliderUpload' + Slider);
+        cloneTr.find(".fusion_SliderType").prop('id', 'fusion_SliderType_' + Slider);
+        cloneTr.find(".fusion_VideoType").prop('id', 'fusion_VideoType_' + Slider);
+        cloneTr.find(".fusion_VideoTypeDropDown").prop('id', 'fusion_VideoTypeDropDown_' + Slider);
+        cloneTr.find(".fusion_VideoFrom").prop('id', 'fusion_VideoFrom_' + Slider);
+        cloneTr.find(".fusion_VideoType1").prop('id', 'fusion_VideoType1_' + Slider);
+        cloneTr.find(".fusion_VideoType2").prop('id', 'fusion_VideoType2_' + Slider);
+        cloneTr.find(".fusion_VideoType1and2").prop('id', 'fusion_VideoType1and2_' + Slider);
+        cloneTr.find(".fusion_VideoType3").prop('id', 'fusion_VideoType3_' + Slider);
+        cloneTr.find(".fusion_VideoTypeOnly3").prop('id', 'fusion_VideoTypeOnly3_' + Slider);
+        cloneTr.find(".fusion_SlideImage").prop('id', 'fusion_SlideImage_' + Slider);
+        if (obj == undefined) {
+            cloneTr.find("#fusion_VideoType_" + Slider).css('display', 'none');
+            cloneTr.find("#fusion_VideoFrom_" + Slider).css('display', 'none');
+            cloneTr.find("#fusion_SlideImage_" + Slider).css('display', 'block');
+        }
+
+        cloneTr.find('#sliderUpload' + Slider).click(function () {
+            $("#dialog_uploadMedia").empty();
+            var template = root + "/Templates/CMS/Editor/UploadMediaTemplate.html";
+            $("#dialog_uploadMedia").load(template);
+            uploaderOpenedBy = $(this);
+
+            if (uploaderOpenedBy.hasClass('remove-image')) {
+                uploaderOpenedBy.parent().find('img').attr('src', '');
+                uploaderOpenedBy.parent().find('input').attr('value', '');
+                uploaderOpenedBy.hide();
+                uploaderOpenedBy.text('Upload').removeClass('remove-image').attr('style', '');
+
+                return;
+            }
+            var dialog = $("#dialog_uploadMedia").dialog({
+                autoOpen: false,
+                width: "96%",
+                modal: true,
+                resizable: false,
+                position: [30, 30],
+                dialogClass: "no-titlebar",
+                create: function (event) { $(event.target).parent().css('position', 'fixed'); $(".ui-widget-header").hide(); },
+                open: function () { $(".ui-widget-header").hide(); },
+                close: function () {
+                    $(".ui-widget-header").show();
+                    if (selectedUploadedObjectsToUse.length > 0) {
+                        uploaderCallback(selectedUploadedObjectsToUse[0].FilePath);
+                        uploaderOpenedBy.text('Remove').addClass('remove-image');
+                    }
+                }
+            });
+            dialog.dialog("open");
+        });
+
+        if (obj != undefined) {
+            $(cloneTr).find(".subObjectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(obj[$(this).attr("data-subPropertyIndex")]);
+                } else {
+                    $(this).val(obj[$(this).attr("data-subPropertyIndex")]);
+                }
+            });
+            if (obj[110] == 2) {
+                $(cloneTr).find(".fusion_VideoType1and2").each(function () {
+                    $(this).attr("src", obj[112]);
+                    if (obj[112].length > 0) {
+                        if (obj[111] == 1) {
+                            cloneTr.find("#fusion_VideoType1_" + Slider).css('display', 'block');
+                            cloneTr.find("#fusion_VideoType1and2_" + Slider).css('display', 'block');
+                            cloneTr.find("#fusion_VideoType2_" + Slider).css('display', 'none');
+                            cloneTr.find("#fusion_VideoType3_" + Slider).css('display', 'none');
+                            cloneTr.find("#fusion_VideoTypeOnly3_" + Slider).css('display', 'none');
+                            cloneTr.find("#fusion_SlideImage_" + Slider).css('display', 'none');
+                        }
+                        if (obj[111] == 2) {
+                            cloneTr.find("#fusion_VideoType1_" + Slider).css('display', 'none');
+                            cloneTr.find("#fusion_VideoType1and2_" + Slider).css('display', 'block');
+                            cloneTr.find("#fusion_VideoType2_" + Slider).css('display', 'block');
+                            cloneTr.find("#fusion_VideoType3_" + Slider).css('display', 'none');
+                            cloneTr.find("#fusion_VideoTypeOnly3_" + Slider).css('display', 'none');
+                            cloneTr.find("#fusion_SlideImage_" + Slider).css('display', 'none');
+                        }
+                        if (obj[111] == 3) {
+                            cloneTr.find("#fusion_VideoType1_" + Slider).css('display', 'none');
+                            cloneTr.find("#fusion_VideoType1and2_" + Slider).css('display', 'none');
+                            cloneTr.find("#fusion_VideoType2_" + Slider).css('display', 'none');
+                            cloneTr.find("#fusion_VideoType3_" + Slider).css('display', 'block');
+                            cloneTr.find("#fusion_VideoTypeOnly3_" + Slider).css('display', 'block');
+                            cloneTr.find("#fusion_SlideImage_" + Slider).css('display', 'none');
+                        }
+                        $(this).parent().find('.fusion_VideoType1and2-button').text('Remove').addClass('remove-image');
+                    }
+                });
+            } else {
+                $(cloneTr).find(".slide-image").each(function () {
+                    $(this).attr("src", obj[99]);
+                    if (obj[99].length > 0) {
+                        cloneTr.find("#fusion_VideoType_" + Slider).css('display', 'none');
+                        cloneTr.find("#fusion_VideoFrom_" + Slider).css('display', 'none');
+                        cloneTr.find("#fusion_SlideImage_" + Slider).css('display', 'block');
+                        $(this).parent().find('.slide-image-button').text('Remove').addClass('remove-image');
+                    }
+                });
+            }
+            $(cloneTr).find(".image-thumbnail").each(function () {
+                $(this).attr("src", obj[100]);
+                if (obj[100].length > 0) {
+                    $(this).parent().find('.image-thumbnail-button').text('Remove').addClass('remove-image');
+                }
+            });
+        }
+        $(prevTr).before($(cloneTr));
+    }
+
+    function removeSlider(ctrl) {
+        var tr = $(ctrl).parents("tr:first");
+        if (Slider == 1) {
+            alert("You need a minimum of one row");
+            return false;
+        }
+        $(tr).remove();
+        Slider -= 1;
+        var c = 1;
+        $("#SliderContainer tr.child-clone-row").each(function () {
+            var linkHeader = $(this).find(".linkHeader");
+            $(linkHeader).attr("data-boxIndex", c);
+            $(linkHeader).html("Slider Item " + c + "<i class='fusiona-plus2'>");
+            c = c + 1;
+        });
+    }
+
+    function addVideoCode(ctrl) {
+        var code = $(ctrl).attr('data-videoCode');
+        $(ctrl).parent().parent().parent().find(".subObjectProperty").html(code);
+    }
+
+    function uploaderCallback(filePath) {
+        if ($(uploaderOpenedBy) != undefined) {
+            $(uploaderOpenedBy).parent().find("input[type='hidden']").val(filePath);
+            $(uploaderOpenedBy).parent().find("img").attr("src", filePath);
+        }
+    }
+</script>
+<div style="width: 95%; display: inline-block; position: absolute; left: 2%">
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Image Size Width</strong><span>Width without 'px'. ex: 800.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="664" value="810" id="fusion_size_width" name="fusion_size_width" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description">
+            <strong>Image Size Height</strong><span>Height without 'px'. ex: 400.</span>
+        </div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="665" value="400" id="fusion_size_height" name="fusion_size_height" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description">
+            <strong>CSS Class</strong><span>Add a class to the wrapping HTML element.</span>
+        </div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="666" value="" id="fusion_class" name="fusion_class" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description">
+            <strong>CSS ID</strong><span>Add an ID to the wrapping HTML element.</span>
+        </div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="667" value="" id="fusion_id" name="fusion_id" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <table class="clearfix has-children" id="SliderContainer">
+        <tbody>
+            <tr data-boxindex="0">
+                <td><a href="#" class="fusion-expand-child linkHeader" data-boxindex="" onclick="toggleSliderDetail(this)" data-state="0">Slider Item 1<i class="fusiona-plus2"></i></a>
+                    <div class="child-options boxDetail" style="display: none;" data-boxindex="">
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-upload videoHide">
+                            <div class="name-description"><strong>Slide Type</strong><span>Upload an image or video to display in the slide</span></div>
+                            <div class="element-type">
+                                <div class="fusion-upload-container">
+                                    <select class="select-field subObjectProperty fusion_SliderType" data-subpropertyindex="110">
+                                        <option value="1">Image</option>
+                                        <option value="2">Video</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-upload fusion_VideoType">
+                            <div class="name-description"><strong>Type of video to be placed at slider</strong></div>
+                            <div class="element-type">
+                                <div class="fusion-upload-container">
+                                    <select class="select-field subObjectProperty fusion_VideoTypeDropDown" data-subpropertyindex="111">
+                                        <option value="1">Youtube</option>
+                                        <option value="2">Vimeo</option>
+                                        <option value="3">Uploaded</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-upload fusion_VideoFrom">
+                            <div class="name-description">
+                                <span class="fusion_VideoType1"><strong>Put youtube video url</strong><br/><span>(ex: https://www.youtube.com/embed/khThXpem_I0) <br /> Please use the "embed" version of your desired youtube link and add: ?wmode=transparent&rel=0  to the end of your embed link.</span></span>
+                                <span class="fusion_VideoType2"><strong>Put vimeo video url</strong><br/><span>(ex: https://player.vimeo.com/video/75230326)</span></span>
+                                <span class="fusion_VideoType3"><strong>Choose/Upload video(mp4)</strong></span>
+                            </div>
+                            <div class="element-type">
+                                <div class="fusion-upload-container">
+                                    <input type="text" class="text-field subObjectProperty subObjectProperty fusion_VideoType1and2" data-subpropertyindex="112" value="" size="200" style="padding: 6px 0px !important;">
+                                    <div class="fusion-upload-container fusion_VideoTypeOnly3">
+                                        <video id="vdH" width="320" height="240" controls>
+                                            <source src="" type="video/mp4">
+                                        </video>
+                                        <div style="clear: both;"></div>
+                                        <a href="#" class="fusionb-upload-button fusion_VideoType1and2-button" data-upid="1">Upload</a>
+                                        <a href="#" style="display: none" class="fusion_VideoType1and2-edit-button" data-upid="1">Edit</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-upload fusion_SlideImage">
+                            <div class="name-description"><strong>Slide Image</strong><span>Upload an image to display in the slide</span></div>
+                            <div class="element-type">
+                                <div class="fusion-upload-container">
+                                    <img src="" alt="Image" class="uploaded-image slide-image" style="height: 192px; width: 311px; padding-bottom: 3px;">
+                                    <div style="clear: both;"></div>
+                                    <input type="hidden" class="fusion-form-text fusion-form-upload fusion-input subObjectProperty" name="fusion_image" value="" data-subpropertyindex="99">
+                                    <a href="#" class="fusionb-upload-button slide-image-button" data-upid="1">Upload</a>
+                                    <a href="#" style="display: none" class="fusionb-edit-button" data-upid="1">Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-input">
+                            <div class="name-description"><strong>Image Alt Text</strong><span>The alt attribute provides alternative information if an image cannot be viewed.</span></div>
+                            <div class="element-type">
+                                <input type="text" class="text-field subObjectProperty" data-subpropertyindex="175" value="" id="txtAltText" name="fusion_name[0]" size="50" style="padding: 6px 0px !important;">
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-upload fusion_ThumbnailImage">
+                            <div class="name-description"><strong>Slide Thumbnail</strong><span>Upload thumbnail for slider image</span></div>
+                            <div class="element-type">
+                                <div class="fusion-upload-container">
+                                    <img src="" alt="Image" class="uploaded-image image-thumbnail" style="height: 192px; width: 311px; padding-bottom: 3px;">
+                                    <div style="clear: both;"></div>
+                                    <input type="hidden" class="fusion-form-text fusion-form-upload fusion-input subObjectProperty" name="fusion_image" value="" data-subpropertyindex="100">
+                                    <a href="#" class="fusionb-upload-button image-thumbnail-button" data-upid="2">Upload</a>
+                                    <a href="#" style="display: none" class="fusionb-edit-button" data-upid="1">Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix form-element-container funsion-element-child form-element-container-input">
+                            <div class="name-description"><strong>Thumb Image Alt Text</strong><span>The alt attribute provides alternative information if an image cannot be viewed.</span></div>
+                            <div class="element-type">
+                                <input type="text" class="text-field subObjectProperty" data-subpropertyindex="176" value="" id="Text1" name="fusion_name[0]" size="50" style="padding: 6px 0px !important;">
+                            </div>
+                        </div>
+                        <a class="child-clone-row-remove fusion-shortcodes-button" href="JavaScript:void(0)" onclick="removeSlider(this)">Remove</a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><a id="fusion-child-add" data-itemcount="1" href="JavaScript:void(0)" onclick="addNewSlider(this)">Add New Slide</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

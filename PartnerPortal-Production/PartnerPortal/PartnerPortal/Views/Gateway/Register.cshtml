@@ -1,0 +1,1081 @@
+﻿@model PartnerPortal.Models.GatewayVM
+<!DOCTYPE html>
+@{
+    Layout = "";
+}
+<html lang="en-US" class="no-js" ng-app="app">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Expires" content="30" />
+    <meta http-equiv="Cache-Control" content="Public" />
+    <meta name="google-site-verification" content="qG1hz2stDuxUAXRF0SRp5dsnMOIW1IKdjCnxqFp7xJA" />
+    <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
+    <title>@Model.PageTitle</title>
+    <link rel="canonical" href="https://www.starmicronics.com/partnerportal/register/" />
+    <link rel="canonical" href="https://www.starmicronics.com/" />
+    <link href="~/Images/star_icon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    @foreach (var m in Model.MetaTags)
+    {
+        if (m.TagType == 0)
+        {
+            <meta property="og:@m.TagKey" content="@m.TagValue" />
+        }
+        else
+        {
+            <meta name="@m.TagKey" content="@m.TagValue" />
+        }
+
+    }
+
+
+    <script src="~/Scripts/JQuery/jquery-1.10.2.js"></script>
+
+
+
+    <!-- jQuery library -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
+    <!-- JS & CSS library of MultiSelect plugin -->
+    <!--<script src="https://phpcoder.tech/multiselect/js/jquery.multiselect.js"></script>
+    <link rel="stylesheet" href="https://phpcoder.tech/multiselect/css/jquery.multiselect.css">-->
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">*@
+
+
+    <style>
+        @Html.Action("GetFileContent", "Utility", new {path = "~/Styles/PartnerPortal/site.css"})
+         @Html.Action("GetFileContent", "Utility", new {path = "~/Styles/homeStyle.css"})
+        @Html.Action("GetFileContent", "Utility", new {path = "~/Styles/Editor_style.css"})
+        @Html.Action("GetFileContent", "Utility", new {path = "~/Styles/Editor2.css"})
+
+        .content {
+            margin-top: 1%;
+            margin-bottom: 0;
+            background: #093883 url(@Url.Content("~/Images/sGNO4U5-.jpeg")) no-repeat fixed center;
+            min-height: 700px;
+
+        }
+
+
+    </style>
+
+    <style>
+        html, body, iframe {
+            height: 100%;
+        }
+
+        iframe,
+        #error {
+            display: none;
+        }
+
+        #error {
+            font-size: 100px;
+            background: yellow;
+            color: red;
+        }
+
+        #loading,
+        #error,
+        iframe {
+            width: 100%;
+            height: 400px;
+        }
+        /*.fusion-one-full .fusion-column-wrapper .fusion-row {
+
+            height: 100%;
+        }*/
+        .fusion-one-full {
+            width: 80%;
+            background-color: #ffffff;
+            margin-top: 5%;
+        }
+    </style>
+
+
+    <style>
+        .preferred_distributor_list, .star_product_list, .industries_list {
+            width: 100% !important;
+            height: 145px !important;
+            padding: 8px 16px;
+        }
+
+            .preferred_distributor_list option {
+                font-size: 14px;
+                padding: 8px 8px 8px 28px;
+                position: relative;
+                color: #747474;
+            }
+
+            .star_product_list option {
+                font-size: 14px;
+                padding: 8px 8px 8px 28px;
+                position: relative;
+                color: #747474;
+            }
+
+            .industries_list option {
+                font-size: 14px;
+                padding: 8px 8px 8px 28px;
+                position: relative;
+                color: #747474;
+            }
+
+            .preferred_distributor_list option:before {
+                content: "";
+                position: absolute;
+                height: 18px;
+                width: 18px;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                left: 0px;
+                border: 1px solid #747474;
+                border-radius: 2px;
+                z-index: 1;
+            }
+
+            .star_product_list option:before {
+                content: "";
+                position: absolute;
+                height: 18px;
+                width: 18px;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                left: 0px;
+                border: 1px solid #747474;
+                border-radius: 2px;
+                z-index: 1;
+            }
+
+            .industries_list option:before {
+                content: "";
+                position: absolute;
+                height: 18px;
+                width: 18px;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                left: 0px;
+                border: 1px solid #747474;
+                border-radius: 2px;
+                z-index: 1;
+            }
+
+            .preferred_distributor_list option:checked:after {
+                content: attr(title);
+                background: white;
+                color: #747474 !important;
+                position: absolute;
+                width: 100%;
+                height: 60%;
+                left: 0;
+                top: 0;
+                padding: 8px 8px 8px 28px;
+                border: none;
+            }
+
+            .star_product_list option:checked:after {
+                content: attr(title);
+                background: white;
+                color: #747474 !important;
+                position: absolute;
+                width: 100%;
+                height: 60%;
+                left: 0;
+                top: 0;
+                padding: 8px 8px 8px 28px;
+                border: none;
+            }
+
+            .industries_list option:checked:after {
+                content: attr(title);
+                background: white;
+                color: #747474 !important;
+                position: absolute;
+                width: 100%;
+                height: 60%;
+                left: 0;
+                top: 0;
+                padding: 8px 8px 8px 28px;
+                border: none;
+            }
+
+            .preferred_distributor_list option:checked:before {
+                border-color: #747474;
+                background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMC42MSA4LjQ4Ij48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6IzNlODhmYTt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPkFzc2V0IDg8L3RpdGxlPjxnIGlkPSJMYXllcl8yIiBkYXRhLW5hbWU9IkxheWVyIDIiPjxnIGlkPSJfMSIgZGF0YS1uYW1lPSIxIj48cmVjdCBjbGFzcz0iY2xzLTEiIHg9Ii0wLjAzIiB5PSI1LjAxIiB3aWR0aD0iNSIgaGVpZ2h0PSIyIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0Ljk3IDAuMDEpIHJvdGF0ZSg0NSkiLz48cmVjdCBjbGFzcz0iY2xzLTEiIHg9IjUuMzYiIHk9Ii0wLjc2IiB3aWR0aD0iMiIgaGVpZ2h0PSIxMCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNC44NiAtMy4yNikgcm90YXRlKDQ1KSIvPjwvZz48L2c+PC9zdmc+);
+                background-size: 10px;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+
+            .star_product_list option:checked:before {
+                border-color: #747474;
+                background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMC42MSA4LjQ4Ij48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6IzNlODhmYTt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPkFzc2V0IDg8L3RpdGxlPjxnIGlkPSJMYXllcl8yIiBkYXRhLW5hbWU9IkxheWVyIDIiPjxnIGlkPSJfMSIgZGF0YS1uYW1lPSIxIj48cmVjdCBjbGFzcz0iY2xzLTEiIHg9Ii0wLjAzIiB5PSI1LjAxIiB3aWR0aD0iNSIgaGVpZ2h0PSIyIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0Ljk3IDAuMDEpIHJvdGF0ZSg0NSkiLz48cmVjdCBjbGFzcz0iY2xzLTEiIHg9IjUuMzYiIHk9Ii0wLjc2IiB3aWR0aD0iMiIgaGVpZ2h0PSIxMCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNC44NiAtMy4yNikgcm90YXRlKDQ1KSIvPjwvZz48L2c+PC9zdmc+);
+                background-size: 10px;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+
+            .industries_list option:checked:before {
+                border-color: #747474;
+                background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMC42MSA4LjQ4Ij48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6IzNlODhmYTt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPkFzc2V0IDg8L3RpdGxlPjxnIGlkPSJMYXllcl8yIiBkYXRhLW5hbWU9IkxheWVyIDIiPjxnIGlkPSJfMSIgZGF0YS1uYW1lPSIxIj48cmVjdCBjbGFzcz0iY2xzLTEiIHg9Ii0wLjAzIiB5PSI1LjAxIiB3aWR0aD0iNSIgaGVpZ2h0PSIyIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0Ljk3IDAuMDEpIHJvdGF0ZSg0NSkiLz48cmVjdCBjbGFzcz0iY2xzLTEiIHg9IjUuMzYiIHk9Ii0wLjc2IiB3aWR0aD0iMiIgaGVpZ2h0PSIxMCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNC44NiAtMy4yNikgcm90YXRlKDQ1KSIvPjwvZz48L2c+PC9zdmc+);
+                background-size: 10px;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+    </style>
+
+
+
+    <script>
+        var isTimeout;
+        var isLoaded;
+
+        function success() {
+            if (isTimeout) {
+                return;
+            }
+            $('#loading').hide();
+            $('iframe').show();
+            isLoaded = true;
+            //changeHeight();
+            //var ifrm = document.getElementById("iframe");
+            //var doc = ifrm.contentDocument ? ifrm.contentDocument :
+            //    ifrm.contentWindow.document;
+            //ifrm.style.visibility = 'hidden';
+            //ifrm.style.height = "600px"; // reset to minimal height ...
+            //// IE opt. for bing/msn needs a bit added or scrollbar appears
+            //ifrm.style.height = getDocHeight(doc) + 4 + "px";
+            //ifrm.style.visibility = 'visible';
+        };
+
+        setTimeout(function () {
+            if (isLoaded) {
+                return;
+            }
+            $('#loading').hide();
+            $('iframe').hide();
+            $('#error').show();
+            isTimeout = true;
+        }, 5000);
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            var i = 0,
+                countrySelect = $('#country_code'),
+                container = $('#container');
+
+            // Add a click handler to the link.
+            $('#addCodeLink').click(function () {
+                var country_code = countrySelect.val();
+
+                // If we haven't got a country ID...
+                if (!country_code) {
+                    // ...return out of this function.
+                    return;
+                }
+
+                // Increment our count for whatever reason.
+                i += 1;
+
+                // Empty the container div of any old select elements.
+                container.empty();
+
+                // Append a label to the container.
+                container.append('<label for="state_code">State/Province</label>');
+
+                // Depending on the country ID, append a populated select element.
+                switch (country_code) {
+                    case 'US':
+                        container.append(
+                            '<select  id="state_code" name="state_code" style="width:100%;height:30px;">' +
+                            '<option value="AL">Alabama</option>' +
+                            '<option value="AK">Alaska</option>' +
+                            '<option value="AZ">Arizona</option>' +
+                            '<option value="AR">Arkansas</option>' +
+                            '<option value="CA">California</option>' +
+                            '<option value="CO">Colorado</option>' +
+                            '<option value="CT">Connecticut</option>' +
+                            '<option value="DE">Delaware</option>' +
+                            '<option value="DC">District of Columbia</option>' +
+                            '<option value="FL">Florida</option>' +
+                            '<option value="GA">Georgia</option>' +
+                            '<option value="HI">Hawaii</option>' +
+                            '<option value="ID">Idaho</option>' +
+                            '<option value="IL">Illinois</option>' +
+                            '<option value="IN">Indiana</option>' +
+                            '<option value="IA">Iowa</option>' +
+                            '<option value="KS">Kansas</option>' +
+                            '<option value="KY">Kentucky</option>' +
+                            '<option value="LA">Louisiana</option>' +
+                            '<option value="ME">Maine</option>' +
+                            '<option value="MD">Maryland</option>' +
+                            '<option value="MA">Massachusetts</option>' +
+                            '<option value="ME">Mexico State</option>' +
+                            '<option value="MI">Michigan</option>' +
+                            '<option value="MI">Michoacán</option>' +
+                            '<option value="MN">Minnesota</option>' +
+                            '<option value="MS">Mississippi</option>' +
+                            '<option value="MO">Missouri</option>' +
+                            '<option value="MT">Montana</option>' +
+                            '<option value="NE">Nebraska</option>' +
+                            '<option value="NV">Nevada</option>' +
+                            '<option value="NH">New Hampshire</option>' +
+                            '<option value="NJ">New Jersey</option>' +
+                            '<option value="NM">New Mexico</option>' +
+                            '<option value="NY">New York</option>' +
+                            '<option value="NC">North Carolina</option>' +
+                            '<option value="ND">North Dakota</option>' +
+                            '<option value="OH">Ohio</option>' +
+                            '<option value="OR">Oregon</option>' +
+                            '<option value="PA">Pennsylvania</option>' +
+                            '<option value="RI">Rhode Island</option>' +
+                            '<option value="SC">South Carolina</option>' +
+                            '<option value="SD">South Dakota</option>' +
+                            '<option value="TN">Tennessee</option>' +
+                            '<option value="TX">Texas</option>' +
+                            '<option value="VI">US Virgin Islands</option>' +
+                            '<option value="UT">Utah</option>' +
+                            '<option value="VT">Vermont</option>' +
+                            '<option value="VA">Virginia</option>' +
+                            '<option value="WA">Washington</option>' +
+                            '<option value="WV">West Virginia</option>' +
+                            '<option value="WI">Wisconsin</option>' +
+                            '<option value="WY">Wyoming</option>' +
+                            '</select>'
+                        );
+                        break;
+                    case 'MX':
+                        container.append(
+                            '<select  id="state_code" name="state_code" style="width:100%;height:30px;">' +
+                            '<option value="AG">Aguascalientes</option>' +
+                            '<option value="BC">Baja California</option>' +
+                            '<option value="BS">Baja California Sur</option>' +
+                            '<option value="CDMX">Ciudad de México</option>' +
+                            '<option value="CJT">Comitán</option>' +
+                            '<option value="CL">Colima</option>' +
+                            '<option value="CM">Campeche</option>' +
+                            '<option value="CO">Coahuila</option>' +
+                            '<option value="CS">Chiapas</option>' +
+                            '<option value="DF">Federal District</option>' +
+                            '<option value="DG">Durango</option>' +
+                            '<option value="GR">Guerrero</option>' +
+                            '<option value="GT">Guanajuato</option>' +
+                            '<option value="HG">Hidalgo</option>' +
+                            '<option value="JA">Jalisco</option>' +
+                            '<option value="ME">Mexico State</option>' +
+                            '<option value="MI">Michoacán</option>' +
+                            '<option value="MO">Morelos</option>' +
+                            '<option value="NA">Nayarit</option>' +
+                            '<option value="NL">Nuevo León</option>' +
+                            '<option value="OA">Oaxaca</option>' +
+                            '<option value="PB">Puebla</option>' +
+                            '<option value="QE">Querétaro</option>' +
+                            '<option value="QR">Quintana Roo</option>' +
+                            '<option value="SI">Sinaloa</option>' +
+                            '<option value="SL">San Luis Potosí</option>' +
+                            '<option value="SO">Sonora</option>' +
+                            '<option value="TB">Tabasco</option>' +
+                            '<option value="TL">Tlaxcala</option>' +
+                            '<option value="TM">Tamaulipas</option>' +
+                            '<option value="VE">Veracruz</option>' +
+                            '<option value="YU">Yucatán</option>' +
+                            '<option value="ZA">Zacatecas</option>' +
+
+                            '</select>'
+                        );
+                        break;
+                    case 'CA':
+                        container.append(
+                            '<select  id="state_code" name="state_code" style="width:100%;height:30px;">' +
+                            '<option value="AB">Alberta</option>' +
+                            '<option value="BC">British Columbia</option>' +
+                            '<option value="MB">Manitoba</option>' +
+                            '<option value="NB">New Brunswick</option>' +
+                            '<option value="NL">Newfoundland and Labrador</option>' +
+                            '<option value="NS">Nova Scotia</option>' +
+                            '<option value="NT">Northwest Territories</option>' +
+                            '<option value="NU">Nunavut</option>' +
+                            '<option value="ON">Ontario</option>' +
+                            '<option value="PE">Prince Edward Island</option>' +
+                            '<option value="QC">Quebec</option>' +
+                            '<option value="SK">Saskatchewan</option>' +
+                            '<option value="YT">Yukon Territories</option>' +
+                            '</select>'
+                        );
+                        break;
+                }
+            });
+
+        });
+
+
+    </script>
+
+    @*<script>
+            function getSelectedValues() {
+                var dropDown = document.getElementById('00N0h0000078X0U'), preferredDistributorArray = [], i;
+                for (i = 0; i < dropDown.options.length; i += 1) {
+                    if (dropDown.options[i].selected) {
+                        preferredDistributorArray.push(dropDown.options[i].value); //If you need only values
+                        //preferredDistributorArray.push({ Name: dropDown.options[i].text, Value: dropDown.options[i].value });
+                    }
+                }
+                console.log(preferredDistributorArray);
+
+                var dropDown = document.getElementById('00N0h0000078Wpl'), starProductArray = [], i;
+                for (i = 0; i < dropDown.options.length; i += 1) {
+                    if (dropDown.options[i].selected) {
+                        starProductArray.push(dropDown.options[i].value); //If you need only values
+                        //starProductArray.push({ Name: dropDown.options[i].text, Value: dropDown.options[i].value });
+                    }
+                }
+
+                console.log(starProductArray);
+
+                var dropDown = document.getElementById('00N8000000472Vw'), industriesArray = [], i;
+                for (i = 0; i < dropDown.options.length; i += 1) {
+                    if (dropDown.options[i].selected) {
+                        industriesArray.push(dropDown.options[i].value); //If you need only values
+                        //industriesArray.push({ Name: dropDown.options[i].text, Value: dropDown.options[i].value });
+                    }
+                }
+
+                console.log(industriesArray);
+                return false;
+            }
+
+
+        </script>*@
+
+    <script type="text/javascript">
+        //$(function () {
+        //    $('#00N0h0000078X0U').multiselect({
+        //        includeSelectAllOption: true
+        //    });
+        //    //$('#btnSelected').click(function () {
+        //    //    var selected = $("#EmpList option:selected");
+        //    //    var message = "";
+        //    //    selected.each(function () {
+        //    //        message += $(this).text() + " " + $(this).val() + "\n";
+        //    //    });
+        //    //    alert(message);
+        //    //});
+        //});
+
+        $(document).ready(function () {
+
+            $('option').mousedown(function (e) {
+                e.preventDefault();
+                var originalScrollTop = $(this).parent().scrollTop();
+                //console.log(originalScrollTop);
+                $(this).prop('selected', $(this).prop('selected') ? false : true);
+                var self = this;
+                $(this).parent().focus();
+                var arr = $(this).val();
+                //console.log(arr)
+                setTimeout(function () {
+                    $(self).parent().scrollTop(originalScrollTop);
+                }, 0);
+
+                return false;
+            });
+
+            //$('#00N0h0000078X0U').change(function () {
+            //    var arr = $(this).val();
+            //    console.log(arr)
+            //});
+        });
+
+
+    </script>
+
+
+</head>
+<body>
+    <div class="mainContent">
+        @{ Html.RenderAction("GetPageHtml", "Utility", new { id = 3 }); }
+
+
+        <div class="fusion-fullwidth fullwidth-box content" style="text-align: center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;" id="">
+            <div class="fusion-row">
+                <div class=" fusion-one-full fusion-layout-column fusion-spacing-no" style="text-align: left; background-repeat: no-repeat; background-position: left top; display: inline-block; border: 0px solid;" id="">
+                    <div class="fusion-column-wrapper">
+                        <div style="margin-top: 60px; margin-left: 10px; margin-bottom: 10px; height: 100%; padding: 40px; padding-top: 10px;">
+                            @*<script type="text/javascript" id="aoform-script-3f048ebe-af11-490f-9358-af382328ba26:d-0004">!function(o,t,e,a){o._aoForms=o._aoForms||[],o._aoForms.push(a);var n=function(){var o=t.createElement(e);o.src=("https:"==t.location.protocol?"https://":"http://")+"marketing.starmicronics.com/acton/content/form_embed.js",o.async=!0;for(var a=t.getElementsByTagName(e)[0],n=a.parentNode,c=document.getElementsByTagName("script"),r=!1,s=0;s<c.length;s++){if(c[s].getAttribute("src")==o.getAttribute("src"))r=!0;}r?typeof(_aoFormLoader)!="undefined"?_aoFormLoader.load({id:"3f048ebe-af11-490f-9358-af382328ba26:d-0004",accountId:"34776",domain:"marketing.starmicronics.com",isTemp:false,noStyle:false,prefill:false}):"":n.insertBefore(o,a)};window.attachEvent?window.attachEvent("onload",n):window.addEventListener("load",n,!1),n()}(window,document,"script",{id:"3f048ebe-af11-490f-9358-af382328ba26",accountId:"34776",domain:"marketing.starmicronics.com",isTemp:false,noStyle:false,prefill:false});</script>*@
+                            <table style="width: 100%;">
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: right; padding-right: 20px; height: 40px;">
+                                            <strong><span style="font-size: 18pt;"><a href="@Url.Content("~/")">Already have an account? Log in</a>&nbsp;</span></strong>
+                                            <div style="font-size: 18pt; color: #000080; display: inline-block; padding-top: 2px;">➜</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div>
+
+                                <h1>Partner Program Registration Form</h1>
+
+                                Please fill out the form. All fields marked "*" are required.
+                                <br><br>
+
+                                <!--  ----------------------------------------------------------------------  -->
+                                <!--  NOTE: Please add the following <META> element to your page <HEAD>.      -->
+                                <!--  If necessary, please modify the charset parameter to specify the        -->
+                                <!--  character set of your HTML page.                                        -->
+                                <!--  ----------------------------------------------------------------------  -->
+                                <!--  ----------------------------------------------------------------------  -->
+                                <!--  NOTE: Please add the following <FORM> element to your page.             -->
+                                <!--  ----------------------------------------------------------------------  -->
+                                <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+
+                                    <input type=hidden name="oid" value="00D80000000dXi6">
+                                    <input type=hidden name="retURL" value="http://starmicronics.com/thankyou/">
+
+                                    <!--  ----------------------------------------------------------------------  -->
+                                    <!--  NOTE: These fields are optional debugging elements. Please uncomment    -->
+                                    <!--  these lines if you wish to test in debug mode.                          -->
+                                    <!--  <input type="hidden" name="debug" value=1>                              -->
+                                    <!--  <input type="hidden" name="debugEmail"                                  -->
+                                    <!--  value="starit@starmicronics.com">                                       -->
+                                    <!--  ----------------------------------------------------------------------  -->
+
+                                    <label for="company">Company Name *</label><input id="company" maxlength="40" name="company" size="20" type="text" required /><br><br>
+
+                                    <label for="url">Website URL *</label><div style="font-size:12px">Example: https://company.com</div>
+                                    <input id="url" maxlength="80" name="url" size="20" type="url" required style="width:100%;" /><br><br>
+
+                                    <h2>Company Mailing Address</h2><br />
+
+                                    <label for="street">Street *</label><textarea name="street" style="width:100%;"></textarea><br><br>
+
+                                    <label for="city">City *</label><input id="city" maxlength="40" name="city" size="20" type="text" required /><br><br>
+
+                                    @*<label for="state">State/Province *</label><input id="state" maxlength="20" name="state" size="20" type="text" required /><br><br>*@
+
+                                    <label for="zip">Zip/Postal Code *</label><input id="zip" maxlength="20" name="zip" size="20" type="text" required /><br><br>
+
+                                    <label for="country">Country *</label><br />
+                                                                          <select name="country_code" id="country_code" required style="width:100%;height:30px;">
+                                                                              <option value="">Select a Country</option>
+                                                                              <option value="AX">Aland Islands</option>
+                                                                              <option value="AL">Albania</option>
+                                                                              <option value="DZ">Algeria</option>
+                                                                              <option value="AD">Andorra</option>
+                                                                              <option value="AO">Angola</option>
+                                                                              <option value="AI">Anguilla</option>
+                                                                              <option value="AQ">Antarctica</option>
+                                                                              <option value="AG">Antigua and Barbuda</option>
+                                                                              <option value="AR">Argentina</option>
+                                                                              <option value="AM">Armenia</option>
+                                                                              <option value="AW">Aruba</option>
+                                                                              <option value="AU">Australia</option>
+                                                                              <option value="AT">Austria</option>
+                                                                              <option value="AZ">Azerbaijan</option>
+                                                                              <option value="BS">Bahamas</option>
+                                                                              <option value="BH">Bahrain</option>
+                                                                              <option value="BD">Bangladesh</option>
+                                                                              <option value="BB">Barbados</option>
+                                                                              <option value="BY">Belarus</option>
+                                                                              <option value="BE">Belgium</option>
+                                                                              <option value="BZ">Belize</option>
+                                                                              <option value="BJ">Benin</option>
+                                                                              <option value="BM">Bermuda</option>
+                                                                              <option value="BT">Bhutan</option>
+                                                                              <option value="BO">Bolivia, Plurinational State of</option>
+                                                                              <option value="BQ">Bonaire, Sint Eustatius and Saba</option>
+                                                                              <option value="BA">Bosnia and Herzegovina</option>
+                                                                              <option value="BW">Botswana</option>
+                                                                              <option value="BV">Bouvet Island</option>
+                                                                              <option value="BR">Brazil</option>
+                                                                              <option value="IO">British Indian Ocean Territory</option>
+                                                                              <option value="BN">Brunei Darussalam</option>
+                                                                              <option value="BG">Bulgaria</option>
+                                                                              <option value="BF">Burkina Faso</option>
+                                                                              <option value="BI">Burundi</option>
+                                                                              <option value="KH">Cambodia</option>
+                                                                              <option value="CM">Cameroon</option>
+                                                                              <option value="CA">Canada</option>
+                                                                              <option value="CV">Cape Verde</option>
+                                                                              <option value="KY">Cayman Islands</option>
+                                                                              <option value="CF">Central African Republic</option>
+                                                                              <option value="TD">Chad</option>
+                                                                              <option value="CL">Chile</option>
+                                                                              <option value="CN">China</option>
+                                                                              <option value="CX">Christmas Island</option>
+                                                                              <option value="CC">Cocos (Keeling) Islands</option>
+                                                                              <option value="CO">Colombia</option>
+                                                                              <option value="KM">Comoros</option>
+                                                                              <option value="CG">Congo</option>
+                                                                              <option value="CD">Congo, the Democratic Republic of the</option>
+                                                                              <option value="CK">Cook Islands</option>
+                                                                              <option value="CR">Costa Rica</option>
+                                                                              <option value="CI">Cote d&#39;Ivoire</option>
+                                                                              <option value="HR">Croatia</option>
+                                                                              <option value="CU">Cuba</option>
+                                                                              <option value="CW">Curaçao</option>
+                                                                              <option value="CY">Cyprus</option>
+                                                                              <option value="CZ">Czech Republic</option>
+                                                                              <option value="DK">Denmark</option>
+                                                                              <option value="DJ">Djibouti</option>
+                                                                              <option value="DM">Dominica</option>
+                                                                              <option value="DO">Dominican Republic</option>
+                                                                              <option value="UAE">Dubai</option>
+                                                                              <option value="EC">Ecuador</option>
+                                                                              <option value="EG">Egypt</option>
+                                                                              <option value="SV">El Salvador</option>
+                                                                              <option value="GQ">Equatorial Guinea</option>
+                                                                              <option value="ER">Eritrea</option>
+                                                                              <option value="EE">Estonia</option>
+                                                                              <option value="ET">Ethiopia</option>
+                                                                              <option value="FK">Falkland Islands (Malvinas)</option>
+                                                                              <option value="FO">Faroe Islands</option>
+                                                                              <option value="FJ">Fiji</option>
+                                                                              <option value="FI">Finland</option>
+                                                                              <option value="FR">France</option>
+                                                                              <option value="GF">French Guiana</option>
+                                                                              <option value="PF">French Polynesia</option>
+                                                                              <option value="TF">French Southern Territories</option>
+                                                                              <option value="GA">Gabon</option>
+                                                                              <option value="GM">Gambia</option>
+                                                                              <option value="GE">Georgia</option>
+                                                                              <option value="DE">Germany</option>
+                                                                              <option value="GH">Ghana</option>
+                                                                              <option value="GI">Gibraltar</option>
+                                                                              <option value="GR">Greece</option>
+                                                                              <option value="GL">Greenland</option>
+                                                                              <option value="GD">Grenada</option>
+                                                                              <option value="GP">Guadeloupe</option>
+                                                                              <option value="GU">Guam</option>
+                                                                              <option value="GT">Guatemala</option>
+                                                                              <option value="GG">Guernsey</option>
+                                                                              <option value="GN">Guinea</option>
+                                                                              <option value="GW">Guinea-Bissau</option>
+                                                                              <option value="GY">Guyana</option>
+                                                                              <option value="HT">Haiti</option>
+                                                                              <option value="HM">Heard Island and McDonald Islands</option>
+                                                                              <option value="VA">Holy See (Vatican City State)</option>
+                                                                              <option value="HN">Honduras</option>
+                                                                              <option value="HU">Hungary</option>
+                                                                              <option value="IS">Iceland</option>
+                                                                              <option value="IN">India</option>
+                                                                              <option value="ID">Indonesia</option>
+                                                                              <option value="IR">Iran, Islamic Republic of</option>
+                                                                              <option value="IQ">Iraq</option>
+                                                                              <option value="IE">Ireland</option>
+                                                                              <option value="IM">Isle of Man</option>
+                                                                              <option value="IL">Israel</option>
+                                                                              <option value="IT">Italy</option>
+                                                                              <option value="JM">Jamaica</option>
+                                                                              <option value="JP">Japan</option>
+                                                                              <option value="JE">Jersey</option>
+                                                                              <option value="JO">Jordan</option>
+                                                                              <option value="KZ">Kazakhstan</option>
+                                                                              <option value="KE">Kenya</option>
+                                                                              <option value="KI">Kiribati</option>
+                                                                              <option value="KP">Korea, Democratic People&#39;s Republic of</option>
+                                                                              <option value="KR">Korea, Republic of</option>
+                                                                              <option value="KW">Kuwait</option>
+                                                                              <option value="KG">Kyrgyzstan</option>
+                                                                              <option value="LA">Lao People&#39;s Democratic Republic</option>
+                                                                              <option value="LV">Latvia</option>
+                                                                              <option value="LB">Lebanon</option>
+                                                                              <option value="LS">Lesotho</option>
+                                                                              <option value="LR">Liberia</option>
+                                                                              <option value="LY">Libya</option>
+                                                                              <option value="LI">Liechtenstein</option>
+                                                                              <option value="LT">Lithuania</option>
+                                                                              <option value="LU">Luxembourg</option>
+                                                                              <option value="MO">Macao</option>
+                                                                              <option value="MK">Macedonia, the former Yugoslav Republic of</option>
+                                                                              <option value="MG">Madagascar</option>
+                                                                              <option value="MW">Malawi</option>
+                                                                              <option value="MY">Malaysia</option>
+                                                                              <option value="MV">Maldives</option>
+                                                                              <option value="ML">Mali</option>
+                                                                              <option value="MT">Malta</option>
+                                                                              <option value="MQ">Martinique</option>
+                                                                              <option value="MR">Mauritania</option>
+                                                                              <option value="MU">Mauritius</option>
+                                                                              <option value="YT">Mayotte</option>
+                                                                              <option value="MX">Mexico</option>
+                                                                              <option value="MD">Moldova, Republic of</option>
+                                                                              <option value="MC">Monaco</option>
+                                                                              <option value="MN">Mongolia</option>
+                                                                              <option value="ME">Montenegro</option>
+                                                                              <option value="MS">Montserrat</option>
+                                                                              <option value="MA">Morocco</option>
+                                                                              <option value="MZ">Mozambique</option>
+                                                                              <option value="MM">Myanmar</option>
+                                                                              <option value="NA">Namibia</option>
+                                                                              <option value="NR">Nauru</option>
+                                                                              <option value="NP">Nepal</option>
+                                                                              <option value="NL">Netherlands</option>
+                                                                              <option value="NC">New Caledonia</option>
+                                                                              <option value="NZ">New Zealand</option>
+                                                                              <option value="NI">Nicaragua</option>
+                                                                              <option value="NE">Niger</option>
+                                                                              <option value="NG">Nigeria</option>
+                                                                              <option value="NU">Niue</option>
+                                                                              <option value="NF">Norfolk Island</option>
+                                                                              <option value="NO">Norway</option>
+                                                                              <option value="OM">Oman</option>
+                                                                              <option value="PK">Pakistan</option>
+                                                                              <option value="PS">Palestine</option>
+                                                                              <option value="PA">Panama</option>
+                                                                              <option value="PG">Papua New Guinea</option>
+                                                                              <option value="PY">Paraguay</option>
+                                                                              <option value="PE">Peru</option>
+                                                                              <option value="PH">Philippines</option>
+                                                                              <option value="PN">Pitcairn</option>
+                                                                              <option value="PL">Poland</option>
+                                                                              <option value="PT">Portugal</option>
+                                                                              <option value="PR">Puerto Rico</option>
+                                                                              <option value="QA">Qatar</option>
+                                                                              <option value="RE">Reunion</option>
+                                                                              <option value="RO">Romania</option>
+                                                                              <option value="RU">Russian Federation</option>
+                                                                              <option value="RW">Rwanda</option>
+                                                                              <option value="BL">Saint Barthélemy</option>
+                                                                              <option value="SH">Saint Helena, Ascension and Tristan da Cunha</option>
+                                                                              <option value="KN">Saint Kitts and Nevis</option>
+                                                                              <option value="LC">Saint Lucia</option>
+                                                                              <option value="MF">Saint Martin (French part)</option>
+                                                                              <option value="PM">Saint Pierre and Miquelon</option>
+                                                                              <option value="VC">Saint Vincent and the Grenadines</option>
+                                                                              <option value="WS">Samoa</option>
+                                                                              <option value="SM">San Marino</option>
+                                                                              <option value="ST">Sao Tome and Principe</option>
+                                                                              <option value="SA">Saudi Arabia</option>
+                                                                              <option value="SCT">Scotland</option>
+                                                                              <option value="SN">Senegal</option>
+                                                                              <option value="RS">Serbia</option>
+                                                                              <option value="SC">Seychelles</option>
+                                                                              <option value="SL">Sierra Leone</option>
+                                                                              <option value="SG">Singapore</option>
+                                                                              <option value="SX">Sint Maarten (Dutch part)</option>
+                                                                              <option value="SK">Slovakia</option>
+                                                                              <option value="SI">Slovenia</option>
+                                                                              <option value="SB">Solomon Islands</option>
+                                                                              <option value="SO">Somalia</option>
+                                                                              <option value="ZA">South Africa</option>
+                                                                              <option value="GS">South Georgia and the South Sandwich Islands</option>
+                                                                              <option value="SS">South Sudan</option>
+                                                                              <option value="ES">Spain</option>
+                                                                              <option value="LK">Sri Lanka</option>
+                                                                              <option value="SD">Sudan</option>
+                                                                              <option value="SR">Suriname</option>
+                                                                              <option value="SJ">Svalbard and Jan Mayen</option>
+                                                                              <option value="SZ">Swaziland</option>
+                                                                              <option value="SE">Sweden</option>
+                                                                              <option value="CH">Switzerland</option>
+                                                                              <option value="SY">Syrian Arab Republic</option>
+                                                                              <option value="TW">Taiwan</option>
+                                                                              <option value="TJ">Tajikistan</option>
+                                                                              <option value="TZ">Tanzania, United Republic of</option>
+                                                                              <option value="TH">Thailand</option>
+                                                                              <option value="TL">Timor-Leste</option>
+                                                                              <option value="TG">Togo</option>
+                                                                              <option value="TK">Tokelau</option>
+                                                                              <option value="TO">Tonga</option>
+                                                                              <option value="TT">Trinidad and Tobago</option>
+                                                                              <option value="TN">Tunisia</option>
+                                                                              <option value="TR">Turkey</option>
+                                                                              <option value="TM">Turkmenistan</option>
+                                                                              <option value="TC">Turks and Caicos Islands</option>
+                                                                              <option value="TV">Tuvalu</option>
+                                                                              <option value="UG">Uganda</option>
+                                                                              <option value="UA">Ukraine</option>
+                                                                              <option value="AE">United Arab Emirates</option>
+                                                                              <option value="GB">United Kingdom</option>
+                                                                              <option value="US">United States</option>
+                                                                              <option value="UY">Uruguay</option>
+                                                                              <option value="UZ">Uzbekistan</option>
+                                                                              <option value="VU">Vanuatu</option>
+                                                                              <option value="VE">Venezuela, Bolivarian Republic of</option>
+                                                                              <option value="VN">Viet Nam</option>
+                                                                              <option value="VG">Virgin Islands, British</option>
+                                                                              <option value="WF">Wallis and Futuna</option>
+                                                                              <option value="EH">Western Sahara</option>
+                                                                              <option value="YE">Yemen</option>
+                                                                              <option value="ISO">Yugoslavia</option>
+                                                                              <option value="ZM">Zambia</option>
+                                                                              <option value="ZW">Zimbabwe</option>
+                                                                          </select>
+                                    <br /><br />
+                                    <div id="container"></div>
+                                    <a id="addCodeLink" href="#">Add a State</a>
+                                    <br><br>
+                                    @*<input id="country" maxlength="40" name="country" size="20" type="text" required /><br><br>*@
+
+                                    <h2>Main Contact</h2><br />
+                                    <span style="font-size:10pt;">***NOTE: The email entered for the Main Contact will be responsible for receiving the Partner Reseller Agreement, the login credentials for your Partner Portal Dashboard and resetting your password in the future.</span><br><br>
+
+                                    <label for="first_name">First Name *</label><input id="first_name" maxlength="40" name="first_name" size="20" type="text" required /><br><br>
+
+                                    <label for="last_name">Last Name *</label><input id="last_name" maxlength="80" name="last_name" size="20" type="text" required /><br><br>
+
+                                    <label for="title">Main Contact Title *</label><input id="title" maxlength="40" name="title" size="20" type="text" required /><br><br>
+
+                                    <label for="phone">Phone Number *</label><input id="phone" maxlength="40" name="phone" size="20" type="text" required /><br><br>
+
+                                    <label for="email">Email *</label><br /><input id="email" maxlength="80" name="email" size="20" type="email" required style="width:100%;" /><br><br>
+
+                                    <label>Preferred Distributor(s) *</label><br />
+                                    <select id="00N0h0000078X0U" multiple="multiple" name="00N0h0000078X0U" title="Preferred Distributors" required style="width:100%;height:120px;" class="preferred_distributor_list">
+                                        <option title="Azerty" value="Azerty">Azerty</option>
+                                        <option title="BlueStar" value="BlueStar">BlueStar</option>
+                                        <option title="Current Components" value="Current Components">Current Components</option>
+                                        <option title="Ingram Micro" value="Ingram Micro">Ingram Micro</option>
+                                        <option title="MS Cash Drawer" value="MS Cash Drawer">MS Cash Drawer</option>
+                                        <option title="Nimax Mexico" value="Nimax Mexico">Nimax Mexico</option>
+                                        <option title="ScanSource" value="ScanSource">ScanSource</option>
+                                    </select>
+                                    <br><br>
+
+                                    <label>
+                                        Star Product(s) Sold (check all that apply) *
+                                    </label>
+                                    <br />
+                                    <select id="00N0h0000078Wpl" multiple="multiple" name="00N0h0000078Wpl" title="Star Products Sold" required style="width:100%;height:120px;" class="star_product_list">
+                                        <option title="Desktop Printers" value="Desktop Printers">Desktop Printers</option>
+                                        <option title="Portable Printers" value="Portable Printers">Portable Printers</option>
+                                        <option title="Kiosk Printers" value="Kiosk Printers">Kiosk Printers</option>
+                                        <option title="Kitchen Printers" value="Kitchen Printers">Kitchen Printers</option>
+                                        <option title="Cash Drawers" value="Cash Drawers">Cash Drawers</option>
+                                        <option title="Scales" value="Scales">Scales</option>
+                                        <option title="Paper" value="Paper">Paper</option>
+                                        <option title="Accessories" value="Accessories">Accessories</option>
+                                        <option title="Label Printers" value="Label Printers">Label Printers</option>
+                                        <option title="Thermal Printers" value="Thermal Printers">Thermal Printers</option>
+                                    </select>
+                                    <br><br>
+
+
+                                    <label>
+                                        Industries (check all that apply) *
+                                    </label>
+                                    <br />
+                                    <select id="00N8000000472Vw" multiple="multiple" name="00N8000000472Vw" title="Industries" required style="width:100%;height:120px;" class="industries_list">
+                                        <option title="Agriculture / Livestock" value="Agriculture / Livestock">Agriculture / Livestock</option>
+                                        <option title="Airlines" value="Airlines">Airlines</option>
+                                        <option title="Amusement Parks" value="Amusement Parks">Amusement Parks</option>
+                                        <option title="Auto/Motorcycle/Bicycles" value="Auto/Motorcycle/Bicycles">Auto/Motorcycle/Bicycles</option>
+                                        <option title="Banking" value="Banking">Banking</option>
+                                        <option title="Cannabis" value="Cannabis">Cannabis</option>
+                                        <option title="Charitable Organizations" value="Charitable Organizations">Charitable Organizations</option>
+                                        <option title="Construction" value="Construction">Construction</option>
+                                        <option title="Convenient Stores" value="Convenient Stores">Convenient Stores</option>
+                                        <option title="Cosmetics/Skin Care" value="Cosmetics/Skin Care">Cosmetics/Skin Care</option>
+                                        <option title="Delivery" value="Delivery">Delivery</option>
+                                        <option title="Dry Cleaner/Laundry Mat" value="Dry Cleaner/Laundry Mat">Dry Cleaner/Laundry Mat</option>
+                                        <option title="Education" value="Education">Education</option>
+                                        <option title="Events/Festivals" value="Events/Festivals">Events/Festivals</option>
+                                        <option title="Field Service/Mobility" value="Field Service/Mobility">Field Service/Mobility</option>
+                                        <option title="Fitness/Health Clubs/Athletics" value="Fitness/Health Clubs/Athletics">Fitness/Health Clubs/Athletics</option>
+                                        <option title="Golf" value="Golf">Golf</option>
+                                        <option title="Government/Armed Force" value="Government/Armed Force">Government/Armed Force</option>
+                                        <option title="Grocery/Supermarket" value="Grocery/Supermarket">Grocery/Supermarket</option>
+                                        <option title="Gun stores/shooting range" value="Gun stores/shooting range">Gun stores/shooting range</option>
+                                        <option title="Healthcare" value="Healthcare">Healthcare</option>
+                                        <option title="Hotel" value="Hotel">Hotel</option>
+                                        <option title="Industrial Weighting" value="Industrial Weighting">Industrial Weighting</option>
+                                        <option title="IT Services/Consulting" value="IT Services/Consulting">IT Services/Consulting</option>
+                                        <option title="Jewelry" value="Jewelry">Jewelry</option>
+                                        <option title="Law Enforcement" value="Law Enforcement">Law Enforcement</option>
+                                        <option title="Law Firms" value="Law Firms">Law Firms</option>
+                                        <option title="Library" value="Library">Library</option>
+                                        <option title="Lottery/Gaming" value="Lottery/Gaming">Lottery/Gaming</option>
+                                        <option title="Loyalty" value="Loyalty">Loyalty</option>
+                                        <option title="Marketing/Web design" value="Marketing/Web design">Marketing/Web design</option>
+                                        <option title="Natural Resources" value="Natural Resources">Natural Resources</option>
+                                        <option title="Other" value="Other">Other</option>
+                                        <option title="Parking" value="Parking">Parking</option>
+                                        <option title="Payment" value="Payment">Payment</option>
+                                        <option title="PC and POS Hardware" value="PC and POS Hardware">PC and POS Hardware</option>
+                                        <option title="Pets" value="Pets">Pets</option>
+                                        <option title="Pharmaceutical" value="Pharmaceutical">Pharmaceutical</option>
+                                        <option title="Restaurant/Food Truck/Bar Lounge" value="Restaurant/Food Truck/Bar Lounge">Restaurant/Food Truck/Bar Lounge</option>
+                                        <option title="Retail" value="Retail">Retail</option>
+                                        <option title="Salon/Spa" value="Salon/Spa">Salon/Spa</option>
+                                        <option title="Scrap and Recycling" value="Scrap and Recycling">Scrap and Recycling</option>
+                                        <option title="Security" value="Security">Security</option>
+                                        <option title="Self-Service" value="Self-Service">Self-Service</option>
+                                        <option title="Telecommunications" value="Telecommunications">Telecommunications</option>
+                                        <option title="Test Equipments" value="Test Equipments">Test Equipments</option>
+                                        <option title="Theater/Museum" value="Theater/Museum">Theater/Museum</option>
+                                        <option title="Transportation" value="Transportation">Transportation</option>
+                                        <option title="Travel Agency/Tourism" value="Travel Agency/Tourism">Travel Agency/Tourism</option>
+                                        <option title="Video/Photography" value="Video/Photography">Video/Photography</option>
+                                        <option title="Voting" value="Voting">Voting</option>
+                                        <option title="Warehouse" value="Warehouse">Warehouse</option>
+                                        <option title="Winery/Brewery" value="Winery/Brewery">Winery/Brewery</option>
+                                    </select><br><br>
+
+                                    <h2>Company Setup</h2>
+
+                                    <label>Total dollar amount of Star products purchase last year: *</label>
+                                    <input id="00N0h0000078WqK" name="00N0h0000078WqK" size="20" type="number" required style="width:100%" /><br><br>
+
+                                    <label>Forecasted dollar amount of Star products to be purchased this year: *</label><input id="00N0h0000078WqF" name="00N0h0000078WqF" size="20" type="number" required style="width:100%" /><br><br>
+
+                                    <label>Annual Company Revenue</label>
+                                    <input id="00N0h000004qXfu" name="00N0h000004qXfu" size="20" type="number" style="width:100%" /><br><br>
+
+                                    <label># of Office Locations *</label><input id="00N0h000004qXfk" name="00N0h000004qXfk" size="20" type="number" required style="width:100%" /><br><br>
+
+                                    <label># of Total Employees *</label><input id="00N0h000004qXfp" name="00N0h000004qXfp" size="20" type="number" required style="width:100%" /><br><br>
+
+                                    <label># of Sales Reps *</label><input id="00N0h0000078Wpv" name="00N0h0000078Wpv" size="20" type="number" required style="width:100%" /><br><br>
+
+                                    <label># of Tech Support *</label><input id="00N0h0000078Wq0" name="00N0h0000078Wq0" size="20" type="number" required style="width:100%" /><br><br>
+
+                                    <label>Do you provide on-site support? *</label><select id="00N0h0000078Wq5" name="00N0h0000078Wq5" title="Do you provide on-site support?" required style="width:100%;">
+                                        <option value="">Select One</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select><br><br>
+
+                                    <label>Do you sell software? *</label><select id="00N0h000004qXfz" name="00N0h000004qXfz" title="Do you sell software?" required style="width:100%;">
+                                        <option value="">Select One</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select><br><br>
+
+                                    <label>Do you provide phone support? *</label><select id="00N0h0000078WqA" name="00N0h0000078WqA" title="Do you provide phone support?" required style="width:100%;">
+                                        <option value="">Select One</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select><br><br>
+
+                                    <label>Territory *</label><select id="00N0h0000078Wpq" name="00N0h0000078Wpq" title="Territory" required style="width:100%;">
+                                        <option value="">Select One</option>
+                                        <option value="USA/Canada">USA/Canada</option>
+                                        <option value="Mexico">Mexico</option>
+                                        <option value="ROLA">ROLA</option>
+                                    </select><br><br>
+
+                                    <label>Partner Type *</label><select id="00N0h0000078Y99" name="00N0h0000078Y99" title="Partner Type" required style="width:100%;">
+                                        <option value="">Select One</option>
+                                        <option value="Technology Partner">Technology Partner</option>
+                                        <option value="Services Partner">Services Partner</option>
+                                        <option value="Solution Partner">Solution Partner</option>
+                                        <option value="Fulfillment Partner">Fulfillment Partner</option>
+                                    </select><br><br>
+
+                                    <style type="text/css">
+                                        .tg {
+                                            border-collapse: collapse;
+                                            border-spacing: 0;
+                                        }
+
+                                        input {
+                                            border: 1px solid #d2d2d2;
+                                            font-size: 13px;
+                                            color: #747474;
+                                            padding: 8px 15px;
+                                            margin-right: 1%;
+                                            width: 100%;
+                                            box-sizing: border-box;
+                                        }
+
+                                        .tg td {
+                                            border-color: none;
+                                            border-style: none;
+                                            border-width: 0px;
+                                            font-family: Arial, sans-serif;
+                                            font-size: 14px;
+                                            overflow: hidden;
+                                            padding: 10px 5px;
+                                            word-break: normal;
+                                        }
+
+                                        .tg th {
+                                            border-color: none;
+                                            border-style: none;
+                                            border-width: 0px;
+                                            font-family: Arial, sans-serif;
+                                            font-size: 14px;
+                                            font-weight: normal;
+                                            overflow: hidden;
+                                            padding: 10px 5px;
+                                            word-break: normal;
+                                        }
+
+                                        .tg .tg-73oq {
+                                            border-color: #000000;
+                                            text-align: left;
+                                            vertical-align: top
+                                        }
+
+                                        .tg .tg-0lax {
+                                            text-align: left;
+                                            vertical-align: top
+                                        }
+                                    </style>
+                                    <table class="tg">
+                                        <thead>
+                                            <tr>
+                                                <th class="tg-73oq"><span style="font-weight:bold">Solution Partner –</span><br><span style="font-weight:bold"> </span><span style="font-weight:400;font-style:normal;text-decoration:none">A Solution Partner is typically a larger national or multi-national reseller that represents a wide range of business equipment and consumer technology. A Solution Partner offers focused vertical market solutions that include a bundled software and hardware solution sold through their own e-commerce site. Solution Partners can manage deployment, installation, and support for large scale projects through national offices and third-party relationships. Solution Partners may offer many complementary products sold with a variety of financing options, service plans, or other value-added services.</span></th>
+                                                <th class="tg-73oq"><span style="font-weight:bold">Fulfillment Partner –</span><br><span style="font-weight:bold"> </span><span style="font-weight:400;font-style:normal;text-decoration:none">A Fulfillment Partner is typically a business that leverages marketplace resellers and modern logistics to connect educated end-users with hardware solutions to meet end-user requirements. Fulfillment Partners enable hardware manufacturers to reach a wide range of vertical markets. Fulfillment Partners are often aligned with software applications to deliver integrated products bundled with complementary hardware and consumables for specific solutions or software applications. Fulfillment Partners embrace delivering the best selection of hardware solutions available for on-demand delivery at the lowest market price to business owners in a wide variety of vertical markets.</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="tg-0lax"><span style="font-weight:bold">Services Partner –</span><br><span style="font-weight:bold">  </span><span style="font-weight:400;font-style:normal;text-decoration:none">A Services Partner is typically a regional or local business that works as a trusted advisor with the business owner. Service Partners offer payment services, POS, payroll, accounting or other software and hardware as turnkey solutions matching the business needs. A Service Partner may offer personalized or onsite services, such as training, installation, maintenance, technical support, etc. Service Partners offer full-service individualized support, consulting, to installation, to post-sale support for businesses.</span></td>
+                                                <td class="tg-0lax"><span style="font-weight:bold">Technology Partner –</span><br>A Technology Partner develops software that integrates Star products through custom development into deployed applications or integrates Star product hardware form, fit &amp; function into manufactured devices. Technology partners only resell Star hardware for use with their own technology solution.<br></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p style="font-size:14px">*Disclaimer: Partners that fall into multiple categories will be assessed based on the amount of business that falls into each category. Star will ultimately have the final decision on which category a partner will be placed.</p>
+
+                                    <label for="lead_source" hidden>Lead Source</label><select hidden id="lead_source" name="lead_source">
+                                        <option value="Partner Portal">Partner Portal</option>
+                                    </select>
+                                    <select id="00N80000004HMHf" name="00N80000004HMHf" title="Account Type" hidden>
+                                        <option value="Undetermined" hidden></option>
+
+                                    </select>
+
+                                    <select id="00N80000004GIbk" name="00N80000004GIbk" title="Customer Type" hidden>
+                                        <option value="Reseller" hidden>Reseller</option>
+
+                                    </select><br>
+                                    By clicking "I Agree," you agree to Star Micronics' <a href="https://starmicronics.com/privacy-policy/">Privacy Policy</a> and <a href="https://starmicronics.com/terms-of-use/">Terms of Use</a>. This may include product-related emails.<br><br>
+                                    I Agree: <input id="00N0h000004qYZE" name="00N0h000004qYZE" type="checkbox" value="1" checked /><br><br>
+
+
+                                    <input type="submit" name="submit">
+
+                                </form>
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br /><br /><br />
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+</body>
+</html>

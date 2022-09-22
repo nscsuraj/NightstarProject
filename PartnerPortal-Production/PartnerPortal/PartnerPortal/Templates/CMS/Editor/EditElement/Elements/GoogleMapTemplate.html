@@ -1,0 +1,326 @@
+﻿<style>
+    .colorSelector {
+        position: relative;
+        width: 36px;
+        height: 36px;
+    }
+
+        .colorSelector div {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 30px;
+            height: 30px;
+        }
+
+    .colorpicker {
+        z-index: 1120;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('#colorSelector div').css('backgroundColor', '#ffffff');
+
+        //get the object and set values
+        var carrierObj = JSON.parse($("#dialog_form").attr("data-obj"));
+        try {
+            $(".objectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(carrierObj[$(this).attr("data-PropertyIndex")]);
+                } else if ($(this).is('textarea')) {
+                    if (!(carrierObj[$(this).attr("data-PropertyIndex")] == undefined)) {
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                    }
+                } else {
+                    if (carrierObj[$(this).attr("data-PropertyIndex")] != null && carrierObj[$(this).attr("data-PropertyIndex")] != undefined && carrierObj[$(this).attr("data-PropertyIndex")].length > 0)
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                }
+            });
+        } catch (e) {
+
+        }
+        //set color
+        $('#mapOverlayColorSelector div').css('backgroundColor', $('#mapOverlayColor').val());
+        $('#infoBoxTextColorSelector div').css('backgroundColor', $('#infoBoxTextColor').val());
+        $('#infoBoxBackgroundColorSelector div').css('backgroundColor', $('#infoBoxBackgroundColor').val());
+
+        $('#mapOverlayColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#mapOverlayColorSelector div').css('backgroundColor', '#' + hex);
+                $('#mapOverlayColor').val('#' + hex);
+            }
+        });
+
+        $('#infoBoxTextColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#infoBoxTextColorSelector div').css('backgroundColor', '#' + hex);
+                $('#infoBoxTextColor').val('#' + hex);
+            }
+        });
+
+        $('#infoBoxBackgroundColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#infoBoxBackgroundColorSelector div').css('backgroundColor', '#' + hex);
+                $('#infoBoxBackgroundColor').val('#' + hex);
+            }
+        });
+
+        $(".ui-dialog").css("height", $(window).height() - 70);
+    });
+</script>
+<div style="width: 95%; display: inline-block; position: absolute; left: 2%">
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Map Type</strong><span>Select the type of google map to display</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_type" name="fusion_type" class="select-field objectProperty" data-propertyindex="427">
+                <option value="roadmap" selected="">Roadmap</option>
+                <option value="satellite">Satellite</option>
+                <option value="hybrid">Hybrid</option>
+                <option value="terrain">Terrain</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Map Width</strong><span>Map width in percentage or pixels. ex: 100%, or 940px</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="428" value="100%" id="fusion_width" name="fusion_width" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Map Height</strong><span>Map height in pixels. ex: 300px</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="429" value="300px" id="fusion_height" name="fusion_height" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Zoom Level</strong><span>Higher number will be more zoomed in.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_zoom" name="fusion_zoom" class="select-field objectProperty" data-propertyindex="430">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14" selected="">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Scrollwheel on Map</strong><span>Enable zooming using a mouse's scroll wheel</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_scrollwheel" name="fusion_scrollwheel" class="select-field objectProperty" data-propertyindex="431">
+                <option value="yes" selected="">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Show Scale Control on Map</strong><span>Display the map scale</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_scale" name="fusion_scale" class="select-field objectProperty" data-propertyindex="432">
+                <option value="yes" selected="">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Show Pan Control on Map</strong><span>Displays pan control button</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_zoom_pancontrol" name="fusion_zoom_pancontrol" class="select-field objectProperty" data-propertyindex="433">
+                <option value="yes" selected="">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Address Pin Animation</strong><span>Choose to animate the address pins when the map first loads.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_animation" name="fusion_animation" class="select-field objectProperty" data-propertyindex="434">
+                <option value="yes" selected="">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Show tooltip by default</strong><span>Display or hide tooltip by default when the map first loads.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_popup" name="fusion_popup" class="select-field objectProperty" data-propertyindex="435">
+                <option value="yes" selected="">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Select the Map Styling Switch</strong><span>Choose default styling for classic google map styles. Choose theme styling for our custom style. Choose custom styling to make your own with the advanced options below.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_mapstyle" name="fusion_mapstyle" class="select-field objectProperty" data-propertyindex="436">
+                <option value="default" selected="">Default Styling</option>
+                <option value="theme">Theme Styling</option>
+                <option value="custom">Custom Styling</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-color">
+        <div class="name-description"><strong>Map Overlay Color</strong><span>Custom styling setting only. Pick an overlaying color for the map. Works best with "roadmap" type.</span></div>
+        <div class="element-type">
+            <div class="wp-picker-container">
+                <table style="width: 100%" colspacing="10">
+                    <tr>
+                        <td style="width: 75%; text-align: right;">
+                            <div id="mapOverlayColorSelector" class="colorSelector" style="width: 90%;">
+                                <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                </div>
+                                <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                </span>
+                            </div>
+                        </td>
+                        <td style="width: 25%; vertical-align: middle;">
+                            <input type="text" class="objectProperty" data-propertyindex="437" value="" id="mapOverlayColor" name="mapOverlayColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Infobox Styling</strong><span>Custom styling setting only. Choose between default or custom info box.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="fusion_infobox" name="fusion_infobox" class="select-field objectProperty" data-propertyindex="438">
+                <option value="default" selected="">Default Infobox</option>
+                <option value="custom">Custom Infobox</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-textarea">
+        <div class="name-description"><strong>Infobox Content</strong><span>Custom styling setting only. Type in custom info box content to replace address string. For multiple addresses, separate info box contents by using the | symbol. ex: InfoBox 1|InfoBox 2|InfoBox 3</span></div>
+        <div class="element-type">
+            <textarea rows="5" cols="55" class="textarea-field objectProperty" data-propertyindex="439" id="fusion_infoboxcontent" name="fusion_infoboxcontent"></textarea>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-color">
+        <div class="name-description"><strong>Info Box Text Color</strong><span>Custom styling setting only. Pick a color for the info box text.</span></div>
+        <div class="element-type">
+            <div class="wp-picker-container">
+                <table style="width: 100%" colspacing="10">
+                    <tr>
+                        <td style="width: 75%; text-align: right;">
+                            <div id="infoBoxTextColorSelector" class="colorSelector" style="width: 90%;">
+                                <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                </div>
+                                <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                </span>
+                            </div>
+                        </td>
+                        <td style="width: 25%; vertical-align: middle;">
+                            <input type="text" class="objectProperty" data-propertyindex="440" value="" id="infoBoxTextColor" name="infoBoxTextColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-color">
+        <div class="name-description"><strong>Info Box Background Color</strong><span>Custom styling setting only. Pick a color for the info box background.</span></div>
+        <div class="element-type">
+            <div class="wp-picker-container">
+                <table style="width: 100%" colspacing="10">
+                    <tr>
+                        <td style="width: 75%; text-align: right;">
+                            <div id="infoBoxBackgroundColorSelector" class="colorSelector" style="width: 90%;">
+                                <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                </div>
+                                <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                </span>
+                            </div>
+                        </td>
+                        <td style="width: 25%; vertical-align: middle;">
+                            <input type="text" class="objectProperty" data-propertyindex="441" value="" id="infoBoxBackgroundColor" name="infoBoxBackgroundColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-textarea">
+        <div class="name-description"><strong>Custom Marker Icon</strong><span>Custom styling setting only. Use full image urls for custom marker icons or input "theme" for our custom marker. For multiple addresses, separate icons by using the | symbol or use one for all. ex: Icon 1|Icon 2|Icon 3</span></div>
+        <div class="element-type">
+            <textarea rows="5" cols="55" class="textarea-field objectProperty" data-propertyindex="442" id="fusion_icon" name="fusion_icon"></textarea>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-textarea">
+        <div class="name-description">
+            <strong>Address</strong><span>Add address to the location which will show up on map. For multiple addresses, separate addresses by using the | symbol. 
+    ex: Address 1|Address 2|Address 3</span>
+        </div>
+        <div class="element-type">
+            <textarea rows="5" cols="55" class="textarea-field objectProperty" data-propertyindex="443" id="fusion_content" name="fusion_content"></textarea>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS Class</strong><span>Add a class to the wrapping HTML element.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="444" value="" id="fusion_class" name="fusion_class" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS ID</strong><span>Add an ID to the wrapping HTML element.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="445" value="" id="fusion_id" name="fusion_id" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+</div>

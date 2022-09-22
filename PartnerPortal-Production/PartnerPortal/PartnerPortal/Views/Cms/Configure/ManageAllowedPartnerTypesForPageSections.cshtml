@@ -1,0 +1,152 @@
+@{
+    ViewBag.Title = "Manage Page Section Permission";
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+}
+
+@section featured {
+}
+@section scripts
+{
+  
+    <style>
+        .ui-button-text {
+            font-size: 1.4rem;
+        }
+    </style>
+    <script>
+
+    </script>
+}
+@section MainContent {
+    <div ng-controller="MenuPermissionController">
+        <div id="display">
+            <div class="divFullBorderCMS" style="font-size: 22pt; background-color: #4f7db4; color: #ffffff; height: 40px; padding-top: 10px; padding-left: 10px;">Manage Page Section Permission</div>
+            <div class="leftFloat width99p paddingtop10 paddingleft1p" style="background-color: rgb(234, 234, 234);">
+                <div class="leftFloat width99p">
+                    <div class="leftFloat width100p">
+                        <div class="leftFloat width5p paddingtop5">
+                        </div>
+                        <div class="leftFloat width93p paddingleft2p">
+                            <table style="width: 100%">
+                                <tr>
+                                    <td style="width: 10%;">Filter:</td>
+                                    <td><input class="form-control width80p" style="padding: 5px;" ng-model="filterName"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="leftFloat width100p">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr style="color: #428bca; cursor: pointer;">
+                                <td style="padding: 5px; background-color: #007BA3; color: #ffffff; height: 30px; font-weight: bold; width: 30px;">&nbsp;</td>
+                                <td style="text-align: left !important; border: none;">
+                                    <table style="cursor: pointer; text-align: left; border: none; width: 80%; table-layout: fixed; word-wrap: break-word;">
+                                        <tr style="text-align: left;">
+                                            <th ng-click="predicate = 'PartPageName'; reverse=!reverse" style="cursor: pointer; text-align: left;">Sections</th>
+                                        </tr>
+
+                                    </table>
+                                </td>
+                                <td style="width: 150px;">&nbsp;</td>
+                            </tr>
+
+                            </thead>
+
+                            <tbody>
+                            <tr ng-repeat-start="section in SectionList | filter : filterName | orderBy : predicate:reverse" ng-class-odd="'daycolodd'" ng-class-even="'daycoleven'">
+                                <td style="padding: 5px;">
+                                    <button type="button" ng-click="SetRowClickedMenuId(section)">
+                                        <span ng-bind="section.Expanded ? '-' : '+'"></span>
+                                    </button>
+                                </td>
+                                <td style="padding: 5px;">
+                                    <div >{{section.DisplayTitle}}</div>
+                                </td>
+                                <td style="width: 150px;">&nbsp;</td>
+                            </tr>
+
+                            <tr ng-repeat-end="" style="text-align: right !important; border-bottom: none;" ng-show="section.Expanded">
+                                <td style="padding: 5px; text-align: right !important; border: none;">&nbsp;
+                                </td>
+
+                                <td style="border: 1px solid #000000; background-color: #c0c0c0; min-height: 80px;">
+                                    <div ng-repeat="perm in section.PartnerTypes" style="min-width: 150px; float: left; border: 1px solid #000000; height: 40px; background-color: #ffffff; margin: 10px; padding: 10px;">
+                                        <table style="width: 100%">
+                                            <tr>
+                                                <td>
+                                                    <b>{{perm.PartnerType}}</b>&nbsp;&nbsp;
+                                                </td>
+                                                <td style="width: 30px;">
+                                                    <input type="checkbox" ng-model="perm.IsAssigned" style="width: 20px; height: 20px;"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </div>
+                                </td>
+
+                                <td style="width: 150px;">
+                                    <input type="button" id="submitButton" class="btn btn-primary" ng-click="savePermission(section)" value="Save Permission" style="width: auto; margin-top: 10px; box-shadow: 4px 4px 5px #888888;"/>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section AngularScripts
+{
+    <script>
+        app.controller("MenuPermissionController", function ($controller, $scope, $http, $rootScope, SweetAlert,
+            notificationFactory, $location,
+            validationFactory, filterFilter, helperFactory, dbUtilFactory, $window, $modal, $log) {
+
+
+            $scope.SectionList = [];
+
+            $scope.SetRowClickedMenuId = function (page) {
+                var result = $.grep($scope.SectionList, function (e) { return e.Id == page.Id });
+                $(result).each(function (key, value) {
+                    value.Expanded = !value.Expanded;
+                });
+            }
+
+            $scope.getSectionList = function () {
+                dbUtilFactory.get(root + 'api/ppcmsapi/GetPageSectionListForPermission', "", function (d) {
+                    $scope.SectionList = d;
+
+                }, '', 'Error getting data ');
+            };
+            $scope.getSectionList();
+
+
+            $scope.savePermission = function (page) {
+                var perms = "";
+
+                for (var i = 0; i < page.PartnerTypes.length; i++) {
+                    if (page.PartnerTypes[i].IsAssigned) {
+                        if (perms == "") {
+                            perms = page.PartnerTypes[i].PartnerType;
+                        } else {
+                            perms = perms + "," + page.PartnerTypes[i].PartnerType;
+                        }
+                    }
+                }
+                page.AllowedPartnerTypes = perms;
+                dbUtilFactory.postp(root + 'api/ppcmsapi/SavePageSectionPermission', page, function (d) {
+                    $scope.getSectionList();
+                    SweetAlert.swal("Permission Saved");
+                }, '', 'Error getting data ');
+            };
+
+            
+        });
+    </script>
+}
+

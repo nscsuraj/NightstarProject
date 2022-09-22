@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html lang="en-US" class="no-js" ng-app="app">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Expires" content="30" />
+    <meta http-equiv="Cache-Control" content="Public" />
+    <meta name="google-site-verification" content="qG1hz2stDuxUAXRF0SRp5dsnMOIW1IKdjCnxqFp7xJA" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Images/star_icon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    @RenderSection("MetaTags", required: false)
+    @RenderSection("Styles", required: false)
+    <style>
+        @Html.Action("GetFileContent", "Utility", new {path = "~/Styles/PartnerPortal/site.css"})
+         @Html.Action("GetFileContent", "Utility", new {path = "~/Styles/homeStyle.css"})
+        @Html.Action("GetFileContent", "Utility", new {path = "~/Styles/Editor_style.css"})
+        @Html.Action("GetFileContent", "Utility", new {path = "~/Styles/Editor2.css"})
+        @Html.Action("GetFileContent", "Utility", new {path = "~/Styles/sweetalert2.min.css"})
+        .swal2-spacer {
+            background-color: #ffffff;
+            color: #ffffff;
+            height: 50px;
+        }
+    </style>
+    @*@Html.Action("GetJSCssInline", "Utility")*@
+
+@*    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/angularjs")
+    @Scripts.Render("~/bundles/customjsmain")*@
+    <script>
+        //var root = '@Url.Content("~")';
+        var root = 'http://localhost/';
+       // var root = 'http://mdev.starmicronics.com/';
+        var rootUrl = '@Url.Content("~")';        
+    </script>
+    @* Google Analytics code is:*@
+    <script src="~/scripts/gataglinks.js" type="text/javascript"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-19068382-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-19068382-1');
+    </script>
+    <script>
+        @Html.Action("GetFileContent", "Utility", new {path = "~/Scripts/Angular/angular.min.js"})
+    </script>
+    <script>
+        
+        @Html.Action("GetFileContent", "Utility", new {path = "~/Scripts/SweetAlert2.js"})
+    </script>
+    <script>
+        @Html.Action("GetFileContent", "Utility", new {path = Url.Content("~/Scripts/FileSaver.js")})
+    </script>
+    <script>
+        @Html.Action("GetFileContent", "Utility", new {path = Url.Content("~/Scripts/json-export-excel.js")})
+    </script>
+    <script>
+        @Html.Action("GetFileContent", "Utility", new {path = Url.Content("~/Scripts/Angular/dirPagination.js")})
+    </script>
+
+    <script>
+        @Html.Action("GetFileContent", "Utility", new {path = "~/Scripts/app/appReseller.js"})
+    </script>
+    <script>
+        @Html.Action("GetFileContent", "Utility", new {path = "~/Scripts/JQuery/jquery-1.10.2.js"})
+    </script>
+
+
+</head>
+<body>
+<div class="mainContent">
+    @{ Html.RenderAction("GetPageHtml", "Utility", new {id = 3}); }
+    @{ Html.RenderAction("GetPageHtml", "Utility", new {id = 4}); }
+     @Html.Action("GetMegaMenu", "Menu")
+    @*     @{
+         var menu = Cache["StarResponsiveCachedMegaMenu"] as string;
+         if (menu == null)
+         {
+             @Html.Action("GetMegaMenu", "Menu")
+         }
+         else
+         {
+             @Html.Raw(menu)
+         }
+     }*@
+
+
+
+    <div class="fusion-fullwidth fullwidth-box" style="text-align: left;-webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; background-color: #ECF8FF;" id="">
+        <div class="fusion-row">
+            <div class=" fusion-one-fourth fusion-layout-column fusion-spacing-no layoutLeftPanel" style="text-align: center; background-repeat: no-repeat; background-color: #ECF8FF; background-position: left top; width: 25%; border: 0px solid;" id="">
+                <div class="fusion-column-wrapper">
+                    @Html.Partial("Partials/LeftPanelPartial")
+
+                </div>
+            </div>
+            <div class=" fusion-one-half fusion-layout-column fusion-spacing-no layoutMiddlePanel" style="text-align: center; background-repeat: no-repeat; background-position: left top; border: 0px solid; width: 50%;" id="">
+                <div class="fusion-column-wrapper">
+                    <div style="margin: 10px;">
+                        @RenderSection("MainContent", required: false)
+                    </div>
+                </div>
+            </div>
+            <div class=" fusion-one-fourth fusion-layout-column fusion-spacing-no layoutRightPanel" style="text-align: left; background-color: #ECF8FF;" id="">
+                <div class="fusion-column-wrapper">
+                    @RenderSection("ResellerLookUpContent", required: false)
+                    @Html.Partial("Partials/RightPanelPartial")
+                </div>
+            </div>
+        </div>
+        <br/><br/><br/><br/>
+    </div>
+    
+
+
+
+
+
+</div>
+    @RenderSection("FooterContent", required: false)
+    @RenderSection("scripts", required: false)
+
+
+@*        <script src="~/Scripts/Angular/angular.js"></script>
+<script src="~/Scripts/app/appDashboard.js"></script>
+<script src="~/Scripts/JQuery/jquery-1.10.2.js"></script>*@
+
+<script>
+    $(document).ready(function() {
+        var ctrl = document.getElementById("MenuName");
+        var ctrl1 = document.getElementById("PageHeader");
+        
+        if (ctrl) {
+            $(".menuItem").each(function() {
+                $(this).removeClass("activeMenu");
+            });
+            if (ctrl.value != "")
+            {
+                var he = $("." + ctrl.value);
+                if(he){
+                    $("." + ctrl.value).addClass("activeMenu");
+                }
+            }
+        }
+        
+        if (ctrl1) {
+            $("#SiteBannerPageTitle").html(ctrl1.value);
+        }
+    });
+</script>
+<script type="text/javascript" defer="defer" src="https://script.opentracker.net/?site=www.starmicronics.com"></script>
+<script> /*<![CDATA[*/
+    (function (w, a, b, d, s) {
+        w[a] = w[a] || {};
+        w[a][b] = w[a][b] || { q: [], track: function (r, e, t) { this.q.push({ r: r, e: e, t: t || +new Date }); } };
+        var e = d.createElement(s);
+        var f = d.getElementsByTagName(s)[0];
+        e.async = 1;
+        e.src = '//marketing.starmicronics.com/cdnr/32/acton/bn/tracker/34776';
+        f.parentNode.insertBefore(e, f);
+    })(window, 'ActOn', 'Beacon', document, 'script');
+    ActOn.Beacon.track(); /*]]>*/
+</script>
+</body>
+</html>

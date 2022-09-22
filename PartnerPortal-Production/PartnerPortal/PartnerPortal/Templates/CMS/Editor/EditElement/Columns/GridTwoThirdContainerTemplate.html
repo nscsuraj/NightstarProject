@@ -1,0 +1,352 @@
+﻿<style>
+    .colorSelector {
+        position: relative;
+        width: 36px;
+        height: 36px;
+    }
+
+        .colorSelector div {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 30px;
+            height: 30px;
+        }
+
+    .colorpicker {
+        z-index: 1120;
+    }
+</style>
+<script>
+    var uploaderOpenedBy = {};
+    $(document).ready(function () {
+        $('#tab-container').easytabs();
+        $('#colorSelector div').css('backgroundColor', '#ffffff');
+
+        //get the object and set values
+        var carrierObj = JSON.parse($("#dialog_form").attr("data-obj"));
+        try {
+            $(".objectProperty").each(function () {
+                if ($(this).is('div')) {
+                    $(this).html(carrierObj[$(this).attr("data-PropertyIndex")]);
+                } else {
+                    if (carrierObj[$(this).attr("data-PropertyIndex")].length > 0) {
+                        $(this).val(carrierObj[$(this).attr("data-PropertyIndex")]);
+                    }
+                }
+            });
+        } catch (e) {
+
+        }
+        //set color
+        $('#backgroundColorSelector div').css('backgroundColor', $('#backgroundColor').val());
+        $('#borderColorSelector div').css('backgroundColor', $('#borderColor').val());
+        $("#backgroundImageDisplay").attr("src", $("#hidden_background_image").val());
+        if ($("#hidden_background_image").val().length > 0) {
+            $('.fusionb-upload-button').text('Remove').addClass('remove-image');
+        }
+
+        $('#backgroundColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#backgroundColorSelector div').css('backgroundColor', '#' + hex);
+                $('#backgroundColor').val('#' + hex);
+            }
+        });
+
+        $('#borderColorSelector').ColorPicker({
+            color: '#000000',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#borderColorSelector div').css('backgroundColor', '#' + hex);
+                $('#borderColor').val('#' + hex);
+            }
+        });
+        $(".ui-dialog").css("height", $(window).height() - 60);
+
+        $(".fusionb-upload-button").click(function () {
+            $("#dialog_uploadMedia").empty();
+            var template = root + "/Templates/CMS/Editor/UploadMediaTemplate.html";
+            $("#dialog_uploadMedia").load(template);
+            uploaderOpenedBy = $(this);
+            //$("#dialog_uploadMedia").attr("data-allowMultiSelect",false); //Add this line only if you want to add multiselect option
+            if ($(this).hasClass('remove-image')) {
+                $(this).parent().find('img').attr('src', '');
+                $(this).parent().find('input').attr('value', '');
+                $(this).hide();
+                $(this).text('Upload').removeClass('remove-image').attr('style', '');
+                return;
+            }
+            var dialog = $("#dialog_uploadMedia").dialog({
+                autoOpen: false,
+                width: "96%",
+                modal: true,
+                resizable: false,
+                position: [30, 30],
+                dialogClass: "no-titlebar",
+                create: function (event) { $(event.target).parent().css('position', 'fixed'); $(".ui-widget-header").hide(); },
+                open: function () { $(".ui-widget-header").hide(); },
+                close: function () {
+                    //for (var i = 0; i < selectedUploadedObjectsToUse.length; i++) {
+                    //    alert(selectedUploadedObjectsToUse[i].FilePath);
+                    //}
+                    $(".ui-widget-header").show();
+                    if (selectedUploadedObjectsToUse.length > 0) {
+                        uploaderCallback(selectedUploadedObjectsToUse[0].FilePath);
+                    }
+                    $('.fusionb-upload-button').text('Remove').addClass('remove-image');
+                }
+            });
+
+            dialog.dialog("open");
+        });
+
+    });
+
+    function uploaderCallback(filePath) {
+        if ($(uploaderOpenedBy) != undefined) {
+            $(uploaderOpenedBy).parent().find("input[type='hidden']").val(filePath);
+            $(uploaderOpenedBy).parent().find("img").attr("src", filePath);
+        }
+    }
+</script>
+<div style="width: 95%; display: inline-block; position: absolute; left: 2%">
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Last Column</strong><span>Choose if the column is last in a set. This has to be set to "Yes" for the last column in a set.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="last" name="last" class="select-field objectProperty" data-propertyindex="95">
+                <option value="yes">Yes</option>
+                <option value="no" selected="">No</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Column Spacing</strong><span>Set to "No" to eliminate margin between columns.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="spacing" name="spacing" class="select-field objectProperty" data-propertyindex="96">
+                <option value="yes" selected="">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Center Content</strong><span>Only works with columns inside a full width container that is set to equal heights.  Set to "Yes" to center the content horizontally and vertically.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="center_content" name="center_content" class="select-field objectProperty" data-propertyindex="97">
+                <option value="yes">Yes</option>
+                <option value="no" selected="">No</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Hide on Mobile</strong><span>Select "Yes" to hide full width container on mobile.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="hide_on_mobile" name="hide_on_mobile" class="select-field objectProperty" data-propertyindex="98">
+                <option value="no" selected="">No</option>
+                <option value="yes">Yes</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-color">
+        <div class="name-description"><strong>Background Color</strong><span>Controls the background color.</span></div>
+        <div class="element-type">
+            <div class="wp-picker-container">
+                <table style="width: 100%" colspacing="10">
+                    <tr>
+                        <td style="width: 75%; text-align: right;">
+                            <div id="backgroundColorSelector" class="colorSelector" style="width: 90%;">
+                                <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                </div>
+                                <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                </span>
+                            </div>
+                        </td>
+                        <td style="width: 25%; vertical-align: middle;">
+                            <input type="text" class="objectProperty" data-propertyindex="99" value="" id="backgroundColor" name="backgroundColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-upload">
+        <div class="name-description"><strong>Background Image</strong><span>Upload an image to display in the background</span></div>
+        <div class="element-type">
+            <div class="fusion-upload-container">
+                <img id="backgroundImageDisplay" src="" alt="Image" class="uploaded-image" style="height: 192px; width: 311px; padding-bottom: 3px;">
+                <div style="clear: both;"></div>
+                <input type="hidden" class="fusion-form-text fusion-form-upload fusion-input objectProperty" name="background_image" id="hidden_background_image" value="" data-propertyindex="100">
+                <a href="#" class="fusionb-upload-button " data-upid="1">Upload</a>
+                <a href="#" style="display: none" class="fusionb-edit-button" data-upid="1">Edit</a>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Background Repeat</strong><span>Choose how the background image repeats.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="background_repeat" name="background_repeat" class="select-field objectProperty" data-propertyindex="101">
+                <option value="no-repeat" selected="">No Repeat</option>
+                <option value="repeat">Repeat Vertically and Horizontally</option>
+                <option value="repeat-x">Repeat Horizontally</option>
+                <option value="repeat-y">Repeat Vertically</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Background Position</strong><span>Choose the postion of the background image</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="background_position" name="background_position" class="select-field objectProperty" data-propertyindex="102">
+                <option value="left top" selected="">Left Top</option>
+                <option value="left center">Left Center</option>
+                <option value="left bottom">Left Bottom</option>
+                <option value="right top">Right Top</option>
+                <option value="right center">Right Center</option>
+                <option value="right bottom">Right Bottom</option>
+                <option value="center top">Center Top</option>
+                <option value="center center">Center Center</option>
+                <option value="center bottom">Center Bottom</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Border Size</strong><span>In pixels (px), ex: 1px.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="103" value="0px" id="border_size" name="border_size" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+
+    <div class="clearfix form-element-container form-element-container-color">
+        <div class="name-description"><strong>Border Color</strong><span>Controls the border color.</span></div>
+        <div class="element-type">
+            <div class="wp-picker-container">
+                <table style="width: 100%" colspacing="10">
+                    <tr>
+                        <td style="width: 75%; text-align: right;">
+                            <div id="borderColorSelector" class="colorSelector" style="width: 90%;">
+                                <div style="width: 75%; border: 1px solid black; cursor: pointer; text-align: center; font-weight: bold; border-right: none;">
+                                </div>
+                                <span style="width: 25%; border: 1px solid black; float: right; vertical-align: middle; height: 25px; border-left: none; cursor: pointer; text-align: center; padding-top: 5px; font-weight: bold; display: inline-block; background-color: #F0F0F0; position: relative; top: 3px; left: 3px;">Select Color
+                                </span>
+                            </div>
+                        </td>
+                        <td style="width: 25%; vertical-align: middle;">
+                            <input type="text" class="objectProperty" data-propertyindex="104" value="" id="borderColor" name="borderColor" size="50" style="padding: 6px 0px !important; text-align: center;">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Border Style</strong><span>Controls the border style.</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="border_style" name="border_style" class="select-field objectProperty" data-propertyindex="105">
+                <option value="solid">Solid</option>
+                <option value="dashed">Dashed</option>
+                <option value="dotted">Dotted</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Padding</strong><span>In pixels (px), ex: 10px.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="106" value="" id="padding" name="padding" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Margin Top</strong><span>In pixels (px), ex: 1px.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="107" value="" id="margin_top" name="margin_top" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>Margin Bottom</strong><span>In pixels (px), ex: 1px.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="108" value="" id="margin_bottom" name="margin_bottom" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Animation Type</strong><span>Select the type on animation to use on the shortcode</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="animation_type[0]" name="animation_type[0]" class="select-field objectProperty" data-propertyindex="109">
+                <option value="0">None</option>
+                <option value="bounce">Bounce</option>
+                <option value="fade">Fade</option>
+                <option value="flash">Flash</option>
+                <option value="rubberBand">Rubberband</option>
+                <option value="shake">Shake</option>
+                <option value="slide">Slide</option>
+                <option value="zoom">Zoom</option>
+            </select>
+
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Direction of Animation</strong><span>Select the incoming direction for the animation</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="animation_direction[0]" name="animation_direction[0]" class="select-field objectProperty" data-propertyindex="110">
+                <option value="down">Down</option>
+                <option value="left">Left</option>
+                <option value="right">Right</option>
+                <option value="up">Up</option>
+                <option value="static">Static</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-select">
+        <div class="name-description"><strong>Speed of Animation</strong><span>Type in speed of animation in seconds (0.1 - 1)</span></div>
+        <div class="element-type">
+            <div class="select_arrow"></div>
+            <select id="animation_speed[0]" name="animation_speed[0]" class="select-field objectProperty" data-propertyindex="111">
+                <option value="1">1</option>
+                <option value="0.1" selected="">0.1</option>
+                <option value="0.2">0.2</option>
+                <option value="0.3">0.3</option>
+                <option value="0.4">0.4</option>
+                <option value="0.5">0.5</option>
+                <option value="0.6">0.6</option>
+                <option value="0.7">0.7</option>
+                <option value="0.8">0.8</option>
+                <option value="0.9">0.9</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS Class</strong><span>Add a class to the wrapping HTML element.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="112" value="" id="class" name="class" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <div class="clearfix form-element-container form-element-container-input">
+        <div class="name-description"><strong>CSS ID</strong><span>Add an ID to the wrapping HTML element.</span></div>
+        <div class="element-type">
+            <input type="text" class="text-field objectProperty" data-propertyindex="113" value="" id="id" name="id" size="50" style="padding: 6px 0px !important;">
+        </div>
+    </div>
+    <br />
+    <br />
+</div>

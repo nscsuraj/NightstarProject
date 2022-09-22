@@ -1,0 +1,42 @@
+﻿@model PartnerPortal.Models.PageInfoVM
+@{
+    ViewBag.Title = Model.TitleTag;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section MetaTags
+{
+     @foreach (var m in Model.Gateway.MetaTags)
+     {
+         if (m.TagType == 0)
+         {
+             <meta property="og:@m.TagKey" content="@m.TagValue"/>
+         }
+         else
+         {
+            <meta name="@m.TagKey" content="@m.TagValue"/>
+         }
+     
+     }
+}
+
+@section scripts
+{
+@*    <script type="text/javascript" src="~/Scripts/homeScript1.js"></script>
+    <script type="text/javascript" src="~/Scripts/homeScript2.js"></script>*@
+}
+@section MainContent {
+     @Html.HiddenFor(m=> m.PageHeader)
+    <div class="DragAndDropCMSContent">
+        @Html.Partial("Partials/PagePartial", Model.Id)
+    </div>
+        @Html.HiddenFor(m=> m.MenuName)
+        @Html.HiddenFor(m=> m.PageHeader)
+}
+@*@section FooterContent {
+    @Html.Partial("Partials/FooterContentPartial",Model.Gateway)
+}*@
+
+@section RightPanelPartial{
+    @Html.Partial("Partials/RightPanelPartial")
+}

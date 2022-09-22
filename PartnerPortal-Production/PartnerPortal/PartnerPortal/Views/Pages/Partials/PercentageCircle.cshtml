@@ -1,0 +1,142 @@
+﻿<style>
+.position {
+  float: left;
+  margin: 0px;
+}
+
+.progress-bar {
+  position: relative;
+  height: 100px;
+  width: 100px;
+}
+
+.progress-bar div {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+}
+
+.progress-bar div span {
+  position: absolute;
+  font-family: Arial;
+  font-size: 25px;
+  line-height: 88px;
+  height: 88px;
+  width: 88px;
+  left: 6.25px;
+  top: 6.25px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #ffffff;
+}
+.progress-bar {
+    background-color:#ffffff;
+    border-color:#ffffff;
+    -webkit-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.1);
+}
+.progress-bar .background { background-color: #ffffff; }
+
+.progress-bar .rotate {
+  clip: rect(0 50px 100px 0);
+  background-color: #4b86db;
+}
+
+.progress-bar .left {
+  clip: rect(0 50px 100px 0);
+  opacity: 1;
+  background-color: #b3cef6;
+}
+
+.progress-bar .right {
+  clip: rect(0 50px 100px 0);
+  transform: rotate(180deg);
+  opacity: 0;
+  background-color: #4b86db;
+}
+ @@keyframes 
+toggle {  0% {
+ opacity: 0;
+}
+ 100% {
+ opacity: 1;
+}
+}
+
+@@media only screen and (max-width:800px) and (min-width:751px){
+    .progress-bar div span {
+        width: 87px;
+        height: 87px;
+        left: 5.5px;
+        top: 4.5px;
+    }
+}
+
+@@media only screen and (max-width:750px) and (min-width:0px){
+    .progress-bar div span {
+        width: 84px;
+        height: 84px;
+        left: 5.5px;
+        top: 4.5px;
+    }
+}
+
+    </style>
+
+
+
+
+
+<script>
+    (function ($) {
+        $.fn.loading = function () {
+            var DEFAULTS = {
+                backgroundColor: '#b3cef6',
+                progressColor: '#4b86db',
+                percent: 0,
+                duration: 2000
+            };
+
+            $(this).each(function () {
+                var $target = $(this);
+
+                var opts = {
+                    backgroundColor: $target.data('color') ? $target.data('color').split(',')[0] : DEFAULTS.backgroundColor,
+                    progressColor: $target.data('color') ? $target.data('color').split(',')[1] : DEFAULTS.progressColor,
+                    percent: $target.data('percent') ? $target.data('percent') : DEFAULTS.percent,
+                    duration: $target.data('duration') ? $target.data('duration') : DEFAULTS.duration
+                };
+                // console.log(opts);
+
+                $target.append('<div class="background"></div><div class="rotate"></div><div class="left"></div><div class="right"></div><div class=""><span>' + opts.percent + '%</span></div>');
+
+                $target.find('.background').css('background-color', opts.backgroundColor);
+                $target.find('.left').css('background-color', opts.backgroundColor);
+                $target.find('.rotate').css('background-color', opts.progressColor);
+                $target.find('.right').css('background-color', opts.progressColor);
+
+                var $rotate = $target.find('.rotate');
+                setTimeout(function () {
+                    $rotate.css({
+                        'transition': 'transform ' + opts.duration + 'ms linear',
+                        'transform': 'rotate(' + opts.percent * 3.6 + 'deg)'
+                    });
+                }, 1);
+
+                if (opts.percent > 50) {
+                    var animationRight = 'toggle ' + (opts.duration / opts.percent * 50) + 'ms step-end';
+                    var animationLeft = 'toggle ' + (opts.duration / opts.percent * 50) + 'ms step-start';
+                    $target.find('.right').css({
+                        animation: animationRight,
+                        opacity: 1
+                    });
+                    $target.find('.left').css({
+                        animation: animationLeft,
+                        opacity: 0
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
