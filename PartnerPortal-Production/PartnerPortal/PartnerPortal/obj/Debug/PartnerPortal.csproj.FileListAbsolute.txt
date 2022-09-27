@@ -133,7 +133,6 @@ E:\TFS_2021\StarMicronics\PartnerPortal-Production\PartnerPortal\PartnerPortal\o
 E:\TFS_2021\StarMicronics\PartnerPortal-Production\PartnerPortal\PartnerPortal\obj\Debug\PartnerPortal.csproj.CopyComplete
 E:\TFS_2021\StarMicronics\PartnerPortal-Production\PartnerPortal\PartnerPortal\obj\Debug\PartnerPortal.dll
 E:\TFS_2021\StarMicronics\PartnerPortal-Production\PartnerPortal\PartnerPortal\obj\Debug\PartnerPortal.pdb
-E:\TFS_SEIS\StarMicronics\PartnerPortal-Production\PartnerPortal\PartnerPortal\bin\MvcCodeRouting.dll
 E:\TFS_SEIS\StarMicronics\PartnerPortal-Production\PartnerPortal\PartnerPortal\bin\PartnerPortal.dll.config
 E:\TFS_SEIS\StarMicronics\PartnerPortal-Production\PartnerPortal\PartnerPortal\bin\PartnerPortal.dll
 E:\TFS_SEIS\StarMicronics\PartnerPortal-Production\PartnerPortal\PartnerPortal\bin\PartnerPortal.pdb
@@ -155,6 +154,7 @@ E:\TFS_SEIS\StarMicronics\PartnerPortal-Production\PartnerPortal\PartnerPortal\b
 E:\TFS_SEIS\StarMicronics\PartnerPortal-Production\PartnerPortal\PartnerPortal\bin\Microsoft.Web.Infrastructure.dll
 E:\TFS_SEIS\StarMicronics\PartnerPortal-Production\PartnerPortal\PartnerPortal\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
 E:\TFS_SEIS\StarMicronics\PartnerPortal-Production\PartnerPortal\PartnerPortal\bin\Microsoft.Web.WebPages.OAuth.dll
+E:\TFS_SEIS\StarMicronics\PartnerPortal-Production\PartnerPortal\PartnerPortal\bin\MvcCodeRouting.dll
 E:\TFS_SEIS\StarMicronics\PartnerPortal-Production\PartnerPortal\PartnerPortal\bin\MvcCodeRouting.Web.Http.dll
 E:\TFS_SEIS\StarMicronics\PartnerPortal-Production\PartnerPortal\PartnerPortal\bin\Newtonsoft.Json.dll
 E:\TFS_SEIS\StarMicronics\PartnerPortal-Production\PartnerPortal\PartnerPortal\bin\PartnerPortal.Business.dll

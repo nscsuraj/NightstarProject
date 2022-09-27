@@ -472,6 +472,7 @@
     <Content Include="Images\colorpicker\slider.png" />
     <Content Include="Images\combobox_arrows_sprite.gif" />
     <Content Include="Images\delete-24.png" />
+    <Content Include="Images\Desktop Banner.png" />
     <Content Include="Images\downArrow.png" />
     <Content Include="Images\DownloadDriver-Button.png" />
     <Content Include="Images\edit.png" />
